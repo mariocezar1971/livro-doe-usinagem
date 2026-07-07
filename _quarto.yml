@@ -1,0 +1,184 @@
+project:
+  type: book
+  output-dir: _book
+  resources:
+    - "figuras/**"
+    - "dados/**"
+    - "codigos/**"
+    - CNAME
+
+book:
+  title: "Planejamento de Experimentos em Usinagem"
+  subtitle: "Fatorial, RSM e otimização multiresposta aplicados às ligas de alumínio"
+  author:
+    - name: "Mário Cezar dos Santos Jr."
+      affiliations:
+        - name: "Instituto Federal do Espírito Santo (IFES)"
+          city: "Vila Velha"
+          country: "Brasil"
+      email: "mariocezarsj@gmail.com"
+      orcid: "0000-0000-0000-0000"   # SUBSTITUIR pelo ORCID real
+  date: today
+  date-format: "DD/MM/YYYY"
+  language: pt-BR
+  description: |
+    Livro técnico sobre Planejamento de Experimentos (DOE) aplicado à usinagem,
+    com estudo de caso completo em torneamento de ligas de alumínio.
+    Cobre planejamento fatorial 2^k, planejamento composto central (PCC),
+    superfícies de resposta (RSM) e otimização multiresposta por algoritmo genético.
+  keyword: "DOE, planejamento de experimentos, usinagem, ligas de alumínio, RSM, otimização multiresposta"
+  cover-image: "figuras/capa.png"
+  favicon: "figuras/favicon.png"
+  site-url: "https://doeusinagem.com.br"
+  repo-url: "https://github.com/mariocezar1971/livro-doe-usinagem"
+  repo-branch: main
+  repo-actions: [edit, issue]
+  sharing: [twitter, linkedin]
+  search:
+    location: navbar
+    type: overlay
+  page-footer:
+    left: |
+      Mário Cezar dos Santos Jr. (2027).<br>
+      CC BY-NC-ND 4.0 (versão HTML).
+    right: |
+      Construído com [Quarto](https://quarto.org/).
+
+  chapters:
+    - index.qmd
+    - part: "Parte I — Fundamentos"
+      chapters:
+        - parte-1/cap-01-por-que-doe.qmd
+        - parte-1/cap-02-metalurgia.qmd
+        - parte-1/cap-03-torneamento.qmd
+    - part: "Parte II — Metodologia DOE"
+      chapters:
+        - parte-2/cap-04-fatorial.qmd
+        - parte-2/cap-05-pcc-rsm.qmd
+        - parte-2/cap-06-otimizacao.qmd
+    - part: "Parte III — Estudo de caso"
+      chapters:
+        - parte-3/cap-07-projeto.qmd
+        - parte-3/cap-08-fatorial-aluminio.qmd
+        - parte-3/cap-09-rsm-pcc.qmd
+        - parte-3/cap-10-otimizacao-global.qmd
+    - part: "Parte IV — Aplicação"
+      chapters:
+        - parte-4/cap-11-chao-fabrica.qmd
+        - parte-4/cap-12-sintese.qmd
+    - references.qmd
+
+  appendices:
+    - apendices/apendice-a-instrumentacao.qmd
+    - apendices/apendice-b-codigos.qmd
+    - apendices/apendice-c-tabelas.qmd
+    - apendices/apendice-d-dados.qmd
+
+bibliography: references.bib
+csl: associacao-brasileira-de-normas-tecnicas.csl
+
+format:
+  html:
+    theme:
+      light: [cosmo, styles/custom-light.scss]
+      dark: [darkly, styles/custom-dark.scss]
+    css: styles/styles.css
+    code-fold: false
+    code-tools: true
+    code-link: true
+    code-copy: true
+    code-overflow: wrap
+    code-block-bg: true
+    code-block-border-left: "#0066cc"
+    highlight-style: github
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    number-depth: 3
+    fig-cap-location: bottom
+    tbl-cap-location: top
+    smooth-scroll: true
+    link-external-newwindow: true
+    link-external-icon: true
+    citations-hover: true
+    crossrefs-hover: true
+    include-in-header:
+      - text: |
+          <meta name="author" content="Mário Cezar dos Santos Jr.">
+          <meta property="og:type" content="book">
+          <meta property="og:locale" content="pt_BR">
+
+  pdf:
+    documentclass: scrbook
+    classoption:
+      - paper=6in:9in    # Formato KDP padrão
+      - pagesize=pdftex
+      - DIV=12
+      - BCOR=10mm
+      - twoside
+      - openright
+      - numbers=noenddot
+    papersize: a5         # Sobrescrito por classoption acima se necessario
+    pdf-engine: xelatex
+    cite-method: biblatex
+    biblatexoptions:
+      - backend=biber
+      - style=abnt
+      - language=brazil
+    geometry:
+      - inner=20mm
+      - outer=15mm
+      - top=20mm
+      - bottom=20mm
+      - heightrounded
+    fontsize: 10pt
+    mainfont: "Source Serif Pro"
+    sansfont: "Source Sans Pro"
+    monofont: "Source Code Pro"
+    linestretch: 1.15
+    indent: true
+    number-sections: true
+    number-depth: 3
+    toc: true
+    toc-depth: 2
+    lof: true
+    lot: true
+    colorlinks: true
+    linkcolor: "blue!50!black"
+    citecolor: "green!40!black"
+    urlcolor: "blue!50!black"
+    fig-cap-location: bottom
+    tbl-cap-location: top
+    fig-pos: "H"
+    include-in-header:
+      - styles/preamble.tex
+    keep-tex: true
+
+  epub:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    fig-cap-location: bottom
+    epub-cover-image: "figuras/capa.png"
+    epub-metadata: styles/epub-metadata.xml
+    css: styles/epub.css
+
+execute:
+  freeze: auto
+  cache: true
+  warning: false
+  message: false
+  echo: true
+
+knitr:
+  opts_chunk:
+    fig.path: "figuras/gerada-"
+    fig.width: 6
+    fig.height: 4
+    dpi: 300
+    dev: ["png", "pdf"]
+    out.width: "85%"
+    fig.align: "center"
+
+jupyter: python3

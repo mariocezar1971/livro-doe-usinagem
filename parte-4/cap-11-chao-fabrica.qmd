@@ -1,0 +1,48 @@
+---
+title: "Do laboratório ao chão de fábrica"
+subtitle: "Restrições industriais e checklist de aplicação"
+author: "Mário Cezar dos Santos Jr."
+abstract: |
+  Adapta a metodologia DOE para o ambiente industrial real, onde existem restrições de custo, tempo de máquina, ruído experimental e segurança que limitam o experimentador acadêmico.
+---
+
+# Do laboratório ao chão de fábrica {#sec-cap11}
+
+::: {.callout-note}
+## Status do capítulo
+**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 6 do roadmap.
+:::
+
+## Da bancada ao chão de fábrica
+
+*Conteúdo em desenvolvimento.*
+
+## Restrições típicas industriais
+
+*Conteúdo em desenvolvimento.*
+
+## Checklist de projeto experimental industrial
+
+*Conteúdo em desenvolvimento.*
+
+## Erros frequentes e como evitar
+
+*Conteúdo em desenvolvimento.*
+
+## Casos curtos de aplicação
+
+*Conteúdo em desenvolvimento.*
+
+## Para saber mais
+
+::: {.callout-tip}
+## Aprofundamento
+Referências complementares e leituras recomendadas para este capítulo serão adicionadas no decorrer da redação.
+:::
+
+## Exercícios propostos {.unnumbered}
+
+::: {.callout-important}
+## Em desenvolvimento
+Exercícios serão adicionados durante a Fase 6 do roadmap.
+:::

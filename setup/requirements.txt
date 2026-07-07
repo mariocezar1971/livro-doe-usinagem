@@ -1,0 +1,44 @@
+# Pacotes Python necessários para o livro DOE em Usinagem
+# Instalar via: pip install -r requirements.txt
+#
+# Estes pacotes são usados principalmente nos capítulos:
+# - Cap 6 (Otimização multiresposta) — pymoo, deap
+# - Cap 10 (Otimização global) — pymoo
+# - Análises complementares — pandas, numpy, scipy, scikit-learn
+# - Apêndice B (Códigos)
+
+# Núcleo científico
+numpy>=1.26.0
+scipy>=1.11.0
+pandas>=2.1.0
+matplotlib>=3.8.0
+seaborn>=0.13.0
+
+# Otimização multiresposta
+pymoo>=0.6.1            # NSGA-II, NSGA-III, MOEA/D
+deap>=1.4.1             # Algoritmos genéticos clássicos
+
+# Estatística e ML
+scikit-learn>=1.4.0
+statsmodels>=0.14.0
+
+# DOE em Python (complementar ao R)
+pyDOE3>=1.0.4           # Planejamentos fatoriais e PCC
+SALib>=1.4.7            # Análise de sensibilidade
+
+# Visualização interativa
+plotly>=5.18.0
+kaleido>=0.2.1          # Exportação estática de plotly
+
+# Notebooks/Quarto Jupyter integration
+jupyter>=1.0.0
+jupyterlab>=4.0.0
+ipykernel>=6.27.0
+nbformat>=5.9.0
+
+# Banco de dados (para o framework Funcoes_Regressao)
+sqlalchemy>=2.0.0
+
+# Utilitários
+tqdm>=4.66.0
+pyyaml>=6.0.0

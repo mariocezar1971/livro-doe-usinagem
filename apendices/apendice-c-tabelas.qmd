@@ -1,0 +1,28 @@
+---
+title: "Apêndice C — Tabelas estatísticas de referência"
+---
+
+# Apêndice C — Tabelas estatísticas de referência {#sec-apendice-c .unnumbered}
+
+::: {.callout-note}
+## Status
+**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 6 do roadmap.
+:::
+
+Tabelas estatísticas necessárias para o uso manual das técnicas apresentadas: distribuição t-Student, F-Snedecor, qui-quadrado, valores críticos para PCC.
+
+## Distribuição t-Student
+
+*Conteúdo em desenvolvimento.*
+
+## Distribuição F-Snedecor
+
+*Conteúdo em desenvolvimento.*
+
+## Distribuição qui-quadrado
+
+*Conteúdo em desenvolvimento.*
+
+## Coeficientes ortogonais para PCC
+
+*Conteúdo em desenvolvimento.*

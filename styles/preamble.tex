@@ -1,0 +1,94 @@
+% Preamble LaTeX customizado para versão PDF do livro
+% Configura formatação avançada que não cabe no _quarto.yml
+
+% Símbolos matemáticos extras
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Unidades físicas (SI)
+\usepackage{siunitx}
+\sisetup{
+  output-decimal-marker={,},
+  group-separator={\,},
+  group-minimum-digits=4,
+  per-mode=symbol
+}
+
+% Símbolos químicos
+\usepackage[version=4]{mhchem}
+
+% Figuras e tabelas avançadas
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{array}
+\usepackage{tabularx}
+
+% Cores customizadas
+\usepackage{xcolor}
+\definecolor{azulivro}{HTML}{003366}
+\definecolor{azullink}{HTML}{0066cc}
+\definecolor{verdesuc}{HTML}{009933}
+\definecolor{laranjaalert}{HTML}{cc6600}
+
+% Caixas de callout no PDF (similares ao HTML)
+\usepackage[most]{tcolorbox}
+
+\newtcolorbox{boxnota}{
+  enhanced,
+  colback=blue!5,
+  colframe=azulivro,
+  fonttitle=\bfseries,
+  title=Nota,
+  arc=2mm,
+  boxrule=0.5pt
+}
+
+\newtcolorbox{boxdica}{
+  enhanced,
+  colback=green!5,
+  colframe=verdesuc,
+  fonttitle=\bfseries,
+  title=Na prática,
+  arc=2mm,
+  boxrule=0.5pt
+}
+
+\newtcolorbox{boxaviso}{
+  enhanced,
+  colback=orange!5,
+  colframe=laranjaalert,
+  fonttitle=\bfseries,
+  title=Erro comum,
+  arc=2mm,
+  boxrule=0.5pt
+}
+
+% Cabeçalhos e rodapés profissionais
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\nouppercase\leftmark}
+\fancyhead[LO]{\nouppercase\rightmark}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Espaçamento de parágrafos
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{0.3em plus 0.1em minus 0.05em}
+
+% Espaçamento de listas
+\usepackage{enumitem}
+\setlist{itemsep=2pt, topsep=4pt}
+
+% Hyphenação em PT-BR (escrita)
+\usepackage[brazilian]{babel}
+
+% Microtypografia
+\usepackage{microtype}
+
+% Permite quebra em URLs longas
+\usepackage{xurl}

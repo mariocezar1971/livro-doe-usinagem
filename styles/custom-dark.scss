@@ -1,0 +1,28 @@
+/*-- scss:defaults --*/
+
+// Cores principais (versão escura)
+$primary: #66ccff;
+$secondary: #99ddff;
+$success: #66cc99;
+$info: #99ddff;
+$warning: #ffaa66;
+$danger: #ff6699;
+
+// Tipografia (mesma da versão clara)
+$font-family-sans-serif: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+$font-family-serif: "Source Serif Pro", Georgia, "Times New Roman", serif;
+$font-family-monospace: "Source Code Pro", Menlo, Consolas, monospace;
+
+$body-font-family: $font-family-serif;
+$body-font-size: 17px;
+$body-line-height: 1.7;
+
+$headings-font-family: $font-family-sans-serif;
+$headings-font-weight: 600;
+
+/*-- scss:rules --*/
+
+.book-title {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}

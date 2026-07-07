@@ -1,0 +1,107 @@
+name: Publicar livro no GitHub Pages
+
+on:
+  workflow_dispatch:    # Permite disparar manualmente em Actions tab
+  push:
+    branches: [main]    # Dispara em push para main
+  pull_request:
+    branches: [main]    # Renderiza em PRs (sem deploy) para validar mudancas
+
+# Permissoes necessarias para deploy via GitHub Actions
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Garantir que apenas um deploy roda por vez
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build (renderizar livro)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositorio
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0    # Para que pandoc/quarto vejam todo o historico
+
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: "1.8.25"   # Mesma versao do ambiente local
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "4.5"
+          use-public-rspm: true
+
+      - name: Setup Pandoc (extra, garante versao)
+        uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Cache de pacotes R
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/R/renv
+          key: ${{ runner.os }}-r-${{ hashFiles('setup/setup-r-env.R') }}
+          restore-keys: |
+            ${{ runner.os }}-r-
+
+      - name: Instalar pacotes R essenciais
+        run: |
+          install.packages(c("knitr", "rmarkdown", "downlit", "xml2"),
+                           repos = "https://cran.r-project.org")
+        shell: Rscript {0}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Instalar pacotes Python essenciais
+        run: |
+          python -m pip install --upgrade pip
+          pip install jupyter pyyaml nbformat ipykernel
+
+      - name: Renderizar livro (HTML)
+        run: |
+          quarto render --to html
+        env:
+          QUARTO_PRINT_STACK: true
+
+      - name: Verificar output
+        run: |
+          if [ ! -f _book/index.html ]; then
+            echo "ERRO: _book/index.html nao foi gerado"
+            exit 1
+          fi
+          echo "Arquivos gerados:"
+          find _book -type f -name "*.html" | head -20
+          echo "Total HTML: $(find _book -name '*.html' | wc -l)"
+
+      - name: Upload artefato para Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_book
+
+  deploy:
+    name: Deploy para GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # So faz deploy em push para main (nao em PRs)
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

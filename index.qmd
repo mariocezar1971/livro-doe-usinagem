@@ -1,0 +1,80 @@
+---
+title: "Prefácio"
+---
+
+# Prefácio {.unnumbered}
+
+::: {.callout-note}
+## Status do manuscrito
+Este livro está em desenvolvimento. Acompanhe o progresso em [doeusinagem.com.br](https://doeusinagem.com.br) ou [cadastre seu e-mail](https://doeusinagem.com.br/em-breve) para receber o capítulo de amostra quando disponível.
+:::
+
+## Por que este livro existe
+
+A maioria dos textos sobre planejamento de experimentos (DOE) em português ou é uma tradução de obras genéricas, em que os exemplos têm pouca aderência à manufatura brasileira, ou é restrita ao formalismo estatístico, deixando o leitor com a tarefa de descobrir sozinho como aplicar a técnica em um problema industrial real.
+
+Este livro nasce de uma tese de doutorado defendida na Faculdade de Engenharia Mecânica da Universidade Federal de Uberlândia em 2012, sob orientação dos professores Álisson Rocha Machado e Marcos Antônio de Souza Barroso. Após mais de uma década aplicando a metodologia descrita aqui em sala de aula e em colaborações industriais, decidi consolidar o conhecimento em uma obra que une rigor metodológico e estudo de caso completo.
+
+## A quem se destina
+
+O leitor que mais se beneficia deste livro é o aluno de pós-graduação em Engenharia Mecânica, Engenharia de Produção ou Engenharia de Materiais que precisa estruturar um experimento industrial, analisar os resultados estatisticamente e otimizar múltiplas respostas conflitantes. Em segundo lugar, o engenheiro de processo, qualidade ou P&D em indústrias automotiva, aeronáutica, naval e de bens de capital que enfrenta problemas reais de variabilidade e busca uma abordagem sistemática para resolvê-los.
+
+Conhecimento prévio assumido: graduação em engenharia ou matemática aplicada, familiaridade com estatística descritiva (média, variância, distribuição normal) e acesso a software estatístico — embora todos os exemplos sejam apresentados em R e Python de código aberto.
+
+## Como ler este livro
+
+A obra está organizada em quatro partes:
+
+**Parte I — Fundamentos** estabelece o porquê do DOE, a metalurgia das ligas de alumínio que serão usadas no estudo de caso, e os fundamentos do torneamento por arrancamento de cavaco. Pode ser pulada por leitores familiarizados com esses temas, retomada conforme necessário via índice remissivo.
+
+**Parte II — Metodologia DOE** é o núcleo didático. Os Capítulos 4 (Fatorial $2^k$), 5 (PCC e RSM) e 6 (Otimização multiresposta) apresentam a teoria com exemplos resolvidos e exercícios. Esta parte é independente do estudo de caso e pode ser lida isoladamente como um curso de DOE.
+
+**Parte III — Estudo de caso** aplica integralmente a metodologia ao torneamento de seis ligas de alumínio. É a parte mais rica em dados experimentais, gráficos e interpretação industrial.
+
+**Parte IV — Aplicação** discute a adaptação da metodologia para ambientes industriais reais, com restrições de custo, tempo e disponibilidade de máquina.
+
+Os **apêndices** contêm a instrumentação detalhada, o código-fonte completo em R e Python, tabelas estatísticas de referência e os dados experimentais brutos liberados como recurso aberto sob licença CC BY 4.0.
+
+## Convenções
+
+Ao longo do livro, você encontrará caixas de destaque com finalidades específicas:
+
+::: {.callout-tip}
+## Na prática
+Sugestões pragmáticas e atalhos derivados de experiência de aplicação industrial.
+:::
+
+::: {.callout-warning}
+## Erro comum
+Armadilhas frequentes em projetos de DOE, com como evitá-las.
+:::
+
+::: {.callout-important}
+## Decisão de projeto
+Pontos em que o leitor precisa escolher conscientemente entre alternativas.
+:::
+
+::: {.callout-note}
+## Aprofundamento
+Conteúdo opcional para quem quer ir além do mínimo necessário.
+:::
+
+## Códigos e dados
+
+Todos os códigos R e Python apresentados estão disponíveis em [github.com/mariocezar1971/livro-doe-usinagem-codigos](https://github.com/mariocezar1971/livro-doe-usinagem-codigos), assim como os dados experimentais consolidados em formato CSV e SQLite.
+
+## Agradecimentos
+
+À minha esposa, pelo apoio durante a tese original e durante a redação desta obra.
+
+Aos Profs. Álisson Rocha Machado e Marcos Antônio de Souza Barroso, orientadores da tese que deu origem a este livro.
+
+Ao Instituto Federal do Espírito Santo (IFES), Campus Vila Velha, pelo ambiente de docência que permitiu amadurecer a abordagem didática aqui apresentada.
+
+Aos alunos do curso IEMEC8 (Planejamento de Experimentos), cujas dúvidas e contribuições moldaram a sequência didática dos Capítulos 4, 5 e 6.
+
+\
+
+Mário Cezar dos Santos Jr.
+
+Vila Velha, ES — `r format(Sys.Date(), '%B de %Y')`

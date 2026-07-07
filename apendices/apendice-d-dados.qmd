@@ -1,0 +1,32 @@
+---
+title: "Apêndice D — Dados experimentais consolidados"
+---
+
+# Apêndice D — Dados experimentais consolidados {#sec-apendice-d .unnumbered}
+
+::: {.callout-note}
+## Status
+**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 6 do roadmap.
+:::
+
+Dicionário de dados e descrição dos arquivos CSV que acompanham o livro como recurso aberto. Disponíveis em [github.com/mariocezar1971/livro-doe-usinagem-codigos/data](https://github.com/mariocezar1971/livro-doe-usinagem-codigos/tree/main/data).
+
+## Dicionário de dados
+
+*Conteúdo em desenvolvimento.*
+
+## Arquivo: ligas_caracterizacao.csv
+
+*Conteúdo em desenvolvimento.*
+
+## Arquivo: ensaios_2k.csv
+
+*Conteúdo em desenvolvimento.*
+
+## Arquivo: ensaios_pcc.csv
+
+*Conteúdo em desenvolvimento.*
+
+## Como citar estes dados
+
+*Conteúdo em desenvolvimento.*

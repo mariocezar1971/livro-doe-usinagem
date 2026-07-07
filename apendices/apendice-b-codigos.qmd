@@ -1,0 +1,36 @@
+---
+title: "Apêndice B — Códigos R e Python"
+---
+
+# Apêndice B — Códigos R e Python {#sec-apendice-b .unnumbered}
+
+::: {.callout-note}
+## Status
+**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 6 do roadmap.
+:::
+
+Códigos-fonte completos das análises apresentadas no livro, em R e Python, com comentários linha-a-linha. Disponíveis também no repositório [github.com/mariocezar1971/livro-doe-usinagem-codigos](https://github.com/mariocezar1971/livro-doe-usinagem-codigos).
+
+## Setup do ambiente R
+
+*Conteúdo em desenvolvimento.*
+
+## Setup do ambiente Python
+
+*Conteúdo em desenvolvimento.*
+
+## Códigos do Capítulo 4 (Fatorial)
+
+*Conteúdo em desenvolvimento.*
+
+## Códigos do Capítulo 5 (PCC e RSM)
+
+*Conteúdo em desenvolvimento.*
+
+## Códigos do Capítulo 6 (Otimização)
+
+*Conteúdo em desenvolvimento.*
+
+## Códigos do Estudo de Caso
+
+*Conteúdo em desenvolvimento.*

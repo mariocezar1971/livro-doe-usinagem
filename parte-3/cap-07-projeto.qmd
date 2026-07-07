@@ -1,0 +1,52 @@
+---
+title: "Projeto experimental do estudo de caso"
+subtitle: "Ligas, bancada e matriz de ensaios"
+author: "Mário Cezar dos Santos Jr."
+abstract: |
+  Apresenta o problema industrial estudado, a caracterização das seis ligas de alumínio investigadas, a configuração da bancada experimental e o projeto das matrizes $2^k$ e PCC.
+---
+
+# Projeto experimental do estudo de caso {#sec-cap7}
+
+::: {.callout-note}
+## Status do capítulo
+**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 5 do roadmap.
+:::
+
+## Definição do problema
+
+*Conteúdo em desenvolvimento.*
+
+## Caracterização das seis ligas
+
+*Conteúdo em desenvolvimento.*
+
+## Bancada experimental e instrumentação
+
+*Conteúdo em desenvolvimento.*
+
+## Matriz $2^k$ I e $2^k$ II
+
+*Conteúdo em desenvolvimento.*
+
+## Planejamento Composto Central
+
+*Conteúdo em desenvolvimento.*
+
+## Decisões de projeto
+
+*Conteúdo em desenvolvimento.*
+
+## Para saber mais
+
+::: {.callout-tip}
+## Aprofundamento
+Referências complementares e leituras recomendadas para este capítulo serão adicionadas no decorrer da redação.
+:::
+
+## Exercícios propostos {.unnumbered}
+
+::: {.callout-important}
+## Em desenvolvimento
+Exercícios serão adicionados durante a Fase 5 do roadmap.
+:::

@@ -1,0 +1,52 @@
+---
+title: "Metalurgia aplicada das ligas de alumínio"
+subtitle: "Propriedades, tratamentos e aplicações industriais"
+author: "Mário Cezar dos Santos Jr."
+abstract: |
+  Síntese didática da metalurgia das ligas de alumínio trabalháveis das séries 1xxx, 6xxx e 7xxx, com foco nas propriedades que afetam a usinabilidade.
+---
+
+# Metalurgia aplicada das ligas de alumínio {#sec-cap2}
+
+::: {.callout-note}
+## Status do capítulo
+**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 3 do roadmap.
+:::
+
+## Introdução
+
+*Conteúdo em desenvolvimento.*
+
+## Classificação e nomenclatura
+
+*Conteúdo em desenvolvimento.*
+
+## Séries 1xxx, 6xxx e 7xxx
+
+*Conteúdo em desenvolvimento.*
+
+## Mecanismos de endurecimento
+
+*Conteúdo em desenvolvimento.*
+
+## Tratamentos térmicos e mecânicos
+
+*Conteúdo em desenvolvimento.*
+
+## Propriedades mecânicas relevantes para a usinagem
+
+*Conteúdo em desenvolvimento.*
+
+## Para saber mais
+
+::: {.callout-tip}
+## Aprofundamento
+Referências complementares e leituras recomendadas para este capítulo serão adicionadas no decorrer da redação.
+:::
+
+## Exercícios propostos {.unnumbered}
+
+::: {.callout-important}
+## Em desenvolvimento
+Exercícios serão adicionados durante a Fase 3 do roadmap.
+:::

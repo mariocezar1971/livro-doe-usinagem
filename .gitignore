@@ -1,0 +1,58 @@
+# Output do Quarto
+/_book/
+/.quarto/
+/_freeze/
+/_site/
+
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.bbl
+*.blg
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Quarto cache
+.quarto_cache/
+
+# Imagens temporárias (manter apenas em figuras/ as definitivas)
+*.tmp.png
+*.tmp.pdf
+
+# Arquivos pessoais não versionados
+NOTAS_PESSOAIS.md
+RASCUNHO_*.md
+
+**/*.quarto_ipynb

@@ -1,0 +1,36 @@
+/*-- scss:defaults --*/
+
+// Cores principais
+$primary: #003366;
+$secondary: #006699;
+$success: #009933;
+$info: #0099cc;
+$warning: #cc6600;
+$danger: #cc0066;
+
+// Tipografia
+$font-family-sans-serif: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+$font-family-serif: "Source Serif Pro", Georgia, "Times New Roman", serif;
+$font-family-monospace: "Source Code Pro", Menlo, Consolas, monospace;
+
+$body-font-family: $font-family-serif;
+$body-font-size: 17px;
+$body-line-height: 1.7;
+
+$headings-font-family: $font-family-sans-serif;
+$headings-font-weight: 600;
+
+// Links
+$link-color: $primary;
+$link-hover-color: $secondary;
+
+/*-- scss:rules --*/
+
+.book-title {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.sidebar-title {
+  color: $primary !important;
+}

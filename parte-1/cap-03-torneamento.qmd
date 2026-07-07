@@ -1,0 +1,52 @@
+---
+title: "Fundamentos de torneamento"
+subtitle: "Geometria, cavaco e fenômenos da interface"
+author: "Mário Cezar dos Santos Jr."
+abstract: |
+  Fundamentos de torneamento por arrancamento de cavaco, com foco nas variáveis controláveis e nas respostas mensuráveis que serão objeto de estudo nos capítulos seguintes.
+---
+
+# Fundamentos de torneamento {#sec-cap3}
+
+::: {.callout-note}
+## Status do capítulo
+**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 3 do roadmap.
+:::
+
+## Introdução
+
+*Conteúdo em desenvolvimento.*
+
+## Geometria das ferramentas monocortantes
+
+*Conteúdo em desenvolvimento.*
+
+## Formação do cavaco e Círculo de Merchant
+
+*Conteúdo em desenvolvimento.*
+
+## Tipos e formas de cavaco
+
+*Conteúdo em desenvolvimento.*
+
+## Fenômenos da interface cavaco-ferramenta
+
+*Conteúdo em desenvolvimento.*
+
+## Variáveis controláveis e respostas mensuráveis
+
+*Conteúdo em desenvolvimento.*
+
+## Para saber mais
+
+::: {.callout-tip}
+## Aprofundamento
+Referências complementares e leituras recomendadas para este capítulo serão adicionadas no decorrer da redação.
+:::
+
+## Exercícios propostos {.unnumbered}
+
+::: {.callout-important}
+## Em desenvolvimento
+Exercícios serão adicionados durante a Fase 3 do roadmap.
+:::

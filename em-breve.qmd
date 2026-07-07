@@ -1,0 +1,38 @@
+---
+title: "Em breve"
+---
+
+# Livro em desenvolvimento {.unnumbered}
+
+::: {.email-capture}
+
+## 📘 Cadastre seu e-mail e receba o capítulo de amostra
+
+O livro **"Planejamento de Experimentos em Usinagem"** está em desenvolvimento ativo. Quando o primeiro capítulo de amostra estiver pronto, você será o primeiro a receber.
+
+[**Receber capítulo de amostra →**](mailto:mariocezarsj@gmail.com?subject=Quero%20receber%20o%20cap%C3%ADtulo%20de%20amostra)
+
+*Substituir este link pelo formulário Brevo quando integrado.*
+
+:::
+
+## O que você vai encontrar no livro
+
+- Planejamento fatorial $2^k$ aplicado a problemas industriais reais
+- Planejamento Composto Central (PCC) e superfícies de resposta
+- Otimização multiresposta por algoritmo genético e NSGA-II
+- Estudo de caso completo: torneamento de 6 ligas de alumínio
+- Códigos R e Python reproduzíveis
+- Dados experimentais liberados como recurso aberto
+
+## Cronograma previsto
+
+| Etapa | Previsão |
+|-------|----------|
+| Capítulo de amostra | Q4 2026 |
+| Pré-venda PDF | Q3 2027 |
+| Lançamento oficial | Q4 2027 |
+
+## Sobre o autor
+
+**Mário Cezar dos Santos Jr.** é professor do Instituto Federal do Espírito Santo (IFES), Campus Vila Velha, com doutorado em Engenharia Mecânica pela UFU (2012). Pesquisa usinagem de ligas de alumínio e leciona Planejamento de Experimentos no curso IEMEC8.

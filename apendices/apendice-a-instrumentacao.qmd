@@ -1,0 +1,28 @@
+---
+title: "Apêndice A — Instrumentação detalhada"
+---
+
+# Apêndice A — Instrumentação detalhada {#sec-apendice-a .unnumbered}
+
+::: {.callout-note}
+## Status
+**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 6 do roadmap.
+:::
+
+Detalhamento dos dispositivos desenvolvidos: condicionadores CSCi/CSTi, ferramenta e suporte para temperatura de corte, dispositivo de três escovas, processos de calibração.
+
+## Condicionadores de sinais
+
+*Conteúdo em desenvolvimento.*
+
+## Ferramenta para temperatura
+
+*Conteúdo em desenvolvimento.*
+
+## Dispositivo três escovas
+
+*Conteúdo em desenvolvimento.*
+
+## Calibração de termopares ferramenta-cavaco
+
+*Conteúdo em desenvolvimento.*

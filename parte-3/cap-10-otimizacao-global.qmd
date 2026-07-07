@@ -1,0 +1,56 @@
+---
+title: "Modelos globais e otimização multiresposta"
+subtitle: "Propriedades mecânicas como fatores e ponto ótimo simultâneo"
+author: "Mário Cezar dos Santos Jr."
+abstract: |
+  Regressão global incorporando as propriedades mecânicas das ligas como fatores, validação dos modelos preditivos e otimização multiresposta para identificação do ponto ótimo simultâneo de todas as respostas.
+---
+
+# Modelos globais e otimização multiresposta {#sec-cap10}
+
+::: {.callout-note}
+## Status do capítulo
+**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 5 do roadmap.
+:::
+
+## Regressão global I
+
+*Conteúdo em desenvolvimento.*
+
+## Validação dos modelos preditivos
+
+*Conteúdo em desenvolvimento.*
+
+## Otimização por algoritmo genético
+
+*Conteúdo em desenvolvimento.*
+
+## Ponto ótimo identificado
+
+*Conteúdo em desenvolvimento.*
+
+## Análise de sensibilidade
+
+*Conteúdo em desenvolvimento.*
+
+## Regressão global II (simplificada)
+
+*Conteúdo em desenvolvimento.*
+
+## Recomendações operacionais por liga
+
+*Conteúdo em desenvolvimento.*
+
+## Para saber mais
+
+::: {.callout-tip}
+## Aprofundamento
+Referências complementares e leituras recomendadas para este capítulo serão adicionadas no decorrer da redação.
+:::
+
+## Exercícios propostos {.unnumbered}
+
+::: {.callout-important}
+## Em desenvolvimento
+Exercícios serão adicionados durante a Fase 5 do roadmap.
+:::

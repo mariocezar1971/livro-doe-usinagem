@@ -1,0 +1,52 @@
+---
+title: "Análise fatorial $2^k$ das ligas de alumínio"
+subtitle: "Efeitos principais, interações e adequação dos modelos"
+author: "Mário Cezar dos Santos Jr."
+abstract: |
+  Aplicação completa do planejamento fatorial $2^k$ ao torneamento das ligas. Apresenta resultados consolidados, efeitos principais por resposta, interações contra-intuitivas e comparação de sistemas de lubri-refrigeração.
+---
+
+# Análise fatorial $2^k$ das ligas de alumínio {#sec-cap8}
+
+::: {.callout-note}
+## Status do capítulo
+**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 5 do roadmap.
+:::
+
+## Resultados consolidados
+
+*Conteúdo em desenvolvimento.*
+
+## Efeitos principais por resposta
+
+*Conteúdo em desenvolvimento.*
+
+## Interações que contrariam o senso comum
+
+*Conteúdo em desenvolvimento.*
+
+## Adequação dos modelos
+
+*Conteúdo em desenvolvimento.*
+
+## Comparação dos sistemas de lubri-refrigeração
+
+*Conteúdo em desenvolvimento.*
+
+## Interpretação industrial
+
+*Conteúdo em desenvolvimento.*
+
+## Para saber mais
+
+::: {.callout-tip}
+## Aprofundamento
+Referências complementares e leituras recomendadas para este capítulo serão adicionadas no decorrer da redação.
+:::
+
+## Exercícios propostos {.unnumbered}
+
+::: {.callout-important}
+## Em desenvolvimento
+Exercícios serão adicionados durante a Fase 5 do roadmap.
+:::

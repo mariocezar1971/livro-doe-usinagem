@@ -1,0 +1,33 @@
+body {
+  font-family: Georgia, serif;
+  line-height: 1.6;
+  padding: 1em;
+}
+
+h1, h2, h3 {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  color: #003366;
+}
+
+code, pre {
+  font-family: Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: #f5f5f5;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+
+pre {
+  padding: 0.8em;
+  overflow-x: auto;
+}
+
+figure {
+  margin: 1.5em 0;
+  text-align: center;
+}
+
+figcaption {
+  font-size: 0.9em;
+  color: #666;
+}
