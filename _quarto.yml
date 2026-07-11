@@ -1,4 +1,4 @@
-project:
+﻿project:
   type: book
   output-dir: _book
   resources:
@@ -9,11 +9,11 @@ project:
 
 book:
   title: "Planejamento de Experimentos em Usinagem"
-  subtitle: "Fatorial, RSM e otimização multiresposta aplicados às ligas de alumínio"
+  subtitle: "Fatorial, RSM e otimizaÃ§Ã£o multiresposta aplicados Ã s ligas de alumÃ­nio"
   author:
-    - name: "Mário Cezar dos Santos Jr."
+    - name: "MÃ¡rio Cezar dos Santos Jr."
       affiliations:
-        - name: "Instituto Federal do Espírito Santo (IFES)"
+        - name: "Instituto Federal do EspÃ­rito Santo (IFES)"
           city: "Vila Velha"
           country: "Brasil"
       email: "mariocezarsj@gmail.com"
@@ -22,11 +22,11 @@ book:
   date-format: "DD/MM/YYYY"
   language: pt-BR
   description: |
-    Livro técnico sobre Planejamento de Experimentos (DOE) aplicado à usinagem,
-    com estudo de caso completo em torneamento de ligas de alumínio.
+    Livro tÃ©cnico sobre Planejamento de Experimentos (DOE) aplicado Ã  usinagem,
+    com estudo de caso completo em torneamento de ligas de alumÃ­nio.
     Cobre planejamento fatorial 2^k, planejamento composto central (PCC),
-    superfícies de resposta (RSM) e otimização multiresposta por algoritmo genético.
-  keyword: "DOE, planejamento de experimentos, usinagem, ligas de alumínio, RSM, otimização multiresposta"
+    superfÃ­cies de resposta (RSM) e otimizaÃ§Ã£o multiresposta por algoritmo genÃ©tico.
+  keyword: "DOE, planejamento de experimentos, usinagem, ligas de alumÃ­nio, RSM, otimizaÃ§Ã£o multiresposta"
   cover-image: "figuras/capa.png"
   favicon: "figuras/favicon.png"
   site-url: "https://doeusinagem.com.br"
@@ -39,30 +39,30 @@ book:
     type: overlay
   page-footer:
     left: |
-      Mário Cezar dos Santos Jr. (2027).<br>
-      CC BY-NC-ND 4.0 (versão HTML).
+      MÃ¡rio Cezar dos Santos Jr. (2027).<br>
+      CC BY-NC-ND 4.0 (versÃ£o HTML).
     right: |
-      Construído com [Quarto](https://quarto.org/).
+      ConstruÃ­do com [Quarto](https://quarto.org/).
 
   chapters:
     - index.qmd
-    - part: "Parte I — Fundamentos"
+    - part: "Parte I â€” Fundamentos"
       chapters:
         - parte-1/cap-01-por-que-doe.qmd
         - parte-1/cap-02-metalurgia.qmd
         - parte-1/cap-03-torneamento.qmd
-    - part: "Parte II — Metodologia DOE"
+    - part: "Parte II â€” Metodologia DOE"
       chapters:
         - parte-2/cap-04-fatorial.qmd
         - parte-2/cap-05-pcc-rsm.qmd
         - parte-2/cap-06-otimizacao.qmd
-    - part: "Parte III — Estudo de caso"
+    - part: "Parte III â€” Estudo de caso"
       chapters:
         - parte-3/cap-07-projeto.qmd
         - parte-3/cap-08-fatorial-aluminio.qmd
         - parte-3/cap-09-rsm-pcc.qmd
         - parte-3/cap-10-otimizacao-global.qmd
-    - part: "Parte IV — Aplicação"
+    - part: "Parte IV â€” AplicaÃ§Ã£o"
       chapters:
         - parte-4/cap-11-chao-fabrica.qmd
         - parte-4/cap-12-sintese.qmd
@@ -105,14 +105,14 @@ format:
     crossrefs-hover: true
     include-in-header:
       - text: |
-          <meta name="author" content="Mário Cezar dos Santos Jr.">
+          <meta name="author" content="MÃ¡rio Cezar dos Santos Jr.">
           <meta property="og:type" content="book">
           <meta property="og:locale" content="pt_BR">
 
   pdf:
     documentclass: scrbook
     classoption:
-      - paper=6in:9in    # Formato KDP padrão
+      - paper=6in:9in    # Formato KDP padrÃ£o
       - pagesize=pdftex
       - DIV=12
       - BCOR=10mm
@@ -133,9 +133,9 @@ format:
       - bottom=20mm
       - heightrounded
     fontsize: 10pt
-    mainfont: "Source Serif Pro"
-    sansfont: "Source Sans Pro"
-    monofont: "Source Code Pro"
+    mainfont: Cambria
+    sansfont: Calibri
+    monofont: Consolas
     linestretch: 1.15
     indent: true
     number-sections: true
@@ -182,3 +182,5 @@ knitr:
     fig.align: "center"
 
 jupyter: python3
+
+
