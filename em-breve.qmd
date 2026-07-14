@@ -1,38 +1,122 @@
 ---
-title: "Em breve"
+title: "Em breve: Planejamento de Experimentos em Usinagem"
+subtitle: "Fatorial, RSM e otimização multiresposta aplicados às ligas de alumínio"
+format:
+  html:
+    css: styles/em-breve.css
+    toc: false
+    number-sections: false
+    sidebar: false
+    page-navigation: false
+    back-to-top-navigation: false
+    include-in-header:
+      text: |
+        <meta property="og:title" content="Planejamento de Experimentos em Usinagem — Livro">
+        <meta property="og:description" content="O primeiro livro brasileiro sobre DOE aplicado à usinagem de ligas de alumínio.">
+        <meta property="og:type" content="website">
+        <meta name="twitter:card" content="summary_large_image">
+sidebar: false
+lang: pt-BR
 ---
 
-# Livro em desenvolvimento {.unnumbered}
+::: {.hero}
+## O primeiro livro brasileiro sobre DOE aplicado à usinagem de ligas de alumínio
 
-::: {.email-capture}
+**Fatorial 2^k · Superfícies de Resposta · Otimização Multiresposta**
 
-## 📘 Cadastre seu e-mail e receba o capítulo de amostra
-
-O livro **"Planejamento de Experimentos em Usinagem"** está em desenvolvimento ativo. Quando o primeiro capítulo de amostra estiver pronto, você será o primeiro a receber.
-
-[**Receber capítulo de amostra →**](mailto:mariocezarsj@gmail.com?subject=Quero%20receber%20o%20cap%C3%ADtulo%20de%20amostra)
-
-*Substituir este link pelo formulário Brevo quando integrado.*
-
+Metodologia estatística rigorosa aplicada aos problemas reais de manufatura no chão de fábrica.
 :::
 
-## O que você vai encontrar no livro
+::: {.beneficios}
+### O que você vai aprender
 
-- Planejamento fatorial $2^k$ aplicado a problemas industriais reais
-- Planejamento Composto Central (PCC) e superfícies de resposta
-- Otimização multiresposta por algoritmo genético e NSGA-II
-- Estudo de caso completo: torneamento de 6 ligas de alumínio
-- Códigos R e Python reproduzíveis
-- Dados experimentais liberados como recurso aberto
+::: {.grid-beneficios}
+::: {.beneficio-card}
+**📐 Planejamento fatorial 2^k**
 
-## Cronograma previsto
+Do zero à análise de significância, com casos reais de torneamento de alumínio 6061, 6351-T6, 7075-T6 e outras ligas comerciais.
+:::
 
-| Etapa | Previsão |
-|-------|----------|
-| Capítulo de amostra | Q4 2026 |
-| Pré-venda PDF | Q3 2027 |
-| Lançamento oficial | Q4 2027 |
+::: {.beneficio-card}
+**📊 Superfícies de resposta (RSM)**
 
-## Sobre o autor
+Planejamento composto central, ajuste de modelos quadráticos, análise canônica e gráficos de contorno interpretáveis.
+:::
 
-**Mário Cezar dos Santos Jr.** é professor do Instituto Federal do Espírito Santo (IFES), Campus Vila Velha, com doutorado em Engenharia Mecânica pela UFU (2012). Pesquisa usinagem de ligas de alumínio e leciona Planejamento de Experimentos no curso IEMEC8.
+::: {.beneficio-card}
+**🎯 Otimização multiresposta**
+
+Combinação de rugosidade, força de corte e potência em uma única função de otimização via algoritmos genéticos.
+:::
+
+::: {.beneficio-card}
+**🏭 Aplicação industrial**
+
+Chão de fábrica: como implementar DOE em pequenas séries de produção sem parar a operação.
+:::
+:::
+:::
+
+::: {.captura}
+### Seja o primeiro a saber quando lançar
+
+**Cadastre-se agora e receba:**
+
+- ✅ **Capítulo 4 completo grátis** ("Planejamento Fatorial 2^k") assim que o livro sair
+- ✅ **Prioridade na pré-venda** com 40% de desconto vs. preço final
+- ✅ **Convite para o webinar de lançamento** com discussão de casos reais
+- ✅ **Newsletter mensal** sobre DOE aplicado à manufatura (sem spam, sem pegadinha)
+
+<!-- INICIO FORMULARIO BREVO -->
+::: {.brevo-form}
+<!-- COLE AQUI O CODIGO DO FORMULARIO BREVO -->
+
+<div style="padding: 2rem; background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; text-align: center;">
+<strong>⚠️ Formulário ainda não configurado</strong><br><br>
+Este é um placeholder. Consulte <code>setup/BREVO_SETUP_GUIA.md</code> para configurar o Brevo e inserir o código do formulário aqui.
+</div>
+
+:::
+<!-- FIM FORMULARIO BREVO -->
+
+*Seus dados estão protegidos pela LGPD. Cancele o cadastro a qualquer momento com um clique.*
+:::
+
+::: {.sobre-autor}
+### Sobre o autor
+
+**Prof. Dr. Mário Cezar dos Santos Junior**
+
+- Doutor em Engenharia Mecânica pela UFU (2012)
+- Professor no Instituto Federal do Espírito Santo (IFES) — Campus Vila Velha
+- Orientado pelos Profs. Álisson Rocha Machado e Marcos Antônio de Souza Barrozo
+- 12+ anos de pesquisa em usinagem de ligas de alumínio
+- Autor de artigos em periódicos internacionais (JMPT, IJAMT, JMP)
+
+*ORCID: 0009-0001-0411-8191*
+
+Este livro é fruto de mais de uma década de pesquisa aplicada, refinada por dezenas de projetos de iniciação científica e mestrado orientados na área de usinabilidade.
+:::
+
+::: {.previsao}
+### Previsão de lançamento
+
+**1º semestre de 2027**
+
+Formatos disponíveis:
+
+- 📘 **HTML gratuito** — versão web navegável (esta página inclusive)
+- 📄 **PDF** — R\$ 79 (R\$ 49 na pré-venda para inscritos aqui)
+- 📖 **Impresso** — R\$ 119 (via Amazon KDP)
+
+Para acompanhar o desenvolvimento em tempo real: [github.com/mariocezar1971/livro-doe-usinagem](https://github.com/mariocezar1971/livro-doe-usinagem)
+:::
+
+::: {.rodape-landing}
+
+---
+
+Dúvidas? Escreva para [mcezarjr@ifes.edu.br](mailto:mcezarjr@ifes.edu.br)
+
+*© 2027 Mário Cezar dos Santos Junior. Conteúdo licenciado sob CC BY-NC-ND 4.0.*
+:::

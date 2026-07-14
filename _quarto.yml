@@ -1,4 +1,4 @@
-﻿project:
+project:
   type: book
   output-dir: _book
   resources:
@@ -183,4 +183,6 @@ knitr:
 
 jupyter: python3
 
-
+resources:
+  - em-breve.qmd
+  - styles/em-breve.css
