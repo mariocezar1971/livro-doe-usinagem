@@ -29,7 +29,7 @@ book:
   keyword: "DOE, planejamento de experimentos, usinagem, ligas de alumínio, RSM, otimização multiresposta"
   cover-image: "figuras/capa.png"
   favicon: "figuras/favicon.png"
-  site-url: "https://doeusinagem.com.br"
+  site-url: "https://mariocezar1971.github.io/livro-doe-usinagem"
   repo-url: "https://github.com/mariocezar1971/livro-doe-usinagem"
   repo-branch: main
   repo-actions: [edit, issue]
@@ -105,6 +105,8 @@ format:
     citations-hover: true
     crossrefs-hover: true
     include-in-header:
+      - styles/schema-book.html
+      - styles/seo-meta.html
       - text: |
           <meta name="author" content="Mário Cezar dos Santos Jr.">
           <meta property="og:type" content="book">
