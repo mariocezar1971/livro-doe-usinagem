@@ -186,3 +186,6 @@ knitr:
     fig.align: "center"
 
 jupyter: python3
+
+resources:
+  - googleec59d4807eff3619.html
