@@ -80,6 +80,7 @@ csl: associacao-brasileira-de-normas-tecnicas.csl
 
 format:
   html:
+    sitemap: true
     theme:
       light: [cosmo, styles/custom-light.scss]
       dark: [darkly, styles/custom-dark.scss]
