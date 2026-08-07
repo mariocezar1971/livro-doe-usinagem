@@ -1,7 +1,7 @@
 # Fase 0.2 - Ambiente de Producao
 
 **Gerado automaticamente por executar-fase-0-2.ps1**
-Ultima atualizacao: 2026-08-07 10:56:42
+Ultima atualizacao: 2026-08-07 10:58:47
 
 **Diretorio do projeto:** `C:\Users\mceza\Dropbox\PROJETOS\APLICATIVOS\R_STUDIO\APLICATIVOS\LIVRO_DOE_USINAGEM`
 
@@ -15,7 +15,7 @@ Total de verificacoes: 6 de 6
 
 **Detalhes:** Versao 1.8.25 em C:\Program Files\Quarto\bin\quarto.exe
 
-**Verificada em:** 2026-08-07 10:56:19
+**Verificada em:** 2026-08-07 10:58:36
 
 ---
 
@@ -25,7 +25,7 @@ Total de verificacoes: 6 de 6
 
 **Detalhes:** TinyTeX presente e funcional
 
-**Verificada em:** 2026-08-07 10:56:40
+**Verificada em:** 2026-08-07 10:58:45
 
 ---
 
@@ -35,7 +35,7 @@ Total de verificacoes: 6 de 6
 
 **Detalhes:** Projeto em C:\Users\mceza\Dropbox\PROJETOS\APLICATIVOS\R_STUDIO\APLICATIVOS\LIVRO_DOE_USINAGEM
 
-**Verificada em:** 2026-08-07 10:56:40
+**Verificada em:** 2026-08-07 10:58:45
 
 ---
 
@@ -45,7 +45,7 @@ Total de verificacoes: 6 de 6
 
 **Detalhes:** html=OK, pdf=AUSENTE, epub=AUSENTE
 
-**Verificada em:** 2026-08-07 10:56:40
+**Verificada em:** 2026-08-07 10:58:45
 
 ---
 
@@ -55,7 +55,7 @@ Total de verificacoes: 6 de 6
 
 **Detalhes:** R: C:\Program Files\R\R-4.5.1\bin\Rscript.exe | Python: C:\Users\mceza\AppData\Local\Programs\Python\Python313\python.exe
 
-**Verificada em:** 2026-08-07 10:56:42
+**Verificada em:** 2026-08-07 10:58:47
 
 ---
 
@@ -65,7 +65,7 @@ Total de verificacoes: 6 de 6
 
 **Detalhes:** 10/10 pastas, 16/16 capitulos
 
-**Verificada em:** 2026-08-07 10:56:42
+**Verificada em:** 2026-08-07 10:58:47
 
 ---
 
