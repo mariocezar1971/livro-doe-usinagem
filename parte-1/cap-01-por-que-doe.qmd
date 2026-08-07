@@ -3,46 +3,231 @@ title: "Por que DOE em manufatura?"
 subtitle: "O custo de não planejar experimentos industriais"
 author: "Mário Cezar dos Santos Jr."
 abstract: |
-  Apresenta a motivação central do livro: por que abordagens 'um fator por vez' (OFAT) falham em revelar interações relevantes, e como o planejamento de experimentos sistematiza a investigação industrial.
+  Apresenta a motivação central do livro: por que abordagens 'um fator por vez' (OFAT) falham em revelar interações relevantes, e como o planejamento de experimentos sistematiza a investigação industrial. Discute os limites cognitivos e econômicos da experimentação ingênua e situa o DOE dentro de setores estratégicos da manufatura brasileira.
 ---
 
 # Por que DOE em manufatura? {#sec-cap1}
 
-::: {.callout-note}
-## Status do capítulo
-**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 3 do roadmap.
-:::
+## Uma pergunta que custa milhões {#sec-pergunta-milhoes}
 
-## Introdução
+Segunda-feira, sete horas da manhã. Um engenheiro de processo abre a porta do setor de usinagem e encontra três caixas plásticas empilhadas ao lado da linha de torneamento. Dentro, cerca de quatrocentas peças de alumínio 6351-T6 reprovadas na inspeção do fim de semana. Rugosidade fora da especificação, alguns cavacos longos que causaram parada não programada, e uma reclamação formal do cliente que chegou por *e-mail* no domingo à noite.
 
-*Conteúdo em desenvolvimento.*
+O engenheiro tem, na melhor das hipóteses, quatro horas para propor uma correção. A produção precisa retornar. Ele conhece bem os parâmetros do processo: velocidade de corte, avanço, profundidade de usinagem, geometria da ferramenta, tipo de fluido, presença ou ausência de refrigeração, dureza do lote de matéria-prima. São, ao todo, sete variáveis controláveis e pelo menos duas variáveis de ruído (temperatura ambiente, desgaste acumulado da ferramenta). Ele tem um único torno CNC disponível para testar hipóteses, uma bancada de metrologia que consome quinze minutos por peça e um supervisor de produção que quer resultado, não análise estatística.
 
-## O custo de não planejar
+O que ele faz?
 
-*Conteúdo em desenvolvimento.*
+Se sua formação seguiu o roteiro típico dos cursos de engenharia mecânica ou de produção, a resposta é quase automática: **muda uma variável por vez, mantém as outras fixas, observa o que acontece com a rugosidade**. Aumenta o avanço, mede. Reduz o avanço, mede. Aumenta a velocidade, mede. E assim por diante, até algo melhorar. É a chamada abordagem **um fator por vez** (do inglês *one factor at a time*, OFAT), ensinada em disciplinas de laboratório desde a graduação e reforçada por décadas de prática industrial.
 
-## Limitações da abordagem OFAT
+Essa abordagem tem uma virtude inegável: é intuitiva. Ela reproduz o que o cérebro humano faz naturalmente quando quer entender uma causa. Isole a variável, faça o teste, tire a conclusão. O problema é que, na maioria dos processos industriais reais, o que o cérebro faz naturalmente **está errado**.
 
-*Conteúdo em desenvolvimento.*
+Errado não no sentido moral, mas no sentido operacional: OFAT sistematicamente falha em identificar as combinações de parâmetros que produzem os melhores resultados, custa mais caro do que precisaria, e frequentemente conclui que uma variável é irrelevante quando ela é, na verdade, decisiva --- desde que combinada com outra variável específica. Este livro trata da abordagem alternativa, o **planejamento de experimentos** (do inglês *Design of Experiments*, DOE), que resolve esses três problemas ao mesmo tempo.
 
-## Casos industriais ilustrativos
+O objetivo deste primeiro capítulo é responder a uma pergunta simples: **por que vale a pena aprender DOE?** A resposta tem três partes. Primeiro, porque OFAT tem limites técnicos claros que serão demonstrados na seção seguinte. Segundo, porque o DOE já é a linguagem padrão da experimentação industrial nos setores de alta exigência --- aeroespacial, automotivo, farmacêutico --- e sua adoção está crescendo em setores que historicamente resistiam à formalização estatística, como o de bens de capital e o de auto peças. Terceiro, porque o custo de dominar a técnica é razoável (algumas semanas de estudo dirigido) diante do custo de continuar tomando decisões de processo baseadas em intuição.
 
-*Conteúdo em desenvolvimento.*
+## O jeito antigo: um fator por vez {#sec-jeito-antigo}
 
-## O que este livro entrega
+Voltemos ao problema do engenheiro. Suponha que ele decida investigar apenas três das sete variáveis: velocidade de corte ($v_c$), avanço ($f$) e profundidade de corte ($a_p$). Reduzir de sete para três variáveis já é uma simplificação drástica --- veremos adiante que essa é a primeira armadilha do OFAT --- mas comecemos com o caso mais simples.
 
-*Conteúdo em desenvolvimento.*
+O engenheiro define, para cada variável, dois níveis: um **baixo** e um **alto**, que representam extremos plausíveis para o processo. Por exemplo:
 
-## Para saber mais
+- $v_c$: 200 m/min (baixo) ou 400 m/min (alto)
+- $f$: 0{,}1 mm/rev (baixo) ou 0{,}3 mm/rev (alto)
+- $a_p$: 0{,}5 mm (baixo) ou 1{,}5 mm (alto)
+
+O ponto de partida é o processo atual: velocidade média, avanço médio, profundidade média. A resposta de interesse é a rugosidade média $R_a$ da superfície usinada, medida em micrômetros.
+
+Na estratégia OFAT, o engenheiro procede assim:
+
+1. **Fixa** $f$ e $a_p$ nos valores médios do processo atual e **varia** $v_c$ entre o nível baixo e o alto. Mede $R_a$ nas duas condições. Escolhe o nível que produziu menor rugosidade.
+2. **Fixa** $v_c$ no melhor nível encontrado no passo 1, **mantém** $a_p$ no valor médio e **varia** $f$ entre baixo e alto. Mede $R_a$. Escolhe o melhor nível de $f$.
+3. **Fixa** $v_c$ e $f$ nos melhores níveis encontrados nos passos 1 e 2, e **varia** $a_p$ entre baixo e alto. Mede $R_a$. Escolhe o melhor nível de $a_p$.
+
+Ao final, o engenheiro tem uma "receita ótima": a combinação de $v_c$, $f$ e $a_p$ que produziu o menor $R_a$ observado ao longo dos três passos. Ele fez seis experimentos no total (dois por passo) e obteve, aparentemente, uma resposta.
 
 ::: {.callout-tip}
-## Aprofundamento
-Referências complementares e leituras recomendadas para este capítulo serão adicionadas no decorrer da redação.
+## Na prática
+Muitos livros didáticos de manufatura ainda apresentam o OFAT como se fosse uma metodologia válida, chamando-o simplesmente de "análise de sensibilidade" ou "estudo paramétrico". A diferença é que uma análise de sensibilidade rigorosa varia cada fator em torno de um ponto de operação para estimar derivadas locais, enquanto o OFAT como estratégia de otimização assume que os fatores agem de forma independente. Essa segunda hipótese quase nunca se sustenta em processos de usinagem.
+:::
+
+O procedimento parece lógico. Ele é lógico, na verdade, sob uma única hipótese: **que os efeitos de $v_c$, $f$ e $a_p$ sobre $R_a$ sejam independentes**. Ou seja, que o melhor valor de $v_c$ seja o mesmo independentemente de qual $f$ ou $a_p$ estejam sendo usados. Se essa hipótese for verdadeira, o OFAT funciona. Se for falsa, o OFAT produz uma resposta que pode estar arbitrariamente longe do ótimo real.
+
+E, na esmagadora maioria dos processos de usinagem, essa hipótese é falsa.
+
+## Os três limites do OFAT {#sec-limites-ofat}
+
+### Limite 1: OFAT ignora interações
+
+Uma **interação** entre duas variáveis existe quando o efeito de uma delas depende do valor da outra. Em usinagem, interações são a regra, não a exceção. Alguns exemplos concretos:
+
+- O efeito da velocidade de corte sobre a rugosidade **depende** do avanço, porque em avanços altos a marca do avanço domina a topografia, enquanto em avanços baixos a rugosidade é governada por vibração da ferramenta, que responde à velocidade.
+- O efeito da profundidade de corte sobre a força de usinagem **depende** do avanço, porque a área de contato ferramenta-peça é o produto de ambos, e o comportamento dessa área na formação do cavaco não é linear.
+- O efeito do fluido de corte sobre o desgaste **depende** da velocidade de corte, porque em velocidades altas o mecanismo dominante de desgaste passa a ser difusão (favorecido pela temperatura), enquanto em velocidades baixas prevalece abrasão (pouco sensível à temperatura).
+
+Considere o caso da rugosidade em função de $v_c$ e $f$. Suponha, para ilustrar, que a relação real seja:
+
+$$
+R_a = 1{,}5 + 0{,}002 \cdot v_c + 8 \cdot f - 0{,}03 \cdot v_c \cdot f
+$$
+
+O último termo, $-0{,}03 \cdot v_c \cdot f$, é a interação. Ele diz que o efeito de $v_c$ sobre $R_a$ não é uma constante: depende de $f$. Se aplicarmos OFAT partindo de $f = 0{,}2$ mm/rev, o efeito de aumentar $v_c$ de 200 para 400 m/min é:
+
+$$
+\Delta R_a = (0{,}002 - 0{,}03 \cdot 0{,}2) \cdot 200 = -0{,}8 \; \mu\text{m}
+$$
+
+O engenheiro conclui: **aumentar $v_c$ melhora a rugosidade**. Ele fixa $v_c = 400$ e passa a variar $f$. Mas se ele tivesse começado por $f = 0{,}05$ mm/rev, o efeito de aumentar $v_c$ seria:
+
+$$
+\Delta R_a = (0{,}002 - 0{,}03 \cdot 0{,}05) \cdot 200 = +0{,}1 \; \mu\text{m}
+$$
+
+Agora aumentar $v_c$ **piora** a rugosidade. A conclusão do engenheiro depende inteiramente do ponto de partida arbitrário que ele escolheu para $f$. E ele não sabe disso, porque OFAT nunca testa combinações que revelariam a interação.
+
+::: {.callout-warning}
+## Erro comum
+"Vamos rodar OFAT primeiro para descobrir quais variáveis importam, depois fazemos um DOE só com as importantes." Essa estratégia parece prudente, mas é logicamente inconsistente. Se OFAT declara uma variável irrelevante --- o que ocorre com frequência quando o efeito principal é pequeno mas a interação é grande --- essa variável será excluída do DOE seguinte, que, portanto, nunca conseguirá detectar a interação. O erro se propaga.
+:::
+
+### Limite 2: OFAT custa mais caro
+
+Uma intuição comum é que OFAT deve ser mais barato que DOE, porque "faz menos experimentos". Esse raciocínio compara os experimentos errados. Para ser justo, é preciso comparar OFAT e DOE na sua capacidade de responder à mesma pergunta com o mesmo nível de confiança.
+
+Retomando o exemplo de três variáveis a dois níveis. Um planejamento fatorial completo $2^3$ testa **todas as combinações** possíveis:
+
+$$
+\text{Número de experimentos} = 2 \times 2 \times 2 = 8
+$$
+
+O OFAT, como descrito, precisou de 6 experimentos. Parece que OFAT venceu por 2 experimentos. Mas essa comparação é enganosa:
+
+- O fatorial $2^3$ estima **7 efeitos**: 3 principais ($v_c$, $f$, $a_p$), 3 interações duplas ($v_c \times f$, $v_c \times a_p$, $f \times a_p$) e 1 interação tripla ($v_c \times f \times a_p$). O OFAT estima apenas os 3 efeitos principais, e mal.
+- O fatorial permite estimar a variância experimental via replicações do ponto central. O OFAT trata cada experimento como se fosse determinístico. Quando o engenheiro observa uma diferença de 0{,}2 $\mu$m entre dois níveis, ele não sabe se essa diferença é real ou é ruído. No fatorial, ele sabe.
+- O fatorial fornece um **modelo** matemático da resposta, permitindo prever o comportamento em condições não testadas. O OFAT fornece apenas as respostas medidas, sem base para extrapolação.
+
+Se o processo real tem interações relevantes --- e ele quase sempre tem --- o OFAT converge para um ótimo local, não global. O engenheiro sai da sala achando que resolveu o problema, mas deixou desempenho em cima da mesa. Em produção industrial, "desempenho em cima da mesa" significa refugo evitável, ciclos mais longos que o necessário, ferramentas trocadas antes do momento ideal. Traduzido em reais por ano, o "barato" do OFAT costuma ser mais caro que a semana de treinamento em DOE.
+
+### Limite 3: OFAT confunde sinal e ruído
+
+O terceiro limite é estatístico. Todo processo industrial exibe variabilidade: mesmo mantendo todos os parâmetros nominalmente constantes, medições repetidas apresentam alguma dispersão. Isso é chamado de **variância residual** ou **erro experimental**.
+
+Quando o engenheiro observa que a rugosidade caiu de 1{,}8 para 1{,}5 $\mu$m ao mudar a velocidade de corte, ele precisa perguntar: essa diferença de 0{,}3 $\mu$m é **efeito real** da velocidade ou é **ruído de medição**? Sem replicação, essa pergunta é irrespondível.
+
+O OFAT tradicional não prevê replicações. Cada nível é testado uma vez, e a diferença observada é atribuída ao fator. O engenheiro tende a agir sobre diferenças que estão dentro do ruído, ajustando parâmetros que não melhoram nada, apenas produzem a ilusão de melhoria por regressão à média.
+
+O DOE, ao contrário, embute replicações desde o desenho. O planejamento fatorial $2^k$ com pontos centrais permite estimar a variância residual $\sigma^2$ e, a partir dela, calcular quais efeitos são estatisticamente significativos --- ou seja, quais diferenças observadas são grandes demais para serem explicadas por ruído. Sem essa análise, ajustes de processo viram folclore: "no torno da célula 2, avanço 0{,}25 sempre dá problema com liga 6351". Talvez seja verdade. Talvez seja coincidência de três medições ruidosas.
+
+## A promessa do DOE {#sec-promessa-doe}
+
+O planejamento de experimentos entrega, em um único procedimento, o que o OFAT deixa em aberto: **estimativas confiáveis dos efeitos principais, estimativas das interações, uma medida da variância experimental e um modelo matemático da resposta**. Tudo isso com um número de experimentos que, para número modesto de fatores, é competitivo com o OFAT.
+
+O quadro abaixo compara as duas abordagens no cenário do exemplo anterior (três variáveis, dois níveis):
+
+| Aspecto                        | OFAT              | Fatorial $2^3$        |
+|:-------------------------------|:------------------|:----------------------|
+| Número de experimentos         | 6                 | 8 (+ pontos centrais) |
+| Estima efeitos principais      | Sim, sem incerteza| Sim, com incerteza    |
+| Estima interações              | **Não**           | Sim, todas            |
+| Estima variância residual      | **Não**           | Sim                   |
+| Fornece modelo matemático      | **Não**           | Sim                   |
+| Detecta ótimo global           | Só se sem interações | Sim                |
+| Extrapola para condições novas | Não               | Sim (dentro da faixa) |
+
+À medida que o número de fatores cresce, a vantagem quantitativa do DOE se amplia. Considere sete fatores a dois níveis. O fatorial completo $2^7 = 128$ experimentos, o que é excessivo. Mas o DOE oferece **planejamentos fracionários**, como o $2^{7-3}_{IV}$, que estima os sete efeitos principais e as principais interações de dois fatores com apenas 16 experimentos. Fazer OFAT com sete variáveis exigiria pelo menos 14 experimentos e ainda não estimaria interação alguma.
+
+Este livro dedica os Capítulos 4, 5 e 6 (@sec-cap4, @sec-cap5, @sec-cap6) à mecânica do DOE: como escolher fatores e níveis, como executar planejamentos fatoriais completos e fracionários, como ajustar superfícies de resposta e como combinar múltiplas respostas conflitantes em uma otimização única. Os Capítulos 7 a 10 (@sec-cap7, @sec-cap8, @sec-cap9, @sec-cap10) aplicam a metodologia ao torneamento de seis ligas de alumínio comerciais, fechando o ciclo teoria-prática.
+
+## Onde o DOE mora na indústria brasileira {#sec-doe-industria-br}
+
+O DOE não é uma técnica exótica. Ele é o padrão de fato para experimentação industrial em vários setores estratégicos, e a manufatura brasileira participa dessa realidade em graus diferentes conforme o setor. Vale um panorama.
+
+### Setor aeroespacial
+
+O setor aeroespacial brasileiro, liderado pela Embraer e por sua cadeia de fornecedores no Vale do Paraíba, opera dentro de normas internacionais que exigem qualificação estatística de processos --- notadamente AS9100 (gestão da qualidade aeroespacial) e Nadcap (qualificação de processos especiais). Essas normas requerem estudos de capabilidade, análises de sistema de medição e caracterização de processos com base em métodos formais, dos quais DOE é peça central. O engenheiro de manufatura que trabalha em fornecedor aeroespacial de médio porte, hoje, ou aprende DOE por necessidade regulatória ou é substituído por quem já sabe.
+
+### Setor automotivo
+
+Nas montadoras e nos fornecedores de primeiro escalão da cadeia automotiva --- que inclui plantas no ABC paulista, no Paraná, em Minas Gerais e no Espírito Santo ---, a metodologia **Seis Sigma** é o veículo pelo qual o DOE chega ao chão de fábrica. Um projeto DMAIC (*Define, Measure, Analyze, Improve, Control*) na fase *Improve* frequentemente executa um planejamento fatorial fracionário para identificar os fatores dominantes de um problema de qualidade. Green Belts e Black Belts certificados na indústria automotiva aprendem DOE como pré-requisito.
+
+### Setor de auto peças
+
+O setor de auto peças, particularmente forte no interior de São Paulo, no norte do Paraná e na Grande Vitória, opera com margens estreitas e demanda flutuante. Nele, o DOE ainda é sub-utilizado --- não por resistência técnica, mas por falta de familiaridade. Este é justamente o público que este livro pretende alcançar: o engenheiro de processo que tem autonomia local para experimentar, orçamento limitado e resultados urgentes. DOE bem aplicado nesse contexto tem retorno rápido e visível.
+
+### Setor metalúrgico e de bens de capital
+
+Empresas do porte de Gerdau e Vale, em suas operações de laminação e de beneficiamento mineral, empregam DOE em suas áreas de pesquisa e desenvolvimento. Em bens de capital --- linha na qual entram grandes fabricantes de máquinas-ferramenta, incluindo a Romi, sediada em Santa Bárbara d'Oeste ---, o DOE é usado tanto no projeto de novos equipamentos quanto na caracterização de processos internos.
+
+### O caso do estudo que originou este livro
+
+Este livro nasce de uma tese de doutorado defendida em 2012 na Faculdade de Engenharia Mecânica da Universidade Federal de Uberlândia. O estudo aplicou planejamento fatorial completo, planejamento composto central e otimização multiresposta a seis ligas de alumínio da série 6xxx e 7xxx, com foco em torneamento a seco e com fluido em condições próximas às praticadas na indústria automotiva de auto peças. As decisões metodológicas tomadas ali foram, ao longo da década seguinte, refinadas em sala de aula com alunos de graduação e pós-graduação do IFES, e ajustadas pela experiência de aplicação em colaborações pontuais com indústrias do Espírito Santo.
+
+Nada do que este livro apresenta é original em termos de teoria: DOE é um corpo consolidado de conhecimento desde os anos 1950, refinado por décadas na comunidade estatística e industrial internacional. O que se propõe original é a **integração didática**: uma sequência única que parte da motivação (este capítulo), passa pela metalurgia e pela usinagem específicas do alumínio (Capítulos 2 e 3, @sec-cap2 e @sec-cap3), estabelece a metodologia (Capítulos 4 a 6), aplica ao caso real (Capítulos 7 a 10) e discute a implantação (Capítulos 11 e 12, @sec-cap11 e @sec-cap12).
+
+## O mapa deste livro {#sec-mapa-livro}
+
+Este livro está organizado em quatro partes e quatro apêndices. O caminho recomendado depende do que o leitor já sabe e do que ele busca.
+
+### Parte I --- Fundamentos (Capítulos 1 a 3)
+
+O leitor está aqui. Os Capítulos 2 (@sec-cap2) e 3 (@sec-cap3) apresentam, respectivamente, a metalurgia das ligas de alumínio trabalháveis e os fundamentos do torneamento por arrancamento de cavaco. Um leitor com formação em manufatura pode pular ou consultar por referência. Um leitor com formação em estatística e aplicação industrial em outro setor deveria ler ambos, pois o vocabulário técnico dos Capítulos 7 a 10 é construído em cima deles.
+
+### Parte II --- Metodologia DOE (Capítulos 4 a 6)
+
+Núcleo estatístico do livro. O Capítulo 4 (@sec-cap4) apresenta o planejamento fatorial $2^k$ completo e fracionário, com análise de significância. O Capítulo 5 (@sec-cap5) introduz o planejamento composto central (PCC) e o ajuste de superfícies de resposta (RSM). O Capítulo 6 (@sec-cap6) trata da otimização multiresposta, incluindo função desejabilidade e algoritmos genéticos. Essa parte é auto-suficiente e pode ser lida como um curso curto de DOE, independentemente do estudo de caso.
+
+### Parte III --- Estudo de caso (Capítulos 7 a 10)
+
+Aplicação integral da metodologia. O Capítulo 7 (@sec-cap7) descreve o projeto experimental: fatores escolhidos, respostas medidas, matriz de planejamento. O Capítulo 8 (@sec-cap8) executa a análise fatorial. O Capítulo 9 (@sec-cap9) executa o PCC e ajusta as superfícies. O Capítulo 10 (@sec-cap10) apresenta a otimização global, com múltiplas respostas conflitantes.
+
+### Parte IV --- Aplicação (Capítulos 11 e 12)
+
+Discussão pragmática. O Capítulo 11 (@sec-cap11) aborda o DOE no ambiente de chão de fábrica, com restrições reais de disponibilidade de máquina, tempo de setup, custo de matéria-prima e coleta de dados durante produção. O Capítulo 12 (@sec-cap12) sintetiza os aprendizados e discute tendências: MQL, criogenia, digitalização de processos.
+
+### Apêndices
+
+Recursos de referência. O Apêndice A cataloga a instrumentação usada no estudo de caso (dinamômetro, rugosímetro, câmera térmica). O Apêndice B contém o código-fonte completo em R e Python. O Apêndice C reúne tabelas estatísticas de uso frequente. O Apêndice D disponibiliza os dados experimentais brutos em formato CSV e SQLite, sob licença CC BY 4.0.
+
+### Como usar este livro
+
+Três perfis de leitor e três caminhos sugeridos:
+
+::: {.callout-important}
+## Decisão de projeto: qual caminho seguir?
+- **Aluno de pós-graduação com projeto de DOE em curso.** Ler Capítulos 1, 4, 5, 6 em sequência. Consultar Capítulos 2 e 3 conforme a aplicação. Usar os Capítulos 7 a 10 como estudo de caso resolvido para comparar com o próprio projeto.
+- **Engenheiro de processo com problema específico de usinagem.** Ler Capítulos 1 e 11 primeiro (motivação e restrições práticas). Depois, ir direto ao Capítulo 4 e voltar aos Capítulos 5 e 6 conforme a complexidade do problema. Os Capítulos 2, 3 e o estudo de caso servem como referência.
+- **Professor preparando disciplina de DOE.** Ler o livro inteiro em ordem, usando os exercícios propostos ao fim de cada capítulo como banco de questões. O estudo de caso oferece um exemplo integrado que pode ser distribuído ao longo do semestre.
+:::
+
+O livro assume familiaridade com estatística descritiva (média, variância, distribuição normal) e leitura confortável de fórmulas matemáticas em nível de graduação. Não assume conhecimento prévio de DOE nem de usinagem em profundidade --- apenas o essencial que a maioria dos engenheiros mecânicos e de produção adquire na graduação.
+
+Todo o software usado no livro é aberto e gratuito. O código de referência está em R, com equivalentes em Python disponíveis no repositório do livro. Nenhum exemplo depende de software proprietário.
+
+## Fecho {#sec-fecho-cap1}
+
+A cena do engenheiro na segunda-feira de manhã, com as caixas de refugo e o supervisor cobrando resultado, não é ficção. Ela se repete todo dia, em variantes específicas, no chão de fábrica brasileiro. A escolha técnica que ele faz naquela manhã --- OFAT ou DOE --- não é apenas metodológica. É uma escolha entre resolver o problema desta semana e resolver a classe de problemas de que este é apenas um exemplar.
+
+Este livro trata da segunda opção. O próximo capítulo (@sec-cap2) começa por onde qualquer decisão sobre usinagem de alumínio precisa começar: entender por que **alumínio 6061 não é a mesma coisa que alumínio 7075**, e por que essa diferença metalúrgica determina o que faz sentido experimentar.
+
+::: {.callout-tip}
+## Para saber mais
+- **Montgomery, D. C.** *Design and Analysis of Experiments*. 10ª ed. Wiley, 2020. Referência canônica em DOE. Consultar especialmente o Capítulo 1 para uma introdução alternativa à motivação estatística.
+- **Box, G. E. P.; Hunter, J. S.; Hunter, W. G.** *Statistics for Experimenters*. 2ª ed. Wiley, 2005. Uma introdução histórica e conceitual ao DOE, com forte ênfase em pensamento científico.
+- **Werkema, C.** *Análise de Regressão: Como Entender o Relacionamento entre as Variáveis de um Processo*. FCO, 2013. Uma das poucas referências em português com aplicação industrial explícita.
+- **Ribeiro, J. L. D.; Caten, C. S.** *Projeto de Experimentos*. UFRGS, 2011. Material didático em português com exercícios resolvidos, disponível em versão livre no repositório da UFRGS.
 :::
 
 ## Exercícios propostos {.unnumbered}
 
-::: {.callout-important}
-## Em desenvolvimento
-Exercícios serão adicionados durante a Fase 3 do roadmap.
+::: {.callout-note}
+## Objetivos dos exercícios
+Os exercícios abaixo têm três finalidades: (1) verificar a compreensão dos conceitos apresentados, (2) desenvolver a intuição para reconhecer situações em que OFAT falha, e (3) preparar o leitor para as questões técnicas dos Capítulos 4 a 6. Não é necessário fazer todos: escolha os que mais se aproximam da sua realidade.
 :::
+
+**Exercício 1.1** --- Identifique, em um processo de usinagem com o qual você tenha familiaridade, **três interações plausíveis entre parâmetros de processo**. Para cada uma, descreva em uma frase o mecanismo físico que justifica a interação.
+
+**Exercício 1.2** --- Um engenheiro observa que, ao aumentar a velocidade de corte de 250 para 350 m/min mantendo os demais parâmetros fixos, a rugosidade cai de 2{,}1 para 1{,}8 $\mu$m. Ele conclui que "velocidade alta é melhor". Liste **três razões pelas quais essa conclusão pode estar errada**, mesmo que a medição esteja correta.
+
+**Exercício 1.3** --- Para um processo com cinco fatores a dois níveis, calcule: (a) o número de experimentos necessário no fatorial $2^5$ completo, (b) o número de experimentos necessário para OFAT com um único ponto de referência, e (c) o número de efeitos que cada abordagem estima. Comente o resultado.
+
+**Exercício 1.4** --- Consulte a norma AS9100 (ou equivalente do seu setor) e identifique **um requisito específico** que efetivamente exige o uso de métodos estatísticos formais. Discuta se OFAT atenderia ou não a esse requisito.
+
+**Exercício 1.5** --- Descreva, em no máximo dez linhas, um problema real de usinagem que você gostaria de resolver com DOE ao longo da leitura deste livro. Retome essa descrição ao final do Capítulo 10 e avalie o quanto o livro te aproximou da solução.
