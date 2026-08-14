@@ -1,0 +1,43 @@
+{
+    "fase":  "0.1",
+    "titulo":  "Decisoes Editoriais Fundadoras",
+    "iniciada_em":  "2026-08-07 10:22:16",
+    "atualizada_em":  "2026-08-07 10:40:46",
+    "decisoes":  [
+                     {
+                         "id":  "2",
+                         "nome":  "Publico-alvo primario",
+                         "valor":  "Pos-graduacao + Engenheiros industriais (foco duplo)",
+                         "justificativa":  "",
+                         "decidida_em":  "2026-08-07 10:23:28"
+                     },
+                     {
+                         "id":  "3",
+                         "nome":  "Precos",
+                         "valor":  "PDF R$79 | Impresso R$119 | HTML R$0",
+                         "justificativa":  "Precos escolhidos considerando percepcao de valor + margens Kiwify/KDP",
+                         "decidida_em":  "2026-08-07 10:24:40"
+                     },
+                     {
+                         "id":  "4",
+                         "nome":  "Prefacio Prof. Alisson Machado",
+                         "valor":  "Decisao adiada para quando manuscrito estiver 80% pronto",
+                         "justificativa":  "",
+                         "decidida_em":  "2026-08-07 10:25:04"
+                     },
+                     {
+                         "id":  "1",
+                         "nome":  "Titulo e subtitulo",
+                         "valor":  "Planejamento de Experimentos em Usinagem - Fatorial, RSM e otimizacao multiresposta aplicados as ligas de aluminio",
+                         "justificativa":  "Titulo curto memoravel, subtitulo enumera metodos, escopo especifico em aluminio",
+                         "decidida_em":  "2026-08-07 10:38:31"
+                     },
+                     {
+                         "id":  "5",
+                         "nome":  "Nome do dominio",
+                         "valor":  "ensinodoelab.com.br (REGISTRADO)",
+                         "justificativa":  "",
+                         "decidida_em":  "2026-08-07 10:40:46"
+                     }
+                 ]
+}

@@ -1,0 +1,57 @@
+{
+    "fase":  "0.2",
+    "titulo":  "Setup Ambiente de Producao",
+    "iniciada_em":  "2026-08-07 10:55:57",
+    "atualizada_em":  "2026-08-07 11:02:14",
+    "project_path":  "C:\\Users\\mceza\\Dropbox\\PROJETOS\\APLICATIVOS\\R_STUDIO\\APLICATIVOS\\LIVRO_DOE_USINAGEM",
+    "verificacoes":  [
+                         {
+                             "id":  "1",
+                             "nome":  "Quarto CLI",
+                             "status":  "OK",
+                             "detalhes":  "Versao 1.8.25 em C:\\Program Files\\Quarto\\bin\\quarto.exe",
+                             "acao":  "",
+                             "verificada_em":  "2026-08-07 11:02:01"
+                         },
+                         {
+                             "id":  "2",
+                             "nome":  "TinyTeX / LaTeX",
+                             "status":  "OK",
+                             "detalhes":  "TinyTeX presente e funcional",
+                             "acao":  "",
+                             "verificada_em":  "2026-08-07 11:02:12"
+                         },
+                         {
+                             "id":  "3",
+                             "nome":  "Diretorio do projeto",
+                             "status":  "OK",
+                             "detalhes":  "Projeto em C:\\Users\\mceza\\Dropbox\\PROJETOS\\APLICATIVOS\\R_STUDIO\\APLICATIVOS\\LIVRO_DOE_USINAGEM",
+                             "acao":  "",
+                             "verificada_em":  "2026-08-07 11:02:12"
+                         },
+                         {
+                             "id":  "4",
+                             "nome":  "Configuracao _quarto.yml",
+                             "status":  "AVISO",
+                             "detalhes":  "html=OK, pdf=AUSENTE, epub=AUSENTE",
+                             "acao":  "",
+                             "verificada_em":  "2026-08-07 11:02:12"
+                         },
+                         {
+                             "id":  "5",
+                             "nome":  "Engines R + Python",
+                             "status":  "OK",
+                             "detalhes":  "R: C:\\Program Files\\R\\R-4.5.1\\bin\\Rscript.exe | Python: C:\\Users\\mceza\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+                             "acao":  "",
+                             "verificada_em":  "2026-08-07 11:02:14"
+                         },
+                         {
+                             "id":  "6",
+                             "nome":  "Estrutura de pastas",
+                             "status":  "OK",
+                             "detalhes":  "10/10 pastas, 16/16 capitulos",
+                             "acao":  "",
+                             "verificada_em":  "2026-08-07 11:02:14"
+                         }
+                     ]
+}
