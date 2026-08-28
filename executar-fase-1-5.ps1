@@ -341,7 +341,7 @@ function Comparar-Metas($sc, $mesProjeto) {
 # ============================================================================
 # GRAVAR REGISTRO SEMANAL
 # ============================================================================
-function Gravar-Registro($semana, $auto, $sc, $an, $alertas, $mesProjeto) {
+function Gravar-Registro($semana, $dadosAuto, $sc, $an, $alertas, $mesProjeto) {
     if (-not (Test-Path $Script:PastaSetup)) {
         New-Item -ItemType Directory -Path $Script:PastaSetup -Force | Out-Null
     }
@@ -352,10 +352,10 @@ function Gravar-Registro($semana, $auto, $sc, $an, $alertas, $mesProjeto) {
     $bloco += "Registrado em: $(Get-Date -Format 'yyyy-MM-dd HH:mm')`n`n"
 
     $bloco += "### Coleta automatica`n"
-    $bloco += "- GitHub views (14d): $($auto.github_views)`n"
-    $bloco += "- GitHub visitantes (14d): $($auto.github_visitors)`n"
-    $bloco += "- Sitemap URLs: $($auto.sitemap_urls)`n"
-    $bloco += "- URLs no ar: $($auto.urls_ok)`n`n"
+    $bloco += "- GitHub views (14d): $($dadosAuto.github_views)`n"
+    $bloco += "- GitHub visitantes (14d): $($dadosAuto.github_visitors)`n"
+    $bloco += "- Sitemap URLs: $($dadosAuto.sitemap_urls)`n"
+    $bloco += "- URLs no ar: $($dadosAuto.urls_ok)`n`n"
 
     $bloco += "### Search Console`n"
     $bloco += "- Impressoes: $($sc.impressoes)`n"
@@ -529,7 +529,7 @@ Write-Info "Mes do projeto: $mesProjeto"
 Write-Info "Repositorio: $($Script:Repo)"
 
 # 1. Coleta automatica (sempre)
-$auto = Coletar-Automatico
+$dadosAuto = Coletar-Automatico
 
 # 2. Captura interativa (a menos que -Auto)
 if ($Auto) {
@@ -545,7 +545,7 @@ if ($Auto) {
 }
 
 # 3. Gravar registro
-Gravar-Registro $semana $auto $sc $an $alertas $mesProjeto
+Gravar-Registro $semana $dadosAuto $sc $an $alertas $mesProjeto
 
 # 4. Lembrete de commit
 Write-Host ""
