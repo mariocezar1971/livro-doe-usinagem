@@ -1,52 +1,227 @@
 ---
 title: "Fundamentos de torneamento"
-subtitle: "Geometria, cavaco e fenômenos da interface"
+subtitle: "Geometria, cavaco e os fenômenos que decidem a usinabilidade"
 author: "Mário Cezar dos Santos Jr."
 abstract: |
-  Fundamentos de torneamento por arrancamento de cavaco, com foco nas variáveis controláveis e nas respostas mensuráveis que serão objeto de estudo nos capítulos seguintes.
+  Este capítulo estabelece a mecânica do torneamento que sustenta os estudos experimentais das próximas partes do livro. Parte da definição do processo e da geometria das ferramentas monocortantes, reconstrói didaticamente a formação do cavaco e o Círculo de Merchant, classifica tipos e formas de cavaco segundo a ISO 3685, e descreve os fenômenos da interface cavaco-ferramenta — zonas de aderência, escorregamento e fluxo, e a aresta postiça de corte. Fecha conectando as variáveis controláveis (velocidade, avanço, profundidade) às respostas mensuráveis (força, potência, temperatura, rugosidade) que serão os fatores e as respostas dos planejamentos de experimentos.
 ---
 
 # Fundamentos de torneamento {#sec-cap3}
 
+## Introdução {#sec-cap3-intro}
+
+No capítulo anterior, seis ligas de alumínio foram distinguidas por sua metalurgia — composição, precipitados, dureza. Mas a metalurgia só se revela na usinagem quando a ferramenta encosta na peça. É aí que uma liga "dura no papel" pode cortar bem, e uma "mole" pode dar trabalho. O elo entre a microestrutura do Capítulo @sec-cap2 e os resultados experimentais da Parte III é a **mecânica do corte** — o assunto deste capítulo.
+
+A pergunta que organiza tudo o que vem a seguir é: **o que torna um material fácil ou difícil de usinar?** A resposta tem nome — *usinabilidade* — e é medida por um conjunto de respostas quantificáveis: a força de usinagem, a potência consumida, a temperatura de corte, o acabamento da superfície, o controle do cavaco e o desgaste da ferramenta [@childs2000metal; @diniz2001tecnolog; @trent2000metal]. Nenhuma dessas respostas existe isolada; todas nascem da mesma raiz física — o cisalhamento do metal na ponta da ferramenta.
+
+Entre os fatores que governam a usinabilidade estão o processo, a composição química, a microestrutura, o tratamento térmico e as propriedades mecânicas do material — sendo a **dureza**, segundo a literatura clássica, o principal aspecto isolado a ditar a facilidade de corte [@mills1983machinab; @johne1994machinin]. Mas, como o Capítulo @sec-cap2 mostrou com a liga 6262-T6, a dureza não conta a história toda: microestrutura e elementos de liga também decidem.
+
+Este capítulo constrói o vocabulário e os modelos físicos necessários para ler os experimentos que virão. Ele percorre, nesta ordem: o processo de torneamento e suas grandezas; a geometria da ferramenta; a formação do cavaco e o Círculo de Merchant; os tipos e formas de cavaco; os fenômenos da interface cavaco-ferramenta; e, ao final, a ponte para as variáveis e respostas dos planejamentos de experimentos.
+
 ::: {.callout-note}
-## Status do capítulo
-**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 3 do roadmap.
+## Onde este capítulo se conecta
+Os conceitos aqui — força, cavaco, interface, aresta postiça — são os observáveis dos estudos experimentais dos capítulos @sec-cap8 a @sec-cap10. A velocidade de corte, o avanço e a profundidade definidos na última seção serão os *fatores* dos planejamentos fatoriais e superfícies de resposta.
 :::
 
-## Introdução
+## O processo de torneamento {#sec-cap3-processo}
 
-*Conteúdo em desenvolvimento.*
+O torneamento é o processo de obtenção de superfícies de revolução por meio de uma **ferramenta monocortante** que se desloca coplanarmente ao eixo da peça, enquanto esta gira em torno do eixo principal [@dossantos2003; @ferraresi1977usinagem]. É o processo de usinagem mais fundamental — e o escolhido para o estudo deste livro justamente por isolar bem as variáveis de corte.
 
-## Geometria das ferramentas monocortantes
+Distinguem-se dois modos de corte: no **corte ortogonal**, a aresta de corte reta move-se perpendicular às direções de corte e de avanço; no **corte oblíquo**, a aresta move-se em ângulo em relação a elas [@boothroyd1981fundamen; @machado2009teoria]. O corte ortogonal é a idealização usada nos modelos teóricos (é o caso do Círculo de Merchant, adiante); o oblíquo é o que ocorre na maioria das operações reais.
 
-*Conteúdo em desenvolvimento.*
+Três grandezas comandam o processo — e serão os fatores controláveis dos experimentos:
 
-## Formação do cavaco e Círculo de Merchant
+- **Velocidade de corte** ($v_c$, em m/min): a velocidade tangencial da superfície da peça em relação à ferramenta;
+- **Avanço** ($f$, em mm/volta): o deslocamento da ferramenta por rotação da peça;
+- **Profundidade de corte** ($a_p$, em mm): a penetração radial da ferramenta na peça.
 
-*Conteúdo em desenvolvimento.*
+Essas três grandezas, tomadas a partir de um ponto de referência na aresta de corte, definem a **área da seção de corte** ($A_{sc} = a_p \cdot f$) e, com a velocidade, a taxa de remoção de material [@diniz2001tecnolog; @machado2009teoria]. Guardar o trio $v_c$, $f$, $a_p$ é guardar as alavancas que o operador — e o experimentador — efetivamente controla.
 
-## Tipos e formas de cavaco
+## Geometria das ferramentas monocortantes {#sec-cap3-geometria}
 
-*Conteúdo em desenvolvimento.*
+A ferramenta é o instrumento que impõe o cisalhamento — e sua geometria decide boa parte do resultado. As especificações de uma ferramenta monocortante dependem principalmente de dois ângulos [@roy2009machinab; @tang2009influenc]:
 
-## Fenômenos da interface cavaco-ferramenta
+- **Ângulo de saída** ($\gamma_o$): formado entre o plano de referência e a superfície de saída (por onde o cavaco escorrega). Afeta significativamente a usinabilidade — ângulos maiores facilitam o escoamento do cavaco e reduzem a força, mas enfraquecem a cunha de corte;
+- **Ângulo de folga** ($\alpha_o$): formado entre o plano de corte e a superfície de folga. Evita o atrito entre a ferramenta e a superfície recém-usinada e influi na penetração; embora não participe diretamente do escorregamento do cavaco, afeta o desgaste de flanco [@boothroyd1981fundamen].
 
-*Conteúdo em desenvolvimento.*
+Além desses, outros ângulos completam a geometria [@machado2009teoria]:
 
-## Variáveis controláveis e respostas mensuráveis
+- **Ângulo de posição primário** ($\chi_r$): afeta a distribuição de tensões na aresta, a dissipação de calor, a direção de saída do cavaco e a força passiva;
+- **Ângulo de inclinação** ($\lambda_s$): afeta a direção de saída do cavaco;
+- **Raio da aresta de corte** ($r_n$) e **raio de ponta** ($r_\varepsilon$): influenciam o acabamento da superfície.
 
-*Conteúdo em desenvolvimento.*
+::: {.callout-tip}
+## Na prática
+De todos os ângulos, o de saída ($\gamma_o$) é o que o experimentador sente mais direto na força de corte: aumentá-lo reduz a força, mas há um limite — passar do ponto fragiliza a ferramenta e acelera a quebra. Por isso, em estudos de usinabilidade, a geometria costuma ser mantida fixa (uma pastilha padronizada), para que as variações observadas venham dos fatores de corte, não da ferramenta.
+:::
 
-## Para saber mais
+## Formação do cavaco e o Círculo de Merchant {#sec-cap3-cavaco}
+
+Aqui está o coração mecânico do capítulo. Entender como o cavaco se forma é entender de onde vêm força, calor e acabamento.
+
+### O ciclo de formação do cavaco
+
+O cavaco é a porção de material removida pela ferramenta, com geometria irregular [@ferraresi1977usinagem]. Seu mecanismo de formação depende de fatores cristalográficos — orientação dos cristais, sistemas de deslizamento, densidade de discordâncias móveis [@to1997ultrapre] — os mesmos conceitos de discordâncias que, no Capítulo @sec-cap2, explicaram o endurecimento das ligas. A formação segue um ciclo de quatro fases:
+
+1. **Deformação elástica** do material comprimido pela ferramenta;
+2. **Alta deformação plástica** no *plano de cisalhamento primário* (PCP);
+3. **Abertura de trinca** no plano de cisalhamento primário;
+4. **Deslizamento** do material cisalhado sobre a superfície de saída da ferramenta.
+
+O cisalhamento concentrado no plano primário atinge taxas de deformação da ordem de $10^4$ a $10^6\,\text{s}^{-1}$ [@vernazapefia2002experime] e domina a formação do cavaco — sendo o principal responsável pelas alterações superficiais e subsuperficiais das propriedades mecânicas da peça [@to1997ultrapre]. É um processo complexo, que combina deformação plástica, geração de nova superfície, efeitos térmicos, fricção e interação química [@lane2010].
+
+### O ângulo de cisalhamento e o grau de recalque
+
+Duas grandezas resumem a geometria da formação do cavaco:
+
+- **Ângulo de cisalhamento** ($\phi$): formado entre o plano de trabalho e o plano de cisalhamento primário. Ele governa o acabamento da superfície, a tensão sobre a ferramenta, a força de usinagem, a temperatura de corte e a energia consumida [@rao2001analysis; @trent2000metal] — praticamente todas as respostas de interesse;
+- **Grau de recalque** ($R_c = h'/h$): a razão entre a espessura do cavaco depois ($h'$) e antes ($h$) do corte.
+
+A relação entre eles é direta e importante: **quanto maior o grau de recalque, menor o ângulo de cisalhamento** e maior a deformação na zona primária [@boothroyd1981fundamen]. Em outras palavras, um grau de recalque alto sinaliza maior resistência ao movimento do cavaco — mais força, mais calor. O ângulo de cisalhamento, por sua vez, depende das condições de corte (avanço e velocidade), da geometria da ferramenta e do atrito na interface [@machado2009teoria].
+
+Um dado que antecipa a Parte III: Keong Ng et al. estudaram justamente o efeito do avanço e da velocidade sobre o ângulo de cisalhamento no micro e nanotorneamento da **liga 7075-T6** [@keongng2006experime] — uma das seis ligas deste livro. A dependência do ângulo de cisalhamento com as condições de corte é, portanto, mensurável e será explorada experimentalmente.
+
+### O Círculo de Merchant
+
+O modelo que organiza as forças no corte ortogonal é o **Círculo de Merchant** [@merchant1954mechanis] — uma construção geométrica que relaciona as forças que se pode *medir* com as forças que *atuam nos planos de cisalhamento*, que não se pode medir diretamente.
+
+No corte, um dinamômetro mede duas componentes: a **força de corte** ($F_c$), na direção da velocidade de corte, e a **força de avanço** ($F_f$), na direção do avanço. O Círculo de Merchant decompõe essas forças medidas nas forças que realmente importam para a física do cisalhamento:
+
+$$F_z = F_c\cos\phi - F_f\,\text{sen}\,\phi \qquad \text{(força de cisalhamento no plano primário)}$$
+
+$$F_n = F_c\cos\gamma_o - F_f\,\text{sen}\,\gamma_o \qquad \text{(força de compressão normal)}$$
+
+A beleza do modelo é conceitual: ele mostra que a força medida no dinamômetro e a resistência ao cisalhamento do material são **duas faces da mesma geometria**. Quando, na Parte III, mediremos $F_c$ e $F_f$ com um dinamômetro piezelétrico, é o Círculo de Merchant que dá sentido físico a esses números.
+
+::: {.callout-important}
+## Decisão de projeto
+O Círculo de Merchant é o motivo de a força de usinagem ser uma resposta tão informativa nos experimentos: ela não é um número arbitrário, mas o reflexo direto da resistência ao cisalhamento do material — que, por sua vez, vem da microestrutura do Capítulo @sec-cap2. Medir força é, indiretamente, medir metalurgia em ação.
+:::
+
+## Tipos e formas de cavaco {#sec-cap3-tipos}
+
+O cavaco não é subproduto: sua forma é um diagnóstico da usinagem e um problema prático de chão de fábrica. Classificam-se quatro **tipos** quanto ao mecanismo de formação [@machado2009teoria; @boothroyd1981fundamen]:
+
+- **Contínuo**: típico de materiais dúcteis que se deformam intensamente sem propagar trinca. É o mais indesejável — ocupa espaço, pode ferir o operador, impede o acesso do fluido à região de corte, e tende a formar fitas, hélices ou emaranhados;
+- **Parcialmente contínuo**: formado por propagação insuficiente da trinca no plano primário;
+- **Descontínuo**: típico de materiais frágeis, que não suportam grande deformação; a trinca propaga-se com facilidade. Vantagem: sai facilmente da região de corte, em pedaços;
+- **Segmentado**: formado por deformação adiabática em bandas estreitas; típico de materiais de baixa condutividade térmica, como ligas de titânio.
+
+A **forma** do cavaco depende principalmente do material, mas sofre grande influência do tipo e das condições de corte. A norma **ISO 3685** [@internationalst1993tool] classifica as formas em fita, tubular, espiral, helicoidal, arco e lasca — subdivididas em longos, curtos, emaranhados, conectados e soltos.
+
+::: {.callout-warning}
+## Erro comum
+Tratar o cavaco contínuo como "sinal de bom corte" porque a superfície fica lisa. Na prática industrial, o cavaco longo e emaranhado é um risco de segurança e de parada de máquina. É por isso que a liga 6262-T6, com seus elementos de livre-corte que fragmentam o cavaco (Capítulo @sec-cap2), é tão valorizada — ela resolve o problema do cavaco na origem, na metalurgia.
+:::
+
+Este é o ponto onde o Capítulo @sec-cap2 e este se encontram de forma mais visível: a **ductilidade** da liga — alta na 1350-O, baixa na 7075-T6 — prediz o tipo de cavaco. Ligas dúcteis tendem ao cavaco contínuo problemático; a redução de ductilidade (por tratamento térmico ou elementos de liga) favorece cavacos mais curtos e manejáveis.
+
+## Fenômenos da interface cavaco-ferramenta {#sec-cap3-interface}
+
+A região onde o cavaco escorrega sobre a ferramenta — a interface — concentra as maiores tensões e temperaturas do processo. É ali que se decidem a força, o calor e o desgaste [@machado2009teoria]. Três zonas e um fenômeno organizam essa região.
+
+### As zonas de aderência, escorregamento e fluxo
+
+- **Zona de aderência**: região de intensa interação atômica ferramenta-cavaco, onde a área real de contato iguala a aparente, devido às altas tensões de compressão e cisalhamento e às altas temperaturas. Nela **não há movimento relativo** entre cavaco e ferramenta; o cavaco flui internamente, estabelecendo a zona de fluxo [@trent2000metal; @dasilva1999cutting];
+- **Zona de escorregamento**: região periférica à de aderência, onde há atrito cinemático ferramenta-cavaco, com a área real muito menor que a aparente;
+- **Zona de fluxo**: caracterizada por altíssimas taxas de deformação e alta densidade de discordâncias, sob recuperação dinâmica e recristalização, com novos contornos de grão sendo continuamente gerados [@trent2000metal].
+
+Ao longo dessas zonas, a tensão de compressão decresce assintoticamente da aresta de corte (máxima) até o fim do contato (nula). A zona de aderência é favorecida por altas velocidades de corte, longo tempo de usinagem e grande afinidade química cavaco-ferramenta — mas pode ser **inibida pela presença de elementos de livre-corte** no material [@machado2009teoria]. Novamente a 6262-T6 reaparece: seus glóbulos de Bi e Pb atuam exatamente aqui, reduzindo a aderência.
+
+### A aresta postiça de corte (APC)
+
+A aresta postiça é um dos fenômenos mais importantes na usinagem de alumínio. Ela se manifesta na usinagem de materiais de fases distintas, em **baixas velocidades de corte**, pelo acúmulo sucessivo de material encruado acima da zona de aderência [@machado2009teoria; @mills1983machinab]. As fases distintas favorecem aberturas de trinca por suas diferentes características de deformação, gerando um estado triaxial de tensões [@boothroyd1981fundamen; @trent2000metal].
+
+A APC tem um efeito duplo, que o experimentador precisa conhecer:
+
+- **Efeito favorável**: ela desloca a zona de fluxo e aumenta efetivamente o ângulo de saída, o que *diminui* a força de usinagem e a temperatura na interface [@mills1983machinab; @reis2007silva];
+- **Efeito adverso**: seus destacamentos frequentes aderem à superfície usinada, **prejudicando o acabamento**, e podem promover desgaste adesivo na ferramenta [@boothroyd1981fundamen; @mills1983machinab].
+
+A aresta postiça **diminui com o aumento da velocidade de corte**: a temperatura mais alta inibe o encruamento do material sobre a superfície de saída [@machado2009teoria]. Esse comportamento — APC em baixas velocidades, sumindo em altas — é um dos padrões que os experimentos de rugosidade da Parte III vão evidenciar.
+
+## Variáveis controláveis e respostas mensuráveis {#sec-cap3-variaveis}
+
+Toda a mecânica anterior converge aqui, na tradução do processo para a linguagem do planejamento de experimentos: o que se **controla** (fatores) e o que se **mede** (respostas).
+
+### Os fatores controláveis
+
+Os fatores que o experimentador manipula nos planejamentos deste livro são as três grandezas de corte:
+
+| Fator | Símbolo | Unidade | Efeito dominante |
+|:------|:-------:|:-------:|:-----------------|
+| Velocidade de corte | $v_c$ | m/min | Temperatura, APC, desgaste |
+| Avanço | $f$ | mm/volta | Força, rugosidade, forma do cavaco |
+| Profundidade de corte | $a_p$ | mm | Força, área de seção |
+
+: Os três fatores controláveis dos planejamentos de experimentos. {#tbl-fatores}
+
+A área da seção de corte ($A_{sc} = a_p \cdot f$) combina dois deles e permite avaliar a **pressão específica de corte** ($K_s = F_c/A_{sc}$) [@boothroyd1981fundamen] — uma medida normalizada de quão "difícil" é cortar o material, independente do tamanho do corte.
+
+### As respostas mensuráveis
+
+As respostas são o que os planejamentos buscam modelar e otimizar:
+
+- **Força de usinagem** ($F_u$): resultante das forças de corte ($F_c$), avanço ($F_f$) e passiva ($F_p$), medida por dinamômetro piezelétrico [@chambers1996machinab; @snchezcarrilero2002]. Reflete a resistência ao cisalhamento — logo, a metalurgia da liga;
+- **Potência de corte** ($N_e$): produto da força de corte pela velocidade;
+- **Temperatura de corte** ($T_c$): governada pelo cisalhamento e pelo atrito na interface;
+- **Rugosidade** da superfície usinada: o acabamento, fortemente afetado pela APC e pelo avanço;
+- **Controle do cavaco**: tipo e forma, conforme a ISO 3685;
+- **Desgaste da ferramenta**: cratera ($KT$) e flanco ($VB_B$).
+
+### A relação força-dureza: um prenúncio dos experimentos
+
+A literatura já indica o que os experimentos da Parte III vão confirmar quantitativamente. Durante a usinagem, as ligas de alumínio apresentam forças **baixas** comparadas aos aços — pressões específicas até 70% menores [@kelly2002minimal] — mas com diferenças entre si conforme composição e propriedades [@johne1994machinin].
+
+O efeito da dureza sobre a força não é trivial. Fang e Wu, no torneamento ortogonal das ligas **7075-T6** (531 MPa, 166 HB), 6061-T6 (262 MPa, 95 HB) e 2024-T351, registraram **aumento da força com o aumento da dureza** [@fang2005effects] — a resistência ao cisalhamento prevalecendo. Mas Demir e Gündüz mostraram uma inversão dependente da velocidade: no torneamento da liga 6061 com diferentes tratamentos, as ligas mais duras deram maiores forças entre 175 e 350 m/min, mas as **mais dúcteis** deram maiores forças acima de 350 m/min [@demir2009]. Em baixa velocidade prevalece a resistência do material; em alta, prevalece o aumento da área dos planos de cisalhamento.
+
+::: {.callout-tip}
+## Na prática
+Essa inversão é a razão de este livro usar planejamento de experimentos em vez de "testar um fator por vez". A força não depende só da liga, nem só da velocidade — depende da *interação* entre elas. Um experimento fatorial captura essa interação; testar velocidade e liga isoladamente jamais a revelaria. É exatamente o argumento do Capítulo @sec-cap1, agora ancorado na física do corte.
+:::
+
+## Síntese do capítulo {#sec-cap3-sintese}
+
+O Quadro @tbl-sintese3 resume os conceitos deste capítulo e para onde cada um aponta nos experimentos.
+
+| Conceito | Papel na usinagem | Onde reaparece |
+|:---------|:------------------|:---------------|
+| Fatores $v_c$, $f$, $a_p$ | Variáveis controláveis | Fatores dos planejamentos (@sec-cap8) |
+| Ângulo de cisalhamento $\phi$ | Governa força, calor, acabamento | Modelos de resposta (@sec-cap9) |
+| Grau de recalque $R_c$ | Mede resistência ao corte | Estudo de cavaco (@sec-cap9) |
+| Círculo de Merchant | Liga força medida a cisalhamento | Interpretação de $F_u$ |
+| Tipo/forma de cavaco | Diagnóstico e problema prático | Resposta "controle do cavaco" |
+| Aresta postiça (APC) | Afeta força e acabamento | Resposta "rugosidade" |
+| Pressão específica $K_s$ | Dificuldade normalizada de corte | Comparação entre ligas |
+
+: Síntese dos fundamentos de torneamento e suas conexões experimentais. {#tbl-sintese3}
+
+Três ideias devem permanecer:
+
+1. **Tudo nasce do cisalhamento.** Força, calor, acabamento e desgaste são consequências do mesmo evento físico — o cisalhamento do metal no plano primário e o atrito na interface.
+2. **A metalurgia entra pela resistência ao cisalhamento.** A microestrutura do Capítulo @sec-cap2 chega à usinagem através da resistência que o material opõe ao corte — medida, via Círculo de Merchant, pela força de usinagem.
+3. **As respostas dependem de interações.** Força, rugosidade e temperatura não são funções de um fator só; dependem de como velocidade, avanço, profundidade e liga se combinam — a justificativa física para o planejamento de experimentos.
+
+Com os fundamentos metalúrgicos (@sec-cap2) e mecânicos (este capítulo) estabelecidos, a Parte II do livro apresenta a metodologia do planejamento de experimentos — fatorial, superfícies de resposta e otimização — que, na Parte III, será aplicada a estas seis ligas e a estes fatores e respostas.
+
+## Para saber mais {#sec-cap3-saibamais}
 
 ::: {.callout-tip}
 ## Aprofundamento
-Referências complementares e leituras recomendadas para este capítulo serão adicionadas no decorrer da redação.
+Para a teoria da usinagem em profundidade, @machado2009teoria (*Teoria da Usinagem dos Materiais*) é a referência brasileira de base deste capítulo. Os fundamentos clássicos estão em @boothroyd1981fundamen e @trent2000metal (*Metal Cutting*). O modelo de forças no corte ortogonal remonta ao trabalho seminal de @merchant1954mechanis. Para os efeitos de dureza e condições de corte sobre a força nas ligas de alumínio, @fang2005effects e @demir2009 trazem dados diretos das ligas estudadas.
 :::
 
 ## Exercícios propostos {.unnumbered}
 
-::: {.callout-important}
-## Em desenvolvimento
-Exercícios serão adicionados durante a Fase 3 do roadmap.
-:::
+1. **Grandezas do processo.** Defina velocidade de corte, avanço e profundidade de corte. Qual combinação define a área da seção de corte, e por que essa área importa para a força?
+
+2. **Geometria.** Explique o efeito do ângulo de saída ($\gamma_o$) sobre a força de usinagem. Por que não se pode simplesmente aumentá-lo indefinidamente para reduzir a força?
+
+3. **Ângulo de cisalhamento.** Relacione o grau de recalque ($R_c$) com o ângulo de cisalhamento ($\phi$). Se um experimento mede $R_c$ alto, o que isso indica sobre a força de usinagem esperada?
+
+4. **Círculo de Merchant.** Um dinamômetro mede $F_c$ e $F_f$. Explique, com base no Círculo de Merchant, por que essas duas forças medidas bastam para se inferir a força de cisalhamento no plano primário.
+
+5. **Cavaco e metalurgia.** Relacione a ductilidade das ligas do Capítulo @sec-cap2 (da 1350-O à 7075-T6) com o tipo de cavaco esperado. Qual liga tende ao cavaco contínuo problemático, e qual tende ao cavaco mais fragmentado — e por quê?
+
+6. **Aresta postiça.** A APC diminui a força mas piora o acabamento. Descreva como a velocidade de corte afeta a APC e explique por que, num estudo de rugosidade, esperar-se-ia pior acabamento em baixas velocidades.
+
+7. **Interações (integrador).** Fang e Wu observaram força crescente com a dureza; Demir e Gündüz observaram que, acima de 350 m/min, as ligas mais dúcteis davam maiores forças. Explique fisicamente essa aparente contradição e argumente por que um planejamento fatorial é necessário para capturá-la.
