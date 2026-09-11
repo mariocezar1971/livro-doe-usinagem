@@ -1,52 +1,188 @@
 ---
 title: "Projeto experimental do estudo de caso"
-subtitle: "Ligas, bancada e matriz de ensaios"
+subtitle: "As seis ligas, os ensaios de torneamento e os planejamentos aplicados"
 author: "Mário Cezar dos Santos Jr."
 abstract: |
-  Apresenta o problema industrial estudado, a caracterização das seis ligas de alumínio investigadas, a configuração da bancada experimental e o projeto das matrizes $2^k$ e PCC.
+  Este capítulo abre a Parte III apresentando o projeto experimental que gerou todos os dados do estudo de caso do livro. Descreve a caracterização das seis ligas de alumínio (microestrutura, dureza e tração); a configuração dos ensaios de torneamento (máquina, ferramentas, condições de lubri-refrigeração e as respostas medidas); e os dois planejamentos aplicados — o fatorial 2^k, que identifica os fatores significativos, e o planejamento composto central, que modela as superfícies de resposta. A visão de conjunto fica aqui; os detalhes de instrumentação e das cadeias de medição estão reunidos no Apêndice A. É o capítulo que conecta a metodologia da Parte II aos resultados dos capítulos seguintes.
 ---
 
 # Projeto experimental do estudo de caso {#sec-cap7}
 
+## Introdução {#sec-cap7-intro}
+
+As Partes I e II construíram a base: a metalurgia das ligas (@sec-cap2), a mecânica do torneamento (@sec-cap3) e as ferramentas do planejamento de experimentos — fatorial (@sec-cap4), superfícies de resposta (@sec-cap5) e otimização (@sec-cap6). Este capítulo mostra como tudo isso foi posto em prática num experimento real, e é o portal da Parte III: a partir daqui, o livro apresenta e discute os resultados obtidos.
+
+O objetivo do estudo foi investigar como as **propriedades mecânicas das ligas** e as **condições de corte** afetam a **usinabilidade** no torneamento de ligas de alumínio. Concretamente, mediram-se, para seis ligas sob diferentes condições, as respostas que definem a usinabilidade: as componentes da força de usinagem (avanço $F_f$, passiva $F_p$ e de corte $F_c$), a potência de usinagem ($N_e$), a temperatura de corte ($T_c$), os parâmetros de rugosidade ($R_a$, $R_z$, $R_q$) e a vibração ($V_b$).
+
+O capítulo tem três partes, correspondentes às três decisões de qualquer projeto experimental: **o quê** se estuda (as ligas e sua caracterização), **como** se ensaia (a configuração dos experimentos de torneamento) e **com que estrutura** se organiza a investigação (os planejamentos fatorial e composto central). Os detalhes de instrumentação — modelos de equipamentos, cadeias de medição, calibrações — foram reunidos no Apêndice A, para manter aqui a visão de conjunto sem perder o rigor.
+
 ::: {.callout-note}
-## Status do capítulo
-**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 5 do roadmap.
+## Onde este capítulo se conecta
+Este é o elo entre método e resultado. Os planejamentos descritos aqui (Seção @sec-cap7-planejamentos) geram os dados analisados no Capítulo @sec-cap8 (efeitos fatoriais) e no Capítulo @sec-cap9 (superfícies de resposta), que por sua vez alimentam a otimização do Capítulo @sec-cap10. Toda tabela de resultados dos próximos capítulos nasce do experimento aqui projetado.
 :::
 
-## Definição do problema
+## Caracterização das ligas de alumínio {#sec-cap7-caracterizacao}
 
-*Conteúdo em desenvolvimento.*
+Antes de usinar, é preciso conhecer o material. As seis ligas do estudo foram caracterizadas em duas frentes — microestrutura e propriedades mecânicas — cujos fundamentos metalúrgicos já foram tratados no Capítulo @sec-cap2. Aqui se descreve *como* essa caracterização foi feita.
 
-## Caracterização das seis ligas
+### As seis ligas e seus papéis
 
-*Conteúdo em desenvolvimento.*
+As ligas foram barras redondas extrudadas (Ø 101 mm), fabricadas pela Alcoa, escolhidas para cobrir um amplo espectro de propriedades, da mais dúctil (1350-O) à mais resistente (7075-T6). No desenho experimental, cada liga teve um papel definido:
 
-## Bancada experimental e instrumentação
+- **1350-O e 7075-T6** — os extremos de resistência mecânica, usados como os níveis baixo (−1) e alto (+1) do fator "Liga" nos planejamentos fatoriais;
+- **6082-T4, 6262-T6 e 7075-T73** — ligas intermediárias, submetidas aos mesmos ensaios para a posterior análise de regressão global (que modela a usinabilidade em função das propriedades);
+- **6351-T6** — reservada para os ensaios de **validação** dos modelos de segunda ordem, um papel crucial: testar o modelo numa liga que não participou de sua construção.
 
-*Conteúdo em desenvolvimento.*
+Essa distribuição de papéis é um traço elegante do projeto: as mesmas seis ligas servem à triagem, à modelagem e à validação, cada uma no seu lugar.
 
-## Matriz $2^k$ I e $2^k$ II
+### Caracterização microestrutural
 
-*Conteúdo em desenvolvimento.*
+A microestrutura de cada liga foi revelada por metalografia: as amostras foram lixadas, polidas e atacadas com reagente de Keller, e observadas em microscópio óptico a 400×. Essa caracterização produziu as micrografias das seis ligas apresentadas no Capítulo @sec-cap2 (@fig-micro-ligas), que evidenciam os precipitados responsáveis pelo endurecimento — o Mg₂Si nas séries 6xxx, o MgZn₂ nas 7xxx, e os glóbulos de livre-corte na 6262-T6.
 
-## Planejamento Composto Central
+### Caracterização das propriedades mecânicas
 
-*Conteúdo em desenvolvimento.*
+Duas propriedades mecânicas foram medidas, por serem as que mais influenciam a usinabilidade:
 
-## Decisões de projeto
+- **Dureza Vickers (Hd)** — medida por ensaio de dureza Vickers nas superfícies transversais das amostras;
+- **Resistência à tração (R) e alongamento (Ar)** — medidos por ensaio de tração, fornecendo o limite de resistência e a ductilidade.
 
-*Conteúdo em desenvolvimento.*
+Essas três grandezas — dureza, resistência e alongamento — não são apenas descritivas: elas entram como **variáveis de entrada** nos modelos de regressão global, ao lado das condições de corte. A metalurgia, medida aqui, torna-se preditor da usinabilidade. Os valores obtidos para as seis ligas foram apresentados no Capítulo @sec-cap2 (Tabela de propriedades). Os detalhes dos procedimentos de dureza e tração estão no Apêndice A.
 
-## Para saber mais
+## Configuração dos ensaios de usinagem {#sec-cap7-ensaios}
+
+Com as ligas caracterizadas, os ensaios de torneamento foram configurados para medir as respostas de usinabilidade sob condições controladas.
+
+### Máquina e ferramentas
+
+Os ensaios foram conduzidos num **torno CNC ROMI Multiplic 35D**, com 11 kW de potência no motor principal e faixa de rotação de 3 a 3000 rpm — capacidade folgada para cobrir toda a faixa de velocidades de corte do estudo.
+
+Duas ferramentas de corte foram empregadas, por razões distintas:
+
+- **Ferramenta A** — pastilha de metal duro (carboneto de tungstênio, classe HTi10) com superfície de saída polida e ondulada, montada num suporte que forneceu ângulo de saída de 8°, folga de 11° e posição de 90°. Foi usada para medir força, vibração, potência e rugosidade. Sua superfície polida favorece o controle do cavaco e reduz a adesão — importante na usinagem de alumínio;
+- **Ferramenta B** — barra de metal duro classe K15, usada especificamente nos ensaios de **temperatura de corte**, por exigência do método de calibração termopar ferramenta-peça.
+
+Os modelos exatos, ângulos completos e especificações das ferramentas estão no Apêndice A.
+
+### Condições de lubri-refrigeração
+
+Três condições de lubri-refrigeração foram estudadas, cobrindo o espectro de práticas industriais:
+
+- **Seco** — sem fluido, a condição mais limpa e econômica;
+- **MQF (mínima quantidade de fluido)** — névoa de óleo vegetal biodegradável aplicada por bicos direcionados, uma técnica de usinagem sustentável;
+- **Jorro** — abundância de fluido emulsionável, a técnica convencional.
+
+Essa escolha permite avaliar não só os fatores de corte, mas também o **impacto ambiental e econômico** da lubrificação — uma questão prática relevante, já que a análise fatorial revelaria se o fluido de fato afeta as respostas (adiantando: para várias delas, não afeta). Os fluidos específicos, vazões e o sistema de aplicação estão detalhados no Apêndice A.
+
+### As respostas medidas
+
+Para cada condição de corte, mediram-se as respostas de usinabilidade:
+
+| Resposta | Símbolo | O que mede |
+|:---------|:-------:|:-----------|
+| Força de corte | $F_c$ | Resistência ao corte na direção da velocidade |
+| Força de avanço | $F_f$ | Componente na direção do avanço |
+| Força passiva | $F_p$ | Componente radial |
+| Potência de usinagem | $N_e$ | Energia consumida no corte |
+| Temperatura de corte | $T_c$ | Temperatura na interface |
+| Rugosidade | $R_a$, $R_z$, $R_q$ | Acabamento da superfície |
+| Vibração | $V_b$ | Aceleração no suporte da ferramenta |
+
+: Respostas de usinabilidade medidas nos ensaios. {#tbl-respostas}
+
+Cada resposta foi obtida com instrumentação específica — dinamômetro para as forças, sistema elétrico para a potência, termopar para a temperatura, rugosímetro para o acabamento, acelerômetro para a vibração. As cadeias de medição completas, com modelos, condicionadores de sinal e procedimentos de aquisição, constam do Apêndice A.
+
+::: {.callout-tip}
+## Na prática
+A separação entre "o que se mede" (aqui) e "como se mede em detalhe" (Apêndice A) não é só organização editorial. Ela reflete uma boa prática de relato científico: o corpo do trabalho deve deixar clara a lógica do experimento sem soterrar o leitor em números de série de equipamentos. Quem quer reproduzir o experimento vai ao apêndice; quem quer entender o raciocínio fica no capítulo.
+:::
+
+## Planejamentos de experimento {#sec-cap7-planejamentos}
+
+Definidas as ligas e a configuração dos ensaios, a estrutura da investigação foi dada por dois planejamentos, aplicando diretamente a metodologia da Parte II.
+
+### A estratégia em dois estágios
+
+O estudo seguiu a progressão econômica descrita nos Capítulos @sec-cap4 e @sec-cap5: primeiro triagem, depois modelagem.
+
+1. **Planejamento fatorial 2^k (exploratório)** — identifica, por ANOVA, quais fatores são simultaneamente significativos para cada resposta;
+2. **Planejamento composto central (PCC)** — a partir dos fatores significativos apontados pelo fatorial, gera os modelos de segunda ordem que descrevem as superfícies de resposta.
+
+As variáveis de entrada foram de dois tipos: **propriedades mecânicas** (resistência $R$, alongamento $Ar$, dureza $Hd$ — representadas pelo fator Liga) e **condições de corte** (velocidade $v_c$, profundidade $a_p$, avanço $f$ e lubri-refrigeração $lub$).
+
+### O planejamento fatorial 2^k
+
+No fatorial, o fator **Liga** representou a variação das propriedades mecânicas em dois níveis, usando as ligas extremas: **1350-O no nível baixo (−1)** e **7075-T6 no nível alto (+1)** — a mais mole e a mais dura, maximizando o contraste de propriedades.
+
+Como havia **três condições de lubri-refrigeração**, o fatorial foi desdobrado em dois planejamentos para acomodá-las: o **2kI** (comparando seco e jorro) e o **2kII** (comparando seco e MQF). Os níveis dos fatores de corte estão na Tabela @tbl-niveis-fatorial.
+
+| Fator | Nível −1 | Nível +1 |
+|:------|:--------:|:--------:|
+| Liga | 1350-O | 7075-T6 |
+| Velocidade de corte $v_c$ | 200 m/min | 600 m/min |
+| Avanço $f$ | 0,20 mm/volta | 0,35 mm/volta |
+| Profundidade $a_p$ | 1 mm | 4 mm |
+| Lubri-refrigeração (2kI) | Seco | Jorro |
+| Lubri-refrigeração (2kII) | Seco | MQF |
+
+: Níveis dos fatores nos planejamentos fatoriais 2kI e 2kII. Nos ensaios de temperatura, adotaram-se níveis ajustados de $v_c$ (300), $f$ (0,30) e $a_p$ (3), por limitação da ferramenta B. {#tbl-niveis-fatorial}
+
+A análise de variância desses planejamentos identificou, para cada resposta, os fatores significativos ao nível de 5% — resultados apresentados no Capítulo @sec-cap8.
+
+### O planejamento composto central
+
+Os fatores apontados como significativos pelo fatorial foram então levados ao PCC, que acrescentou os pontos axiais e centrais necessários para estimar a curvatura (Capítulo @sec-cap5). O PCC usou **quatro observações no ponto central** e distância axial calculada para garantir a ortogonalidade da matriz. Dele saíram os modelos de segunda ordem das respostas de usinabilidade — apresentados no Capítulo @sec-cap9.
+
+### Estudos complementares de desgaste
+
+Além dos dois planejamentos principais, o projeto incluiu estudos de **desgaste e avaria das ferramentas**, observando a evolução do desgaste de flanco e de cratera ao longo dos ensaios — informação essencial para avaliar a viabilidade prática das condições de corte otimizadas.
+
+::: {.callout-important}
+## Decisão de projeto
+O uso de seis ligas com papéis distintos — duas nos efeitos fatoriais, três na regressão global, uma na validação — é o que dá robustez ao estudo. A liga 6351-T6, guardada exclusivamente para validação, é a prova de fogo dos modelos: se um modelo construído com as outras ligas prevê bem a usinabilidade da 6351-T6, ele capturou a física real, não apenas ajustou os dados de treino. Essa separação treino-validação, comum hoje em aprendizado de máquina, já estruturava este experimento.
+:::
+
+## Síntese do capítulo {#sec-cap7-sintese}
+
+O Quadro @tbl-sintese7 resume o projeto experimental.
+
+| Elemento | Escolha do estudo |
+|:---------|:------------------|
+| Ligas | Seis (1350-O, 6082-T4, 6262-T6, 6351-T6, 7075-T73, 7075-T6) |
+| Caracterização | Microestrutura (400×), dureza Vickers, tração |
+| Máquina | Torno CNC ROMI Multiplic 35D (11 kW) |
+| Ferramentas | A (força/rugosidade), B (temperatura) |
+| Lubri-refrigeração | Seco, MQF, jorro |
+| Respostas | $F_c$, $F_f$, $F_p$, $N_e$, $T_c$, $R_a$/$R_z$/$R_q$, $V_b$ |
+| Planejamentos | Fatorial 2^k (2kI, 2kII) + PCC |
+| Fatores | Liga, $v_c$, $f$, $a_p$, lubri-refrigeração |
+
+: Síntese do projeto experimental do estudo de caso. {#tbl-sintese7}
+
+Três ideias devem permanecer:
+
+1. **O projeto aplica a Parte II à risca.** Fatorial para triagem, PCC para modelagem — a progressão metodológica dos Capítulos @sec-cap4 e @sec-cap5 tornada experimento concreto.
+2. **Cada liga tem um papel.** Extremos para os efeitos, intermediárias para a regressão, uma reservada para validação — um desenho que garante robustez.
+3. **Visão geral aqui, detalhes no apêndice.** O rigor está preservado; a instrumentação completa vive no Apêndice A, sem obstruir a lógica do experimento.
+
+Com o experimento projetado, os próximos capítulos apresentam seus frutos: o Capítulo @sec-cap8 traz os efeitos fatoriais — quais fatores realmente importam para cada resposta.
+
+## Para saber mais {#sec-cap7-saibamais}
 
 ::: {.callout-tip}
 ## Aprofundamento
-Referências complementares e leituras recomendadas para este capítulo serão adicionadas no decorrer da redação.
+Os detalhes de instrumentação, equipamentos e cadeias de medição deste estudo estão no **Apêndice A**. Para fundamentos de metrologia aplicada à usinagem, @machado2009teoria. Sobre técnicas de lubri-refrigeração e MQF na usinagem de alumínio, @braga2002minimum (furação de liga Al-Si com MQF) e @dasilva1999cutting. Os planejamentos aqui aplicados seguem @montgomery2005design, detalhado nos Capítulos @sec-cap4 e @sec-cap5.
 :::
 
 ## Exercícios propostos {.unnumbered}
 
-::: {.callout-important}
-## Em desenvolvimento
-Exercícios serão adicionados durante a Fase 5 do roadmap.
-:::
+1. **Papéis das ligas.** Explique por que o estudo reservou a liga 6351-T6 exclusivamente para validação, sem usá-la na construção dos modelos. Que problema essa separação previne?
+
+2. **Fator Liga.** No fatorial, o fator "Liga" variou entre 1350-O (−1) e 7075-T6 (+1). Que propriedades mecânicas essa variação representa? Por que escolher justamente os extremos?
+
+3. **Dois planejamentos fatoriais.** Por que foram necessários dois planejamentos (2kI e 2kII) em vez de um só? Como as três condições de lubri-refrigeração motivaram esse desdobramento?
+
+4. **Variáveis de entrada.** O estudo tratou propriedades mecânicas (R, Ar, Hd) e condições de corte ($v_c$, $f$, $a_p$, lub) como variáveis de entrada. Classifique cada uma como fator controlável no processo ou propriedade do material. Qual a implicação dessa distinção?
+
+5. **Estratégia em dois estágios.** Descreva a progressão fatorial → PCC aplicada no estudo. Por que rodar o fatorial antes do PCC, em vez de ir direto ao PCC?
+
+6. **Visão geral vs. detalhe (integrador).** Este capítulo descreve o dinamômetro apenas como "instrumento que mede as forças", remetendo os detalhes ao Apêndice A. Argumente a favor dessa separação do ponto de vista do leitor. Quando o detalhe de instrumentação é essencial no corpo do texto, e quando é melhor no apêndice?

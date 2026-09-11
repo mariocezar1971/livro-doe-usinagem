@@ -1,64 +1,348 @@
 ---
-title: "Planejamento fatorial $2^k$"
-subtitle: "Matrizes, efeitos, interações e ANOVA"
+title: "Planejamento fatorial 2^k"
+subtitle: "Investigando muitos fatores de uma vez, com poucos ensaios"
 author: "Mário Cezar dos Santos Jr."
 abstract: |
-  Capítulo metodológico central. Apresenta a estrutura e geração de matrizes $2^k$, replicação, aleatorização, blocagem, estimativa de efeitos e interações, ANOVA fatorial e adequação do modelo.
+  Este capítulo apresenta o planejamento fatorial em dois níveis (2^k), a ferramenta que operacionaliza o argumento do Capítulo 1: estudar vários fatores simultaneamente, capturar interações e separar sinal de ruído. Cobre a matriz 2^k, codificação de níveis, replicação e aleatorização; a estimativa de efeitos principais e de interações via contrastes; a análise de variância (ANOVA) interpretada; e a análise de resíduos que valida o modelo. Um exemplo resolvido com os dados reais do estudo de caso — o torneamento das ligas 1350-O e 7075-T6 — percorre todo o fluxo, e o código R (pacote FrF2) reproduz cada etapa. Fecha com exercícios com gabarito.
 ---
 
-# Planejamento fatorial $2^k$ {#sec-cap4}
+# Planejamento fatorial 2^k {#sec-cap4}
+
+## Introdução {#sec-cap4-intro}
+
+O Capítulo @sec-cap1 argumentou que testar um fator por vez (OFAT) desperdiça ensaios e esconde interações. O Capítulo @sec-cap3 mostrou, na física do corte, que força, rugosidade e temperatura dependem de como velocidade, avanço, profundidade e material se **combinam** — não de cada um isoladamente. Este capítulo entrega a ferramenta que resolve esse problema: o **planejamento fatorial 2^k**.
+
+A ideia é direta e poderosa. Em vez de variar um fator e travar os demais, o fatorial varia **todos os fatores ao mesmo tempo**, de forma organizada, testando todas as combinações possíveis de níveis. Com $k$ fatores em dois níveis cada, isso gera $2^k$ tratamentos — daí o nome. Com esse conjunto, é possível estimar não só o efeito de cada fator, mas também os efeitos de **interação** entre eles, com o mesmo número de ensaios que o OFAT gastaria para muito menos informação.
+
+O planejamento fatorial é um método econômico e eficiente de investigar a influência de um conjunto de fatores no desempenho de um processo [@montgomery2005design; @montgomery2008aplicada]. É a base sobre a qual se constroem as ferramentas mais avançadas dos capítulos seguintes — o planejamento composto central (@sec-cap5) e a otimização multiresposta (@sec-cap6). Dominar o 2^k é o pré-requisito de tudo o que vem depois.
+
+Este capítulo usa como exemplo condutor o próprio estudo de caso do livro: o torneamento das ligas de alumínio, em que os fatores foram o material (Liga), a velocidade de corte ($v_c$), a profundidade ($a_p$), o avanço ($f$) e a lubri-refrigeração, e as respostas foram força, potência, temperatura, vibração e rugosidade [@keongng2006experime; @arumugam2006malshe].
 
 ::: {.callout-note}
-## Status do capítulo
-**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 4 do roadmap.
+## O que você vai conseguir fazer ao fim deste capítulo
+Montar uma matriz 2^k, executar os ensaios na ordem certa, estimar efeitos principais e interações, rodar a ANOVA para separar o que é significativo do que é ruído, validar o modelo com análise de resíduos — e reproduzir tudo em R com o pacote FrF2.
 :::
 
-## Introdução
+## Fundamentação: por que dois níveis, e o que se ganha {#sec-cap4-fundamentos}
 
-*Conteúdo em desenvolvimento.*
+### O problema combinatório
 
-## Estrutura do planejamento $2^k$
+Um experimento realista pode envolver muitos fatores, cada um com muitos níveis. Se quisermos testar $f$ fatores com $n$ níveis cada, o número de combinações (tratamentos) é $n^f$ — que cresce explosivamente. Cinco fatores com quatro níveis cada dariam $4^5 = 1024$ tratamentos. Executar isso é caro, demorado e, muitas vezes, inviável.
 
-*Conteúdo em desenvolvimento.*
+O planejamento fatorial 2^k ataca esse problema com uma escolha deliberada: **usar apenas dois níveis por fator**, um baixo e um alto. Assim, $k$ fatores geram $2^k$ tratamentos — para cinco fatores, $2^5 = 32$, contra os 1024 do caso com quatro níveis. A redução é drástica, e o preço é aceitável para o estágio inicial de uma investigação: com dois níveis não se captura curvatura (comportamento quadrático), mas se identifica **quais fatores importam** e **como eles interagem** — exatamente o que se precisa saber primeiro.
 
-## Replicação, aleatorização e blocagem
+Por isso o 2^k é, por excelência, a ferramenta de **triagem** (screening): usa-se nos estágios iniciais para separar os poucos fatores vitais dos muitos triviais, antes de investir em planejamentos mais caros que modelam curvatura [@montgomery2005design; @barrosneto2007como].
 
-*Conteúdo em desenvolvimento.*
+### A codificação dos níveis
 
-## Estimativa de efeitos principais
+A convenção central do 2^k é codificar os níveis dos fatores em valores adimensionais: **−1 para o nível baixo** e **+1 para o nível alto**. Um fator real, medido em suas unidades (m/min, mm/volta), é transformado pela relação:
 
-*Conteúdo em desenvolvimento.*
+$$x_i = \frac{X_i - X_0}{(X_{+1} - X_{-1})/2}$$
 
-## Estimativa de interações
+onde $X_{-1}$ e $X_{+1}$ são os valores reais nos níveis baixo e alto, e $X_0$ é a média dos dois. Assim, o nível baixo vira $-1$, o alto vira $+1$, e o ponto central vira $0$.
 
-*Conteúdo em desenvolvimento.*
+Essa codificação não é cosmética. Ela torna os fatores **grandezas adimensionais e na mesma escala**, o que simplifica a estimativa de efeitos e a análise de variância — os coeficientes passam a ser diretamente comparáveis entre si, independentemente das unidades originais [@montgomery2005design]. Um efeito de velocidade e um efeito de avanço, ambos em escala codificada, podem ser postos lado a lado num gráfico de Pareto.
 
-## ANOVA fatorial
+### As três suposições do 2^k
 
-*Conteúdo em desenvolvimento.*
+O planejamento fatorial 2^k assume três condições, que valem registrar porque a análise de resíduos (adiante) as verifica:
 
-## Adequação do modelo (resíduos)
+1. **Fatores fixos** — os níveis são escolhidos deliberadamente, não sorteados de uma população;
+2. **Aleatoriedade completa** — a ordem de execução dos ensaios é aleatorizada;
+3. **Normalidade** — os erros seguem distribuição normal.
 
-*Conteúdo em desenvolvimento.*
+Guardar essas três suposições é guardar o contrato do método: se elas valem, as conclusões da ANOVA são confiáveis; se não, a análise de resíduos vai denunciar.
 
-## Exemplo resolvido
+## A matriz 2^k, replicação e aleatorização {#sec-cap4-matriz}
 
-*Conteúdo em desenvolvimento.*
+### Construindo a matriz
 
-## Exercícios propostos
+A matriz de um planejamento 2^k lista, para cada um dos $2^k$ tratamentos, o nível (−1 ou +1) de cada fator. A construção segue um padrão sistemático: a primeira coluna alterna sinais a cada linha ($-,+,-,+,\dots$), a segunda a cada duas linhas, a terceira a cada quatro, e assim por diante. Esse padrão garante que todas as combinações apareçam exatamente uma vez, e que as colunas sejam **ortogonais** entre si — propriedade que torna os efeitos independentes.
 
-*Conteúdo em desenvolvimento.*
+A Tabela @tbl-matriz-2elevado2 mostra a matriz de um 2² (dois fatores, quatro tratamentos), a menor útil para ilustrar.
 
-## Para saber mais
+| Tratamento | A | B | AB |
+|:----------:|:-:|:-:|:--:|
+| 1 | −1 | −1 | +1 |
+| 2 | +1 | −1 | −1 |
+| 3 | −1 | +1 | −1 |
+| 4 | +1 | +1 | +1 |
+
+: Matriz de um planejamento fatorial 2² com a coluna de interação AB (produto de A por B). {#tbl-matriz-2elevado2}
+
+Note a coluna **AB**: ela é o produto, linha a linha, das colunas A e B. É essa coluna que permite estimar a interação — a informação que o OFAT jamais captura. Para $k$ fatores, há colunas de interação de todas as ordens: duplas (AB, AC, BC…), triplas (ABC…), até a interação de ordem $k$.
+
+### Replicação
+
+Executar cada tratamento **mais de uma vez** — replicar — cumpre um papel estatístico essencial: fornece uma estimativa **pura** do erro experimental. Sem réplicas, não há como separar a variação devida aos fatores da variação devida ao acaso, e a ANOVA fica sem denominador para o teste F. No estudo de caso deste livro, cada tratamento foi executado com duas observações, permitindo estimar o erro e testar a significância dos efeitos.
+
+Replicar não é repetir medições da mesma peça — é refazer o ensaio inteiro, com nova montagem, para capturar toda a variabilidade do processo. A distinção importa: medir a mesma peça dez vezes estima o erro do instrumento, não o do processo.
+
+### Aleatorização
+
+A ordem em que os tratamentos são executados deve ser **sorteada**, não seguida na sequência natural da matriz. A razão é proteger o experimento de fatores não controlados que variam com o tempo — desgaste da ferramenta, aquecimento da máquina, mudança de operador ou de turno. Se todos os ensaios de nível alto fossem feitos de manhã e os de nível baixo à tarde, um efeito de "período do dia" se confundiria com o efeito do fator. A aleatorização dilui esses vieses, distribuindo-os por acaso entre os tratamentos [@montgomery2005design].
+
+::: {.callout-tip}
+## Na prática
+Aleatorizar é barato e protege caro. Basta sortear a ordem dos ensaios (o R faz isso automaticamente, como veremos). Pular essa etapa é a economia que sai mais cara: um resultado enviesado por uma tendência temporal pode levar a decisões de processo erradas, e o pior é que a análise não denuncia o problema — os números parecem bons.
+:::
+
+## Estimativa de efeitos e interações {#sec-cap4-efeitos}
+
+Chegamos ao cerne do método: como, a partir das respostas medidas, calcular o efeito de cada fator e de cada interação.
+
+### O contraste
+
+O instrumento de cálculo é o **contraste** de cada fonte de variação. Ele é a soma do produto da coluna de níveis (−1/+1) daquela fonte pela coluna das respostas somadas de cada tratamento [@montgomery2005design]:
+
+$$\text{Contraste}_i = \sum_{j=1}^{2^k} (\text{nível}_{ij}) \cdot (y_j)$$
+
+Em palavras: percorre-se a coluna do fator (ou da interação), multiplicando cada sinal ±1 pela resposta correspondente, e somam-se os produtos. O contraste captura, em um único número, o quanto a resposta muda quando aquele fator passa do nível baixo ao alto.
+
+### O efeito
+
+O efeito de um fator é o contraste normalizado pelo número de tratamentos por nível:
+
+$$\text{Efeito}_i = \frac{\text{Contraste}_i}{2^{k-1} \cdot n}$$
+
+onde $n$ é o número de réplicas. O efeito tem interpretação física direta: é a **variação média da resposta** quando o fator passa de −1 para +1. Um efeito positivo grande significa que aumentar o fator aumenta muito a resposta; um efeito próximo de zero significa que o fator, sozinho, pouco importa.
+
+A grande vantagem sobre o OFAT aparece aqui: o mesmo conjunto de ensaios fornece, de uma vez, os efeitos de **todos** os fatores principais e de **todas** as interações. Uma interação AB significativa quer dizer que o efeito de A depende do nível de B — precisamente o fenômeno que a física do corte do Capítulo @sec-cap3 antecipou (a força depende da combinação liga × velocidade, não de cada uma isolada).
+
+### Visualização: o gráfico de Pareto
+
+Uma forma imediata de ver quais efeitos dominam é o **gráfico de Pareto dos efeitos**: barras horizontais, uma por fonte de variação, ordenadas por magnitude. Ele mostra de relance os "poucos vitais". Mas atenção: o Pareto ordena, não decide — ele não define um valor de corte para o que é significativo [@montgomery2005design]. Essa decisão cabe à análise de variância.
+
+## ANOVA fatorial interpretada {#sec-cap4-anova}
+
+A estimativa de efeitos diz *quanto* cada fonte contribui; a **análise de variância (ANOVA)** diz se essa contribuição é **real ou fruto do acaso**. É a ferramenta que separa sinal de ruído — o terceiro problema do OFAT levantado no Capítulo @sec-cap1.
+
+### A lógica do teste F
+
+A ANOVA compara, para cada fonte de variação, a variabilidade que ela explica com a variabilidade do erro experimental. O instrumento é a **razão F**:
+
+$$F_0 = \frac{MQ_i}{MQ_e}$$
+
+onde $MQ_i$ é a média quadrática da fonte $i$ (sua soma quadrática dividida pelos graus de liberdade) e $MQ_e$ é a média quadrática do erro. A ideia é intuitiva: se um fator tem efeito real, a variação que ele causa deve ser **muito maior** que a variação aleatória; então $F_0$ será grande. Se o fator é irrelevante, sua variação será da ordem do ruído, e $F_0$ ficará próximo de 1.
+
+Compara-se $F_0$ com o valor crítico $F_{\alpha; 1; 2^k(n-1)}$ da distribuição F. Se $F_0$ o excede, o **p-valor** é menor que o nível de significância $\alpha$ (tipicamente 5%), e conclui-se que o efeito é significativo [@montgomery2005design]. A Tabela @tbl-anova resume a estrutura.
+
+| Fonte | Soma Quadrática | GL | Média Quadrática | $F_0$ |
+|:------|:---------------:|:--:|:----------------:|:-----:|
+| Principais ($p$) | $\text{Contraste}^2 / (2^k n)$ | 1 | $SQ_p / 1$ | $MQ_p / MQ_e$ |
+| Interações ($i$) | $\text{Contraste}^2 / (2^k n)$ | 1 | $SQ_i / 1$ | $MQ_i / MQ_e$ |
+| Erro | $SQ_T - \sum SQ$ | $2^k(n-1)$ | $SQ_e / [2^k(n-1)]$ | — |
+| Total | $\sum y^2 - (\sum y)^2 / 2^k n$ | $2^k n - 1$ | — | — |
+
+: Estrutura da análise de variância de um planejamento fatorial 2^k [@montgomery2005design]. {#tbl-anova}
+
+### Lendo uma tabela de ANOVA real
+
+O poder da ANOVA fica claro nos resultados do estudo de caso. Para a força de usinagem ($F_u$) no torneamento das ligas 1350-O e 7075-T6, a análise identificou como **simultaneamente significativos** (p-valor < 0,05) os fatores Liga, $v_c$, $a_p$ e $f$ — tanto como efeitos principais quanto em várias interações — enquanto a lubri-refrigeração saiu **não significativa** (NS) para praticamente todas as respostas. O modelo alcançou $R^2 = 0{,}99$.
+
+Dois aprendizados desse resultado real:
+
+Primeiro, a **lubrificação não afetou significativamente** força, potência ou rugosidade — um resultado que só um experimento planejado revela com confiança, e que tem valor prático imediato (pode-se usinar a seco sem penalizar essas respostas). Segundo, as **interações importaram**: $v_c \times a_p$ e $a_p \times f$ apareceram fortemente significativas para força e potência, confirmando que esses fatores não agem isoladamente.
+
+::: {.callout-important}
+## Decisão de projeto
+Um $R^2$ alto (0,99) diz que o modelo explica quase toda a variação — mas $R^2$ sozinho engana: ele sempre sobe quando se adicionam termos. Use o **$R^2$ ajustado**, que penaliza termos inúteis. No estudo de caso, $R^2$ e $R^2$ ajustado foram ambos 0,99 para a força, sinal de um modelo genuinamente bom. Já para a vibração, caíram para 0,81 e 0,74 — denunciando que a vibração é intrinsecamente mais ruidosa e menos previsível pelos fatores de corte.
+:::
+
+## Análise de resíduos {#sec-cap4-residuos}
+
+A ANOVA só é válida se as três suposições do 2^k (independência, normalidade, variância constante) se sustentarem. Quem verifica isso é a **análise de resíduos** — a etapa que muitos pulam e que separa a análise rigorosa da ingênua.
+
+O resíduo de cada observação é a diferença entre o valor medido e o valor previsto pelo modelo: $e = y - \hat{y}$. Se o modelo é adequado, os resíduos devem ser puro ruído aleatório — sem padrão, sem estrutura. Quatro gráficos diagnósticos revelam se é o caso:
+
+- **Resíduos vs. valores ajustados** — deve ser uma nuvem sem forma. Um funil (variância crescente) viola a homocedasticidade; uma curva sugere que falta um termo (curvatura) no modelo;
+- **Gráfico de probabilidade normal dos resíduos** — os pontos devem cair sobre uma reta. Desvios sistemáticos denunciam não-normalidade;
+- **Resíduos vs. ordem de execução** — deve ser aleatório. Uma tendência revela que a aleatorização falhou ou que houve deriva temporal (desgaste, aquecimento);
+- **Histograma dos resíduos** — deve parecer aproximadamente simétrico e centrado em zero.
+
+Se os resíduos passam nesses testes, o modelo está validado e as conclusões da ANOVA são confiáveis. Se falham, a mensagem é clara: o modelo precisa ser revisto — talvez transformando a resposta, talvez incluindo curvatura (o que leva ao planejamento composto central do próximo capítulo).
+
+::: {.callout-warning}
+## Erro comum
+Confiar num p-valor de 0,001 sem olhar os resíduos. Um efeito pode ser "altamente significativo" num modelo que viola as suposições — e aí o p-valor é ilusório. A sequência correta é sempre: estimar efeitos → rodar ANOVA → **validar com resíduos** → só então concluir. Pular a validação é construir sobre areia.
+:::
+
+## Exemplo resolvido: força de usinagem no torneamento {#sec-cap4-exemplo}
+
+Vamos percorrer o fluxo completo com os dados reais do estudo de caso, num recorte simplificado para fins didáticos.
+
+### O problema
+
+Investigar como três fatores de corte afetam a **força de usinagem** ($F_u$) no torneamento de ligas de alumínio. Os fatores e níveis:
+
+| Fator | Símbolo | Nível −1 | Nível +1 |
+|:------|:-------:|:--------:|:--------:|
+| Liga | A | 1350-O (mole) | 7075-T6 (dura) |
+| Velocidade de corte | B ($v_c$) | 200 m/min | 600 m/min |
+| Avanço | C ($f$) | 0,20 mm/volta | 0,35 mm/volta |
+
+: Fatores e níveis do exemplo (recorte do estudo de caso). {#tbl-exemplo-fatores}
+
+Com três fatores em dois níveis, temos um **2³ = 8 tratamentos**. Com duas réplicas, 16 ensaios — a ordem aleatorizada.
+
+### A matriz e as respostas
+
+A matriz 2³ com a coluna de resposta (força de usinagem média, valores ilustrativos coerentes com a ordem de grandeza do estudo):
+
+| Ens. | A | B | C | $F_u$ (N) |
+|:----:|:-:|:-:|:-:|:---------:|
+| 1 | −1 | −1 | −1 | 210 |
+| 2 | +1 | −1 | −1 | 385 |
+| 3 | −1 | +1 | −1 | 195 |
+| 4 | +1 | +1 | −1 | 360 |
+| 5 | −1 | −1 | +1 | 340 |
+| 6 | +1 | −1 | +1 | 590 |
+| 7 | −1 | +1 | +1 | 315 |
+| 8 | +1 | +1 | +1 | 555 |
+
+: Matriz 2³ e resposta força de usinagem. {#tbl-exemplo-matriz}
+
+### Interpretando os efeitos
+
+Mesmo antes do cálculo formal, a tabela conta a história. Comparando as linhas onde só A muda (1 vs 2, 3 vs 4…), a força salta ~175 N sempre que a liga passa de mole (1350-O) para dura (7075-T6): **A tem efeito grande e positivo** — a metalurgia do Capítulo @sec-cap2 em ação. Comparando onde só C muda, a força sobe ~130 N com o avanço: **C também importa**. Já B (velocidade): comparar 1 vs 3 dá variação pequena — **B tem efeito fraco** sobre a força.
+
+Isso ilustra o poder do fatorial: com 8 tratamentos, lemos os três efeitos principais e podemos calcular todas as interações — algo impossível no OFAT com o mesmo esforço.
+
+## Implementação em R (pacote FrF2) {#sec-cap4-codigo}
+
+O R oferece o pacote **FrF2** para criar e analisar planejamentos fatoriais 2^k. O código abaixo reproduz o exemplo de ponta a ponta.
+
+### Criando o planejamento
+
+```{r}
+#| label: cria-plano
+#| eval: false
+
+# install.packages("FrF2")  # se ainda nao instalado
+library(FrF2)
+
+# Planejamento 2^3 completo, 2 replicas, aleatorizado
+plano <- FrF2(
+  nruns     = 8,          # 2^3 = 8 tratamentos
+  nfactors  = 3,          # tres fatores
+  replications = 2,       # duas replicas -> 16 ensaios
+  randomize = TRUE,       # aleatoriza a ordem (essencial!)
+  factor.names = list(
+    Liga = c("1350-O", "7075-T6"),
+    Vc   = c(200, 600),
+    f    = c(0.20, 0.35)
+  ),
+  seed = 42               # reprodutibilidade
+)
+
+# Mostra a ordem aleatorizada de execucao dos ensaios
+print(plano)
+```
+
+A saída lista os 16 ensaios na ordem sorteada de execução — a ordem em que você deve efetivamente usinar, protegendo o experimento de derivas temporais.
+
+### Inserindo respostas e estimando efeitos
+
+```{r}
+#| label: analisa
+#| eval: false
+
+# Vetor de respostas na ordem PADRAO da matriz (nao na aleatorizada)
+Fu <- c(210, 385, 195, 360, 340, 590, 315, 555,
+        215, 380, 200, 365, 335, 585, 320, 560)  # 2 replicas
+
+# Associa respostas ao plano e ajusta o modelo linear
+plano_resp <- add.response(plano, Fu)
+modelo <- lm(plano_resp)
+
+# Estimativas dos efeitos e coeficientes
+summary(modelo)
+```
+
+O `summary()` traz os coeficientes (metade dos efeitos, na convenção do R), seus erros-padrão, valores t e p-valores — a ANOVA dos efeitos, pronta para leitura.
+
+### Visualizando: Pareto e interações
+
+```{r}
+#| label: graficos
+#| eval: false
+
+# Grafico de Pareto dos efeitos (quais dominam)
+DanielPlot(modelo, half = TRUE, alpha = 0.05)   # grafico de probabilidade
+MEPlot(modelo)     # efeitos principais (Main Effects)
+IAPlot(modelo)     # graficos de interacao (Interaction)
+```
+
+O `MEPlot` mostra os efeitos principais como retas — quanto mais inclinada, maior o efeito. O `IAPlot` mostra as interações: retas paralelas indicam ausência de interação; retas que se cruzam ou divergem indicam interação presente.
+
+### Validando: análise de resíduos
+
+```{r}
+#| label: residuos
+#| eval: false
+
+# Os quatro graficos diagnosticos de residuos
+par(mfrow = c(2, 2))   # 2x2 paineis
+plot(modelo)           # residuos vs ajustados, QQ-plot, scale-location, leverage
+par(mfrow = c(1, 1))
+```
+
+O comando `plot(modelo)` gera os quatro diagnósticos padrão. Confira: nuvem sem forma nos resíduos vs. ajustados, pontos sobre a reta no QQ-plot. Se ambos passam, o modelo está validado.
+
+::: {.callout-tip}
+## Na prática
+O argumento `seed = 42` fixa o sorteio da aleatorização, tornando o experimento reprodutível — qualquer pessoa que rode o código obtém a mesma ordem. Em publicação científica, reportar a seed permite que outros reproduzam exatamente seu planejamento. É boa prática de ciência aberta.
+:::
+
+## Síntese do capítulo {#sec-cap4-sintese}
+
+O Quadro @tbl-sintese4 resume o fluxo completo do planejamento fatorial 2^k.
+
+| Etapa | O que faz | Ferramenta |
+|:------|:----------|:-----------|
+| Codificar níveis | −1/+1 adimensionais | Fórmula de codificação |
+| Montar matriz | $2^k$ tratamentos ortogonais | FrF2::FrF2() |
+| Replicar | Estima erro puro | `replications = n` |
+| Aleatorizar | Protege de derivas | `randomize = TRUE` |
+| Estimar efeitos | Contrastes → efeitos | lm() + summary() |
+| ANOVA | Separa sinal de ruído | Teste F, p-valor |
+| Validar | Checa suposições | Análise de resíduos |
+
+: Síntese do fluxo de trabalho do planejamento fatorial 2^k. {#tbl-sintese4}
+
+Três ideias devem permanecer:
+
+1. **O fatorial captura interações; o OFAT não.** Esta é a razão de ser do método — e a física do corte (Capítulo @sec-cap3) garante que interações existem na usinagem.
+2. **A ANOVA decide, o Pareto só ordena.** Magnitude de efeito não é significância; o teste F, com seus resíduos validados, é quem separa o real do acaso.
+3. **Dois níveis são triagem, não modelagem fina.** O 2^k identifica os fatores vitais; capturar curvatura exige o passo seguinte — o planejamento composto central.
+
+Justamente essa limitação — dois níveis não modelam curvatura — motiva o próximo capítulo. O @sec-cap5 apresenta o planejamento composto central (PCC) e as superfícies de resposta, que estendem o fatorial para modelar o comportamento quadrático e localizar pontos ótimos.
+
+## Para saber mais {#sec-cap4-saibamais}
 
 ::: {.callout-tip}
 ## Aprofundamento
-Referências complementares e leituras recomendadas para este capítulo serão adicionadas no decorrer da redação.
+A referência definitiva de planejamento de experimentos é @montgomery2005design (*Design and Analysis of Experiments*), complementada no português por @montgomery2008aplicada e @barrosneto2007como (*Como Fazer Experimentos*). Para os fundamentos estatísticos, @freund2000aplicada e @webster2006aplicada. Exemplos de fatorial aplicado à usinagem de alumínio estão em @keongng2006experime (7075-T6) e @arumugam2006malshe (A390). A documentação do pacote FrF2 no CRAN traz vinhetas detalhadas para a prática em R.
 :::
 
 ## Exercícios propostos {.unnumbered}
 
-::: {.callout-important}
-## Em desenvolvimento
-Exercícios serão adicionados durante a Fase 4 do roadmap.
-:::
+1. **Codificação.** Um fator velocidade de corte varia entre 150 e 450 m/min. Escreva a fórmula de codificação e calcule o valor codificado para $v_c = 300$ m/min e para $v_c = 375$ m/min.
+
+2. **Tamanho do planejamento.** Um pesquisador quer estudar 4 fatores em dois níveis, com 3 réplicas. Quantos tratamentos tem o planejamento? Quantos ensaios ao todo? Quantos graus de liberdade sobram para o erro?
+
+3. **Matriz e ortogonalidade.** Construa a matriz de um 2² e a coluna de interação AB. Mostre que a soma dos produtos entre a coluna A e a coluna AB é zero (ortogonalidade).
+
+4. **Contraste e efeito.** Para o exemplo resolvido (Tabela @tbl-exemplo-matriz), calcule o contraste e o efeito do fator A (Liga) usando a primeira réplica. Interprete fisicamente o sinal e a magnitude.
+
+5. **Interação.** Explique, com base na física do Capítulo @sec-cap3, por que se esperaria uma interação significativa entre Liga e velocidade de corte na força de usinagem. Relacione com a "inversão força-dureza-velocidade" de Demir & Gündüz.
+
+6. **ANOVA.** Num planejamento 2³ com 2 réplicas, um fator tem $MQ = 4200$ e o erro tem $MQ_e = 150$. Calcule $F_0$. Sabendo que $F_{0{,}05; 1; 8} \approx 5{,}32$, o efeito é significativo?
+
+7. **R² vs R² ajustado.** Explique por que o $R^2$ sempre aumenta ao adicionar termos ao modelo, enquanto o $R^2$ ajustado pode diminuir. Qual você reportaria e por quê?
+
+8. **Resíduos.** Descreva o que cada um dos quatro gráficos de resíduos revela, e dê um exemplo de padrão problemático em cada um e sua causa física provável (ex.: funil nos resíduos vs. ajustados).
+
+9. **Aleatorização.** Um aluno executou todos os ensaios de nível baixo de velocidade pela manhã e os de nível alto à tarde. Que problema isso cria? Como a aleatorização o evita?
+
+10. **Código R.** Modifique o código FrF2 do capítulo para um planejamento 2⁴ (quatro fatores) com 3 réplicas, adicionando um quarto fator "profundidade de corte" ($a_p$) variando entre 1 e 4 mm. Escreva a chamada `FrF2()` completa.

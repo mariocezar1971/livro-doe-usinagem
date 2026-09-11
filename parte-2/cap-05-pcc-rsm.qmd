@@ -1,64 +1,273 @@
 ---
-title: "PCC e superfícies de resposta"
-subtitle: "Modelos de segunda ordem e otimização local"
+title: "Planejamento composto central e superfícies de resposta"
+subtitle: "Modelando curvatura e localizando o ótimo"
 author: "Mário Cezar dos Santos Jr."
 abstract: |
-  Estende o fatorial puro para modelagem de superfícies de resposta via Planejamento Composto Central (PCC). Cobre regressão múltipla com termos quadráticos, curvas de nível, vetor gradiente e steepest ascent.
+  Este capítulo estende o fatorial 2^k para modelar curvatura e localizar condições ótimas de operação. Parte das limitações do fatorial puro — dois níveis não capturam comportamento quadrático — e apresenta o planejamento composto central (PCC), que adiciona pontos axiais e centrais para estimar curvatura com poucos ensaios extras. Cobre a regressão múltipla em forma matricial e o método dos mínimos quadrados; o modelo de segunda ordem da metodologia de superfícies de resposta (RSM); e a interpretação geométrica via curvas de nível e vetor gradiente. Um exemplo com o pacote rsm do R, ancorado nos fatores reais do estudo de caso (velocidade, avanço, profundidade), percorre todo o fluxo, com visualizações 3D. Fecha com exercícios com gabarito.
 ---
 
-# PCC e superfícies de resposta {#sec-cap5}
+# Planejamento composto central e superfícies de resposta {#sec-cap5}
+
+## Introdução {#sec-cap5-intro}
+
+O Capítulo @sec-cap4 entregou o fatorial 2^k — a ferramenta de triagem que identifica quais fatores importam e como interagem. Mas terminou com uma limitação declarada: **dois níveis não capturam curvatura**. Um fatorial 2^k só "enxerga" retas; se a relação entre um fator e a resposta é curva — se existe um máximo ou mínimo no interior da faixa estudada — o 2^k passa por cima dele sem perceber.
+
+Isso é um problema sério para quem otimiza. Na usinagem, muitas respostas têm ótimos internos: existe uma velocidade de corte que minimiza a força, um avanço que equilibra rugosidade e produtividade. Um modelo linear jamais localiza esses pontos, porque a reta não tem máximo nem mínimo no interior — ela só cresce ou só decresce.
+
+Este capítulo resolve a limitação em dois passos. Primeiro, o **planejamento composto central (PCC)** estende a matriz fatorial com pontos que permitem estimar termos quadráticos — a curvatura. Segundo, a **metodologia de superfícies de resposta (RSM)** usa o modelo de segunda ordem resultante para mapear a resposta como uma superfície tridimensional e localizar o ótimo, com o auxílio de curvas de nível e do vetor gradiente.
+
+O fio condutor continua sendo o estudo de caso: no torneamento das ligas de alumínio, os fatores quantitativos significativos identificados no fatorial — velocidade de corte ($v_c$), avanço ($f$) e profundidade ($a_p$) — foram levados ao PCC para modelar suas superfícies de resposta [@correia2005; @montgomery2005design].
 
 ::: {.callout-note}
-## Status do capítulo
-**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 4 do roadmap.
+## O que você vai conseguir fazer ao fim deste capítulo
+Reconhecer quando o fatorial é insuficiente; construir um PCC a partir de um fatorial existente; ajustar um modelo de segunda ordem por mínimos quadrados; interpretar a superfície via curvas de nível e gradiente; e reproduzir tudo em R com o pacote rsm, incluindo visualizações 3D.
 :::
 
-## Introdução
+## As limitações do fatorial puro {#sec-cap5-limitacoes}
 
-*Conteúdo em desenvolvimento.*
+### O que dois níveis não veem
 
-## Limitações do fatorial puro
+Um fator estudado em apenas dois níveis (−1 e +1) fornece dois pontos. Por dois pontos passa uma única reta — e só uma reta. Não há informação para distinguir uma relação genuinamente linear de uma curva que, por acaso, passa pelos mesmos dois pontos. O modelo do fatorial 2^k, portanto, é intrinsecamente de **primeira ordem**:
 
-*Conteúdo em desenvolvimento.*
+$$y = \beta_0 + \sum_{i=1}^{k} \beta_i x_i + \sum_{i<j} \beta_{ij} x_i x_j + \varepsilon$$
 
-## Construção do PCC
+Ele tem termos principais ($\beta_i x_i$) e de interação ($\beta_{ij} x_i x_j$), mas **nenhum termo quadrático** ($\beta_{ii} x_i^2$). É esse termo que descreve curvatura, e ele exige um terceiro nível para ser estimado — porque, geometricamente, só por três pontos se determina uma parábola.
 
-*Conteúdo em desenvolvimento.*
+### O ponto central como detector de curvatura
 
-## Regressão múltipla quadrática
+Há um truque elegante para *detectar* (ainda que não modelar) curvatura sem sair do fatorial: adicionar **réplicas no ponto central** (todos os fatores em zero). Se a média das respostas no centro difere significativamente da média dos pontos fatoriais, há curvatura — a superfície não é plana. É um teste barato: bastam algumas rodadas no centro para saber se vale a pena investir num planejamento de segunda ordem.
 
-*Conteúdo em desenvolvimento.*
+Mas detectar não é modelar. Uma vez confirmada a curvatura, é preciso um planejamento que a **estime** — e é aí que entra o PCC.
 
-## Superfícies de resposta
+::: {.callout-tip}
+## Na prática
+Sempre inclua pontos centrais, mesmo num fatorial de triagem. Eles custam pouco (poucos ensaios extras), fornecem uma estimativa independente do erro puro e, de quebra, sinalizam se há curvatura à espreita. É um seguro barato: se o teste do ponto central acusa curvatura, você já sabe que precisará do PCC antes de tentar otimizar.
+:::
 
-*Conteúdo em desenvolvimento.*
+## Construção do planejamento composto central {#sec-cap5-pcc}
 
-## Curvas de nível e vetor gradiente
+O PCC foi projetado para estimar um modelo de segunda ordem com o **menor número possível de ensaios**. Ele combina três tipos de pontos, cada um com um papel.
 
-*Conteúdo em desenvolvimento.*
+### Os três blocos de pontos
 
-## Direção de melhoria (steepest ascent)
+Para $k$ fatores significativos, o PCC é montado assim [@montgomery2005design; @correia2005]:
 
-*Conteúdo em desenvolvimento.*
+1. **Pontos fatoriais** — os $2^k$ tratamentos do fatorial (níveis ±1). Estimam os efeitos principais e as interações. **Reaproveitam-se** do fatorial já executado;
+2. **Pontos axiais (ou estrela)** — $2k$ tratamentos, um par por fator, posicionados a uma distância $\pm\alpha$ do centro ao longo de cada eixo (com os demais fatores em zero). São eles que fornecem o terceiro nível necessário para estimar os termos quadráticos;
+3. **Pontos centrais** — $n_0$ réplicas no centro (todos os fatores em zero). Estimam o erro puro e a curvatura geral.
 
-## Exemplo resolvido
+O total é $2^k + 2k + n_0$ tratamentos. Para três fatores com quatro pontos centrais: $8 + 6 + 4 = 18$ ensaios — modesto para a riqueza de informação (todos os efeitos principais, interações e curvaturas). Essa economia é a grande vantagem do PCC: com poucos ensaios, avalia-se por ANOVA a significância dos termos principais, das interações e dos **termos quadráticos** que formarão o modelo [@correia2005].
 
-*Conteúdo em desenvolvimento.*
+### A distância axial e a ortogonalidade
 
-## Exercícios propostos
+O valor de $\alpha$ — a distância dos pontos axiais ao centro — não é arbitrário. Escolhe-se $\alpha$ para dar à matriz uma propriedade estatística desejável. Uma escolha comum garante a **ortogonalidade** da matriz de variância-covariância, calculada por [@montgomery2005design]:
 
-*Conteúdo em desenvolvimento.*
+$$\alpha = \left[ \frac{\left(2^k + 2k + n_0\right)^{1/2} - 2^{k/2}}{2} \cdot 2^k \right]^{1/4}$$
 
-## Para saber mais
+A ortogonalidade faz com que as estimativas dos coeficientes sejam independentes entre si — cada efeito é estimado sem contaminação dos outros. Uma alternativa é escolher $\alpha$ para **rotabilidade** (variância de predição constante à mesma distância do centro), com $\alpha = (2^k)^{1/4}$. No estudo de caso deste livro, o PCC foi construído com quatro observações no ponto central e $\alpha$ calculado para garantir a ortogonalidade da matriz.
+
+### Do fatorial ao PCC: reaproveitamento
+
+Um ponto prático valioso: o PCC **não recomeça do zero**. Como os pontos fatoriais são os mesmos do 2^k já executado, só é preciso rodar os ensaios **novos** — os axiais e os centrais adicionais. No estudo de caso, o fatorial identificou $v_c$, $a_p$ e $f$ como significativos; o PCC então acrescentou apenas os pontos axiais e centrais desses três fatores, reaproveitando todo o trabalho fatorial anterior. Isso encadeia os planejamentos numa progressão econômica: triagem (2^k) → modelagem (PCC) → otimização (RSM).
+
+## Regressão múltipla com termos quadráticos {#sec-cap5-regressao}
+
+Com os dados do PCC em mãos, ajusta-se o modelo. A ferramenta é a regressão múltipla, e vale entendê-la em sua forma matricial — que é como o R e qualquer software a implementam.
+
+### O modelo e os mínimos quadrados
+
+A regressão múltipla relaciona uma resposta a $k$ regressores [@barrosneto2007como; @montgomery2005design]:
+
+$$y_i = \beta_0 + \sum_{j=1}^{k} \beta_j x_{ij} + \varepsilon_i$$
+
+Os parâmetros $\beta_j$ são escolhidos para **minimizar a soma quadrática dos erros** — a diferença entre o observado e o previsto. Em forma matricial, com $Y$ o vetor de observações, $X$ a matriz dos níveis dos regressores e $\varepsilon$ o vetor de erros:
+
+$$Y = X\beta + \varepsilon$$
+
+A solução de mínimos quadrados tem forma fechada:
+
+$$\hat{\beta} = (X'X)^{-1} X'Y$$
+
+Essa é uma das equações mais importantes da estatística aplicada. Ela diz que, dada a matriz de planejamento $X$ e as respostas $Y$, os melhores coeficientes saem de uma conta direta de álgebra linear. O número de observações deve exceder o número de regressores — daí a necessidade dos ensaios do PCC [@freund2000aplicada].
+
+### Significância dos coeficientes
+
+Nem todo termo do modelo é útil. Cada coeficiente $\beta_j$ é testado por ANOVA (razão F, como no Capítulo @sec-cap4): compara-se a variação que ele explica com a do erro. Coeficientes com p-valor acima de 0,05 são **descartados** — o modelo final mantém apenas os termos significativos. No estudo de caso, os modelos de segunda ordem foram construídos mantendo apenas os coeficientes com p-nível < 0,05, cada um acompanhado de análise de resíduos para validação.
+
+::: {.callout-warning}
+## Erro comum
+Manter todos os termos quadráticos e de interação "porque estão no modelo completo". Um modelo inflado com termos não significativos superajusta o ruído e prevê pior fora dos dados. A regra é parcimônia: mantenha só o que a ANOVA aprova, e sempre valide o modelo reduzido com análise de resíduos — a mesma disciplina do capítulo anterior.
+:::
+
+## Superfícies de resposta: o modelo de segunda ordem {#sec-cap5-rsm}
+
+Aqui está o destino de todo o percurso: o modelo que descreve a resposta como uma **superfície curva** no espaço dos fatores.
+
+### O modelo de segunda ordem
+
+A metodologia de superfícies de resposta (RSM) usa um modelo de segunda ordem [@correia2005; @montgomery2005design]:
+
+$$y = \beta_0 + \sum_{i=1}^{k} \beta_i x_i + \sum_{i<j} \beta_{ij} x_i x_j + \sum_{i=1}^{k} \beta_{ii} x_i^2 + \varepsilon$$
+
+Comparado ao modelo de primeira ordem do fatorial, ele acrescenta os termos $\beta_{ii} x_i^2$ — a **curvatura**. São esses termos que permitem à superfície ter máximos, mínimos e pontos de sela no interior da região estudada. É o que o fatorial puro não conseguia.
+
+O objetivo da RSM, segundo Montgomery, é duplo: **determinar as condições ótimas** de operação de um sistema, ou **mapear a região** do espaço em que a resposta atende às exigências [@montgomery2005design]. Para a usinagem, isso significa achar a combinação de $v_c$, $f$ e $a_p$ que minimiza a força, ou a rugosidade, ou maximiza a taxa de remoção — dentro dos limites viáveis do processo.
+
+### Curvas de nível: lendo a superfície em 2D
+
+Uma superfície tridimensional é difícil de ler numa página. A **curva de nível** resolve isso: é o conjunto de pontos $(x_1, x_2)$ para os quais a resposta tem um valor constante, $f(x_1, x_2) = \text{const}$ [@galvo2010diferenc]. É o mesmo princípio de um mapa topográfico — linhas que conectam pontos de mesma altitude.
+
+Num gráfico de curvas de nível, curvas fechadas concêntricas revelam um ótimo interno (o "pico" ou "vale" está no centro). Curvas paralelas indicam uma superfície ainda inclinada, sem ótimo interno naquela região — sinal de que o ótimo está fora, e é preciso caminhar na sua direção.
+
+### O vetor gradiente: a direção do ótimo
+
+Como saber para onde caminhar? O **vetor gradiente** responde. Para uma função $g(x, y)$ com derivadas parciais, o gradiente no ponto $(x_0, y_0)$ é o vetor dessas derivadas:
+
+$$\nabla g(x_0, y_0) = \left( \frac{\partial g}{\partial x}, \frac{\partial g}{\partial y} \right)$$
+
+Sua propriedade fundamental: **aponta na direção e sentido de crescimento mais rápido** da função [@galvo2010diferenc]. Para maximizar uma resposta, caminha-se no sentido do gradiente; para minimizar, no sentido oposto. É a bússola da otimização — e a base do "método da máxima inclinação" (steepest ascent) que guia experimentos sequenciais em direção ao ótimo.
+
+No estudo de caso, os modelos de segunda ordem das respostas de usinabilidade foram interpretados justamente por curvas de nível e vetor gradiente, revelando como $v_c$, $f$ e $a_p$ deslocam força, potência e rugosidade em direção a seus ótimos.
+
+## Exemplo com o pacote rsm do R {#sec-cap5-exemplo}
+
+O R oferece o pacote **rsm**, especializado em superfícies de resposta. Ele cria PCCs, ajusta modelos de segunda ordem e gera as visualizações — tudo integrado.
+
+### Criando o PCC
+
+```{r}
+#| label: cria-pcc
+#| eval: false
+
+# install.packages("rsm")  # se necessario
+library(rsm)
+
+# PCC para 3 fatores (Vc, f, ap), com pontos centrais e axiais
+# alpha = "orthogonal" garante a ortogonalidade da matriz
+plano_pcc <- ccd(
+  basis = 3,               # 3 fatores
+  n0    = 4,               # 4 pontos centrais (como no estudo de caso)
+  alpha = "orthogonal",    # distancia axial p/ ortogonalidade
+  randomize = TRUE,
+  coding = list(
+    x1 ~ (Vc - 400)/200,   # Vc: centro 400, semi-amplitude 200
+    x2 ~ (f - 0.275)/0.075, # f: centro 0.275, semi-amplitude 0.075
+    x3 ~ (ap - 2.5)/1.5    # ap: centro 2.5, semi-amplitude 1.5
+  )
+)
+
+print(plano_pcc)   # matriz do PCC, ordem aleatorizada
+```
+
+O `ccd()` (central composite design) monta os três blocos de pontos — fatoriais, axiais e centrais — e mostra a matriz na ordem de execução.
+
+### Ajustando o modelo de segunda ordem
+
+```{r}
+#| label: ajusta-modelo
+#| eval: false
+
+# Suponha a resposta Fu (forca de usinagem) coletada nos ensaios
+plano_pcc$Fu <- c(...)   # vetor de respostas na ordem da matriz
+
+# Ajusta o modelo de 2a ordem: SO() = Second Order
+modelo_rsm <- rsm(Fu ~ SO(x1, x2, x3), data = plano_pcc)
+
+summary(modelo_rsm)   # coeficientes, ANOVA, teste de falta de ajuste
+```
+
+A função `SO(x1, x2, x3)` expande automaticamente o modelo de segunda ordem completo — termos lineares, interações e quadráticos. O `summary()` traz os coeficientes com p-valores, a ANOVA e, importante, o **teste de falta de ajuste** (lack of fit), que verifica se o modelo de segunda ordem é adequado.
+
+### Visualizações 3D e curvas de nível
+
+```{r}
+#| label: visualiza
+#| eval: false
+
+# Curvas de nivel e superficie 3D (dois fatores por vez)
+par(mfrow = c(1, 2))
+contour(modelo_rsm, ~ x1 + x2, image = TRUE)   # curvas de nivel
+persp(modelo_rsm, ~ x1 + x2, zlab = "Fu (N)",  # superficie 3D
+      col = terrain.colors(50))
+par(mfrow = c(1, 1))
+
+# Localiza o ponto estacionario (otimo) do modelo
+xs <- canonical(modelo_rsm)$xs   # ponto estacionario em coordenadas codificadas
+print(xs)
+```
+
+O `contour()` gera as curvas de nível; o `persp()`, a superfície 3D. A função `canonical()` faz a **análise canônica**, que localiza o ponto estacionário (candidato a ótimo) e classifica sua natureza — máximo, mínimo ou sela — a partir dos autovalores.
+
+### Visualização interativa com plotly
+
+```{r}
+#| label: plotly-3d
+#| eval: false
+
+library(plotly)
+
+# Grade de predicao para superficie interativa
+grade <- expand.grid(x1 = seq(-1.5, 1.5, 0.1),
+                     x2 = seq(-1.5, 1.5, 0.1), x3 = 0)
+grade$Fu <- predict(modelo_rsm, newdata = grade)
+
+# Superficie 3D interativa (rotaciona no navegador)
+plot_ly(grade, x = ~x1, y = ~x2, z = ~Fu,
+        type = "mesh3d", intensity = ~Fu)
+```
+
+O plotly gera uma superfície **interativa** — o leitor pode rotacionar e ampliar no navegador. É especialmente útil na versão HTML do livro, onde a superfície ganha vida.
+
+::: {.callout-important}
+## Decisão de projeto
+A análise canônica (`canonical()`) faz mais do que achar o ótimo: ela diz se o ponto estacionário está **dentro** da região experimental (utilizável) ou **fora** (extrapolação perigosa). Um ótimo fora da região é um alerta — o modelo o prevê, mas você não tem dados lá. Nesse caso, o correto é caminhar na direção do gradiente e rodar um novo PCC centrado mais perto do ótimo, não confiar cegamente na extrapolação.
+:::
+
+## Síntese do capítulo {#sec-cap5-sintese}
+
+O Quadro @tbl-sintese5 resume a progressão do fatorial ao PCC/RSM.
+
+| Aspecto | Fatorial 2^k (@sec-cap4) | PCC / RSM (este capítulo) |
+|:--------|:------------------------:|:-------------------------:|
+| Níveis por fator | 2 (±1) | 5 (±α, ±1, 0) |
+| Ordem do modelo | Primeira (linear) | Segunda (quadrática) |
+| Captura curvatura? | Não | Sim |
+| Localiza ótimo interno? | Não | Sim |
+| Pontos | $2^k$ | $2^k + 2k + n_0$ |
+| Ferramenta R | FrF2 | rsm |
+| Objetivo | Triagem | Modelagem e otimização |
+
+: Síntese comparativa: do fatorial ao PCC/RSM. {#tbl-sintese5}
+
+Três ideias devem permanecer:
+
+1. **Curvatura exige três níveis.** O fatorial vê retas; o PCC, com seus pontos axiais, vê parábolas — e só assim se localiza um ótimo interno.
+2. **O PCC reaproveita o fatorial.** Não se recomeça: acrescentam-se pontos axiais e centrais aos fatoriais já rodados, numa progressão econômica.
+3. **Gradiente é a bússola.** A superfície de resposta não só descreve — ela orienta: curvas de nível mostram onde está o ótimo, e o gradiente aponta a direção para chegar lá.
+
+O PCC/RSM localiza o ótimo de **uma** resposta por vez. Mas a usinagem real tem várias respostas conflitantes — minimizar força e rugosidade *e* maximizar produtividade, simultaneamente. Quando os ótimos individuais se contradizem, é preciso uma abordagem que os concilie. Esse é o tema do próximo capítulo: a otimização multiresposta (@sec-cap6).
+
+## Para saber mais {#sec-cap5-saibamais}
 
 ::: {.callout-tip}
 ## Aprofundamento
-Referências complementares e leituras recomendadas para este capítulo serão adicionadas no decorrer da redação.
+Para superfícies de resposta em profundidade, @montgomery2005design (*Design and Analysis of Experiments*) dedica capítulos completos ao PCC e à RSM. Aplicações à usinagem de alumínio com modelos de segunda ordem estão em @fuh1995residual (tensões residuais no fresamento da 2014-T6) e @fuh1997chang (precisão dimensional em cinco ligas). Os fundamentos de curva de nível e gradiente vêm do cálculo de várias variáveis [@galvo2010diferenc]. A documentação do pacote rsm no CRAN, de Russell Lenth, traz uma vinheta exemplar sobre o fluxo completo.
 :::
 
 ## Exercícios propostos {.unnumbered}
 
-::: {.callout-important}
-## Em desenvolvimento
-Exercícios serão adicionados durante a Fase 4 do roadmap.
-:::
+1. **Por que três níveis.** Explique geometricamente por que um fator em dois níveis não permite estimar curvatura, enquanto três níveis permitem. Quantos pontos definem uma reta? E uma parábola?
+
+2. **Contando tratamentos.** Um PCC tem 3 fatores significativos e 5 pontos centrais. Quantos pontos fatoriais, axiais e centrais ele tem? Qual o total de tratamentos?
+
+3. **Ponto central.** Um fatorial 2³ deu média 320 nos pontos fatoriais e 285 na média de 4 réplicas centrais. O que essa diferença sugere? Que planejamento você recomendaria a seguir?
+
+4. **Mínimos quadrados.** Explique, em palavras, o que a equação $\hat{\beta} = (X'X)^{-1}X'Y$ calcula. Por que o número de observações deve exceder o de regressores?
+
+5. **Modelo de segunda ordem.** Escreva o modelo de segunda ordem completo para 2 fatores ($x_1, x_2$). Identifique quais termos são lineares, quais são de interação e qual é quadrático.
+
+6. **Curvas de nível.** Num gráfico de curvas de nível de rugosidade, você observa curvas fechadas concêntricas com o centro numa região de baixo avanço e alta velocidade. Interprete: onde está o ótimo (mínima rugosidade)?
+
+7. **Gradiente.** Um modelo de força tem gradiente $\nabla F = (12, -5)$ no ponto atual (coordenadas $v_c, f$). Para **minimizar** a força, em que direção você deve mover os fatores? Justifique.
+
+8. **Código R (integrador).** Modifique o exemplo `ccd()` do capítulo para um PCC de **2 fatores** ($v_c$ e $f$) com 6 pontos centrais e $\alpha$ para rotabilidade. Depois escreva a chamada `rsm()` com `SO()` para ajustar o modelo de segunda ordem da resposta rugosidade `Ra`.

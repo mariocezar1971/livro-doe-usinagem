@@ -1,28 +1,119 @@
 ---
-title: "Apêndice A — Instrumentação detalhada"
+title: "Apêndice A — Instrumentação e cadeias de medição"
+subtitle: "Detalhes dos equipamentos e procedimentos do estudo de caso"
+author: "Mário Cezar dos Santos Jr."
+abstract: |
+  Este apêndice reúne os detalhes de instrumentação do projeto experimental descrito no Capítulo 7: os equipamentos, as cadeias de medição e os procedimentos de aquisição de cada resposta de usinabilidade. Enquanto o capítulo apresenta a visão geral do experimento, aqui estão as especificações que permitem reproduzi-lo — modelos de máquina e ferramentas, fluidos e vazões, e as cadeias de medição de força, potência, temperatura, rugosidade e vibração.
 ---
 
-# Apêndice A — Instrumentação detalhada {#sec-apendice-a .unnumbered}
+# Apêndice A — Instrumentação e cadeias de medição {#sec-apendice-a}
+
+## Propósito {#sec-apa-proposito}
+
+O Capítulo @sec-cap7 apresentou a lógica do projeto experimental — as ligas, a configuração dos ensaios e os planejamentos. Este apêndice complementa aquele capítulo com os **detalhes de instrumentação** que foram deliberadamente mantidos fora do corpo do texto para preservar a clareza. Aqui estão as especificações necessárias para reproduzir o experimento: modelos de equipamentos, parâmetros de aplicação e cadeias de medição de cada resposta.
+
+## Máquina e ferramentas de corte {#sec-apa-maquina}
+
+### Torno CNC
+
+Os ensaios foram conduzidos no torno CNC **ROMI Multiplic 35D**, com as seguintes características: potência instalada no motor principal de 11 kW; potência total instalada de 20 kVA; faixa de rotação de 3 a 3000 rpm.
+
+### Ferramenta de corte A (força, vibração, potência, rugosidade)
+
+A ferramenta A foi usada para medir $F_c$, $F_f$, $F_p$, $V_b$, $R_a$, $R_z$, $R_q$ e $N_e$. Suas especificações:
+
+- **Inserto:** substrato de carboneto de tungstênio (WC-Co), Mitsubishi TCGT16T308-AZ HTi10, com superfície de corte polida e ondulada;
+- **Suporte:** ISO STGCR2020K16Z (Mitsubishi);
+- **Ângulos da montagem:** saída $\gamma_o = 8°$, folga $\alpha_o = 11°$, posição $\chi_r = 90°$;
+- **Benefícios:** controle de cavaco, redução do esforço de corte, mínima adesividade e redução de rebarbas;
+- **Faixa de velocidade recomendada (fabricante):** 500–1200 m/min no alumínio puro; 200–500 m/min em ligas com Si < 12%; 150–400 m/min em ligas com Si > 12%.
+
+### Ferramenta de corte B (temperatura)
+
+A ferramenta B foi usada exclusivamente nos ensaios de temperatura de corte, por exigência do método termopar ferramenta-peça:
+
+- **Corpo:** barra retangular de metal duro (13 × 4 × 310 mm), classe K15 (TASK);
+- **Composição:** 93% WC + 7% Co, tamanho de grão 1,0 µm, dureza 1580 HV;
+- **Ângulos:** saída $\gamma_o = 7°$, folga $\alpha_o = 12°$, posição $\chi_r = 90°$, obtidos por retificação da barra.
+
+## Lubri-refrigeração {#sec-apa-lubri}
+
+### MQF (mínima quantidade de fluido)
+
+- **Fluido:** Accu-Lube LB-2000 (ITW), biodegradável, à base de óleo vegetal (soja, milho, canola);
+- **Propriedades:** densidade 920 kg/m³, viscosidade 37 cSt (40 °C), ponto de fulgor 320 °C, ponto de fluidez −20 °C, 0% de enxofre, cloro e óleo mineral;
+- **Aplicação:** bicos flexíveis direcionados à região de corte, via dispositivo dosador Accu-lube, calibrado para vazão de óleo de 100 ± 3 ml/h, em fluxo de ar a 6 ± 1 bar.
+
+### Jorro
+
+- **Fluido:** Vasco 1000 (Blaser Swisslube), óleo miscível em água, biodegradável de alto desempenho;
+- **Propriedades:** 0% de óleo mineral, 45% de óleo vegetal, densidade 950 kg/m³ (20 °C), viscosidade 56 mm²/s (40 °C), ponto de fulgor 180 °C;
+- **Aplicação:** vazão de 360 L/h, concentração de ~6% (verificada com refratômetro Atago).
+
+## Medição de forças, vibração e potência {#sec-apa-forcas}
+
+### Forças
+
+As três componentes da força de usinagem ($F_f$, $F_p$, $F_c$) foram medidas na ponta da ferramenta, nas direções x, y e z, respectivamente. Para cada resposta e condição de corte, coletaram-se duas amostras de sinais após o sistema entrar em regime de corte (~3,5 s). O valor de cada força foi a **média aritmética** de seus sinais ao longo do período de amostragem:
+
+$$\bar{F}_i = \frac{1}{T}\int_0^T F_i(t)\, dt$$
+
+### Vibração
+
+A aceleração ($V_b$) foi medida no suporte da ferramenta, próximo à aresta de corte, na direção z. Seu valor foi a **média quadrática (RMS)** dos sinais:
+
+$$V_b = \sqrt{\frac{1}{T}\int_0^T v_b^2(t)\, dt}$$
+
+### Potência de usinagem
+
+A potência de usinagem ($N_e$) foi determinada a partir das correntes de fase ($I_i$) e tensões fase-terra ($\phi_i$) instantâneas, medidas no circuito elétrico do torno CNC. Ela resulta da **diferença** entre a potência consumida durante o corte e a potência em vazio (sem corte), nas mesmas condições:
+
+$$N_e = Pot_t - Pot_v$$
+
+onde $Pot_t$ é a potência total durante o corte e $Pot_v$ a potência em vazio. Procedimento semelhante foi usado por @braga2002minimum na furação de liga Al-Si.
+
+## Medição de temperatura de corte {#sec-apa-temperatura}
+
+A temperatura de corte foi medida pelo **método do termopar ferramenta-peça**. Durante a usinagem, a força eletromotriz (FEM) gerada no circuito termopar ferramenta-peça — proporcional ao gradiente entre a temperatura na interface cavaco-ferramenta ($T_c$) e a ambiente ($T_a$) — foi coletada e mediada ao longo do regime de corte.
+
+### A cadeia de medição
+
+O circuito envolveu:
+
+- **Isolamento:** o conjunto suporte-ferramenta foi isolado da estrutura do torno com placas de celeron (2 mm);
+- **Fechamento do circuito:** um dispositivo de três escovas fechou o circuito elétrico com a peça em rotação, usando uma fina camada de vaselina sólida entre peça e escovas;
+- **Aterramento:** exceto o conjunto suporte/ferramenta, todos os equipamentos foram ligados ao terra equipotencial;
+- **Aquisição:** multímetro e fiação dedicados, os mesmos da calibração termopar.
+
+### As junções termoelétricas
+
+O circuito termopar ferramenta-peça contém oito junções termoelétricas ($J_1$ a $J_8$). Por projeto, apenas a junção $J_3$ (ferramenta-peça) fica à temperatura de corte $T_c$; as demais são mantidas próximas à temperatura ambiente $T_a$. A camada de vaselina entre peça e escovas, e o contato próximo ao centro da peça (baixa velocidade relativa), minimizam gradientes de temperatura indesejados nas junções auxiliares. O isolamento elétrico entre $J_2$ e $J_3$ é a condição suficiente para o bom funcionamento do sistema.
 
 ::: {.callout-note}
-## Status
-**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 6 do roadmap.
+## Nota metodológica
+O método termopar ferramenta-peça e sua validação foram objeto de trabalho específico do autor e colaboradores, submetido a periódico internacional de medição, tratando da influência do tipo de sistema termopar peça-ferramenta e das condições de corte sobre a força eletromotriz gerada.
 :::
 
-Detalhamento dos dispositivos desenvolvidos: condicionadores CSCi/CSTi, ferramenta e suporte para temperatura de corte, dispositivo de três escovas, processos de calibração.
+## Medição de rugosidade {#sec-apa-rugosidade}
 
-## Condicionadores de sinais
+Os parâmetros de rugosidade ($R_a$, $R_z$, $R_q$) foram medidos na superfície usinada com rugosímetro, seguindo a direção de medição perpendicular às marcas de avanço — a direção que capta o perfil real deixado pela ferramenta. Os detalhes de comprimento de amostragem (cut-off) e número de medições por condição seguiram as recomendações normativas para superfícies torneadas.
 
-*Conteúdo em desenvolvimento.*
+## Calibração {#sec-apa-calibracao}
 
-## Ferramenta para temperatura
+Todos os instrumentos de medição — dinamômetro, sistema de aquisição de potência, termopar ferramenta-peça e rugosímetro — foram devidamente calibrados antes dos ensaios, seguindo as recomendações dos respectivos fabricantes. A calibração do termopar ferramenta-peça, por sua natureza específica, exigiu procedimento dedicado com a ferramenta B, relacionando a força eletromotriz medida a temperaturas de referência conhecidas.
 
-*Conteúdo em desenvolvimento.*
+## Resumo dos equipamentos {#sec-apa-resumo}
 
-## Dispositivo três escovas
+O Quadro @tbl-equipamentos consolida a instrumentação do estudo.
 
-*Conteúdo em desenvolvimento.*
+| Resposta | Instrumento / método | Grandeza medida |
+|:---------|:---------------------|:----------------|
+| $F_c$, $F_f$, $F_p$ | Dinamômetro (3 componentes) | Força na ponta da ferramenta |
+| $V_b$ | Acelerômetro no suporte | Aceleração (RMS) |
+| $N_e$ | Sistema elétrico do torno | Potência (corte − vazio) |
+| $T_c$ | Termopar ferramenta-peça | FEM → temperatura |
+| $R_a$, $R_z$, $R_q$ | Rugosímetro | Perfil da superfície |
 
-## Calibração de termopares ferramenta-cavaco
+: Resumo da instrumentação por resposta de usinabilidade. {#tbl-equipamentos}
 
-*Conteúdo em desenvolvimento.*
+Estes são os detalhes que sustentam os resultados apresentados na Parte III. O leitor que queira reproduzir ou auditar o experimento encontra aqui as especificações; o leitor que queira acompanhar o raciocínio encontra a visão de conjunto no Capítulo @sec-cap7.

@@ -1,52 +1,229 @@
 ---
-title: "Análise fatorial $2^k$ das ligas de alumínio"
-subtitle: "Efeitos principais, interações e adequação dos modelos"
+title: "Análise fatorial 2^k das ligas de alumínio"
+subtitle: "Quais fatores realmente importam — e as interações que surpreendem"
 author: "Mário Cezar dos Santos Jr."
 abstract: |
-  Aplicação completa do planejamento fatorial $2^k$ ao torneamento das ligas. Apresenta resultados consolidados, efeitos principais por resposta, interações contra-intuitivas e comparação de sistemas de lubri-refrigeração.
+  Este capítulo apresenta e discute os resultados do planejamento fatorial 2^k aplicado ao torneamento das ligas de alumínio. A análise de variância revela, para cada resposta de usinabilidade, quais fatores são significativos — e o resultado surpreende: a profundidade de corte domina, a lubri-refrigeração não afeta significativamente nenhuma resposta, e vários efeitos têm sinal contra-intuitivo (a liga mais dura exige menos força; aumentar a velocidade reduz a força). O capítulo dá especial atenção às interações contra-intuitivas, explicando-as pela mecânica do cisalhamento, e traduz cada achado em orientação industrial prática. Os gráficos são refeitos e a análise é reproduzível no código R do estudo.
 ---
 
-# Análise fatorial $2^k$ das ligas de alumínio {#sec-cap8}
+# Análise fatorial 2^k das ligas de alumínio {#sec-cap8}
+
+## Introdução {#sec-cap8-intro}
+
+O Capítulo @sec-cap7 projetou o experimento; este apresenta seu primeiro fruto. Aplicando o planejamento fatorial 2^k (Capítulo @sec-cap4) aos ensaios de torneamento, a análise de variância responde à pergunta central da triagem: **para cada resposta de usinabilidade, quais fatores realmente importam?**
+
+A resposta contém surpresas. Alguns resultados confirmam a intuição — a profundidade de corte aumenta a força, como esperado. Outros a contrariam frontalmente: a liga mais **dura** exige **menos** força; aumentar a **velocidade** de corte **reduz** a força; e a **lubri-refrigeração** — objeto de tanta atenção no chão de fábrica — não afeta significativamente **nenhuma** das respostas medidas. Esses achados contra-intuitivos são o coração deste capítulo, porque é neles que a análise fatorial mostra seu valor: ela revela o que a intuição sozinha erraria.
+
+Os fatores estudados foram Liga (representando as propriedades mecânicas, entre 1350-O e 7075-T6), velocidade de corte ($v_c$), profundidade ($a_p$), avanço ($f$) e lubri-refrigeração ($lub$). As respostas foram força de usinagem ($F_u$), potência ($N_e$), temperatura ($T_c$), vibração ($V_b$) e rugosidade ($R_a$, $R_z$, $R_q$, agrupadas). Dois planejamentos foram conduzidos — 2kI (seco vs. jorro) e 2kII (seco vs. MQF) — com resultados notavelmente consistentes entre si.
 
 ::: {.callout-note}
-## Status do capítulo
-**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 5 do roadmap.
+## Onde este capítulo se conecta
+Os fatores identificados como significativos aqui (Liga, $v_c$, $a_p$, $f$) são exatamente os que alimentam o planejamento composto central do Capítulo @sec-cap9, que modelará suas superfícies de resposta. A triagem fatorial deste capítulo é o filtro que define o que merece a modelagem mais cara do próximo.
 :::
 
-## Resultados consolidados
+## O que a ANOVA revelou {#sec-cap8-anova}
 
-*Conteúdo em desenvolvimento.*
+A análise de variância dos dois planejamentos produziu um veredicto claro. A Tabela @tbl-significancia resume quais fatores foram significativos (p < 0,05) para cada resposta, consolidando as tabelas dos dois planejamentos, que concordaram entre si.
 
-## Efeitos principais por resposta
+| Fator | $F_u$ | $N_e$ | $T_c$ | $V_b$ | Rugosidade |
+|:------|:-----:|:-----:|:-----:|:-----:|:----------:|
+| Liga | ✓ | ✓ | ✓ | ✓ | ✓ |
+| $v_c$ | ✓ | ✓ | ✓ | ✓ | — |
+| $a_p$ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| $f$ | ✓ | ✓ | — | ✓ | ✓ |
+| **Lubri-refrigeração** | **—** | **—** | **—** | **—** | **—** |
 
-*Conteúdo em desenvolvimento.*
+: Significância dos fatores por resposta (✓ = significativo p<0,05; — = não significativo). Consolidado dos planejamentos 2kI e 2kII. {#tbl-significancia}
 
-## Interações que contrariam o senso comum
+Três leituras saltam da tabela. Primeira: **Liga, $v_c$, $a_p$ e $f$ importam** — como fatores principais ou em interações, aparecem significativos em todos os modelos. São eles que seguem para o PCC. Segunda: **a lubri-refrigeração não importa** — em nenhuma resposta, em nenhum dos dois planejamentos. Terceira: a qualidade dos modelos foi altíssima — $R^2$ e $R^2$ ajustado acima de 0,95 para todas as respostas, **exceto a vibração** (0,80/0,74), que é intrinsecamente mais ruidosa.
 
-*Conteúdo em desenvolvimento.*
+::: {.callout-important}
+## Decisão de projeto
+O $R^2$ baixo da vibração (0,74 ajustado) não é falha do experimento — é a natureza do fenômeno. A vibração de uma condição de corte varia muito entre repetições, um comportamento peculiar já observado na literatura. Isso é informação, não erro: diz que a vibração é menos previsível pelos fatores de corte do que a força ou a potência, e que otimizá-la exigirá cautela redobrada. Um modelo honesto reporta seu próprio limite.
+:::
 
-## Adequação dos modelos
+## Os efeitos principais: magnitude e sinal {#sec-cap8-efeitos}
 
-*Conteúdo em desenvolvimento.*
+Além de saber *se* um fator importa, a análise fatorial diz *quanto* e em que *direção*. A Tabela @tbl-efeitos traz os efeitos estimados sobre as principais respostas — e é aqui que as surpresas aparecem.
 
-## Comparação dos sistemas de lubri-refrigeração
+| Fator | $F_u$ (N) | $N_e$ (W) | $T_c$ (°C) | $V_b$ (m/s²) |
+|:------|:---------:|:---------:|:----------:|:------------:|
+| Média | 585 | 4149 | 480 | 60 |
+| Liga | **−52** | −92 | **+260** | −16 |
+| $v_c$ | **−107** | +3552 | +72 | +18 |
+| $a_p$ | **+714** | +4529 | −3 | +39 |
+| $f$ | +221 | +1364 | — | +44 |
 
-*Conteúdo em desenvolvimento.*
+: Efeitos fatoriais estimados (planejamento 2kI; o 2kII deu valores muito próximos). Em negrito, os efeitos discutidos como contra-intuitivos. {#tbl-efeitos}
 
-## Interpretação industrial
+O padrão dominante é claro: **a profundidade de corte ($a_p$) é o fator mais influente sobre a força** (+714 N — de longe o maior efeito) e sobre a potência (+4529 W). Faz sentido físico: aumentar a profundidade aumenta a área dos planos de cisalhamento, elevando o esforço de corte. O avanço ($f$) vem em seguida, com efeito positivo sobre força, potência, rugosidade e vibração.
 
-*Conteúdo em desenvolvimento.*
+Mas dois efeitos têm o **sinal trocado** em relação ao que a intuição esperaria — e merecem seção própria.
 
-## Para saber mais
+## As descobertas contra-intuitivas {#sec-cap8-contraintuitivo}
+
+Este é o ponto-chave do capítulo. Três resultados contrariam a intuição de chão de fábrica, e cada um se explica pela mecânica do cisalhamento do Capítulo @sec-cap3.
+
+### A liga mais dura exige menos força
+
+O efeito da Liga sobre a força é **negativo** (−52 N): passar da liga mole (1350-O) para a dura (7075-T6) **reduz** a força de usinagem. Isso parece absurdo — material mais duro não deveria ser mais difícil de cortar?
+
+A explicação está na ductilidade, não na dureza. A 1350-O, muito dúctil (Capítulo @sec-cap2), deforma-se intensamente antes de romper, gerando grandes áreas de contato e cavaco contínuo aderente — o que **eleva** a força. A 7075-T6, menos dúctil, rompe o cavaco mais cedo, com menor deformação plástica. Na força de usinagem, a ductilidade da liga mole pesa mais que a resistência da liga dura. É a metalurgia do Capítulo @sec-cap2 se manifestando de forma que só o experimento revelaria.
+
+### Aumentar a velocidade reduz a força
+
+O efeito da velocidade de corte sobre a força também é **negativo** (−107 N): usinar mais rápido dá **menos** força. O mecanismo é térmico. Velocidades altas elevam a temperatura na zona de corte, e o calor **amacia** o material localmente, reduzindo sua resistência ao cisalhamento. Menos resistência ao cisalhamento significa menos força. O mesmo aumento de velocidade que reduz a força, porém, **aumenta a potência** (+3552 W) — porque potência é força vezes velocidade, e a velocidade cresce mais do que a força cai.
+
+### A lubrificação não afeta nada
+
+O resultado mais consequente para a prática: a lubri-refrigeração foi **não significativa para todas as respostas**, nos dois planejamentos. Nem a força, nem a potência, nem a rugosidade mudaram significativamente entre seco, MQF e jorro.
+
+Isso tem valor industrial direto e será discutido adiante — mas o ponto metodológico aqui é que **só um experimento planejado permite afirmar isso com confiança**. Sem a ANOVA, seria temerário dizer "pode usinar a seco"; com ela, o dado é sólido.
+
+::: {.callout-warning}
+## Erro comum
+A intuição de que "material mais duro = mais força" e "mais lubrificação = melhor" é tão arraigada que muitos engenheiros ajustam processos por ela, sem medir. Os resultados deste capítulo mostram o custo desse hábito: decisões baseadas em intuição teriam superdimensionado a máquina para a liga errada e gasto com fluido que não traz benefício. O experimento fatorial é o antídoto para a intuição não verificada.
+:::
+
+## As interações: os fatores não agem sozinhos {#sec-cap8-interacoes}
+
+A grande vantagem do fatorial sobre o OFAT é capturar interações — e o estudo encontrou várias significativas, confirmando que os fatores se combinam de formas não-aditivas.
+
+A **interação Liga × $v_c$** aumentou força e potência: quando a liga dura encontra alta velocidade, o aumento da rigidez da liga prevaleceu sobre o amaciamento térmico que a velocidade traria. A **interação $v_c$ × $a_p$** reduziu a força mas aumentou potência e vibração: a redução da resistência ao cisalhamento pelo calor (alta velocidade) prevaleceu sobre o aumento das áreas de cisalhamento (maior profundidade). A **interação $a_p$ × $f$** — uma das mais fortes — aumentou força, potência, rugosidade e vibração, mas reduziu a temperatura: o aumento simultâneo de avanço e profundidade eleva os esforços, porém amplia as áreas de cisalhamento, melhorando a dissipação de calor.
+
+Essas interações são a prova experimental do argumento do Capítulo @sec-cap1: **os efeitos dependem das combinações**. Um estudo OFAT, variando um fator por vez, jamais capturaria que $v_c$ e $a_p$ juntos reduzem a força enquanto cada um, isolado, tem efeito próprio distinto.
+
+::: {.callout-tip}
+## Na prática
+A interação $a_p \times f$ é a mais relevante para o operador: aumentar avanço e profundidade juntos maximiza a taxa de remoção (produtividade), mas ao custo de mais força, mais vibração e pior acabamento. Não há almoço grátis — e a interação quantifica exatamente o preço. É por isso que o Capítulo @sec-cap10 precisará da otimização multiresposta: para achar o equilíbrio entre produtividade e qualidade que nenhum fator isolado entrega.
+:::
+
+## Reproduzindo a análise em R {#sec-cap8-codigo}
+
+A análise fatorial deste capítulo é inteiramente reproduzível. O código abaixo, usando os pacotes do Capítulo @sec-cap4, reproduz a estimativa de efeitos e a ANOVA, e refaz os gráficos com ggplot2.
+
+```{r}
+#| label: analise-fatorial
+#| eval: false
+
+library(FrF2)
+library(ggplot2)
+library(dplyr)
+
+# Dados do planejamento 2kI (matriz de tratamentos + respostas medidas)
+# Fu = forca de usinagem (N), medida em cada um dos 16 tratamentos
+dados <- data.frame(
+  Liga = rep(c(-1, 1), 8),
+  Vc   = c(-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1),
+  ap   = c(1,1,1,1,-1,-1,-1,-1,1,1,1,1,-1,-1,-1,-1),
+  f    = c(-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1),
+  Fu   = c(...)   # inserir as 16 respostas medidas (Tab. II.1 da tese)
+)
+
+# Modelo fatorial completo com interacoes
+modelo <- lm(Fu ~ Liga * Vc * ap * f, data = dados)
+
+# ANOVA: identifica fatores significativos
+anova(modelo)
+
+# Estimativas de efeitos (coeficientes x 2, na convencao fatorial)
+efeitos <- 2 * coef(modelo)[-1]
+print(round(efeitos, 1))
+```
+
+O `lm(Fu ~ Liga * Vc * ap * f)` ajusta o modelo com todos os fatores e interações; `anova()` produz a tabela de significância; e os coeficientes, dobrados, dão os efeitos.
+
+### Gráficos de efeitos com ggplot2
+
+```{r}
+#| label: graficos-ggplot
+#| eval: false
+
+# Preparar tabela de efeitos para o grafico de Pareto
+ef_df <- data.frame(
+  fonte  = names(efeitos),
+  efeito = as.numeric(efeitos)
+) %>%
+  mutate(abs_ef = abs(efeito)) %>%
+  arrange(desc(abs_ef))
+
+# Grafico de Pareto dos efeitos (barras horizontais ordenadas)
+ggplot(ef_df, aes(x = reorder(fonte, abs_ef), y = abs_ef,
+                  fill = efeito > 0)) +
+  geom_col() +
+  coord_flip() +
+  labs(x = "Fonte de variacao", y = "Magnitude do efeito |E|",
+       title = "Efeitos fatoriais sobre a forca de usinagem",
+       fill = "Sinal") +
+  scale_fill_manual(values = c("FALSE"="#c0392b","TRUE"="#2c3e50"),
+                    labels = c("Negativo","Positivo")) +
+  theme_minimal(base_size = 12)
+```
+
+O gráfico de Pareto em ggplot2 mostra, de relance, que $a_p$ domina (maior barra) e destaca os efeitos negativos (Liga, $v_c$) em cor distinta — tornando visual a descoberta contra-intuitiva.
+
+### Validação por análise de resíduos
+
+```{r}
+#| label: residuos-validacao
+#| eval: false
+
+# Os quatro diagnosticos que validam o modelo
+par(mfrow = c(2, 2))
+plot(modelo)
+par(mfrow = c(1, 1))
+
+# Confirmar R2 e R2 ajustado
+resumo <- summary(modelo)
+cat("R2:", round(resumo$r.squared, 3),
+    "| R2 ajustado:", round(resumo$adj.r.squared, 3), "\n")
+```
+
+A validação por resíduos confirma a adequação dos modelos — para a força, $R^2$ ajustado de 0,99, como reportado. Reproduzir essa validação é o que distingue a análise rigorosa da mera aceitação dos números.
+
+## Interpretação industrial {#sec-cap8-industrial}
+
+Traduzindo os achados para a decisão de chão de fábrica:
+
+**Usine a seco.** A lubri-refrigeração não afetou significativamente nenhuma resposta. Para as ligas e condições estudadas, o fluido de corte pode ser dispensado sem penalizar força, potência, rugosidade ou temperatura — com ganho ambiental (sem descarte de fluido), econômico (sem custo de fluido nem de sua gestão) e de saúde ocupacional. Esse é, talvez, o resultado de maior valor prático imediato do estudo.
+
+**A profundidade é a alavanca principal — e o gargalo.** Como $a_p$ domina a força e a potência, é o fator a vigiar ao dimensionar a operação: aumentá-lo eleva a produtividade, mas exige máquina com potência suficiente. A interação $a_p \times f$ mostra que avanço e profundidade juntos multiplicam o esforço.
+
+**Não superdimensione pela dureza da liga.** Como a liga dura (7075-T6) exigiu *menos* força que a mole (1350-O), dimensionar a máquina pela resistência do material seria um erro. O que importa para a força é a ductilidade e o comportamento do cavaco, não a dureza nominal.
+
+**Velocidade alta é aliada da força, inimiga da potência.** Usinar rápido reduz a força (amaciamento térmico), mas aumenta a potência consumida. A escolha da velocidade é, portanto, um compromisso — que o Capítulo @sec-cap10 otimizará formalmente.
+
+## Síntese do capítulo {#sec-cap8-sintese}
+
+Três ideias devem permanecer:
+
+1. **A profundidade domina; a lubrificação não importa.** O maior efeito é o de $a_p$; a lubri-refrigeração foi não significativa em tudo — um resultado de alto valor prático.
+2. **Vários efeitos são contra-intuitivos.** Liga dura exige menos força, velocidade alta reduz força — inversões que só a física do cisalhamento (Capítulo @sec-cap3) explica, e que só o experimento revelaria.
+3. **As interações confirmam a necessidade do DOE.** Os fatores se combinam de formas não-aditivas; nenhum estudo OFAT capturaria a interação $a_p \times f$ ou $v_c \times a_p$.
+
+Com os fatores significativos identificados e seus efeitos compreendidos, o Capítulo @sec-cap9 os leva ao planejamento composto central, modelando as superfícies de resposta que permitirão localizar as condições ótimas de corte.
+
+## Para saber mais {#sec-cap8-saibamais}
 
 ::: {.callout-tip}
 ## Aprofundamento
-Referências complementares e leituras recomendadas para este capítulo serão adicionadas no decorrer da redação.
+A interpretação dos efeitos pela mecânica do cisalhamento apoia-se em @trent2000metal e @zaghbani2009force sobre as tensões nos planos de cisalhamento. O comportamento peculiar da vibração (baixo $R^2$) é discutido em @tatar2008measurem. A metodologia fatorial aplicada segue @montgomery2005design (Capítulo @sec-cap4). Estudos comparáveis de fatorial na usinagem de alumínio incluem @keongng2006experime e @arumugam2006malshe.
 :::
 
 ## Exercícios propostos {.unnumbered}
 
-::: {.callout-important}
-## Em desenvolvimento
-Exercícios serão adicionados durante a Fase 5 do roadmap.
-:::
+1. **Efeito dominante.** Pela Tabela @tbl-efeitos, qual fator tem o maior efeito sobre a força de usinagem? Interprete fisicamente por que esse fator domina.
+
+2. **Sinal contra-intuitivo.** O efeito da Liga sobre a força é −52 N (negativo). Explique por que a liga mais dura (7075-T6) exige menos força que a mais mole (1350-O), usando o conceito de ductilidade do Capítulo @sec-cap2.
+
+3. **Força vs. potência.** A velocidade de corte tem efeito negativo na força (−107 N) mas fortemente positivo na potência (+3552 W). Explique como o mesmo fator pode reduzir a força e aumentar a potência simultaneamente.
+
+4. **Lubrificação.** A lubri-refrigeração foi não significativa para todas as respostas. Que decisão industrial isso permite, e por que só um experimento planejado autoriza essa conclusão com segurança?
+
+5. **Interação (integrador).** A interação $a_p \times f$ aumentou força, potência, rugosidade e vibração, mas reduziu a temperatura. Explique fisicamente esse comportamento aparentemente contraditório (mais esforço, menos calor).
+
+6. **Qualidade do modelo.** A vibração teve $R^2$ ajustado de 0,74, contra 0,99 da força. O que isso diz sobre a previsibilidade de cada resposta? Como isso deveria afetar a confiança nas otimizações de cada uma?
+
+7. **Código R.** Modifique o código do capítulo para analisar a **rugosidade** (Rug) em vez da força, incluindo o gráfico de Pareto dos efeitos. Que fatores você esperaria ver como dominantes, com base na Tabela @tbl-significancia?
+
+8. **Da triagem à modelagem.** Explique por que apenas Liga, $v_c$, $a_p$ e $f$ (e não a lubrificação) seguem para o PCC do próximo capítulo. Qual o critério que decidiu essa seleção?

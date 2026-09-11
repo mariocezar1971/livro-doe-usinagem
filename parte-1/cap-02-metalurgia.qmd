@@ -290,11 +290,33 @@ Três ideias devem permanecer:
 
 Com essa base metalúrgica estabelecida, o próximo capítulo (@sec-cap3) trata dos fundamentos do torneamento — a mecânica do corte que, aplicada a estas seis microestruturas, produzirá os resultados experimentais da Parte III.
 
+## Avanços recentes (2012-2026) {#sec-cap2-avancos}
+
+A metalurgia das ligas de alumínio apresentada neste capítulo apoia-se em fundamentos consolidados, mas a pesquisa não parou. Três frentes evoluíram de forma relevante para quem usina essas ligas na década que se seguiu ao estudo de caso deste livro, e vale registrá-las.
+
+### Modelos preditivos de precipitação
+
+A sequência de precipitação da série 6xxx (SSS → G.P. → β'' → β' → β), descrita na Seção @sec-cap2-endurecimento, continua sendo o consenso, mas ganhou refinamento. Revisões recentes detalham que a formação de clusters de Si precede a das zonas G.P., e que o precipitado β'' é hoje reconhecido como o principal responsável pela dureza no pico de envelhecimento das ligas Al-Mg-Si [@dai2022; @met2026]. Para a série 7xxx, a fase endurecedora central passou a ser descrita mais precisamente como η' (MgZn₂), com ênfase de que **aumentar a fração volumétrica de η' finos** é a chave para conciliar alta resistência e resistência à corrosão sob tensão — o dilema clássico dessas ligas [@dai2022].
+
+Surgiu também uma nova classe de abordagem: **modelos preditivos** que estimam a resistência a partir da microestrutura (raio, espaçamento e fração volumétrica dos precipitados), combinando física e dados. São úteis justamente porque medir essas variáveis experimentalmente é caro e difícil — e um modelo confiável pode substituir parte da caracterização metalográfica [@met2026]. Para o experimentador, isso aponta um futuro em que a dureza de uma liga poderá ser prevista antes mesmo de usiná-la.
+
+### A questão do chumbo: rumo a ligas de livre-corte sem Pb
+
+Talvez a mudança mais consequente para a liga 6262-T6 deste estudo seja regulatória e ambiental. O chumbo (Pb), um dos elementos de livre-corte que explicam a excelente usinabilidade da 6262 (Seção @sec-cap2-endurecimento), tornou-se alvo de restrição por toxicidade — o cavaco da usinagem de ligas com Pb representa resíduo perigoso e risco de exposição a partículas finas [@limarga2023].
+
+A resposta da metalurgia foi desenvolver **ligas de livre-corte sem chumbo**, substituindo o Pb por combinações de **estanho (Sn), bismuto (Bi) e índio (In)** [@limarga2023]. O princípio permanece o mesmo descrito neste capítulo — partículas de baixo ponto de fusão que fundem na temperatura de corte, fragmentam o cavaco e lubrificam a interface — mas com elementos menos tóxicos. A engenharia dessas ligas, porém, revelou-se sutil: o Bi e o Sn têm afinidade com o Mg, formando fases estáveis como Mg₂Sn e Mg₃Bi₂ que **consomem parte do Mg disponível** e podem tanto reduzir o Mg₂Si endurecedor quanto elevar o ponto de fusão das partículas de livre-corte, diminuindo seu efeito [@limarga2023]. O equilíbrio entre usinabilidade e resistência, nessas ligas modernas, depende finamente da razão Si/Mg e do teor de cada elemento.
+
+Para o leitor que aplica DOE, essa é uma fronteira fértil: a otimização da composição de ligas de livre-corte sem Pb é, em essência, um problema multiresposta — maximizar usinabilidade e resistência simultaneamente — exatamente o tipo de problema tratado na Parte IV deste livro.
+
+### DOE e RSM aplicados à usinagem de alumínio
+
+Por fim, a própria metodologia deste livro consolidou-se como padrão na pesquisa de usinabilidade de alumínio na última década. Estudos recentes de torneamento das ligas 6061 e 7075 aplicam rotineiramente planejamento de experimentos, superfícies de resposta (RSM) e função desejabilidade para otimizar rugosidade, forças e temperatura em função de velocidade, avanço, profundidade e raio de ponta [@gutema2022; @dudzik2025]. Confirma-se de forma consistente um padrão que reaparecerá na Parte III: **o avanço e o raio de ponta são os fatores dominantes sobre a rugosidade**, enquanto a velocidade de corte governa temperatura e formação de aresta postiça [@gutema2022; @dudzik2025]. O fato de a comunidade ter adotado precisamente fatorial, RSM e desejabilidade — os três pilares metodológicos deste livro — valida a abordagem escolhida.
+
 ## Para saber mais {#sec-cap2-saibamais}
 
 ::: {.callout-tip}
 ## Aprofundamento
-Para a metalurgia física do alumínio em profundidade, @hatch1984aluminum (*Aluminum: Properties and Physical Metallurgy*) permanece a referência clássica. Para fundamentos de ciência dos materiais aplicáveis a ligas, @callister2007material. Sobre a caracterização de fases e morfologias por microscopia, @warmuzek2004metallog oferece um catálogo detalhado das fases das séries 1xxx, 6xxx e 7xxx. Os efeitos de solubilização e envelhecimento sobre a dureza são bem ilustrados experimentalmente em @demir2009 e @tan2007.
+Para a metalurgia física do alumínio em profundidade, @hatch1984aluminum (*Aluminum: Properties and Physical Metallurgy*) permanece a referência clássica. Para fundamentos de ciência dos materiais aplicáveis a ligas, @callister2007material. Sobre a caracterização de fases e morfologias por microscopia, @warmuzek2004metallog oferece um catálogo detalhado das fases das séries 1xxx, 6xxx e 7xxx. Os efeitos de solubilização e envelhecimento sobre a dureza são bem ilustrados experimentalmente em @demir2009 e @tan2007. Para os avanços recentes, as revisões de @dai2022 (série 7xxx) e @met2026 (endurecimento por precipitação) atualizam os mecanismos; @limarga2023 discute as ligas de livre-corte sem chumbo; e @gutema2022 e @dudzik2025 exemplificam a aplicação de RSM e desejabilidade à usinagem de alumínio.
 :::
 
 ## Exercícios propostos {.unnumbered}
