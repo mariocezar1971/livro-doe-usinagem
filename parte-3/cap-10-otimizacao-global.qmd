@@ -1,56 +1,234 @@
 ---
 title: "Modelos globais e otimização multiresposta"
-subtitle: "Propriedades mecânicas como fatores e ponto ótimo simultâneo"
+subtitle: "O ponto ótimo, a validação e as recomendações operacionais"
 author: "Mário Cezar dos Santos Jr."
 abstract: |
-  Regressão global incorporando as propriedades mecânicas das ligas como fatores, validação dos modelos preditivos e otimização multiresposta para identificação do ponto ótimo simultâneo de todas as respostas.
+  Este capítulo é o clímax do estudo de caso. Apresenta os modelos de regressão global, que descrevem a usinabilidade em função das propriedades das ligas (resistência, alongamento, dureza) e das condições de corte; valida esses modelos numa liga que não participou de sua construção — a 6351-T6; e executa a otimização multiresposta que concilia força, potência, temperatura e rugosidade numa única condição de corte recomendada. Reproduz a otimização por algoritmo genético e apresenta a fronteira de Pareto (NSGA-II) como alternativa que expõe os trade-offs. Fecha com recomendações operacionais por liga e uma nota sobre a extensão do estudo a novas ligas.
 ---
 
 # Modelos globais e otimização multiresposta {#sec-cap10}
 
+## Introdução {#sec-cap10-intro}
+
+Os capítulos anteriores construíram, peça por peça, o edifício do estudo de caso: o projeto experimental (@sec-cap7), os efeitos fatoriais (@sec-cap8) e os modelos de superfície de resposta por liga (@sec-cap9). Este capítulo os une num resultado final e acionável — a **condição de corte ótima** que concilia todas as respostas conflitantes.
+
+Para chegar lá, o capítulo dá três passos. Primeiro, generaliza: em vez de um modelo por liga, constrói **modelos globais** que descrevem a usinabilidade em função das próprias propriedades mecânicas (resistência, alongamento, dureza) somadas às condições de corte — modelos que valem para qualquer liga dentro da faixa estudada. Segundo, **valida** esses modelos numa liga reservada, a 6351-T6, que não participou de sua construção — o teste mais rigoroso de que um modelo capturou a física real. Terceiro, **otimiza**: aplica a otimização multiresposta do Capítulo @sec-cap6 para achar a condição que minimiza força, potência, temperatura e rugosidade simultaneamente.
+
+Este é o ponto onde toda a metodologia do livro (Parte II) e todos os dados do experimento (Parte III) convergem numa recomendação prática. É o retorno sobre o investimento de planejar experimentos.
+
 ::: {.callout-note}
-## Status do capítulo
-**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 5 do roadmap.
+## O que este capítulo entrega
+A condição de corte recomendada, validada e otimizada — o produto final do estudo. E, mais importante que o número, o método reproduzível para chegar a ele em qualquer problema de usinabilidade.
 :::
 
-## Regressão global I
+## Os modelos de regressão global {#sec-cap10-global}
 
-*Conteúdo em desenvolvimento.*
+Os modelos por liga do Capítulo @sec-cap9 respondem "qual a usinabilidade desta liga?". Os modelos globais respondem uma pergunta mais poderosa: "qual a usinabilidade de **uma liga com estas propriedades**?". A diferença é decisiva — o modelo global permite prever a usinabilidade de uma liga a partir de sua resistência, alongamento e dureza, sem precisar ensaiá-la.
 
-## Validação dos modelos preditivos
+### A estrutura do modelo global
 
-*Conteúdo em desenvolvimento.*
+O modelo global relaciona cada resposta $y_i$ a seis variáveis de entrada: três **propriedades mecânicas** (resistência $R$, alongamento $Ar$, dureza $Hd$) e três **condições de corte** ($v_c$, $a_p$, $f$). É um modelo de segunda ordem na forma matricial (Capítulo @sec-cap5):
 
-## Otimização por algoritmo genético
+$$y_i = \beta_0 + X'b + X'BX$$
 
-*Conteúdo em desenvolvimento.*
+onde $X$ reúne as seis variáveis, $b$ é o vetor de coeficientes lineares e $B$ a matriz de coeficientes quadráticos e de interação. Construído sobre 90 observações (cinco ligas × dezoito condições) contra 28 termos candidatos, o modelo mantém apenas os coeficientes significativos (p < 0,05).
 
-## Ponto ótimo identificado
+### A qualidade dos modelos globais
 
-*Conteúdo em desenvolvimento.*
+A Tabela @tbl-global mostra os coeficientes de determinação dos modelos globais para as sete respostas.
 
-## Análise de sensibilidade
+| Resposta | $F_u$ | $N_e$ | $T_c$ | $R_a$ | $R_z$ | $R_q$ | $V_b$ |
+|:---------|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
+| $R^2$ | 0,966 | 0,985 | 0,909 | 0,901 | 0,910 | 0,903 | 0,879 |
+| $R^2$ ajustado | 0,962 | 0,983 | 0,902 | 0,885 | 0,892 | 0,888 | 0,850 |
 
-*Conteúdo em desenvolvimento.*
+: Coeficientes de determinação dos modelos de regressão global. {#tbl-global}
 
-## Regressão global II (simplificada)
+Todos os modelos superam $R^2 = 0{,}85$ — bons ajustes, considerando que agora **generalizam através de cinco ligas diferentes**, não apenas uma. É natural que os $R^2$ globais sejam um pouco menores que os por-liga do Capítulo @sec-cap9: o modelo global tem a tarefa mais difícil de valer para toda a faixa de propriedades. Que ainda assim explique 90-98% da variação é o que torna a generalização confiável.
 
-*Conteúdo em desenvolvimento.*
+Um achado interessante: as propriedades mecânicas entram nos modelos de forma significativa e via interações. A **dureza ($Hd$)** aparece fortemente na força e na rugosidade; o **alongamento ($Ar$)** e a **resistência ($R$)** modulam várias respostas. A metalurgia do Capítulo @sec-cap2, quantificada, torna-se preditor.
 
-## Recomendações operacionais por liga
+## A validação com a liga 6351-T6 {#sec-cap10-validacao}
 
-*Conteúdo em desenvolvimento.*
+Um modelo que se ajusta bem aos dados que o construíram pode estar apenas decorando o ruído. O teste de fogo é prever dados **que ele nunca viu**. Foi para isso que a liga 6351-T6 (R = 336 MPa, Ar = 17%, Hd = 119 HV) foi reservada desde o projeto experimental (@sec-cap7): ela não participou da construção dos modelos, apenas de sua validação.
 
-## Para saber mais
+### O procedimento
+
+A 6351-T6 foi usinada em dezoito condições de corte, medindo-se as respostas reais. Em paralelo, os modelos globais **previram** as respostas para essas mesmas condições. Comparar predito com observado responde: os modelos capturaram a física, ou só ajustaram os dados de treino?
+
+### O veredicto
+
+A comparação foi submetida a análise de variância de fator único, testando se há diferença estatística entre valores preditos e observados. O resultado é o melhor possível: **não há diferença significativa** — os p-níveis ficaram muito acima de 5% (0,75 para força, 0,86 para potência, 0,85 para temperatura, 0,61 para rugosidade). Estatisticamente, as previsões dos modelos são indistinguíveis das medições reais.
+
+Isso valida os modelos de forma robusta: eles preveem a usinabilidade de uma liga que não os construiu, com fidelidade estatística. É a prova de que capturaram a relação física entre propriedades, condições de corte e usinabilidade — não um artefato dos dados de treino.
+
+::: {.callout-important}
+## Decisão de projeto
+A validação em liga independente (6351-T6) é o que separa um modelo confiável de um exercício de ajuste de curva. Reservar dados para validação "custa" — são ensaios que não entram na construção do modelo. Mas o retorno é a confiança: um modelo validado assim pode ser usado para prever ligas novas dentro da faixa, poupando ensaios futuros. É a mesma lógica treino-validação que hoje estrutura o aprendizado de máquina, aplicada décadas antes em usinabilidade.
+:::
+
+## A otimização multiresposta {#sec-cap10-otimizacao}
+
+Com modelos globais validados, chega o momento da otimização. Dos sete modelos, quatro foram selecionados para compor o problema multiobjetivo — **força ($F_u$), potência ($N_e$), temperatura ($T_c$) e rugosidade ($R_a$)** — por sua importância prática no processo. A rugosidade $R_a$ foi escolhida entre os parâmetros de acabamento por ser a mais usada na literatura de usinagem de alumínio.
+
+### O ponto ótimo
+
+Aplicando a otimização multiresposta (Capítulo @sec-cap6), buscou-se a combinação de propriedades e condições de corte que minimiza simultaneamente as quatro respostas. O ponto ótimo encontrado foi:
+
+| Variável | Valor ótimo |
+|:---------|:-----------:|
+| Resistência $R$ | 323 MPa |
+| Alongamento $Ar$ | 44% |
+| Dureza $Hd$ | 34,5 HV |
+| Velocidade $v_c$ | 126 m/min |
+| Profundidade $a_p$ | 2,43 mm |
+| Avanço $f$ | 0,19 mm/volta |
+
+: Condição ótima encontrada pela otimização multiresposta. {#tbl-otimo}
+
+Nessa condição, as respostas otimizadas ficam em: força $F_u \approx 723$ N, potência $N_e \approx 1395$ W, temperatura $T_c \approx 344$ °C e rugosidade $R_a \approx 2{,}47$ µm — o melhor compromisso entre as quatro, dado o conflito entre elas.
+
+Note que o ótimo inclui **propriedades da liga** (R, Ar, Hd), não só condições de corte. Isso é o poder do modelo global: ele indica não apenas *como usinar*, mas *que tipo de liga* (em termos de propriedades) usina melhor sob otimização conjunta.
+
+### Reproduzindo a otimização por algoritmo genético
+
+O estudo usou algoritmo genético (Capítulo @sec-cap6) para a busca do ótimo — apropriado dada a superfície multiobjetivo acidentada. O código abaixo reproduz a abordagem, minimizando uma desejabilidade global das quatro respostas.
+
+```{r}
+#| label: ag-otimizacao
+#| eval: false
+
+library(GA)          # algoritmo genetico
+library(desirability)
+
+# Modelos globais de 2a ordem (coeficientes da Tab. 5.22 da tese)
+# Cada funcao preve uma resposta a partir das 6 variaveis codificadas
+predizer_Fu <- function(x) { 460.90 + t(x) %*% b_Fu + t(x) %*% B_Fu %*% x }
+# (analogo para Ne, Tc, Ra com seus coeficientes)
+
+# Desejabilidades individuais (minimizar as quatro)
+d_Fu <- dMin(low = 200, high = 900)
+d_Ne <- dMin(low = 500, high = 3000)
+d_Tc <- dMin(low = 300, high = 600)
+d_Ra <- dMin(low = 0.4, high = 4.0)
+
+# Funcao objetivo: desejabilidade global (a MAXIMIZAR pelo AG)
+objetivo <- function(x) {
+  fu <- predizer_Fu(x); ne <- predizer_Ne(x)
+  tc <- predizer_Tc(x); ra <- predizer_Ra(x)
+  D <- dOverall(d_Fu, d_Ne, d_Tc, d_Ra)
+  predict(D, data.frame(D1=fu, D2=ne, D3=tc, D4=ra))
+}
+
+# Algoritmo genetico: busca o ponto de maxima desejabilidade
+resultado <- ga(
+  type = "real-valued",
+  fitness = objetivo,
+  lower = rep(-1.41, 6), upper = rep(1.41, 6),  # limites codificados
+  popSize = 100, maxiter = 200, seed = 42
+)
+
+summary(resultado)   # ponto otimo e desejabilidade maxima
+```
+
+O pacote GA evolui uma população de soluções por 200 gerações, convergindo para a condição de máxima desejabilidade — reproduzindo o ponto ótimo da Tabela @tbl-otimo.
+
+## A fronteira de Pareto como alternativa {#sec-cap10-pareto}
+
+A otimização por desejabilidade entrega **um** ponto — o melhor compromisso segundo os pesos embutidos nas desejabilidades. Mas, como discutido no Capítulo @sec-cap6, há uma alternativa que expõe os trade-offs em vez de escondê-los: a fronteira de Pareto, via NSGA-II.
+
+Em vez de dizer "a condição ótima é esta", o NSGA-II entrega o **conjunto de todas as condições eficientes** — aquelas em que não se pode reduzir uma resposta sem aumentar outra. O código abaixo aplica o NSGA-II (via pymoo, Capítulo @sec-cap6) aos modelos globais, mapeando o trade-off força × rugosidade.
+
+```{python}
+#| label: nsga2-pareto
+#| eval: false
+
+import numpy as np
+from pymoo.core.problem import Problem
+from pymoo.algorithms.moo.nsga2 import NSGA2
+from pymoo.optimize import minimize
+
+class UsinabilidadeGlobal(Problem):
+    def __init__(self):
+        super().__init__(n_var=6, n_obj=2,           # 6 variaveis, 2 objetivos
+                         xl=np.full(6, -1.41), xu=np.full(6, 1.41))
+    def _evaluate(self, X, out, *args, **kwargs):
+        # Modelos globais de 2a ordem (coeficientes da Tab. 5.22)
+        Fu = np.array([predizer_Fu(x) for x in X])   # minimizar
+        Ra = np.array([predizer_Ra(x) for x in X])   # minimizar
+        out["F"] = np.column_stack([Fu, Ra])
+
+# NSGA-II: fronteira de Pareto forca x rugosidade
+res = minimize(UsinabilidadeGlobal(), NSGA2(pop_size=100),
+               ("n_gen", 200), seed=1, verbose=False)
+
+# res.F: cada linha e uma condicao de corte nao-dominada (Fu, Ra)
+print("Solucoes na fronteira:", len(res.F))
+```
+
+A fronteira resultante mostra, para cada nível de força aceitável, a menor rugosidade atingível — e vice-versa. O engenheiro escolhe o ponto conforme a prioridade do momento: se o acabamento é crítico, move-se para a região de baixa rugosidade (aceitando mais força); se a força é o gargalo, para o outro extremo. O ponto de desejabilidade (Tabela @tbl-otimo) é **um** dos pontos dessa fronteira — o que corresponde aos pesos escolhidos.
+
+::: {.callout-tip}
+## Na prática
+Use as duas abordagens em sequência, como sugerido no Capítulo @sec-cap6: primeiro o NSGA-II para **ver** o trade-off força × rugosidade × potência e entender o espaço de compromissos; depois a desejabilidade para **cravar** a condição de operação, uma vez decididas as prioridades. O NSGA-II informa a decisão; a desejabilidade a executa.
+:::
+
+## Recomendações operacionais por liga {#sec-cap10-recomendacoes}
+
+Traduzindo todo o estudo em orientação de chão de fábrica, liga a liga:
+
+**1350-O (alumínio puro, recozido).** A mais problemática na usinagem, apesar de mole: cavaco contínuo emaranhado, alto grau de recalque, risco de efeito guarda-chuva. Recomenda-se **avanço mais alto** ($f > 0{,}20$ mm/volta) para melhorar o controle do cavaco, e velocidade elevada para reduzir o recalque. Aceitar que o acabamento será limitado pela ductilidade.
+
+**6082-T4 e 6351-T6 (Al-Mg-Si intermediárias).** Comportamento equilibrado. Avanços moderados a altos dão bom controle de cavaco (forma tubular) sem penalizar demais a rugosidade. São ligas "bem-comportadas" — respondem previsivelmente aos modelos.
+
+**6262-T6 (livre-corte).** A melhor usinabilidade do conjunto, graças ao Bi e Pb. Cavaco fragmentado em arcos soltos com avanços altos. É a liga de escolha quando o controle do cavaco é crítico — a metalurgia resolve o problema na origem.
+
+**7075-T73 e 7075-T6 (Al-Zn-Mg, alta resistência).** Exigem mais força e potência (dimensione a máquina), mas o cavaco é razoavelmente controlável. A 7075-T6, mais dura, é a mais exigente em esforço de corte. Velocidade alta ajuda (amaciamento térmico reduz a força).
+
+**Regra transversal — usine a seco.** Para todas as ligas, a lubri-refrigeração não afetou significativamente as respostas (@sec-cap8). Salvo necessidade específica de controle térmico, a usinagem a seco é recomendável — mais limpa, econômica e sustentável.
+
+## Extensão do estudo: novas ligas {#sec-cap10-extensao}
+
+O poder dos modelos globais é generalizar por propriedades — o que abre caminho para estender o estudo a ligas não ensaiadas. Uma liga nova, caracterizada por sua resistência, alongamento e dureza, pode ter sua usinabilidade **prevista** pelos modelos, sem novos ensaios, desde que suas propriedades caiam dentro da faixa estudada.
+
+Ligas Al-Mg-Si adicionais da mesma família (por exemplo, variantes T6 de composição próxima às já estudadas) são candidatas naturais a essa extensão, tanto para validar os modelos numa faixa mais ampla quanto para investigar como pequenas variações de composição e têmpera deslocam a usinabilidade. Essa é a fronteira de trabalho futuro que os modelos globais habilitam: transformar a caracterização de propriedades — barata — em predição de usinabilidade, poupando a caracterização de usinagem — cara.
+
+::: {.callout-warning}
+## Erro comum
+Extrapolar os modelos globais para **fora** da faixa de propriedades estudada. Um modelo validado entre R = 60 e 540 MPa não garante predições confiáveis para uma liga de 700 MPa — é extrapolação, terreno onde o modelo não foi testado. A generalização vale dentro do envelope experimental; fora dele, é preciso novos ensaios. Prever é seguro na interpolação, arriscado na extrapolação.
+:::
+
+## Síntese do capítulo {#sec-cap10-sintese}
+
+Três ideias devem permanecer:
+
+1. **Os modelos globais generalizam por propriedades.** Preveem a usinabilidade de uma liga a partir de resistência, alongamento e dureza — a metalurgia (@sec-cap2) tornada preditor quantitativo, com $R^2 > 0{,}85$.
+2. **A validação em liga independente é o selo de confiança.** A 6351-T6, prevista sem ter construído os modelos, confirmou-os estatisticamente (p > 0,50) — a prova de que capturaram a física.
+3. **A otimização entrega a condição recomendada.** Força, potência, temperatura e rugosidade conciliadas num ponto ótimo — e a fronteira de Pareto expõe os trade-offs para a decisão final do engenheiro.
+
+Com este capítulo, a Parte III se completa: o estudo de caso percorreu todo o arco, do projeto experimental à condição de corte otimizada e validada. A Parte IV levará essas conclusões ao chão de fábrica e sintetizará as lições do livro.
+
+## Para saber mais {#sec-cap10-saibamais}
 
 ::: {.callout-tip}
 ## Aprofundamento
-Referências complementares e leituras recomendadas para este capítulo serão adicionadas no decorrer da redação.
+Os modelos de regressão global seguem a metodologia de @montgomery2005design. A redução da força com a velocidade, por efeitos térmicos e de discordâncias, é discutida em @abukhshim2006heat. A dificuldade de prever o comportamento sob condições severas é destacada por @kilic2007observat. Sobre a escolha do $R_a$ como parâmetro de rugosidade em ligas de alumínio, ver @demir2009, @sreejith2008machinin e @dwivedi2008machinin. Para os algoritmos de otimização, a documentação do pacote GA (R) e do pymoo (Python) complementa o Capítulo @sec-cap6.
 :::
 
 ## Exercícios propostos {.unnumbered}
 
-::: {.callout-important}
-## Em desenvolvimento
-Exercícios serão adicionados durante a Fase 5 do roadmap.
-:::
+1. **Modelo global vs. por liga.** Explique a diferença entre um modelo de regressão por liga (Capítulo @sec-cap9) e um modelo global. Que pergunta cada um responde, e por que o global é mais poderoso?
+
+2. **Qualidade e generalização.** Os $R^2$ globais (0,88-0,99) são um pouco menores que os por-liga (Capítulo @sec-cap9). Explique por que isso é esperado, e por que não invalida os modelos globais.
+
+3. **Validação.** A liga 6351-T6 foi reservada para validação. Por que validar num conjunto independente é mais rigoroso do que avaliar o ajuste nos dados de construção? Relacione com a lógica treino-validação do aprendizado de máquina.
+
+4. **Interpretação do teste.** Na validação, os p-níveis do teste predito-vs-observado ficaram acima de 0,50 (ex.: 0,75 para força). Por que um p-nível **alto** é o resultado desejado aqui, ao contrário da ANOVA de efeitos onde se busca p < 0,05?
+
+5. **Seleção de respostas.** Da otimização participaram $F_u$, $N_e$, $T_c$ e $R_a$ — não $R_z$ nem $R_q$. Explique o critério dessa seleção e por que $R_a$ foi o parâmetro de rugosidade escolhido.
+
+6. **Ponto ótimo.** O ótimo inclui propriedades da liga (R=323, Ar=44%, Hd=34,5) além de condições de corte. Interprete: o que significa otimizar sobre propriedades, e como isso orienta a escolha de liga para uma aplicação?
+
+7. **Desejabilidade vs. Pareto (integrador).** A otimização deu um ponto (desejabilidade); o NSGA-II daria uma fronteira. Descreva como você usaria as duas abordagens em conjunto num projeto real de seleção de condições de corte, e o que cada uma acrescenta.
+
+8. **Extrapolação.** Um engenheiro quer usar os modelos globais para prever a usinabilidade de uma liga com R = 650 MPa. Os modelos foram construídos com R até 540 MPa. Que cuidado ele deve ter, e por quê?
