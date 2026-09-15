@@ -1,48 +1,199 @@
 ---
-title: "Modelagem RSM via PCC"
-subtitle: "Modelos de segunda ordem, curvas de nível e controle do cavaco"
+title: "Modelagem por superfícies de resposta via PCC"
+subtitle: "Os modelos de segunda ordem, o cavaco e o desgaste das ferramentas"
 author: "Mário Cezar dos Santos Jr."
 abstract: |
-  Modelagem por superfícies de resposta aplicada ao PCC do estudo de caso. Inclui análise residual, curvas de nível, controle do cavaco e estudos de desgaste e avaria de ferramentas.
+  Este capítulo apresenta os resultados da modelagem por superfícies de resposta, obtida pelo planejamento composto central aplicado às cinco ligas de alumínio. Traz os modelos de segunda ordem ajustados para cada resposta de usinabilidade — força, potência, temperatura, rugosidade e vibração — com seus coeficientes de determinação e termos significativos; discute as curvas de nível que revelam a geometria das superfícies; e reúne dois estudos complementares fundamentais para a prática: o controle do cavaco (com o grau de recalque) e o desgaste das ferramentas. Os modelos aqui construídos são a base da otimização multiresposta do capítulo seguinte.
 ---
 
-# Modelagem RSM via PCC {#sec-cap9}
+# Modelagem por superfícies de resposta via PCC {#sec-cap9}
+
+## Introdução {#sec-cap9-intro}
+
+O Capítulo @sec-cap8 identificou, por triagem fatorial, os fatores que importam. Este capítulo dá o passo seguinte da metodologia da Parte II: leva esses fatores ao planejamento composto central (Capítulo @sec-cap5) e constrói os **modelos de segunda ordem** que descrevem as superfícies de resposta de cada liga.
+
+Enquanto o fatorial respondia "quais fatores importam?", o PCC responde "**como** eles importam, na forma exata da curva". Com termos quadráticos, os modelos capturam a curvatura que o fatorial não via — e é essa curvatura que permitirá, no Capítulo @sec-cap10, localizar as condições ótimas de corte.
+
+O capítulo tem quatro partes. Primeiro, os modelos de regressão do PCC para as cinco ligas, com seus coeficientes de determinação. Segundo, a interpretação geométrica via curvas de nível. Terceiro, o estudo do controle do cavaco e do grau de recalque — decisivo para a usinabilidade prática. Quarto, o estudo do desgaste e das avarias das ferramentas — que atesta a viabilidade das condições de corte. Juntos, esses resultados transformam os dados experimentais em conhecimento acionável.
 
 ::: {.callout-note}
-## Status do capítulo
-**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 5 do roadmap.
+## Onde este capítulo se conecta
+Os modelos de segunda ordem construídos aqui são as funções objetivo da otimização multiresposta do Capítulo @sec-cap10. A qualidade desses modelos — atestada pelos altos $R^2$ deste capítulo — é o que dá confiança às condições ótimas que serão determinadas a seguir.
 :::
 
-## Modelos de segunda ordem ajustados
+## Os modelos de regressão do PCC {#sec-cap9-regressao}
 
-*Conteúdo em desenvolvimento.*
+O PCC foi aplicado a cada uma das cinco ligas (1350-O, 6082-T4, 6262-T6, 7075-T73, 7075-T6), com os fatores de corte $v_c$, $a_p$ e $f$ como variáveis de entrada. Para cada liga e cada resposta, ajustou-se um modelo de segunda ordem por análise de variância, mantendo apenas os termos significativos (p < 0,05).
 
-## Análise residual
+### A qualidade dos modelos
 
-*Conteúdo em desenvolvimento.*
+O resultado mais notável é a **qualidade dos ajustes**. A Tabela @tbl-r2-pcc resume os coeficientes de determinação obtidos para as principais respostas, através das cinco ligas.
 
-## Curvas de nível e interpretação
+| Liga | $F_u$ | $N_e$ | $T_c$ | $R_a$ | $V_b$ |
+|:-----|:-----:|:-----:|:-----:|:-----:|:-----:|
+| 1350-O | 0,981 | 0,992 | 0,985 | 0,967 | 0,948 |
+| 6082-T4 | 0,989 | 0,993 | 0,991 | 0,989 | 0,857 |
+| 6262-T6 | 0,999 | 0,994 | 0,992 | 0,984 | 0,923 |
+| 7075-T73 | 0,993 | 0,998 | 0,869 | 0,968 | 0,862 |
+| 7075-T6 | 0,997 | 0,997 | 0,996 | 0,979 | 0,918 |
 
-*Conteúdo em desenvolvimento.*
+: Coeficientes de determinação $R^2$ dos modelos de segunda ordem do PCC, por liga e resposta. {#tbl-r2-pcc}
 
-## Controle do cavaco e grau de recalque
+A leitura é eloquente: para força, potência e temperatura, os $R^2$ ficam quase todos **acima de 0,98** — os modelos explicam mais de 98% da variação. A rugosidade ($R_a$) fica na casa de 0,97-0,99. A exceção é sempre a **vibração**, com $R^2$ menores (0,86-0,95), confirmando o que o fatorial já indicara: a vibração é intrinsecamente mais ruidosa e menos previsível. A temperatura da 7075-T73 (0,869) é o outro ponto mais baixo, sinalizando maior dispersão nessa combinação específica.
 
-*Conteúdo em desenvolvimento.*
+### Os termos significativos
 
-## Desgastes e avarias de ferramentas
+Além do $R^2$, a ANOVA de cada modelo revelou quais termos — lineares, de interação e quadráticos — são significativos. Alguns padrões atravessam as ligas:
 
-*Conteúdo em desenvolvimento.*
+- **O avanço ($f$) domina a rugosidade** — seu termo linear e, frequentemente, o quadrático ($f^2$) são altamente significativos para $R_a$, $R_z$ e $R_q$ em todas as ligas. É o fator-mestre do acabamento;
+- **A profundidade ($a_p$) e o avanço dominam a força** — ambos com termos lineares fortes, e a interação $a_p \times f$ recorrentemente significativa;
+- **A curvatura existe e importa** — termos quadráticos ($v_c^2$, $a_p^2$, $f^2$) aparecem significativos em vários modelos, justificando a passagem do fatorial ao PCC. Fosse tudo linear, o fatorial teria bastado.
 
-## Para saber mais
+A presença de termos quadráticos significativos é a prova experimental de que o passo do PCC valeu a pena: há curvatura real nas superfícies, e localizá-la exige o modelo de segunda ordem.
+
+::: {.callout-important}
+## Decisão de projeto
+Um $R^2$ de 0,999 (força da 6262-T6) é excepcional — mas o rigor exige olhar o $R^2$ **ajustado**, que penaliza termos supérfluos. Nos modelos do estudo, $R^2$ e $R^2$ ajustado ficaram próximos (0,999 vs 0,999 para essa força), sinal de modelos parcimoniosos, sem inflar-se com termos inúteis. Quando os dois divergem muito, é alerta de superajuste — não foi o caso aqui, graças à seleção por significância.
+:::
+
+## As curvas de nível {#sec-cap9-curvas}
+
+Os modelos de segunda ordem são superfícies no espaço dos fatores. Para lê-las, o recurso é a **curva de nível** (Capítulo @sec-cap5) — o mapa topográfico da resposta.
+
+### O que as curvas revelam
+
+Analisando as curvas de nível dos modelos ajustados, emergem os comportamentos que orientam a escolha das condições de corte. Para a **rugosidade**, as curvas mostram tipicamente um vale na região de **baixo avanço** — coerente com o domínio de $f$ sobre o acabamento: quanto menor o avanço, menor a rugosidade, com a curvatura de $f^2$ moldando o fundo do vale. Para a **força e a potência**, as curvas revelam gradientes acentuados na direção da **profundidade e do avanço**, confirmando que aumentar $a_p$ e $f$ eleva rapidamente os esforços.
+
+As curvas de nível são também onde as **interações** ganham forma visível: uma interação $a_p \times f$ significativa aparece como curvas que se inclinam ou torcem, em vez de retas paralelas. É a geometria da não-aditividade — o efeito de um fator mudando conforme o nível do outro.
+
+### Refazendo as curvas em ggplot2
+
+As curvas de nível originais podem ser refeitas com qualidade editorial usando o ggplot2. O código abaixo gera a curva de nível de uma resposta a partir do modelo de segunda ordem ajustado.
+
+```{r}
+#| label: curvas-ggplot
+#| eval: false
+
+library(ggplot2)
+library(metR)   # para geom_contour_fill e rotulos de contorno
+
+# Modelo de 2a ordem ajustado (coeficientes do PCC de uma liga/resposta)
+# Ex.: rugosidade Ra em funcao de Vc e f (ap fixo no centro)
+modelo_Ra <- function(vc, f) {
+  b0 + b_vc*vc + b_f*f + b_vcf*vc*f + b_vc2*vc^2 + b_f2*f^2
+}
+
+# Grade de predicao no espaco codificado
+grade <- expand.grid(
+  vc = seq(-1.41, 1.41, length.out = 60),
+  f  = seq(-1.41, 1.41, length.out = 60)
+)
+grade$Ra <- with(grade, modelo_Ra(vc, f))
+
+# Curva de nivel preenchida com rotulos
+ggplot(grade, aes(x = vc, y = f, z = Ra)) +
+  geom_contour_fill(aes(fill = after_stat(level))) +
+  geom_contour(color = "white", alpha = 0.4) +
+  geom_text_contour(stroke = 0.15) +
+  scale_fill_viridis_c(name = "Ra (um)") +
+  labs(x = "Velocidade de corte (cod.)",
+       y = "Avanço (cod.)",
+       title = "Curva de nivel da rugosidade Ra") +
+  theme_minimal(base_size = 12)
+```
+
+O `geom_contour_fill` do pacote metR preenche as regiões entre curvas com cor, e `geom_text_contour` rotula cada curva com seu valor — produzindo um mapa de nível legível e publicável. O vale de baixa rugosidade aparece como a região de cor mais clara (ou escura, conforme a escala), localizando visualmente a melhor condição.
+
+::: {.callout-tip}
+## Na prática
+A curva de nível é a ferramenta que traduz o modelo estatístico para a linguagem do engenheiro de processo. Em vez de uma equação com seis coeficientes, ele vê um mapa: "para rugosidade abaixo de 1 µm, mantenha o avanço nesta faixa". É a ponte entre o modelo e a decisão de chão de fábrica — e por isso vale investir em curvas de nível de qualidade.
+:::
+
+## Estudo de controle do cavaco {#sec-cap9-cavaco}
+
+Modelos preveem números; o cavaco se vê e se pega. Este estudo, complementar aos modelos, avaliou os tipos e formas de cavaco e o **grau de recalque** ($R_c$) em cada liga — informação decisiva para a usinabilidade prática, já que o cavaco é, simultaneamente, diagnóstico e problema (Capítulo @sec-cap3).
+
+### O princípio: encruamento versus amaciamento
+
+A transição entre tipos de cavaco resulta da **competição entre encruamento e amaciamento** no plano de cisalhamento primário. Havendo alto encruamento, surgem tensões críticas que rompem o cavaco (abertura de trinca); predominando o amaciamento, o cavaco tende a não romper, formando fitas longas. É esse equilíbrio, liga a liga, que o estudo revelou.
+
+### O comportamento liga a liga
+
+Os resultados desenham um espectro que espelha a metalurgia do Capítulo @sec-cap2:
+
+**1350-O — o pior controle.** Devido à sua alta ductilidade, produziu em todas as condições cavaco **contínuo**, em fitas longas e emaranhadas, ocupando grande volume, riscando a peça e enrolando na ferramenta. Alguns cavacos aglomerados causaram o "efeito guarda-chuva", impedindo o fluido de alcançar a região de corte. Seus graus de recalque foram os mais altos — chegando a $R_c > 9$ —, refletindo intensa deformação plástica. Coerentemente, $R_c$ diminuiu com o aumento da velocidade de corte.
+
+**6082-T4 — controle intermediário.** Cavaco contínuo, mas com melhor controle (forma tubular) em avanços mais altos ($f > 0{,}20$ mm/volta). Seus graus de recalque foram menores que os da 1350-O, indicando menor deformação plástica e, portanto, menores esforços de cisalhamento.
+
+**6262-T6 — o melhor controle, pelo livre-corte.** Apesar de dureza e resistência maiores, produziu os cavacos mais bem controlados — em arcos soltos — nas condições de avanço mais alto. A razão está nos **elementos de livre-corte** (Bi e Pb): ao se fundirem nas altas temperaturas de corte, geram tensões internas que trincam o cavaco, superando o efeito da ductilidade e fragmentando-o. É a metalurgia da 6262-T6 (Capítulo @sec-cap2) manifestando-se no cavaco — exatamente como previsto.
+
+**7075-T73 e 7075-T6 — controle por resistência.** As ligas mais resistentes formaram cavaco contínuo tubular emaranhado, com melhor controle (arcos soltos) novamente em avanços maiores. Seus graus de recalque foram menores, coerentes com a menor ductilidade.
+
+### O padrão prático
+
+Um padrão atravessa todas as ligas: **avanços acima de 0,20 mm/volta melhoram o controle do cavaco**. Isso tem valor direto de processo — para fragmentar o cavaco, aumente o avanço (dentro dos limites de rugosidade e força). E a relação recalque-ductilidade confirma a física: ligas dúcteis (1350-O) recalcam mais e formam cavacos piores; a redução da ductilidade (por têmpera ou por elementos de livre-corte) melhora o cavaco.
+
+::: {.callout-warning}
+## Erro comum
+Escolher a condição de corte olhando só força e rugosidade, ignorando o cavaco. Uma condição pode dar força baixa e bom acabamento, mas gerar cavaco emaranhado que causa o efeito guarda-chuva, para a máquina e arrisca o operador. O controle do cavaco é uma resposta de usinabilidade tão real quanto as demais — e a 6262-T6 mostra que a metalurgia certa (livre-corte) o resolve na origem.
+:::
+
+## Estudo do desgaste das ferramentas {#sec-cap9-desgaste}
+
+A última peça do quadro é o desgaste. De nada adianta uma condição de corte otimizada que destrua a ferramenta rapidamente. O estudo acompanhou a evolução do desgaste de flanco e de cratera e as avarias das ferramentas ao longo dos ensaios do PCC.
+
+O desgaste é o fator que atesta a **viabilidade prática e econômica** das condições de corte. Uma condição pode ser ótima em força, potência e acabamento, mas se acelerar o desgaste — encurtando a vida da ferramenta e elevando o custo por peça — sua vantagem se dissolve. Por isso o estudo do desgaste é parte integrante da avaliação de usinabilidade, não um adendo.
+
+Na usinagem de alumínio, o mecanismo de desgaste mais relevante costuma ser o **adesivo** — o alumínio, com sua alta afinidade e baixo ponto de fusão, tende a aderir à ferramenta, formando aresta postiça e, com seus destacamentos, promovendo desgaste. A geometria polida da ferramenta A (Apêndice A), escolhida justamente para minimizar adesão, tem aqui sua justificativa: reduzir o desgaste adesivo característico do alumínio.
+
+::: {.callout-important}
+## Decisão de projeto
+A otimização do próximo capítulo minimizará força, potência e rugosidade — mas a condição ótima só é adotável se o desgaste, avaliado aqui, a validar. É a diferença entre um ótimo de papel e um ótimo de chão de fábrica. Toda condição recomendada deve passar pelo crivo da vida da ferramenta.
+:::
+
+## Síntese do capítulo {#sec-cap9-sintese}
+
+O Quadro @tbl-sintese9 resume os resultados da modelagem.
+
+| Resultado | Achado principal |
+|:----------|:-----------------|
+| Modelos de 2ª ordem | $R^2 > 0{,}98$ para força/potência/temperatura; menor para vibração |
+| Termos significativos | $f$ domina rugosidade; $a_p$ e $f$ dominam força; curvatura presente |
+| Curvas de nível | Vale de rugosidade em baixo avanço; interações visíveis |
+| Controle do cavaco | 6262-T6 melhor (livre-corte); 1350-O pior ($R_c>9$); $f>0{,}20$ ajuda |
+| Desgaste | Mecanismo adesivo; valida a viabilidade das condições ótimas |
+
+: Síntese dos resultados da modelagem por PCC. {#tbl-sintese9}
+
+Três ideias devem permanecer:
+
+1. **Os modelos são excelentes.** Com $R^2$ acima de 0,98 para as principais respostas, os modelos de segunda ordem capturam fielmente a usinabilidade — dando confiança à otimização seguinte.
+2. **A metalurgia reaparece no cavaco.** O melhor controle de cavaco veio da 6262-T6, pelos elementos de livre-corte — a metalurgia do Capítulo @sec-cap2 confirmada experimentalmente no chão de fábrica.
+3. **Otimizar exige olhar o desgaste.** Um ótimo de força e rugosidade só vale se a ferramenta sobreviver — o estudo de desgaste é o crivo de viabilidade.
+
+Com modelos confiáveis para cada resposta e cada liga, e com o cavaco e o desgaste caracterizados, o Capítulo @sec-cap10 executa o passo final: a otimização multiresposta que concilia todas essas respostas conflitantes numa condição de corte recomendada.
+
+## Para saber mais {#sec-cap9-saibamais}
 
 ::: {.callout-tip}
 ## Aprofundamento
-Referências complementares e leituras recomendadas para este capítulo serão adicionadas no decorrer da redação.
+A competição encruamento-amaciamento na formação do cavaco é discutida em @tash2007doty. O comportamento do grau de recalque com a velocidade, na série 1xxx, foi observado por @basti2007tools. O papel dos elementos de livre-corte na fragmentação do cavaco da 6262-T6 apoia-se em @elgallad2010machinab. A metodologia de superfícies de resposta segue @montgomery2005design (Capítulo @sec-cap5). Para o pacote metR de curvas de nível em ggplot2, consulte sua documentação no CRAN.
 :::
 
 ## Exercícios propostos {.unnumbered}
 
-::: {.callout-important}
-## Em desenvolvimento
-Exercícios serão adicionados durante a Fase 5 do roadmap.
-:::
+1. **Qualidade dos modelos.** Pela Tabela @tbl-r2-pcc, qual resposta tem consistentemente os menores $R^2$ através das ligas? O que isso diz sobre sua previsibilidade, e como deveria afetar a confiança em sua otimização?
+
+2. **Termos quadráticos.** A presença de termos quadráticos significativos justifica o uso do PCC em vez do fatorial. Explique por quê — o que o fatorial 2^k não conseguiria capturar?
+
+3. **Curvas de nível.** Numa curva de nível de rugosidade com um vale em baixo avanço, onde está a condição de mínima rugosidade? Como uma interação $a_p \times f$ significativa alteraria o formato dessas curvas?
+
+4. **Grau de recalque.** A liga 1350-O apresentou $R_c > 9$, e a 6082-T4, valores menores. Relacione o grau de recalque com a ductilidade das ligas (Capítulo @sec-cap2) e com os esforços de cisalhamento.
+
+5. **Livre-corte e cavaco.** A 6262-T6, mais dura que a 6082-T4, teve melhor controle de cavaco. Explique esse resultado aparentemente paradoxal usando o papel do Bi e Pb (Capítulo @sec-cap2).
+
+6. **Controle do cavaco (integrador).** Um operador reclama de cavaco emaranhado ("efeito guarda-chuva") ao usinar 1350-O. Com base neste capítulo, que ajuste de parâmetro você recomendaria primeiro, e por quê? Que limite prático esse ajuste encontra?
+
+7. **Desgaste.** Por que o estudo de desgaste é essencial mesmo quando os modelos de força e rugosidade já indicam uma condição ótima? Que mecanismo de desgaste predomina no alumínio, e como a geometria da ferramenta o mitiga?
+
+8. **Código R.** Adapte o código de curvas de nível do capítulo para plotar a **força de usinagem** ($F_u$) em função de $a_p$ e $f$ (com $v_c$ no centro). Que região do gráfico você esperaria conter a menor força, com base nos termos dominantes discutidos?
