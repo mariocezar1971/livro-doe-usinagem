@@ -102,9 +102,7 @@ A interação $a_p \times f$ é a mais relevante para o operador: aumentar avan�
 
 A análise fatorial deste capítulo é inteiramente reproduzível. O código abaixo, usando os pacotes do Capítulo @sec-cap4, reproduz a estimativa de efeitos e a ANOVA, e refaz os gráficos com ggplot2.
 
-```{r}
-#| label: analise-fatorial
-#| eval: false
+```r
 
 library(FrF2)
 library(ggplot2)
@@ -135,9 +133,7 @@ O `lm(Fu ~ Liga * Vc * ap * f)` ajusta o modelo com todos os fatores e interaç�
 
 ### Gráficos de efeitos com ggplot2
 
-```{r}
-#| label: graficos-ggplot
-#| eval: false
+```r
 
 # Preparar tabela de efeitos para o grafico de Pareto
 ef_df <- data.frame(
@@ -164,9 +160,7 @@ O gráfico de Pareto em ggplot2 mostra, de relance, que $a_p$ domina (maior barr
 
 ### Validação por análise de resíduos
 
-```{r}
-#| label: residuos-validacao
-#| eval: false
+```r
 
 # Os quatro diagnosticos que validam o modelo
 par(mfrow = c(2, 2))

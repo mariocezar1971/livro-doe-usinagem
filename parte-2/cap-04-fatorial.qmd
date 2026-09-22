@@ -214,9 +214,7 @@ O R oferece o pacote **FrF2** para criar e analisar planejamentos fatoriais 2^k.
 
 ### Criando o planejamento
 
-```{r}
-#| label: cria-plano
-#| eval: false
+```r
 
 # install.packages("FrF2")  # se ainda nao instalado
 library(FrF2)
@@ -243,9 +241,7 @@ A saída lista os 16 ensaios na ordem sorteada de execução — a ordem em que 
 
 ### Inserindo respostas e estimando efeitos
 
-```{r}
-#| label: analisa
-#| eval: false
+```r
 
 # Vetor de respostas na ordem PADRAO da matriz (nao na aleatorizada)
 Fu <- c(210, 385, 195, 360, 340, 590, 315, 555,
@@ -263,9 +259,7 @@ O `summary()` traz os coeficientes (metade dos efeitos, na convenção do R), se
 
 ### Visualizando: Pareto e interações
 
-```{r}
-#| label: graficos
-#| eval: false
+```r
 
 # Grafico de Pareto dos efeitos (quais dominam)
 DanielPlot(modelo, half = TRUE, alpha = 0.05)   # grafico de probabilidade
@@ -277,9 +271,7 @@ O `MEPlot` mostra os efeitos principais como retas — quanto mais inclinada, ma
 
 ### Validando: análise de resíduos
 
-```{r}
-#| label: residuos
-#| eval: false
+```r
 
 # Os quatro graficos diagnosticos de residuos
 par(mfrow = c(2, 2))   # 2x2 paineis

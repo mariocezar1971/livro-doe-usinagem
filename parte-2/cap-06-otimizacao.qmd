@@ -142,9 +142,7 @@ Escalarizar (desejabilidade, AG mono) ou mapear Pareto (NSGA-II)? A regra: se vo
 
 O pacote **desirability** do R implementa Derringer-Suich diretamente sobre os modelos de segunda ordem do capítulo anterior.
 
-```{r}
-#| label: desirability-r
-#| eval: false
+```r
 
 # install.packages("desirability")
 library(desirability)
@@ -183,9 +181,7 @@ O `dMin`/`dMax` criam as desejabilidades individuais; `dOverall` faz a média ge
 
 Para a fronteira de Pareto, o Python oferece o **pymoo**, biblioteca de referência em otimização multiobjetivo. O exemplo abaixo aplica o NSGA-II aos modelos de segunda ordem, buscando minimizar força e rugosidade simultaneamente.
 
-```{python}
-#| label: pymoo-nsga2
-#| eval: false
+```python
 
 import numpy as np
 from pymoo.core.problem import Problem
@@ -225,9 +221,7 @@ O `Problem` define os objetivos (aqui, força e rugosidade, ambos a minimizar); 
 
 ### Visualizando a fronteira
 
-```{python}
-#| label: plot-pareto
-#| eval: false
+```python
 
 import matplotlib.pyplot as plt
 

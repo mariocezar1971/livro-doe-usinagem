@@ -94,9 +94,7 @@ Note que o ótimo inclui **propriedades da liga** (R, Ar, Hd), não só condiç�
 
 O estudo usou algoritmo genético (Capítulo @sec-cap6) para a busca do ótimo — apropriado dada a superfície multiobjetivo acidentada. O código abaixo reproduz a abordagem, minimizando uma desejabilidade global das quatro respostas.
 
-```{r}
-#| label: ag-otimizacao
-#| eval: false
+```r
 
 library(GA)          # algoritmo genetico
 library(desirability)
@@ -139,9 +137,7 @@ A otimização por desejabilidade entrega **um** ponto — o melhor compromisso 
 
 Em vez de dizer "a condição ótima é esta", o NSGA-II entrega o **conjunto de todas as condições eficientes** — aquelas em que não se pode reduzir uma resposta sem aumentar outra. O código abaixo aplica o NSGA-II (via pymoo, Capítulo @sec-cap6) aos modelos globais, mapeando o trade-off força × rugosidade.
 
-```{python}
-#| label: nsga2-pareto
-#| eval: false
+```python
 
 import numpy as np
 from pymoo.core.problem import Problem

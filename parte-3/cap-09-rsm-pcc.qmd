@@ -70,9 +70,7 @@ As curvas de nível são também onde as **interações** ganham forma visível:
 
 As curvas de nível originais podem ser refeitas com qualidade editorial usando o ggplot2. O código abaixo gera a curva de nível de uma resposta a partir do modelo de segunda ordem ajustado.
 
-```{r}
-#| label: curvas-ggplot
-#| eval: false
+```r
 
 library(ggplot2)
 library(metR)   # para geom_contour_fill e rotulos de contorno
