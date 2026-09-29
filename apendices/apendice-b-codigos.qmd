@@ -1,36 +1,224 @@
 ---
 title: "Apêndice B — Códigos R e Python"
+subtitle: "Os scripts das análises, comentados e prontos para uso"
+author: "Mário Cezar dos Santos Jr."
+abstract: |
+  Este apêndice consolida os códigos R e Python usados nas análises do livro, organizados por tarefa: planejamento fatorial, superfícies de resposta, otimização multiresposta e visualização. Cada bloco é comentado para uso direto. Os códigos completos e os dados que os alimentam estão disponíveis em repositório aberto, cujo acesso é indicado ao final. O objetivo é que o leitor reproduza cada análise do livro e a adapte ao seu próprio problema.
 ---
 
-# Apêndice B — Códigos R e Python {#sec-apendice-b .unnumbered}
+# Apêndice B — Códigos R e Python {#sec-apendice-b}
 
-::: {.callout-note}
-## Status
-**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 6 do roadmap.
+## Propósito {#sec-apb-proposito}
+
+Ao longo do livro, os métodos foram ilustrados com código R e Python. Este apêndice os reúne num só lugar, organizados por tarefa e comentados, para consulta e reuso. Os códigos são **demonstrativos**: mostram como conduzir cada análise. Para executá-los com os dados reais do estudo, use os arquivos do repositório aberto (Seção @sec-apb-repositorio) junto com os dados do Apêndice @sec-apendice-d.
+
+As ferramentas cobrem todo o fluxo metodológico: **FrF2** para planejamento fatorial (Capítulo @sec-cap4), **rsm** para superfícies de resposta (Capítulo @sec-cap5), **GA** e **desirability** para otimização em R, e **pymoo** para a fronteira de Pareto em Python (Capítulo @sec-cap6).
+
+## Códigos R {#sec-apb-r}
+
+### Planejamento fatorial 2^k (pacote FrF2)
+
+Cria a matriz fatorial aleatorizada, insere as respostas, estima os efeitos e valida por resíduos.
+
+```r
+# --- Planejamento fatorial 2^k com FrF2 ---
+library(FrF2)
+
+# Cria plano 2^3 completo, 2 replicas, aleatorizado
+plano <- FrF2(
+  nruns        = 8,          # 2^3 tratamentos
+  nfactors     = 3,          # tres fatores
+  replications = 2,          # duas replicas
+  randomize    = TRUE,       # aleatoriza a ordem (essencial)
+  factor.names = list(
+    Liga = c("1350-O", "7075-T6"),
+    Vc   = c(200, 600),
+    f    = c(0.20, 0.35)
+  ),
+  seed = 42                  # reprodutibilidade
+)
+
+# Insere respostas (na ordem PADRAO da matriz) e ajusta modelo
+Fu <- c(210, 385, 195, 360, 340, 590, 315, 555,
+        215, 380, 200, 365, 335, 585, 320, 560)
+plano_resp <- add.response(plano, Fu)
+modelo <- lm(plano_resp)
+
+# ANOVA e efeitos
+anova(modelo)
+summary(modelo)
+
+# Graficos de efeitos
+MEPlot(modelo)   # efeitos principais
+IAPlot(modelo)   # interacoes
+DanielPlot(modelo, half = TRUE, alpha = 0.05)
+
+# Validacao por residuos
+par(mfrow = c(2, 2)); plot(modelo); par(mfrow = c(1, 1))
+```
+
+### Superfície de resposta via PCC (pacote rsm)
+
+Constrói o planejamento composto central, ajusta o modelo de segunda ordem e localiza o ponto ótimo.
+
+```r
+# --- Planejamento composto central com rsm ---
+library(rsm)
+
+# PCC para 3 fatores, 4 pontos centrais, ortogonal
+plano_pcc <- ccd(
+  basis     = 3,
+  n0        = 4,
+  alpha     = "orthogonal",
+  randomize = TRUE,
+  coding = list(
+    x1 ~ (Vc - 400)/200,
+    x2 ~ (f - 0.275)/0.075,
+    x3 ~ (ap - 2.5)/1.5
+  )
+)
+
+# Ajusta modelo de 2a ordem: SO() = Second Order
+plano_pcc$Fu <- c()   # inserir respostas medidas
+modelo_rsm <- rsm(Fu ~ SO(x1, x2, x3), data = plano_pcc)
+summary(modelo_rsm)   # coeficientes, ANOVA, falta de ajuste
+
+# Analise canonica: localiza o ponto estacionario
+canonical(modelo_rsm)$xs
+```
+
+### Otimização por algoritmo genético (pacotes GA + desirability)
+
+Otimiza multiplas respostas via desejabilidade global, maximizada por algoritmo genético.
+
+```r
+# --- Otimizacao multiresposta: desejabilidade + AG ---
+library(GA)
+library(desirability)
+
+# Desejabilidades individuais (minimizar as quatro respostas)
+d_Fu <- dMin(low = 200, high = 900)
+d_Ne <- dMin(low = 500, high = 3000)
+d_Tc <- dMin(low = 300, high = 600)
+d_Ra <- dMin(low = 0.4, high = 4.0)
+D    <- dOverall(d_Fu, d_Ne, d_Tc, d_Ra)   # media geometrica
+
+# Funcao objetivo: desejabilidade global (a MAXIMIZAR)
+objetivo <- function(x) {
+  # prever as respostas nos modelos de 2a ordem ...
+  # (usar predict() dos modelos rsm ajustados)
+  predict(D, data.frame(D1 = fu, D2 = ne, D3 = tc, D4 = ra))
+}
+
+# Algoritmo genetico
+resultado <- ga(
+  type    = "real-valued",
+  fitness = objetivo,
+  lower   = rep(-1.41, 6), upper = rep(1.41, 6),
+  popSize = 100, maxiter = 200, seed = 42
+)
+summary(resultado)
+```
+
+### Visualização com ggplot2
+
+Gráfico de Pareto dos efeitos e curvas de nível — a estética publicável do livro.
+
+```r
+# --- Graficos com ggplot2 ---
+library(ggplot2)
+library(dplyr)
+
+# Pareto dos efeitos (barras horizontais, sinal em cor)
+ef_df <- data.frame(fonte = names(efeitos), efeito = as.numeric(efeitos)) %>%
+  mutate(abs_ef = abs(efeito)) %>% arrange(desc(abs_ef))
+
+ggplot(ef_df, aes(x = reorder(fonte, abs_ef), y = abs_ef, fill = efeito > 0)) +
+  geom_col() + coord_flip() +
+  scale_fill_manual(values = c("FALSE"="#c0392b","TRUE"="#2c3e50"),
+                    labels = c("Negativo","Positivo")) +
+  labs(x = "Fonte", y = "|Efeito|", fill = "Sinal") +
+  theme_minimal(base_size = 12)
+
+# Curva de nivel (pacote metR)
+library(metR)
+ggplot(grade, aes(x = vc, y = f, z = Ra)) +
+  geom_contour_fill(aes(fill = after_stat(level))) +
+  geom_text_contour() +
+  scale_fill_viridis_c(name = "Ra") +
+  theme_minimal()
+```
+
+## Códigos Python {#sec-apb-python}
+
+### Fronteira de Pareto com NSGA-II (biblioteca pymoo)
+
+Otimização multiobjetivo que entrega a fronteira de Pareto completa — o mapa dos trade-offs.
+
+```python
+# --- Fronteira de Pareto com NSGA-II (pymoo) ---
+import numpy as np
+from pymoo.core.problem import Problem
+from pymoo.algorithms.moo.nsga2 import NSGA2
+from pymoo.optimize import minimize
+
+# Modelos de 2a ordem (coeficientes da regressao do estudo)
+def modelo_Fu(x1, x2, x3):
+    return 380 + 120*x1 + 15*x2 + 90*x3 + 25*x1*x3 + 18*x1**2
+
+def modelo_Ra(x1, x2, x3):
+    return 1.6 + 0.1*x1 + 0.7*x3 + 0.3*x3**2
+
+# Problema multiobjetivo: 3 variaveis, 2 objetivos (minimizar)
+class UsinagemMulti(Problem):
+    def __init__(self):
+        super().__init__(n_var=3, n_obj=2,
+                         xl=np.array([-1.5,-1.5,-1.5]),
+                         xu=np.array([ 1.5, 1.5, 1.5]))
+    def _evaluate(self, X, out, *args, **kwargs):
+        x1, x2, x3 = X[:,0], X[:,1], X[:,2]
+        out["F"] = np.column_stack([modelo_Fu(x1,x2,x3),
+                                    modelo_Ra(x1,x2,x3)])
+
+# Roda o NSGA-II
+res = minimize(UsinagemMulti(), NSGA2(pop_size=100),
+               ("n_gen", 200), seed=1, verbose=False)
+
+print("Solucoes na fronteira:", len(res.F))
+```
+
+### Visualização da fronteira (matplotlib)
+
+```python
+# --- Grafico da fronteira de Pareto ---
+import matplotlib.pyplot as plt
+
+F = res.F
+plt.scatter(F[:,0], F[:,1], c="steelblue", s=20)
+plt.xlabel("Forca de usinagem Fu (N)")
+plt.ylabel("Rugosidade Ra (um)")
+plt.title("Fronteira de Pareto: forca vs rugosidade")
+plt.grid(True, alpha=0.3)
+plt.show()
+```
+
+## Repositório de códigos {#sec-apb-repositorio}
+
+Os códigos completos, executáveis e com os dados reais do estudo, estão disponíveis em repositório aberto no GitHub:
+
+> **`github.com/mariocezar1971/livro-doe-usinagem-codigos`**
+
+O repositório contém: os scripts R e Python completos (não apenas os trechos deste apêndice), os dados experimentais em CSV (Apêndice @sec-apendice-d), e instruções de instalação dos pacotes necessários (FrF2, rsm, GA, desirability, metR em R; pymoo, numpy, matplotlib em Python).
+
+::: {.callout-tip}
+## Acesso rápido
+Na edição impressa, o QR code abaixo leva diretamente ao repositório. Na edição digital, o link acima é clicável. Clone o repositório, instale os pacotes e execute os scripts com os dados fornecidos para reproduzir integralmente as análises do livro.
 :::
 
-Códigos-fonte completos das análises apresentadas no livro, em R e Python, com comentários linha-a-linha. Disponíveis também no repositório [github.com/mariocezar1971/livro-doe-usinagem-codigos](https://github.com/mariocezar1971/livro-doe-usinagem-codigos).
+<!-- QR-CODE-PLACEHOLDER: inserir imagem do QR code do repositorio aqui -->
+<!-- ![QR code do repositorio de codigos](../figuras/qr-repo-codigos.png){#fig-qr width=30%} -->
 
-## Setup do ambiente R
-
-*Conteúdo em desenvolvimento.*
-
-## Setup do ambiente Python
-
-*Conteúdo em desenvolvimento.*
-
-## Códigos do Capítulo 4 (Fatorial)
-
-*Conteúdo em desenvolvimento.*
-
-## Códigos do Capítulo 5 (PCC e RSM)
-
-*Conteúdo em desenvolvimento.*
-
-## Códigos do Capítulo 6 (Otimização)
-
-*Conteúdo em desenvolvimento.*
-
-## Códigos do Estudo de Caso
-
-*Conteúdo em desenvolvimento.*
+::: {.callout-note}
+## Reprodutibilidade
+Reproduzir uma análise científica é o teste final de sua validade. Com os códigos deste apêndice e os dados do Apêndice @sec-apendice-d, cada resultado do livro — dos efeitos fatoriais à condição ótima — pode ser reconstruído. Essa transparência é um compromisso com a boa ciência: os métodos e os dados estão abertos ao escrutínio.
+:::
