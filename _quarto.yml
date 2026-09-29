@@ -80,6 +80,7 @@ csl: associacao-brasileira-de-normas-tecnicas.csl
 
 format:
   html:
+    html-math-method: katex
     sitemap: true
     theme:
       light: [cosmo, styles/custom-light.scss]
