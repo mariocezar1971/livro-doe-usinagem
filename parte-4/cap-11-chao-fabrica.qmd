@@ -1,48 +1,179 @@
 ---
 title: "Do laboratório ao chão de fábrica"
-subtitle: "Restrições industriais e checklist de aplicação"
+subtitle: "Adaptando o planejamento de experimentos às restrições da indústria"
 author: "Mário Cezar dos Santos Jr."
 abstract: |
-  Adapta a metodologia DOE para o ambiente industrial real, onde existem restrições de custo, tempo de máquina, ruído experimental e segurança que limitam o experimentador acadêmico.
+  Este capítulo faz a ponte entre o rigor acadêmico das partes anteriores e a realidade da indústria. O planejamento de experimentos que funcionou no laboratório precisa ser adaptado quando a máquina é de produção, o tempo é dinheiro e cada ensaio compete com a entrega. O capítulo discute como ajustar a metodologia às restrições típicas — custo, tempo, disponibilidade de máquina, ruído do ambiente fabril —, oferece um checklist prático para conduzir um projeto experimental industrial do início ao fim, e cataloga os erros mais frequentes de quem aplica DOE na fábrica, com orientações para evitá-los. É o capítulo que transforma o método em prática.
 ---
 
 # Do laboratório ao chão de fábrica {#sec-cap11}
 
+## Introdução {#sec-cap11-intro}
+
+As Partes I a III deste livro construíram e aplicaram o planejamento de experimentos em condições controladas: um torno dedicado, ferramentas selecionadas, réplicas completas, ordem de ensaios aleatorizada. Foi assim que se revelaram os efeitos, as interações e as condições ótimas de corte das ligas de alumínio. Mas o chão de fábrica não é o laboratório.
+
+Na indústria, a máquina que você precisa para o experimento é a mesma que está produzindo peças com prazo de entrega. Cada ensaio consome material, tempo de máquina e mão de obra — recursos que têm custo direto e concorrem com a produção. O ambiente é ruidoso: vibração de outras máquinas, variação de temperatura, troca de turnos, operadores diferentes. E raramente há tempo para o número ideal de réplicas.
+
+Este capítulo trata dessa transição. A boa notícia é que os **princípios** do DOE não mudam — fatorial, superfícies de resposta e otimização continuam válidos. O que muda é a **prática**: como adaptar o planejamento às restrições reais sem perder o rigor que dá valor ao método. Um experimento industrial bem-feito, mesmo com menos réplicas e mais ruído, ainda supera de longe o "tentar e ver" que domina boa parte das fábricas.
+
 ::: {.callout-note}
-## Status do capítulo
-**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 6 do roadmap.
+## O que este capítulo entrega
+Não é mais teoria — é prática. Como encolher um planejamento sem invalidá-lo, como lidar com o ruído fabril, um checklist para conduzir o projeto do início ao fim, e a lista de erros que fazem experimentos industriais fracassarem — para você não repeti-los.
 :::
 
-## Da bancada ao chão de fábrica
+## Adaptando a metodologia para a indústria {#sec-cap11-adaptacao}
 
-*Conteúdo em desenvolvimento.*
+O primeiro ajuste é mental: no laboratório, o objetivo é **conhecimento**; na fábrica, é **decisão**. Você não precisa do modelo perfeito — precisa do modelo suficiente para decidir a condição de corte, e rápido.
 
-## Restrições típicas industriais
+### Triagem primeiro, sempre
 
-*Conteúdo em desenvolvimento.*
+Na indústria, o fatorial fracionário é o melhor amigo do engenheiro. Se um estudo de laboratório pode se dar ao luxo de um fatorial completo $2^k$, a fábrica raramente pode. Um **fatorial fracionário** $2^{k-p}$ reduz drasticamente o número de ensaios, ao custo de confundir alguns efeitos de alta ordem (interações triplas, quádruplas) — que, na prática, quase nunca importam.
 
-## Checklist de projeto experimental industrial
+A estratégia industrial é sempre em duas etapas, como nos Capítulos @sec-cap4 e @sec-cap5, mas comprimida: um fatorial fracionário de **triagem** para achar os poucos fatores vitais entre os muitos triviais, e só então, se necessário, um planejamento de segunda ordem **apenas nesses poucos fatores**. Investir ensaios num PCC de seis fatores antes da triagem é desperdício que a fábrica não perdoa.
 
-*Conteúdo em desenvolvimento.*
+### Menos réplicas, mais inteligência
 
-## Erros frequentes e como evitar
+O ideal estatístico pede réplicas completas para estimar o erro puro (Capítulo @sec-cap4). A fábrica muitas vezes não tem esse luxo. Duas saídas mantêm o rigor:
 
-*Conteúdo em desenvolvimento.*
+Primeiro, **pontos centrais**: algumas rodadas no centro do planejamento (todos os fatores no nível médio) fornecem uma estimativa do erro experimental sem replicar todo o fatorial, e ainda detectam curvatura. É o maior retorno estatístico por ensaio investido.
 
-## Casos curtos de aplicação
+Segundo, **replicar só onde importa**: se não dá para replicar tudo, replique os pontos mais informativos — o centro e talvez os vértices extremos. Uma réplica parcial bem escolhida é melhor que nenhuma.
 
-*Conteúdo em desenvolvimento.*
+### Blocagem contra a variabilidade fabril
 
-## Para saber mais
+O ambiente industrial introduz variação que o laboratório evita: lotes diferentes de matéria-prima, turnos, operadores, desgaste progressivo da ferramenta ao longo do dia. A **blocagem** é a ferramenta para lidar com isso — agrupar os ensaios em blocos homogêneos (mesmo lote, mesmo turno) e incluir o bloco como fator no modelo. Assim, a variação entre blocos é isolada e não contamina os efeitos de interesse.
+
+::: {.callout-tip}
+## Na prática
+Se você precisa rodar o experimento em dois dias, não faça todos os ensaios de nível alto no primeiro dia e os de nível baixo no segundo — isso confunde o efeito do fator com o efeito do dia. Trate cada dia como um bloco, distribua os tratamentos entre eles de forma balanceada, e a análise separa o "efeito dia" do efeito real. Blocar é quase de graça e protege contra o maior inimigo do experimento industrial: a deriva temporal.
+:::
+
+## Restrições típicas e como contorná-las {#sec-cap11-restricoes}
+
+Todo projeto experimental na fábrica enfrenta o mesmo conjunto de restrições. Reconhecê-las de antemão é meio caminho para contorná-las.
+
+### Custo
+
+Cada ensaio custa material, energia, tempo de máquina e mão de obra — e, o mais caro de todos, o **tempo de máquina parada para produção**. A resposta ao custo é a **economia de ensaios via planejamento**: é exatamente aqui que o DOE justifica seu investimento. Um fatorial fracionário de triagem que gasta 8 ensaios para avaliar 5 fatores substitui as dezenas de tentativas do método "um fator por vez". O custo do DOE não é adicional — é uma fração do que o OFAT gastaria para menos informação.
+
+### Tempo e disponibilidade de máquina
+
+A máquina de produção não fica ociosa esperando seu experimento. Estratégias práticas: rodar os ensaios em **janelas de setup ou manutenção programada**; **encaixar** o experimento em trocas de lote (quando a máquina já vai parar); e planejar o experimento **completo antes de começar** — a matriz definida, os materiais preparados, a ordem sorteada —, para que a execução seja rápida e ininterrupta quando a janela abrir. Um experimento que precisa de decisões durante a execução desperdiça a janela.
+
+### Ruído do ambiente fabril
+
+O chão de fábrica tem fontes de variação que o laboratório controla: vibração de máquinas vizinhas, oscilação de tensão elétrica, variação térmica ao longo do dia, poeira, operadores com técnicas ligeiramente diferentes. Esse ruído não pode ser eliminado, mas pode ser **gerenciado**: pela aleatorização (dilui o ruído entre os tratamentos), pela blocagem (isola fontes conhecidas) e por réplicas nos pontos centrais (quantifica o ruído restante). O objetivo não é um ambiente silencioso — é um experimento robusto ao ruído que existe.
+
+### Disponibilidade de material
+
+Nem sempre há material suficiente para o número ideal de ensaios, ou o material vem em lotes com variação. Trate o **lote** como bloco, use fatoriais fracionários para economizar material, e, se o material for muito escasso, considere um planejamento de **triagem supersaturado** (mais fatores que ensaios) para uma primeira filtragem grosseira dos fatores relevantes.
+
+::: {.callout-warning}
+## Erro comum
+Tentar controlar todas as fontes de ruído fabril como se fosse um laboratório — climatizar a área, isolar a máquina, esperar o turno "ideal". Isso torna o experimento caro, lento e, pior, **não representativo** das condições reais de produção. O objetivo do experimento industrial é encontrar condições que funcionem no chão de fábrica como ele é, não num laboratório idealizado. Aleatorize e bloque em vez de tentar eliminar o ruído.
+:::
+
+## Checklist de projeto experimental industrial {#sec-cap11-checklist}
+
+Um projeto experimental na indústria segue etapas que, puladas, comprometem o resultado. Este checklist condensa a sequência.
+
+### Antes do experimento (planejamento)
+
+- **Definir o objetivo em termos de decisão** — que decisão de processo o experimento vai informar? (Ex.: "escolher velocidade e avanço para minimizar rugosidade mantendo a produtividade")
+- **Identificar a resposta (ou respostas)** — o que será medido, com que instrumento, com que precisão? Uma medição confiável é pré-requisito.
+- **Listar os fatores candidatos** — todos os que podem influenciar, mesmo os suspeitos. A triagem vai filtrar.
+- **Definir níveis realistas** — dentro da faixa operável da máquina e do processo, não em extremos que a produção jamais usaria.
+- **Escolher o planejamento** — fatorial fracionário para triagem; PCC só depois, nos fatores vitais.
+- **Incluir pontos centrais** — para erro puro e detecção de curvatura.
+- **Aleatorizar a ordem** — sortear a sequência de execução, sempre.
+- **Planejar a blocagem** — se houver fontes de variação conhecidas (turnos, lotes), definir os blocos.
+- **Estimar recursos** — quantos ensaios, quanto material, quanto tempo de máquina, quem executa.
+
+### Durante o experimento (execução)
+
+- **Seguir a ordem sorteada** — não "otimizar" a sequência por conveniência; isso reintroduz viés.
+- **Registrar tudo** — cada ensaio com suas condições, a resposta medida, e qualquer anomalia (quebra de ferramenta, parada, troca de operador).
+- **Manter a ferramenta e o setup consistentes** — trocar a pastilha no meio do experimento sem registrar é injetar ruído não controlado.
+
+### Depois do experimento (análise e decisão)
+
+- **Estimar efeitos e rodar a ANOVA** — separar o significativo do ruído (Capítulo @sec-cap4).
+- **Validar com resíduos** — conferir as suposições antes de confiar nas conclusões.
+- **Modelar (se necessário)** — ajustar superfície de resposta apenas se a triagem indicou curvatura e a decisão exige otimização (Capítulo @sec-cap5).
+- **Decidir e documentar** — traduzir o resultado em condição de corte recomendada, e registrar o raciocínio para auditoria futura.
+- **Validar a decisão em produção** — rodar a condição escolhida em escala real antes de adotá-la definitivamente.
+
+::: {.callout-important}
+## Decisão de projeto
+O checklist não é burocracia — é a diferença entre um experimento que decide e um que só gasta recursos. A etapa mais pulada, e a mais cara de pular, é a **validação da decisão em produção**: uma condição ótima no experimento pode falhar em escala real por fatores não capturados (desgaste acelerado, variação de lote). Sempre confirme a condição recomendada rodando-a de verdade antes de mudar o processo.
+:::
+
+## Erros frequentes e como evitá-los {#sec-cap11-erros}
+
+A experiência acumulada de aplicar DOE na indústria revela um padrão de erros recorrentes. Conhecê-los é a forma mais barata de evitá-los.
+
+### Erro 1 — Pular a triagem e ir direto à otimização
+
+O engança-tolo mais comum: investir num PCC de muitos fatores sem antes triar. Gasta-se um experimento caro modelando fatores que a triagem teria descartado. **Evite:** sempre fatorial fracionário primeiro; PCC só nos fatores significativos.
+
+### Erro 2 — Não aleatorizar
+
+Executar os ensaios na ordem "natural" da matriz, ou na ordem mais conveniente, deixa a deriva temporal (desgaste, aquecimento) se confundir com os efeitos. **Evite:** sortear a ordem, sempre — mesmo que dê mais trabalho de setup.
+
+### Erro 3 — Ignorar a medição
+
+Um experimento perfeito com uma medição ruim produz lixo confiável. Se o rugosímetro está descalibrado ou o dinamômetro deriva, nenhuma estatística salva. **Evite:** validar e calibrar a instrumentação antes de começar (Apêndice A).
+
+### Erro 4 — Confundir significância com importância
+
+Um efeito pode ser estatisticamente significativo (p < 0,05) mas praticamente irrelevante (muda a resposta em 0,1%). E o inverso: um efeito grande pode não atingir significância se o ruído for alto. **Evite:** olhar magnitude e significância juntas, e sempre no contexto da decisão prática.
+
+### Erro 5 — Extrapolar o modelo
+
+Usar o modelo fora da faixa de fatores estudada é território não testado (Capítulo @sec-cap10). Um modelo ajustado entre 200 e 600 m/min não garante predições a 800 m/min. **Evite:** manter as recomendações dentro do envelope experimental; para além dele, novos ensaios.
+
+### Erro 6 — Não validar os resíduos
+
+Aceitar a ANOVA sem checar as suposições (normalidade, variância constante, independência) é construir sobre areia. Um p-valor de um modelo que viola suas premissas é ilusório. **Evite:** a análise de resíduos é obrigatória, não opcional (Capítulo @sec-cap4).
+
+### Erro 7 — Não documentar
+
+O experimento que ninguém consegue reproduzir, ou cuja decisão ninguém sabe justificar seis meses depois, perde metade do valor. **Evite:** registrar a matriz, os dados, a análise e o raciocínio da decisão — como se outra pessoa fosse auditar.
+
+::: {.callout-tip}
+## Na prática
+Se você só puder guardar uma regra deste capítulo, guarde esta: **planeje o experimento inteiro antes de tocar na máquina.** A matriz definida, a ordem sorteada, os materiais preparados, a medição validada, os blocos decididos. Experimentos industriais fracassam mais por planejamento apressado do que por análise errada. O tempo investido no planejamento retorna multiplicado na execução e na confiança do resultado.
+:::
+
+## Síntese do capítulo {#sec-cap11-sintese}
+
+Três ideias devem permanecer:
+
+1. **Os princípios não mudam; a prática se adapta.** Fatorial, RSM e otimização valem na fábrica como no laboratório — mas com fracionários, pontos centrais e blocagem para caber nas restrições reais.
+2. **O ruído fabril se gerencia, não se elimina.** Aleatorização, blocagem e réplicas centrais tornam o experimento robusto ao ambiente real — que é onde a decisão vai valer.
+3. **Planejar antes é tudo.** O experimento industrial vive ou morre no planejamento. Matriz, ordem, medição e blocos definidos antes de ligar a máquina.
+
+Com a metodologia adaptada à prática industrial, o próximo e último capítulo sintetiza as lições do livro inteiro e aponta as direções de pesquisa que o futuro reserva ao planejamento de experimentos em usinagem.
+
+## Para saber mais {#sec-cap11-saibamais}
 
 ::: {.callout-tip}
 ## Aprofundamento
-Referências complementares e leituras recomendadas para este capítulo serão adicionadas no decorrer da redação.
+Para o DOE aplicado à indústria e à melhoria de processos, @montgomery2005design dedica capítulos a fatoriais fracionários e à metodologia de superfície de resposta em contexto industrial. A prática de experimentos em programas de melhoria (Seis Sigma) complementa com a visão de projeto conduzido sob restrições. Os fundamentos de blocagem e aleatorização, essenciais aqui, estão detalhados no Capítulo @sec-cap4 deste livro.
 :::
 
 ## Exercícios propostos {.unnumbered}
 
-::: {.callout-important}
-## Em desenvolvimento
-Exercícios serão adicionados durante a Fase 6 do roadmap.
-:::
+1. **Triagem vs. modelagem.** Uma fábrica quer otimizar 6 fatores de um processo de torneamento, mas só tem orçamento para 20 ensaios. Que estratégia de planejamento você recomenda, e por que não ir direto a um PCC dos 6 fatores?
+
+2. **Blocagem.** Um experimento precisa ser rodado ao longo de 3 turnos com operadores diferentes. Explique como a blocagem evita que o "efeito operador" contamine os efeitos dos fatores de corte.
+
+3. **Pontos centrais.** Por que incluir pontos centrais é o "maior retorno estatístico por ensaio investido" num experimento industrial? Que duas informações eles fornecem?
+
+4. **Restrição de custo.** Argumente por que o custo do DOE não é um custo adicional, mas uma fração do que o método "um fator por vez" gastaria. Use um exemplo numérico simples.
+
+5. **Ruído fabril.** Liste três fontes de ruído típicas do chão de fábrica e, para cada uma, a técnica de DOE que a gerencia (aleatorização, blocagem ou réplica central).
+
+6. **Erro de extrapolação.** Um engenheiro ajustou um modelo de rugosidade com velocidade entre 200 e 500 m/min e quer usá-lo para prever a 700 m/min. Que erro ele está cometendo, e o que deveria fazer?
+
+7. **Checklist (integrador).** Escolha um processo de usinagem da sua experiência (ou hipotético) e percorra o checklist deste capítulo, do objetivo à validação em produção, descrevendo o que faria em cada etapa. Qual etapa seria a mais difícil na sua realidade, e por quê?

@@ -1,32 +1,74 @@
 ---
 title: "Apêndice D — Dados experimentais consolidados"
+subtitle: "Estrutura, dicionário e acesso aos dados abertos do estudo"
+author: "Mário Cezar dos Santos Jr."
+abstract: |
+  Este apêndice documenta os dados experimentais do estudo de caso e sua disponibilização como recurso aberto. Descreve a estrutura das tabelas, o dicionário de dados (o significado de cada variável, suas unidades e faixas), e o acesso aos arquivos. A abertura dos dados permite que o leitor reproduza as análises do livro, valide os modelos e aplique os métodos aos dados reais que os originaram.
 ---
 
-# Apêndice D — Dados experimentais consolidados {#sec-apendice-d .unnumbered}
+# Apêndice D — Dados experimentais consolidados {#sec-apendice-d}
+
+## Propósito {#sec-apd-proposito}
+
+A ciência reproduzível exige acesso aos dados. Este apêndice documenta os dados experimentais que originaram todas as análises do livro — os ensaios de torneamento das seis ligas de alumínio — e descreve sua disponibilização como recurso aberto. Com esses dados, o leitor pode reproduzir cada tabela e cada modelo dos Capítulos @sec-cap8 a @sec-cap10, e usar os dados reais como base para seus próprios estudos.
+
+## Estrutura dos dados {#sec-apd-estrutura}
+
+Os dados estão organizados em tabelas que espelham o desenho experimental (Capítulo @sec-cap7). As principais:
+
+- **ensaios** — cada linha é um ensaio de torneamento, com suas condições de corte, a liga usada e as respostas medidas;
+- **ligas** — as propriedades de cada uma das seis ligas (composição resumida, dureza, resistência, alongamento);
+- **planejamentos** — a associação de cada ensaio ao planejamento a que pertence (fatorial 2kI, 2kII, ou PCC).
+
+Os dados são disponibilizados em formato **CSV** (valores separados por vírgula), o formato aberto mais universal, legível por qualquer software — R, Python, planilhas. Cada CSV vem acompanhado deste dicionário de dados.
+
+## Dicionário de dados {#sec-apd-dicionario}
+
+O Quadro @tbl-dicionario define cada variável: seu significado, unidade e papel na análise.
+
+| Variável | Significado | Unidade | Papel |
+|:---------|:------------|:-------:|:------|
+| `ensaio_id` | Identificador único do ensaio | — | Chave |
+| `liga` | Designação da liga (ex.: 7075-T6) | — | Fator / chave |
+| `R` | Limite de resistência à tração | MPa | Propriedade (entrada) |
+| `Ar` | Alongamento (ductilidade) | % | Propriedade (entrada) |
+| `Hd` | Dureza Vickers | HV | Propriedade (entrada) |
+| `Vc` | Velocidade de corte | m/min | Fator (entrada) |
+| `ap` | Profundidade de corte | mm | Fator (entrada) |
+| `f` | Avanço | mm/volta | Fator (entrada) |
+| `lub` | Condição de lubri-refrigeração | categórica | Fator (entrada) |
+| `Fc` | Força de corte | N | Resposta (saída) |
+| `Ff` | Força de avanço | N | Resposta (saída) |
+| `Fp` | Força passiva | N | Resposta (saída) |
+| `Fu` | Força de usinagem (resultante) | N | Resposta (saída) |
+| `Ne` | Potência de usinagem | W | Resposta (saída) |
+| `Tc` | Temperatura de corte | °C | Resposta (saída) |
+| `Ra` | Rugosidade média | µm | Resposta (saída) |
+| `Rz` | Rugosidade (altura) | µm | Resposta (saída) |
+| `Rq` | Rugosidade (quadrática) | µm | Resposta (saída) |
+| `Vb` | Vibração (RMS) | m/s² | Resposta (saída) |
+| `Rc` | Grau de recalque do cavaco | — | Resposta (saída) |
+| `planejamento` | Planejamento de origem (2kI/2kII/PCC) | categórica | Metadado |
+
+: Dicionário de dados dos ensaios experimentais. {#tbl-dicionario}
+
+### Convenções e faixas
+
+- **Valores codificados vs. reais** — nas análises de DOE, os fatores aparecem codificados (−1, 0, +1, ±α); os CSVs trazem os **valores reais** (em suas unidades), a partir dos quais a codificação é derivada pela fórmula do Capítulo @sec-cap4;
+- **Faixas dos fatores** — $v_c$ entre 200 e 600 m/min; $a_p$ entre 1 e 4 mm; $f$ entre 0,20 e 0,35 mm/volta (com pontos axiais estendendo essas faixas no PCC);
+- **Lubri-refrigeração** — três categorias: `seco`, `MQF` (mínima quantidade de fluido), `jorro`;
+- **Dados ausentes** — quando uma resposta não foi medida numa condição (por limitação de ferramenta, como a temperatura), o valor aparece vazio, não como zero.
+
+## Acesso aos dados abertos {#sec-apd-acesso}
+
+Os dados são publicados como **recurso aberto**, sob licença que permite uso, reprodução e citação. O acesso se dá pelo repositório do livro, onde os CSVs e este dicionário ficam disponíveis para download.
 
 ::: {.callout-note}
-## Status
-**Stub criado em 30/06/2026.** Conteúdo a ser desenvolvido na Fase 6 do roadmap.
+## Como reproduzir as análises
+De posse dos CSVs, as análises do livro são reproduzíveis: carregue os dados (R: `read.csv`; Python: `pandas.read_csv`), aplique os métodos dos Capítulos @sec-cap4 a @sec-cap6 (fatorial com FrF2, superfícies com rsm, otimização com GA/pymoo), e você reconstruirá os efeitos, os modelos e as condições ótimas apresentados. Os códigos comentados estão no Apêndice B.
 :::
 
-Dicionário de dados e descrição dos arquivos CSV que acompanham o livro como recurso aberto. Disponíveis em [github.com/mariocezar1971/livro-doe-usinagem-codigos/data](https://github.com/mariocezar1971/livro-doe-usinagem-codigos/tree/main/data).
-
-## Dicionário de dados
-
-*Conteúdo em desenvolvimento.*
-
-## Arquivo: ligas_caracterizacao.csv
-
-*Conteúdo em desenvolvimento.*
-
-## Arquivo: ensaios_2k.csv
-
-*Conteúdo em desenvolvimento.*
-
-## Arquivo: ensaios_pcc.csv
-
-*Conteúdo em desenvolvimento.*
-
-## Como citar estes dados
-
-*Conteúdo em desenvolvimento.*
+::: {.callout-tip}
+## Ciência aberta
+Abrir os dados experimentais é um ato de ciência reproduzível — raro em estudos de usinagem, onde os dados costumam ficar trancados na tese. Ao disponibilizá-los, este livro convida o leitor a verificar, questionar e estender os resultados. É o convite que a boa ciência sempre faz: não confie, verifique.
+:::
