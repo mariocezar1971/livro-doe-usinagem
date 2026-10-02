@@ -1,0 +1,25 @@
+---
+title: "Sinopse e textos de divulgação"
+---
+
+# Sinopse e textos de divulgação {#sec-sinopse .unnumbered}
+
+## Sinopse (contracapa / loja online)
+
+Por que duas barras do mesmo alumínio se comportam de forma tão diferente no torno? Por que a liga mais dura pode exigir *menos* força de corte? E por que, tantas vezes, mais fluido de corte não traz benefício algum?
+
+Este livro responde a essas perguntas com o método que transformou a investigação industrial: o **planejamento de experimentos (DOE)**. Partindo de um estudo de caso real — o torneamento de seis ligas de alumínio —, conduz o leitor por todo o percurso, da metalurgia das ligas à condição de corte otimizada e validada, passando pelo planejamento fatorial, pela metodologia de superfície de resposta e pela otimização multirresposta.
+
+Escrito para alunos de pós-graduação em Engenharia Mecânica e de Produção, para engenheiros de manufatura e para pesquisadores em usinagem, o livro une o rigor estatístico à prática do chão de fábrica. Com exemplos resolvidos, código em R e Python, e dados experimentais abertos, é tanto um curso quanto um manual de consulta — a ponte entre o "tentar e ver" e a decisão fundamentada.
+
+## Orelha (texto de badana)
+
+Há um custo silencioso em cada processo de usinagem ajustado por tentativa e erro: ensaios desperdiçados, decisões enviesadas, interações entre fatores que ninguém percebeu. Este livro mostra que existe um caminho melhor — e o percorre do início ao fim.
+
+Mário Cezar dos Santos Júnior reúne aqui mais de duas décadas de docência e sua pesquisa de doutorado para entregar algo raro na literatura técnica brasileira: um tratamento completo e aplicado do planejamento de experimentos em usinagem, construído sobre dados reais e aberto ao escrutínio. Do porquê das ligas de alumínio se comportarem como se comportam, até os modelos que preveem sua usinabilidade e os algoritmos que otimizam o corte, cada conceito é apresentado com clareza e ancorado em resultados que o leitor pode reproduzir.
+
+Mais do que ensinar uma técnica, este livro propõe uma forma de pensar a investigação industrial — sistemática, econômica e honesta com a incerteza. Para quem produz peças, pesquisa processos ou ensina engenharia, é a ferramenta que transforma tentativa e erro em conhecimento e decisão.
+
+## Frase de capa (tagline)
+
+*Do tentar e ver à decisão fundamentada: o planejamento de experimentos aplicado à usinagem de ligas de alumínio.*

@@ -1,0 +1,14 @@
+---
+title: "Sobre o autor"
+---
+
+# Sobre o autor {#sec-sobre-autor .unnumbered}
+
+**Mário Cezar dos Santos Júnior** é Professor do Ensino Básico, Técnico e Tecnológico (EBTT), em regime de Dedicação Exclusiva, no Instituto Federal do Espírito Santo (IFES), Campus Vitória, lotado na Coordenadoria de Mecânica. Leciona disciplinas de Usinagem, Ajustagem Mecânica, Soldagem e Planejamento de Experimentos, e orienta estudantes de iniciação científica (PIBIC).
+
+Doutor em Engenharia Mecânica pela Universidade Federal de Uberlândia (UFU) e Mestre pela Pontifícia Universidade Católica do Rio de Janeiro (PUC-Rio), dedica sua pesquisa à usinagem de ligas de alumínio, com ênfase na aplicação de planejamento de experimentos (DOE), metodologia de superfície de resposta (RSM), redes neurais artificiais (RNA) e otimização multirresposta. Sua trajetória acadêmica teve início em 1994, na Universidade Federal do Espírito Santo (UFES).
+
+Este livro nasce de sua tese de doutorado e da experiência acumulada em sala de aula e em laboratório, reunindo o rigor estatístico do planejamento de experimentos à prática industrial do torneamento de ligas de alumínio. É fruto do convívio diário com estudantes de engenharia e técnicos em mecânica, para quem o autor buscou transformar métodos muitas vezes áridos em uma ferramenta acessível, aplicável e, sobretudo, útil ao chão de fábrica.
+
+*ORCID:* 0009-0001-0411-8191
+*GitHub:* github.com/mariocezar1971

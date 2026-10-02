@@ -1,0 +1,153 @@
+---
+title: "Glossário"
+---
+
+# Glossário {#sec-glossario .unnumbered}
+
+Definições dos principais termos técnicos empregados no livro, organizados por área. Os termos em inglês de uso consagrado aparecem entre parênteses.
+
+## Planejamento de experimentos (DOE)
+
+**Aleatorização** — Sorteio da ordem de execução dos ensaios de um experimento, para diluir o efeito de fatores não controlados que variam com o tempo (desgaste, aquecimento, turno) entre os tratamentos.
+
+**ANOVA (análise de variância)** — Técnica estatística que compara a variabilidade explicada por cada fator com a variabilidade do erro experimental, decidindo, pelo teste F, quais efeitos são estatisticamente significativos.
+
+**Blocagem** — Agrupamento dos ensaios em blocos homogêneos (mesmo lote, turno ou operador) para isolar fontes conhecidas de variação, impedindo que contaminem os efeitos de interesse.
+
+**Codificação de níveis** — Transformação dos valores reais dos fatores em valores adimensionais (−1 para o nível baixo, +1 para o alto, 0 para o centro), que coloca todos os fatores na mesma escala.
+
+**Contraste** — Soma dos produtos entre a coluna de níveis (±1) de um fator ou interação e as respostas correspondentes; é o instrumento de cálculo dos efeitos.
+
+**Desejabilidade (função de)** — Método de otimização multirresposta (Derringer-Suich) que converte cada resposta a uma escala de 0 a 1 e as combina pela média geométrica, transformando o problema multiobjetivo em monobjetivo.
+
+**DOE (Design of Experiments)** — Planejamento de experimentos; metodologia estatística para investigar o efeito de vários fatores sobre uma ou mais respostas de forma sistemática e econômica.
+
+**Efeito** — Variação média de uma resposta quando um fator passa do nível baixo (−1) ao alto (+1); pode ser principal (de um fator isolado) ou de interação.
+
+**Fatorial 2^k** — Planejamento em que k fatores são testados em dois níveis cada, gerando 2^k tratamentos (todas as combinações); base da triagem de fatores.
+
+**Fatorial fracionário (2^{k-p})** — Versão reduzida do fatorial completo, que usa uma fração dos tratamentos ao custo de confundir efeitos de alta ordem; econômico para triagem industrial.
+
+**Grau de liberdade (GL)** — Número de valores que podem variar livremente numa estimativa estatística; determina as distribuições de referência (t, F, qui-quadrado).
+
+**Interação** — Situação em que o efeito de um fator sobre a resposta depende do nível de outro fator; o fenômeno que o método "um fator por vez" não captura.
+
+**Nível** — Valor que um fator assume num experimento; no fatorial 2^k, cada fator tem dois níveis (baixo e alto).
+
+**OFAT (One Factor At a Time)** — Abordagem de "um fator por vez", em que se varia um fator mantendo os demais fixos; ineficiente e incapaz de detectar interações.
+
+**Ortogonalidade** — Propriedade de uma matriz de planejamento em que as colunas são independentes entre si, tornando as estimativas dos efeitos não correlacionadas.
+
+**Ponto central** — Tratamento com todos os fatores no nível médio (0); fornece estimativa do erro puro e detecta curvatura sem replicar todo o planejamento.
+
+**Ponto axial (ou estrela)** — Tratamento posicionado a uma distância α do centro ao longo de um eixo de fator, usado no PCC para estimar os termos quadráticos.
+
+**PCC (planejamento composto central)** — Planejamento de segunda ordem que acrescenta pontos axiais e centrais ao fatorial, permitindo modelar curvatura e localizar ótimos.
+
+**p-valor** — Probabilidade de observar um efeito tão grande quanto o medido se ele fosse, na verdade, nulo; abaixo do nível de significância (tipicamente 0,05), o efeito é considerado significativo.
+
+**Réplica** — Repetição completa de um ensaio (nova montagem, novo corte) para estimar o erro experimental; distingue-se de repetir a medição da mesma peça.
+
+**Resíduo** — Diferença entre o valor medido e o previsto pelo modelo; sua análise valida as suposições (normalidade, variância constante, independência).
+
+**RSM (metodologia de superfície de resposta)** — Conjunto de técnicas que ajusta modelos de segunda ordem e os interpreta como superfícies, para mapear respostas e localizar condições ótimas.
+
+**R² (coeficiente de determinação)** — Fração da variação total explicada pelo modelo; o R² ajustado penaliza termos supérfluos e é preferível para comparar modelos.
+
+**Superfície de resposta** — Representação geométrica de uma resposta como função dos fatores; suas curvas de nível e seu gradiente orientam a otimização.
+
+**Teste F** — Razão entre a média quadrática de um efeito e a do erro; comparada ao valor crítico da distribuição F, decide a significância na ANOVA.
+
+**Tratamento** — Combinação específica dos níveis de todos os fatores; cada linha da matriz de planejamento.
+
+**Triagem (screening)** — Uso de um planejamento (fatorial completo ou fracionário) para identificar, entre muitos fatores, os poucos que de fato influenciam a resposta.
+
+**Vetor gradiente** — Vetor das derivadas parciais de uma função; aponta a direção de crescimento mais rápido, servindo de bússola na otimização de superfícies de resposta.
+
+## Otimização
+
+**Algoritmo genético (AG)** — Método de otimização inspirado na evolução natural, que faz evoluir uma população de soluções por seleção, cruzamento e mutação, buscando o ótimo global.
+
+**Cruzamento (crossover)** — Operador do algoritmo genético que combina dois indivíduos "pais" para gerar "filhos" com características de ambos.
+
+**Fronteira de Pareto** — Conjunto de soluções não-dominadas de um problema multiobjetivo, em que não se pode melhorar uma resposta sem piorar outra; mapa dos compromissos possíveis.
+
+**Mutação** — Operador do algoritmo genético que introduz mudanças aleatórias em indivíduos, mantendo a diversidade e evitando a convergência prematura.
+
+**NSGA-II** — Algoritmo genético multiobjetivo (Non-dominated Sorting Genetic Algorithm II) que entrega a fronteira de Pareto completa, em vez de um único ótimo.
+
+**Otimização multirresposta** — Busca de condições que otimizam simultaneamente várias respostas conflitantes, por escalarização (desejabilidade, AG) ou pela fronteira de Pareto (NSGA-II).
+
+**Solução não-dominada** — Solução para a qual não existe outra que seja melhor em todos os objetivos ao mesmo tempo; constitui a fronteira de Pareto.
+
+## Metalurgia das ligas de alumínio
+
+**Alongamento** — Deformação percentual de um corpo de prova até a ruptura no ensaio de tração; medida de ductilidade.
+
+**Dureza Vickers (HV)** — Medida de resistência à penetração, obtida por indentação com penetrador piramidal de diamante.
+
+**Encruamento** — Endurecimento de um metal por deformação a frio, decorrente do aumento da densidade de discordâncias; mecanismo das ligas não tratáveis termicamente (séries 1xxx, 3xxx, 5xxx).
+
+**Envelhecimento** — Etapa do tratamento de precipitação em que a solução sólida supersaturada libera precipitados finos; natural (ambiente) ou artificial (forno, 160–200 °C).
+
+**Elementos de livre-corte** — Elementos (bismuto, chumbo) que, por fundirem na temperatura de corte, fragmentam o cavaco e lubrificam a ferramenta, melhorando a usinabilidade; presentes na liga 6262-T6.
+
+**Ligas trabalháveis** — Ligas de alumínio conformadas por deformação (extrusão, laminação, forjamento), identificadas pelo sistema numérico de quatro dígitos.
+
+**Mg₂Si (siliceto de magnésio)** — Precipitado endurecedor principal da série 6xxx (Al-Mg-Si).
+
+**MgZn₂** — Precipitado endurecedor principal da série 7xxx (Al-Zn-Mg), responsável por sua alta resistência.
+
+**Precipitação (endurecimento por)** — Mecanismo de endurecimento das ligas tratáveis (2xxx, 6xxx, 7xxx), em que finos precipitados obstruem o movimento das discordâncias; envolve solubilização, têmpera e envelhecimento.
+
+**Série (1xxx, 6xxx, 7xxx…)** — Classificação das ligas de alumínio pelo elemento principal: 1xxx (alumínio puro), 6xxx (Mg+Si), 7xxx (Zn+Mg), entre outras.
+
+**Solubilização** — Aquecimento da liga (460–550 °C) até dissolver os elementos de liga numa solução sólida homogênea, primeira etapa do endurecimento por precipitação.
+
+**Solução sólida supersaturada (SSS)** — Estado instável, obtido por resfriamento rápido após a solubilização, com mais soluto dissolvido do que o equilíbrio permitiria.
+
+**Têmpera (designação)** — Código (F, O, H, W, T) que descreve o estado metalúrgico de uma liga; T6 = solubilizada e envelhecida artificialmente; T73 = superenvelhecida.
+
+**Zonas de Guinier-Preston (G.P.)** — Agrupamentos iniciais de átomos de soluto, coerentes com a matriz, que precedem os precipitados na sequência de endurecimento da série 6xxx.
+
+## Usinagem e torneamento
+
+**Aresta postiça de corte (APC)** — Acúmulo de material encruado sobre a ferramenta, em baixas velocidades de corte; reduz a força mas piora o acabamento.
+
+**Avanço (f)** — Deslocamento da ferramenta por rotação da peça (mm/volta); fator dominante sobre a rugosidade.
+
+**Cavaco** — Porção de material removida pela ferramenta; sua forma (contínuo, descontínuo, segmentado) é diagnóstico e problema prático da usinagem.
+
+**Círculo de Merchant** — Construção geométrica que relaciona as forças medidas no corte (de corte e de avanço) às forças que atuam nos planos de cisalhamento.
+
+**Força de usinagem (Fu)** — Resultante das componentes de força no corte (de corte Fc, de avanço Ff e passiva Fp); reflete a resistência ao cisalhamento do material.
+
+**Grau de recalque (Rc)** — Razão entre a espessura do cavaco depois e antes do corte; quanto maior, menor o ângulo de cisalhamento e maior a deformação.
+
+**Lubri-refrigeração** — Aplicação de fluido de corte; neste estudo, nas condições seco, MQF (mínima quantidade de fluido) e jorro.
+
+**MQF / MQL (mínima quantidade de fluido/lubrificante)** — Técnica de lubrificação por névoa de pequena quantidade de óleo, mais sustentável que o jorro.
+
+**Plano de cisalhamento primário** — Região onde o material sofre intensa deformação plástica na formação do cavaco; origem das forças e do calor de corte.
+
+**Profundidade de corte (ap)** — Penetração radial da ferramenta na peça (mm); fator dominante sobre a força e a potência.
+
+**Rugosidade (Ra, Rz, Rq)** — Parâmetros que quantificam o acabamento da superfície usinada; Ra (média aritmética) é o mais usado.
+
+**Usinabilidade** — Facilidade com que um material é usinado, avaliada por respostas como força, potência, temperatura, acabamento, controle do cavaco e desgaste da ferramenta.
+
+**Velocidade de corte (vc)** — Velocidade tangencial da superfície da peça em relação à ferramenta (m/min); afeta temperatura, aresta postiça e desgaste.
+
+## Instrumentação e estatística aplicada
+
+**Dinamômetro** — Instrumento que mede as componentes da força de usinagem na ponta da ferramenta.
+
+**Termopar ferramenta-peça** — Método de medição da temperatura de corte baseado na força eletromotriz gerada na junção entre a ferramenta e a peça.
+
+**Distribuição F (de Snedecor)** — Distribuição de probabilidade da razão entre variâncias; base do teste de significância da ANOVA.
+
+**Distribuição qui-quadrado (χ²)** — Distribuição usada em testes de aderência, de independência e para intervalos de confiança de variâncias.
+
+**Distribuição t (de Student)** — Distribuição usada para inferência sobre médias e coeficientes quando a variância é estimada da amostra.
+
+**Validação (treino-validação)** — Prática de reservar dados independentes (aqui, a liga 6351-T6) para testar a capacidade preditiva de um modelo construído com os demais dados.
