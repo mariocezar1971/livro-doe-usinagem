@@ -74,6 +74,8 @@ book:
     - apendices/apendice-b-codigos.qmd
     - apendices/apendice-c-tabelas.qmd
     - apendices/apendice-d-dados.qmd
+    - glossario.qmd
+    - sobre-o-autor.qmd
 
 bibliography: references.bib
 csl: associacao-brasileira-de-normas-tecnicas.csl
