@@ -3,69 +3,86 @@ title: "Apêndice D — Dados experimentais consolidados"
 subtitle: "Estrutura, dicionário e acesso aos dados abertos do estudo"
 author: "Mário Cezar dos Santos Jr."
 abstract: |
-  Este apêndice documenta os dados experimentais do estudo de caso e sua disponibilização como recurso aberto. Descreve a estrutura das tabelas, o dicionário de dados (o significado de cada variável, suas unidades e faixas), e o acesso aos arquivos. A abertura dos dados permite que o leitor reproduza as análises do livro, valide os modelos e aplique os métodos aos dados reais que os originaram.
+  Este apêndice documenta os dados experimentais que originaram as análises do livro e sua disponibilização como recurso aberto. Descreve a estrutura das tabelas, o dicionário de dados (variáveis, unidades e formatos) e o acesso aos arquivos. A abertura dos dados permite reproduzir as análises do livro, validar os modelos e aplicar os métodos aos dados reais que os geraram.
 ---
 
 # Apêndice D — Dados experimentais consolidados {#sec-apendice-d}
 
 ## Propósito {#sec-apd-proposito}
 
-A ciência reproduzível exige acesso aos dados. Este apêndice documenta os dados experimentais que originaram todas as análises do livro — os ensaios de torneamento das seis ligas de alumínio — e descreve sua disponibilização como recurso aberto. Com esses dados, o leitor pode reproduzir cada tabela e cada modelo dos Capítulos @sec-cap8 a @sec-cap10, e usar os dados reais como base para seus próprios estudos.
+A ciência reproduzível exige acesso aos dados. Este apêndice documenta os dados experimentais que originaram as análises do livro — os ensaios de torneamento das ligas de alumínio — e descreve sua disponibilização como recurso aberto. Com esses dados, o leitor pode reproduzir as tabelas e os modelos dos Capítulos @sec-cap8 a @sec-cap10, e usar os dados reais como base para seus próprios estudos.
 
-## Estrutura dos dados {#sec-apd-estrutura}
+Os dados são exportados do banco de origem para arquivos **CSV** (valores separados por vírgula), o formato aberto mais universal, legível por R, Python e planilhas. Cada arquivo acompanha este dicionário.
 
-Os dados estão organizados em tabelas que espelham o desenho experimental (Capítulo @sec-cap7). As principais:
+## As duas famílias de dados {#sec-apd-familias}
 
-- **ensaios** — cada linha é um ensaio de torneamento, com suas condições de corte, a liga usada e as respostas medidas;
-- **ligas** — as propriedades de cada uma das seis ligas (composição resumida, dureza, resistência, alongamento);
-- **planejamentos** — a associação de cada ensaio ao planejamento a que pertence (fatorial 2kI, 2kII, ou PCC).
+Os dados abertos reúnem dois conjuntos complementares:
 
-Os dados são disponibilizados em formato **CSV** (valores separados por vírgula), o formato aberto mais universal, legível por qualquer software — R, Python, planilhas. Cada CSV vem acompanhado deste dicionário de dados.
+**1. Estudo principal (a base do livro).** Os ensaios de torneamento das seis ligas de alumínio (1350-O, 6082-T4, 6262-T6, 6351-T6, 7075-T73, 7075-T6), organizados nos planejamentos fatorial e composto central. São estes que geraram todos os resultados dos Capítulos @sec-cap8 a @sec-cap10.
 
-## Dicionário de dados {#sec-apd-dicionario}
+**2. Ensaios complementares (iniciação científica).** Ensaios posteriores de torneamento da liga **6365-T6**, conduzidos em projetos de iniciação científica (PIBIC 2023 e 2024). Estendem o estudo a uma liga adicional da família 6xxx e incluem séries temporais de tensão e corrente para o cálculo da potência. Não fazem parte das análises do livro, mas são disponibilizados como recurso para pesquisa futura.
 
-O Quadro @tbl-dicionario define cada variável: seu significado, unidade e papel na análise.
+Essa distinção é deliberada e transparente: o livro descreve o estudo das seis ligas; os dados abertos incluem, além dele, a continuidade natural da pesquisa.
+
+## Dicionário de dados — estudo principal {#sec-apd-dicionario}
+
+A tabela consolidada do estudo principal (`plan2k_wide`) tem uma linha por ensaio, com as condições e todas as respostas medidas. O Quadro @tbl-dicionario define cada variável.
 
 | Variável | Significado | Unidade | Papel |
 |:---------|:------------|:-------:|:------|
-| `ensaio_id` | Identificador único do ensaio | — | Chave |
-| `liga` | Designação da liga (ex.: 7075-T6) | — | Fator / chave |
-| `R` | Limite de resistência à tração | MPa | Propriedade (entrada) |
-| `Ar` | Alongamento (ductilidade) | % | Propriedade (entrada) |
-| `Hd` | Dureza Vickers | HV | Propriedade (entrada) |
+| `Ligas` | Designação da liga (ex.: 1350o, 7075t6) | — | Fator / chave |
+| `Rm` | Limite de resistência à tração | MPa | Propriedade (entrada) |
 | `Vc` | Velocidade de corte | m/min | Fator (entrada) |
 | `ap` | Profundidade de corte | mm | Fator (entrada) |
 | `f` | Avanço | mm/volta | Fator (entrada) |
-| `lub` | Condição de lubri-refrigeração | categórica | Fator (entrada) |
-| `Fc` | Força de corte | N | Resposta (saída) |
-| `Ff` | Força de avanço | N | Resposta (saída) |
-| `Fp` | Força passiva | N | Resposta (saída) |
-| `Fu` | Força de usinagem (resultante) | N | Resposta (saída) |
-| `Ne` | Potência de usinagem | W | Resposta (saída) |
-| `Tc` | Temperatura de corte | °C | Resposta (saída) |
-| `Ra` | Rugosidade média | µm | Resposta (saída) |
-| `Rz` | Rugosidade (altura) | µm | Resposta (saída) |
-| `Rq` | Rugosidade (quadrática) | µm | Resposta (saída) |
-| `Vb` | Vibração (RMS) | m/s² | Resposta (saída) |
-| `Rc` | Grau de recalque do cavaco | — | Resposta (saída) |
-| `planejamento` | Planejamento de origem (2kI/2kII/PCC) | categórica | Metadado |
+| `Lub` | Lubri-refrigeração (Seco/MQF/Jorro) | categórica | Fator (entrada) |
+| `x2`–`x5` | Fatores codificados (−1 / +1) | — | Entrada codificada |
+| `Fc` | Força de corte | N | Resposta |
+| `Ff` | Força de avanço | N | Resposta |
+| `Fp` | Força passiva | N | Resposta |
+| `Pot` | Potência de usinagem | W | Resposta |
+| `Ra` | Rugosidade média | µm | Resposta |
+| `Rq` | Rugosidade (quadrática) | µm | Resposta |
+| `Rz` | Rugosidade (altura) | µm | Resposta |
+| `Temp` | Temperatura de corte | °C | Resposta |
+| `Vibra` | Vibração | m/s² | Resposta |
 
-: Dicionário de dados dos ensaios experimentais. {#tbl-dicionario}
+: Dicionário de dados da tabela consolidada do estudo principal. {#tbl-dicionario}
 
-### Convenções e faixas
+### Formatos e convenções
 
-- **Valores codificados vs. reais** — nas análises de DOE, os fatores aparecem codificados (−1, 0, +1, ±α); os CSVs trazem os **valores reais** (em suas unidades), a partir dos quais a codificação é derivada pela fórmula do Capítulo @sec-cap4;
-- **Faixas dos fatores** — $v_c$ entre 200 e 600 m/min; $a_p$ entre 1 e 4 mm; $f$ entre 0,20 e 0,35 mm/volta (com pontos axiais estendendo essas faixas no PCC);
-- **Lubri-refrigeração** — três categorias: `seco`, `MQF` (mínima quantidade de fluido), `jorro`;
-- **Dados ausentes** — quando uma resposta não foi medida numa condição (por limitação de ferramenta, como a temperatura), o valor aparece vazio, não como zero.
+- **Valores reais e codificados** — os fatores aparecem em unidades reais (`Vc`, `ap`, `f`) e na forma codificada (`x2`–`x5`, em −1/+1), derivada pela fórmula do Capítulo @sec-cap4;
+- **Formato longo vs. largo** — além da tabela larga (`plan2k_wide`, uma resposta por coluna), há versões em formato longo (`pcc`, `plan2k`), onde cada linha é uma observação e a coluna `Resp` identifica a resposta, com o valor em `Valor`. O formato longo é conveniente para filtrar por resposta; o largo, para ajustar modelos;
+- **Separador decimal** — os CSVs usam ponto como separador decimal (padrão internacional);
+- **Lubri-refrigeração** — três categorias: `Seco`, `MQF`, `Jorro`.
+
+## As tabelas disponíveis {#sec-apd-tabelas}
+
+O Quadro @tbl-arquivos lista os arquivos CSV publicados.
+
+| Arquivo | Conteúdo | Registros |
+|:--------|:---------|:---------:|
+| `plan2k_wide.csv` | Fatorial — formato largo (todas as respostas) | 138 |
+| `plan2k.csv` | Fatorial — formato longo | 1242 |
+| `pcc.csv` | Planejamento composto central — formato longo | 972 |
+| `teste_torneamento_6365t6_pibic_2023.csv` | Ensaios 6365-T6 (2023) | 54 |
+| `teste_torneamento_6365t6_pibic_2024.csv` | Ensaios 6365-T6 (2024) | 8 |
+| `teste_torneamento_6365t6_pibic_2024_long.csv` | 6365-T6 (2024) — formato longo | 16 |
+| `rugosidade_torneamento_6365t6_pibic_2024.csv` | Rugosidade 6365-T6 (2024) | 16 |
+| `potencia_tratada_torneamento_pibic_2024.csv` | Potência processada (2024) | 16 |
+| `tensao_corrente_6365t6_pibic_2024.csv` | Série temporal tensão/corrente | 568 |
+
+: Arquivos de dados publicados (os formatos _pc e _wide dos ensaios de 2023 também acompanham). {#tbl-arquivos}
+
+Nas tabelas da série 6365-T6, os campos seguem a mesma lógica: `Vc`, `ap`, `f` (condições), `XVc`/`Xap`/`Xf` ou `x1`–`x3` (codificados), e as respostas `PotW`/`Pot` (potência), `Ra`/`Rq`/`Rz` (rugosidade), `EspCav`/`Ec` (espessura do cavaco) e `Rc` (grau de recalque). Os sufixos numéricos (`Ra1`, `Ra2`…) indicam réplicas; o formato `_long` traz as réplicas empilhadas, com a coluna `rep`.
 
 ## Acesso aos dados abertos {#sec-apd-acesso}
 
-Os dados são publicados como **recurso aberto**, sob licença que permite uso, reprodução e citação. O acesso se dá pelo repositório do livro, onde os CSVs e este dicionário ficam disponíveis para download.
+Os dados são publicados como **recurso aberto**, sob licença que permite uso, reprodução e citação, no repositório de códigos do livro (Apêndice @sec-apendice-b), na pasta `dados/`. Lá, os CSVs e este dicionário ficam disponíveis para download.
 
 ::: {.callout-note}
 ## Como reproduzir as análises
-De posse dos CSVs, as análises do livro são reproduzíveis: carregue os dados (R: `read.csv`; Python: `pandas.read_csv`), aplique os métodos dos Capítulos @sec-cap4 a @sec-cap6 (fatorial com FrF2, superfícies com rsm, otimização com GA/pymoo), e você reconstruirá os efeitos, os modelos e as condições ótimas apresentados. Os códigos comentados estão no Apêndice B.
+De posse dos CSVs, as análises do livro são reproduzíveis. Em R: `dados <- read.csv("dados/plan2k_wide.csv")`. Em Python: `pandas.read_csv("dados/plan2k_wide.csv")`. A partir daí, aplique os métodos dos Capítulos @sec-cap4 a @sec-cap6 (fatorial com FrF2, superfícies com rsm, otimização com GA/pymoo). Os códigos comentados estão no Apêndice @sec-apendice-b.
 :::
 
 ::: {.callout-tip}
