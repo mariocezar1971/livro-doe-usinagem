@@ -20,7 +20,7 @@ Definições dos principais termos técnicos empregados no livro, organizados po
 
 **Desejabilidade (função de)** — Método de otimização multirresposta (Derringer-Suich) que converte cada resposta a uma escala de 0 a 1 e as combina pela média geométrica, transformando o problema multiobjetivo em monobjetivo.
 
-**DOE (Design of Experiments)** — Planejamento de experimentos; metodologia estatística para investigar o efeito de vários fatores sobre uma ou mais respostas de forma sistemática e econômica.
+**DOE (*Design of Experiments*)** — Planejamento de experimentos; metodologia estatística para investigar o efeito de vários fatores sobre uma ou mais respostas de forma sistemática e econômica.
 
 **Efeito** — Variação média de uma resposta quando um fator passa do nível baixo (−1) ao alto (+1); pode ser principal (de um fator isolado) ou de interação.
 
@@ -34,7 +34,7 @@ Definições dos principais termos técnicos empregados no livro, organizados po
 
 **Nível** — Valor que um fator assume num experimento; no fatorial 2^k, cada fator tem dois níveis (baixo e alto).
 
-**OFAT (One Factor At a Time)** — Abordagem de "um fator por vez", em que se varia um fator mantendo os demais fixos; ineficiente e incapaz de detectar interações.
+**OFAT (*One Factor At a Time*)** — Abordagem de "um fator por vez", em que se varia um fator mantendo os demais fixos; ineficiente e incapaz de detectar interações.
 
 **Ortogonalidade** — Propriedade de uma matriz de planejamento em que as colunas são independentes entre si, tornando as estimativas dos efeitos não correlacionadas.
 
@@ -60,7 +60,7 @@ Definições dos principais termos técnicos empregados no livro, organizados po
 
 **Tratamento** — Combinação específica dos níveis de todos os fatores; cada linha da matriz de planejamento.
 
-**Triagem (screening)** — Uso de um planejamento (fatorial completo ou fracionário) para identificar, entre muitos fatores, os poucos que de fato influenciam a resposta.
+**Triagem (*screening*)** — Uso de um planejamento (fatorial completo ou fracionário) para identificar, entre muitos fatores, os poucos que de fato influenciam a resposta.
 
 **Vetor gradiente** — Vetor das derivadas parciais de uma função; aponta a direção de crescimento mais rápido, servindo de bússola na otimização de superfícies de resposta.
 
@@ -68,7 +68,7 @@ Definições dos principais termos técnicos empregados no livro, organizados po
 
 **Algoritmo genético (AG)** — Método de otimização inspirado na evolução natural, que faz evoluir uma população de soluções por seleção, cruzamento e mutação, buscando o ótimo global.
 
-**Cruzamento (crossover)** — Operador do algoritmo genético que combina dois indivíduos "pais" para gerar "filhos" com características de ambos.
+**Cruzamento (*crossover*)** — Operador do algoritmo genético que combina dois indivíduos "pais" para gerar "filhos" com características de ambos.
 
 **Fronteira de Pareto** — Conjunto de soluções não-dominadas de um problema multiobjetivo, em que não se pode melhorar uma resposta sem piorar outra; mapa dos compromissos possíveis.
 

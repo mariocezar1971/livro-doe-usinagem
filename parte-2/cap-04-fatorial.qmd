@@ -31,7 +31,7 @@ Um experimento realista pode envolver muitos fatores, cada um com muitos níveis
 
 O planejamento fatorial 2^k ataca esse problema com uma escolha deliberada: **usar apenas dois níveis por fator**, um baixo e um alto. Assim, $k$ fatores geram $2^k$ tratamentos — para cinco fatores, $2^5 = 32$, contra os 1024 do caso com quatro níveis. A redução é drástica, e o preço é aceitável para o estágio inicial de uma investigação: com dois níveis não se captura curvatura (comportamento quadrático), mas se identifica **quais fatores importam** e **como eles interagem** — exatamente o que se precisa saber primeiro.
 
-Por isso o 2^k é, por excelência, a ferramenta de **triagem** (screening): usa-se nos estágios iniciais para separar os poucos fatores vitais dos muitos triviais, antes de investir em planejamentos mais caros que modelam curvatura [@montgomery2005design; @barrosneto2007como].
+Por isso o 2^k é, por excelência, a ferramenta de **triagem** (*screening*): usa-se nos estágios iniciais para separar os poucos fatores vitais dos muitos triviais, antes de investir em planejamentos mais caros que modelam curvatura [@montgomery2005design; @barrosneto2007como].
 
 ### A codificação dos níveis
 
@@ -214,7 +214,9 @@ O R oferece o pacote **FrF2** para criar e analisar planejamentos fatoriais 2^k.
 
 ### Criando o planejamento
 
-```r
+```{r}
+#| label: cria-plano
+#| eval: false
 
 # install.packages("FrF2")  # se ainda nao instalado
 library(FrF2)
@@ -241,7 +243,9 @@ A saída lista os 16 ensaios na ordem sorteada de execução — a ordem em que 
 
 ### Inserindo respostas e estimando efeitos
 
-```r
+```{r}
+#| label: analisa
+#| eval: false
 
 # Vetor de respostas na ordem PADRAO da matriz (nao na aleatorizada)
 Fu <- c(210, 385, 195, 360, 340, 590, 315, 555,
@@ -259,7 +263,9 @@ O `summary()` traz os coeficientes (metade dos efeitos, na convenção do R), se
 
 ### Visualizando: Pareto e interações
 
-```r
+```{r}
+#| label: graficos
+#| eval: false
 
 # Grafico de Pareto dos efeitos (quais dominam)
 DanielPlot(modelo, half = TRUE, alpha = 0.05)   # grafico de probabilidade
@@ -271,7 +277,9 @@ O `MEPlot` mostra os efeitos principais como retas — quanto mais inclinada, ma
 
 ### Validando: análise de resíduos
 
-```r
+```{r}
+#| label: residuos
+#| eval: false
 
 # Os quatro graficos diagnosticos de residuos
 par(mfrow = c(2, 2))   # 2x2 paineis

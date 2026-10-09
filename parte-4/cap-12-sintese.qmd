@@ -52,7 +52,7 @@ Destilando todo o estudo em orientações diretas para quem usina alumínio:
 - **Use o avanço para controlar o cavaco** — avanços acima de ~0,20 mm/volta melhoram a forma do cavaco;
 - **Não dimensione pela dureza nominal** — a ductilidade e o comportamento do cavaco pesam mais que a dureza na força;
 - **Escolha a liga certa para o problema certo** — se o cavaco é crítico, a família de livre-corte (6262) resolve na metalurgia;
-- **Otimize com método** — para respostas conflitantes, a desejabilidade e os algoritmos evolutivos entregam o compromisso; a fronteira de Pareto expõe os trade-offs.
+- **Otimize com método** — para respostas conflitantes, a desejabilidade e os algoritmos evolutivos entregam o compromisso; a fronteira de Pareto expõe os *trade-offs*.
 
 ## Direções de pesquisa {#sec-cap12-direcoes}
 
@@ -68,7 +68,7 @@ Os modelos de regressão deste livro — fatorial, superfície de resposta — s
 
 ### Monitoramento inteligente e Indústria 4.0
 
-A **Indústria 4.0** traz a usinagem para o mundo dos dados em tempo real. Sensores na máquina (força, vibração, temperatura, potência — as mesmas respostas deste livro) alimentam sistemas de **monitoramento de condição** que ajustam parâmetros durante o corte, preveem desgaste e evitam falhas. O planejamento de experimentos ganha um novo papel: não mais um estudo pontual, mas a base para **sistemas adaptativos** que otimizam continuamente. Os modelos construídos por DOE tornam-se o núcleo dos gêmeos digitais (digital twins) do processo de usinagem.
+A **Indústria 4.0** traz a usinagem para o mundo dos dados em tempo real. Sensores na máquina (força, vibração, temperatura, potência — as mesmas respostas deste livro) alimentam sistemas de **monitoramento de condição** que ajustam parâmetros durante o corte, preveem desgaste e evitam falhas. O planejamento de experimentos ganha um novo papel: não mais um estudo pontual, mas a base para **sistemas adaptativos** que otimizam continuamente. Os modelos construídos por DOE tornam-se o núcleo dos gêmeos digitais (*digital twins*) do processo de usinagem.
 
 ### Novas ligas e materiais
 

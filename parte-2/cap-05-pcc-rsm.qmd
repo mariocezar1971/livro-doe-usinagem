@@ -125,7 +125,7 @@ Como saber para onde caminhar? O **vetor gradiente** responde. Para uma função
 
 $$\nabla g(x_0, y_0) = \left( \frac{\partial g}{\partial x}, \frac{\partial g}{\partial y} \right)$$
 
-Sua propriedade fundamental: **aponta na direção e sentido de crescimento mais rápido** da função [@galvo2010diferenc]. Para maximizar uma resposta, caminha-se no sentido do gradiente; para minimizar, no sentido oposto. É a bússola da otimização — e a base do "método da máxima inclinação" (steepest ascent) que guia experimentos sequenciais em direção ao ótimo.
+Sua propriedade fundamental: **aponta na direção e sentido de crescimento mais rápido** da função [@galvo2010diferenc]. Para maximizar uma resposta, caminha-se no sentido do gradiente; para minimizar, no sentido oposto. É a bússola da otimização — e a base do "método da máxima inclinação" (*steepest ascent*) que guia experimentos sequenciais em direção ao ótimo.
 
 No estudo de caso, os modelos de segunda ordem das respostas de usinabilidade foram interpretados justamente por curvas de nível e vetor gradiente, revelando como $v_c$, $f$ e $a_p$ deslocam força, potência e rugosidade em direção a seus ótimos.
 
@@ -135,7 +135,9 @@ O R oferece o pacote **rsm**, especializado em superfícies de resposta. Ele cri
 
 ### Criando o PCC
 
-```r
+```{r}
+#| label: cria-pcc
+#| eval: false
 
 # install.packages("rsm")  # se necessario
 library(rsm)
@@ -161,7 +163,9 @@ O `ccd()` (central composite design) monta os três blocos de pontos — fatoria
 
 ### Ajustando o modelo de segunda ordem
 
-```r
+```{r}
+#| label: ajusta-modelo
+#| eval: false
 
 # Suponha a resposta Fu (forca de usinagem) coletada nos ensaios
 plano_pcc$Fu <- c(...)   # vetor de respostas na ordem da matriz
@@ -172,11 +176,13 @@ modelo_rsm <- rsm(Fu ~ SO(x1, x2, x3), data = plano_pcc)
 summary(modelo_rsm)   # coeficientes, ANOVA, teste de falta de ajuste
 ```
 
-A função `SO(x1, x2, x3)` expande automaticamente o modelo de segunda ordem completo — termos lineares, interações e quadráticos. O `summary()` traz os coeficientes com p-valores, a ANOVA e, importante, o **teste de falta de ajuste** (lack of fit), que verifica se o modelo de segunda ordem é adequado.
+A função `SO(x1, x2, x3)` expande automaticamente o modelo de segunda ordem completo — termos lineares, interações e quadráticos. O `summary()` traz os coeficientes com p-valores, a ANOVA e, importante, o **teste de falta de ajuste** (*lack of fit*), que verifica se o modelo de segunda ordem é adequado.
 
 ### Visualizações 3D e curvas de nível
 
-```r
+```{r}
+#| label: visualiza
+#| eval: false
 
 # Curvas de nivel e superficie 3D (dois fatores por vez)
 par(mfrow = c(1, 2))
@@ -194,7 +200,9 @@ O `contour()` gera as curvas de nível; o `persp()`, a superfície 3D. A funçã
 
 ### Visualização interativa com plotly
 
-```r
+```{r}
+#| label: plotly-3d
+#| eval: false
 
 library(plotly)
 

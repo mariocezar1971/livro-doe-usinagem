@@ -3,7 +3,7 @@ title: "Otimização multiresposta"
 subtitle: "Conciliando respostas conflitantes: desejabilidade, algoritmos genéticos e NSGA-II"
 author: "Mário Cezar dos Santos Jr."
 abstract: |
-  Este capítulo enfrenta o problema central da usinagem real: otimizar várias respostas conflitantes ao mesmo tempo — minimizar força e rugosidade enquanto se maximiza a produtividade. Apresenta três abordagens complementares. A função desejabilidade de Derringer-Suich, que combina múltiplas respostas num único índice escalar. Os algoritmos genéticos (AG), que buscam o ótimo global por evolução de populações — o método usado no estudo de caso deste livro. E o NSGA-II, algoritmo multiobjetivo que entrega a fronteira de Pareto inteira, expondo os trade-offs em vez de escondê-los. Exemplos em Python (pymoo) e R (desirability) percorrem os métodos, com os modelos de segunda ordem do capítulo anterior como funções objetivo. Fecha com exercícios com gabarito.
+  Este capítulo enfrenta o problema central da usinagem real: otimizar várias respostas conflitantes ao mesmo tempo — minimizar força e rugosidade enquanto se maximiza a produtividade. Apresenta três abordagens complementares. A função desejabilidade de Derringer-Suich, que combina múltiplas respostas num único índice escalar. Os algoritmos genéticos (AG), que buscam o ótimo global por evolução de populações — o método usado no estudo de caso deste livro. E o NSGA-II, algoritmo multiobjetivo que entrega a fronteira de Pareto inteira, expondo os *trade-offs* em vez de escondê-los. Exemplos em Python (pymoo) e R (desirability) percorrem os métodos, com os modelos de segunda ordem do capítulo anterior como funções objetivo. Fecha com exercícios com gabarito.
 ---
 
 # Otimização multiresposta {#sec-cap6}
@@ -18,7 +18,7 @@ Esse é o problema da **otimização multiresposta**, e resolvê-lo é o clímax
 
 1. A **função desejabilidade** de Derringer-Suich — combina as respostas num único índice, transformando o problema multiobjetivo em monobjetivo;
 2. Os **algoritmos genéticos** (AG) — buscam o ótimo global por evolução de uma população de soluções, método aplicado no estudo de caso deste livro [@cus2006intellig; @baskar2006selectio];
-3. O **NSGA-II** — algoritmo evolutivo multiobjetivo que, em vez de um único ótimo, entrega toda a **fronteira de Pareto**, expondo os trade-offs para a decisão do engenheiro.
+3. O **NSGA-II** — algoritmo evolutivo multiobjetivo que, em vez de um único ótimo, entrega toda a **fronteira de Pareto**, expondo os *trade-offs* para a decisão do engenheiro.
 
 ::: {.callout-note}
 ## O que você vai conseguir fazer ao fim deste capítulo
@@ -39,8 +39,8 @@ O conflito surge porque os coeficientes diferem entre respostas: o que minimiza 
 
 Existem duas grandes filosofias para lidar com o conflito:
 
-- **Escalarização** — combinar as $m$ respostas num único número (um escalar) e otimizá-lo. A função desejabilidade e o AG mono-objetivo seguem essa via. Vantagem: entrega uma resposta única, direta. Desvantagem: a combinação embute pesos e escolhas que escondem os trade-offs;
-- **Abordagem de Pareto** — não combinar; buscar o conjunto de soluções em que não se pode melhorar uma resposta sem piorar outra (as soluções "não-dominadas"). O NSGA-II segue essa via. Vantagem: expõe todos os trade-offs, deixando a decisão final para o engenheiro. Desvantagem: entrega muitas soluções, não uma.
+- **Escalarização** — combinar as $m$ respostas num único número (um escalar) e otimizá-lo. A função desejabilidade e o AG mono-objetivo seguem essa via. Vantagem: entrega uma resposta única, direta. Desvantagem: a combinação embute pesos e escolhas que escondem os *trade-offs*;
+- **Abordagem de Pareto** — não combinar; buscar o conjunto de soluções em que não se pode melhorar uma resposta sem piorar outra (as soluções "não-dominadas"). O NSGA-II segue essa via. Vantagem: expõe todos os *trade-offs*, deixando a decisão final para o engenheiro. Desvantagem: entrega muitas soluções, não uma.
 
 Este capítulo cobre as duas, porque ambas têm lugar: a escalarização quando se sabe o peso relativo das respostas; a de Pareto quando se quer ver o mapa completo de compromissos antes de decidir.
 
@@ -92,7 +92,7 @@ Essa é a razão de sua popularidade em usinagem: os problemas de otimização d
 O AG evolui a população por gerações sucessivas, aplicando três operadores [@abdelmagif1997optimal]:
 
 1. **Seleção (reprodução)** — os melhores indivíduos (maior valor da função objetivo) são escolhidos como "pais";
-2. **Cruzamento (crossover)** — pares de pais combinam-se, gerando "filhos" que herdam características de ambos;
+2. **Cruzamento (*crossover*)** — pares de pais combinam-se, gerando "filhos" que herdam características de ambos;
 3. **Mutação** — mudanças aleatórias em alguns indivíduos, que introduzem diversidade e evitam a convergência prematura.
 
 A cada geração, a população melhora — os bons se reproduzem, os ruins desaparecem. Após muitas gerações, ela converge para um conjunto de soluções ótimas [@abdelmagif1996tuning; @baskar2006selectio].
@@ -101,12 +101,12 @@ A cada geração, a população melhora — os bons se reproduzem, os ruins desa
 
 Vale fixar o vocabulário, que reaparece no código:
 
-- **Função objetivo (fitness function)** — o que se quer otimizar (por exemplo, a desejabilidade global $D$, ou uma resposta direta);
+- **Função objetivo (*fitness function*)** — o que se quer otimizar (por exemplo, a desejabilidade global $D$, ou uma resposta direta);
 - **Indivíduo (genoma)** — um ponto candidato, um conjunto de valores dos fatores $(x_1, \dots, x_k)$;
 - **População** — a matriz de indivíduos da geração atual;
 - **Geração** — cada nova população produzida por uma iteração;
 - **Diversidade** — a distância média entre indivíduos; alta diversidade permite explorar mais do espaço de busca;
-- **Valor ajustado (fitness value)** — o valor da função objetivo para um indivíduo;
+- **Valor ajustado (*fitness value*)** — o valor da função objetivo para um indivíduo;
 - **Pais e filhos** — os selecionados e os gerados por cruzamento.
 
 Guardar esse vocabulário é ler o código de otimização com fluência — os pacotes usam exatamente esses termos.
@@ -135,14 +135,16 @@ Em vez de dizer "a solução ótima é esta", o NSGA-II diz "estas são todas as
 
 ::: {.callout-important}
 ## Decisão de projeto
-Escalarizar (desejabilidade, AG mono) ou mapear Pareto (NSGA-II)? A regra: se você **já sabe** a importância relativa das respostas (o cliente exige rugosidade abaixo de X, custe o que custar), escalarize — é direto e dá a resposta. Se você **quer descobrir** o trade-off antes de decidir, use NSGA-II e leia a fronteira. Em projetos reais, é comum fazer os dois: NSGA-II para entender o espaço, depois desejabilidade para cravar a condição de operação escolhida.
+Escalarizar (desejabilidade, AG mono) ou mapear Pareto (NSGA-II)? A regra: se você **já sabe** a importância relativa das respostas (o cliente exige rugosidade abaixo de X, custe o que custar), escalarize — é direto e dá a resposta. Se você **quer descobrir** o *trade-off* antes de decidir, use NSGA-II e leia a fronteira. Em projetos reais, é comum fazer os dois: NSGA-II para entender o espaço, depois desejabilidade para cravar a condição de operação escolhida.
 :::
 
 ## Exemplo em R: função desejabilidade {#sec-cap6-exemplo-r}
 
 O pacote **desirability** do R implementa Derringer-Suich diretamente sobre os modelos de segunda ordem do capítulo anterior.
 
-```r
+```{r}
+#| label: desirability-r
+#| eval: false
 
 # install.packages("desirability")
 library(desirability)
@@ -181,7 +183,9 @@ O `dMin`/`dMax` criam as desejabilidades individuais; `dOverall` faz a média ge
 
 Para a fronteira de Pareto, o Python oferece o **pymoo**, biblioteca de referência em otimização multiobjetivo. O exemplo abaixo aplica o NSGA-II aos modelos de segunda ordem, buscando minimizar força e rugosidade simultaneamente.
 
-```python
+```{python}
+#| label: pymoo-nsga2
+#| eval: false
 
 import numpy as np
 from pymoo.core.problem import Problem
@@ -221,7 +225,9 @@ O `Problem` define os objetivos (aqui, força e rugosidade, ambos a minimizar); 
 
 ### Visualizando a fronteira
 
-```python
+```{python}
+#| label: plot-pareto
+#| eval: false
 
 import matplotlib.pyplot as plt
 
@@ -256,7 +262,7 @@ O Quadro @tbl-sintese6 fecha a Parte II resumindo o arsenal de otimização.
 Três ideias devem permanecer:
 
 1. **Respostas conflitam; não há ótimo único.** Otimização multiresposta é a arte do compromisso — minimizar força e rugosidade *e* maximizar produtividade nunca coincidem num só ponto.
-2. **Escalarizar dá uma resposta; Pareto dá o mapa.** A desejabilidade e o AG entregam um ótimo (embutindo pesos); o NSGA-II entrega a fronteira, expondo os trade-offs.
+2. **Escalarizar dá uma resposta; Pareto dá o mapa.** A desejabilidade e o AG entregam um ótimo (embutindo pesos); o NSGA-II entrega a fronteira, expondo os *trade-offs*.
 3. **A decisão final é de engenharia.** Os métodos otimizam; os limites, os pesos e a escolha na fronteira vêm do conhecimento do processo — a estatística informa, o engenheiro decide.
 
 Com este capítulo, a Parte II está completa: o leitor domina o fatorial (triagem), o PCC/RSM (modelagem) e a otimização multiresposta (decisão). A Parte III aplica todo esse arsenal ao estudo de caso real — o torneamento das seis ligas de alumínio — transformando a metodologia em resultados.

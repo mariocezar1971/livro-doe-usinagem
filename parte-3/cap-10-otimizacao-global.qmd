@@ -3,7 +3,7 @@ title: "Modelos globais e otimização multiresposta"
 subtitle: "O ponto ótimo, a validação e as recomendações operacionais"
 author: "Mário Cezar dos Santos Jr."
 abstract: |
-  Este capítulo é o clímax do estudo de caso. Apresenta os modelos de regressão global, que descrevem a usinabilidade em função das propriedades das ligas (resistência, alongamento, dureza) e das condições de corte; valida esses modelos numa liga que não participou de sua construção — a 6351-T6; e executa a otimização multiresposta que concilia força, potência, temperatura e rugosidade numa única condição de corte recomendada. Reproduz a otimização por algoritmo genético e apresenta a fronteira de Pareto (NSGA-II) como alternativa que expõe os trade-offs. Fecha com recomendações operacionais por liga e uma nota sobre a extensão do estudo a novas ligas.
+  Este capítulo é o clímax do estudo de caso. Apresenta os modelos de regressão global, que descrevem a usinabilidade em função das propriedades das ligas (resistência, alongamento, dureza) e das condições de corte; valida esses modelos numa liga que não participou de sua construção — a 6351-T6; e executa a otimização multiresposta que concilia força, potência, temperatura e rugosidade numa única condição de corte recomendada. Reproduz a otimização por algoritmo genético e apresenta a fronteira de Pareto (NSGA-II) como alternativa que expõe os *trade-offs*. Fecha com recomendações operacionais por liga e uma nota sobre a extensão do estudo a novas ligas.
 ---
 
 # Modelos globais e otimização multiresposta {#sec-cap10}
@@ -94,7 +94,9 @@ Note que o ótimo inclui **propriedades da liga** (R, Ar, Hd), não só condiç�
 
 O estudo usou algoritmo genético (Capítulo @sec-cap6) para a busca do ótimo — apropriado dada a superfície multiobjetivo acidentada. O código abaixo reproduz a abordagem, minimizando uma desejabilidade global das quatro respostas.
 
-```r
+```{r}
+#| label: ag-otimizacao
+#| eval: false
 
 library(GA)          # algoritmo genetico
 library(desirability)
@@ -133,11 +135,13 @@ O pacote GA evolui uma população de soluções por 200 gerações, convergindo
 
 ## A fronteira de Pareto como alternativa {#sec-cap10-pareto}
 
-A otimização por desejabilidade entrega **um** ponto — o melhor compromisso segundo os pesos embutidos nas desejabilidades. Mas, como discutido no Capítulo @sec-cap6, há uma alternativa que expõe os trade-offs em vez de escondê-los: a fronteira de Pareto, via NSGA-II.
+A otimização por desejabilidade entrega **um** ponto — o melhor compromisso segundo os pesos embutidos nas desejabilidades. Mas, como discutido no Capítulo @sec-cap6, há uma alternativa que expõe os *trade-offs* em vez de escondê-los: a fronteira de Pareto, via NSGA-II.
 
-Em vez de dizer "a condição ótima é esta", o NSGA-II entrega o **conjunto de todas as condições eficientes** — aquelas em que não se pode reduzir uma resposta sem aumentar outra. O código abaixo aplica o NSGA-II (via pymoo, Capítulo @sec-cap6) aos modelos globais, mapeando o trade-off força × rugosidade.
+Em vez de dizer "a condição ótima é esta", o NSGA-II entrega o **conjunto de todas as condições eficientes** — aquelas em que não se pode reduzir uma resposta sem aumentar outra. O código abaixo aplica o NSGA-II (via pymoo, Capítulo @sec-cap6) aos modelos globais, mapeando o *trade-off* força × rugosidade.
 
-```python
+```{python}
+#| label: nsga2-pareto
+#| eval: false
 
 import numpy as np
 from pymoo.core.problem import Problem
@@ -166,7 +170,7 @@ A fronteira resultante mostra, para cada nível de força aceitável, a menor ru
 
 ::: {.callout-tip}
 ## Na prática
-Use as duas abordagens em sequência, como sugerido no Capítulo @sec-cap6: primeiro o NSGA-II para **ver** o trade-off força × rugosidade × potência e entender o espaço de compromissos; depois a desejabilidade para **cravar** a condição de operação, uma vez decididas as prioridades. O NSGA-II informa a decisão; a desejabilidade a executa.
+Use as duas abordagens em sequência, como sugerido no Capítulo @sec-cap6: primeiro o NSGA-II para **ver** o *trade-off* força × rugosidade × potência e entender o espaço de compromissos; depois a desejabilidade para **cravar** a condição de operação, uma vez decididas as prioridades. O NSGA-II informa a decisão; a desejabilidade a executa.
 :::
 
 ## Recomendações operacionais por liga {#sec-cap10-recomendacoes}
@@ -200,7 +204,7 @@ Três ideias devem permanecer:
 
 1. **Os modelos globais generalizam por propriedades.** Preveem a usinabilidade de uma liga a partir de resistência, alongamento e dureza — a metalurgia (@sec-cap2) tornada preditor quantitativo, com $R^2 > 0{,}85$.
 2. **A validação em liga independente é o selo de confiança.** A 6351-T6, prevista sem ter construído os modelos, confirmou-os estatisticamente (p > 0,50) — a prova de que capturaram a física.
-3. **A otimização entrega a condição recomendada.** Força, potência, temperatura e rugosidade conciliadas num ponto ótimo — e a fronteira de Pareto expõe os trade-offs para a decisão final do engenheiro.
+3. **A otimização entrega a condição recomendada.** Força, potência, temperatura e rugosidade conciliadas num ponto ótimo — e a fronteira de Pareto expõe os *trade-offs* para a decisão final do engenheiro.
 
 Com este capítulo, a Parte III se completa: o estudo de caso percorreu todo o arco, do projeto experimental à condição de corte otimizada e validada. A Parte IV levará essas conclusões ao chão de fábrica e sintetizará as lições do livro.
 

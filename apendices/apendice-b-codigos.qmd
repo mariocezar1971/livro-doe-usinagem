@@ -153,7 +153,7 @@ ggplot(grade, aes(x = vc, y = f, z = Ra)) +
 
 ### Fronteira de Pareto com NSGA-II (biblioteca pymoo)
 
-Otimização multiobjetivo que entrega a fronteira de Pareto completa — o mapa dos trade-offs.
+Otimização multiobjetivo que entrega a fronteira de Pareto completa — o mapa dos *trade-offs*.
 
 ```python
 # --- Fronteira de Pareto com NSGA-II (pymoo) ---
