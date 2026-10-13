@@ -135,9 +135,7 @@ O R oferece o pacote **rsm**, especializado em superfícies de resposta. Ele cri
 
 ### Criando o PCC
 
-```{r}
-#| label: cria-pcc
-#| eval: false
+```r
 
 # install.packages("rsm")  # se necessario
 library(rsm)
@@ -163,9 +161,7 @@ O `ccd()` (central composite design) monta os três blocos de pontos — fatoria
 
 ### Ajustando o modelo de segunda ordem
 
-```{r}
-#| label: ajusta-modelo
-#| eval: false
+```r
 
 # Suponha a resposta Fu (forca de usinagem) coletada nos ensaios
 plano_pcc$Fu <- c(...)   # vetor de respostas na ordem da matriz
@@ -180,9 +176,7 @@ A função `SO(x1, x2, x3)` expande automaticamente o modelo de segunda ordem co
 
 ### Visualizações 3D e curvas de nível
 
-```{r}
-#| label: visualiza
-#| eval: false
+```r
 
 # Curvas de nivel e superficie 3D (dois fatores por vez)
 par(mfrow = c(1, 2))
@@ -200,9 +194,7 @@ O `contour()` gera as curvas de nível; o `persp()`, a superfície 3D. A funçã
 
 ### Visualização interativa com plotly
 
-```{r}
-#| label: plotly-3d
-#| eval: false
+```r
 
 library(plotly)
 
