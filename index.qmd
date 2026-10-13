@@ -6,7 +6,7 @@ title: "Prefácio"
 
 ::: {.callout-note}
 ## Status do manuscrito
-Este livro está em desenvolvimento. Acompanhe o progresso em [doeusinagem.com.br](https://doeusinagem.com.br) ou [cadastre seu e-mail](https://doeusinagem.com.br/em-breve) para receber o capítulo de amostra quando disponível.
+Este livro está em desenvolvimento. Acompanhe o progresso em [o site do livro](https://mariocezar1971.github.io/livro-doe-usinagem/) ou [cadastre seu e-mail](https://mariocezar1971.github.io/livro-doe-usinagem/em-breve.html) para receber o capítulo de amostra quando disponível.
 :::
 
 ## Por que este livro existe

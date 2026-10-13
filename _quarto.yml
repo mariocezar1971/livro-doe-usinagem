@@ -5,7 +5,6 @@ project:
     - "figuras/**"
     - "dados/**"
     - "codigos/**"
-    - CNAME
 
 book:
   title: "Planejamento de Experimentos em Usinagem"
