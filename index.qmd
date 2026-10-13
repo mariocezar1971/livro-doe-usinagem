@@ -17,9 +17,9 @@ Este livro nasce de uma tese de doutorado defendida na Faculdade de Engenharia M
 
 ## A quem se destina
 
-O leitor que mais se beneficia deste livro é o aluno de pós-graduação em Engenharia Mecânica, Engenharia de Produção ou Engenharia de Materiais que precisa estruturar um experimento industrial, analisar os resultados estatisticamente e otimizar múltiplas respostas conflitantes. Em segundo lugar, o engenheiro de processo, qualidade ou P&D em indústrias automotiva, aeronáutica, naval e de bens de capital que enfrenta problemas reais de variabilidade e busca uma abordagem sistemática para resolvê-los.
+O leitor que mais se beneficia deste livro é o aluno de pós-graduação em Engenharia Mecânica, Engenharia de Produção ou Engenharia de Materiais que precisa estruturar um experimento industrial, analisar os resultados estatisticamente e otimizar múltiplas respostas conflitantes. A obra atende igualmente o aluno de graduação em engenharia que cursa disciplinas de planejamento de experimentos, metrologia, usinagem ou processos de fabricação e busca um estudo de caso completo, do laboratório à decisão otimizada. Em terceiro lugar, o engenheiro de processo, qualidade ou P&D em indústrias automotiva, aeronáutica, naval e de bens de capital que enfrenta problemas reais de variabilidade e busca uma abordagem sistemática para resolvê-los.
 
-Conhecimento prévio assumido: graduação em engenharia ou matemática aplicada, familiaridade com estatística descritiva (média, variância, distribuição normal) e acesso a software estatístico — embora todos os exemplos sejam apresentados em R e Python de código aberto.
+Conhecimento prévio assumido: formação em engenharia ou matemática aplicada — em andamento ou concluída —, familiaridade com estatística descritiva (média, variância, distribuição normal) e acesso a software estatístico — embora todos os exemplos sejam apresentados em R e Python de código aberto.
 
 ## Como ler este livro
 
@@ -74,7 +74,6 @@ Ao Instituto Federal do Espírito Santo (IFES), Campus Vila Velha, pelo ambiente
 Aos alunos do curso IEMEC8 (Planejamento de Experimentos), cujas dúvidas e contribuições moldaram a sequência didática dos Capítulos 4, 5 e 6.
 
 \
-
 Mário Cezar dos Santos Jr.
 
 Vila Velha, ES — `r format(Sys.Date(), '%B de %Y')`
