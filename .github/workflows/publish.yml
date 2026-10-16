@@ -70,7 +70,8 @@ jobs:
 
       - name: Renderizar livro (HTML)
         run: |
-          quarto render --to html --profile publico
+          cp config-vitrine.yml _quarto.yml
+          quarto render --to html
         env:
           QUARTO_PRINT_STACK: true
 
