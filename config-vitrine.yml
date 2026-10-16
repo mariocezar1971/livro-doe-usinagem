@@ -5,6 +5,12 @@
 project:
   type: book
   output-dir: _book
+  render:
+    - index.qmd
+    - sinopse-orelha.qmd
+    - amostra-cap-04.qmd
+    - sobre-o-autor.qmd
+    - comprar.qmd
   resources:
     - "figuras/**"
     - "dados/**"
