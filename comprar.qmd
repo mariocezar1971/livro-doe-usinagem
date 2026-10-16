@@ -1,0 +1,37 @@
+---
+title: "Como adquirir o livro"
+---
+
+# Como adquirir {.unnumbered}
+
+Esta página reúne o livro completo *Planejamento de Experimentos em Usinagem: Fatorial, RSM e otimização multiresposta aplicados às ligas de alumínio* — 12 capítulos, 4 apêndices e todo o código em R e Python.
+
+::: {.callout-note}
+## Lançamento em breve
+A data de lançamento será anunciada para a lista de e-mails. [Leia o capítulo de amostra](amostra-cap-04.qmd) enquanto isso.
+:::
+
+## Formatos e preços
+
+- **Digital (PDF + EPUB)** — pela Kiwify. **R$49 na pré-venda** (preço cheio: R$79).
+  👉 [Comprar / entrar na pré-venda](LINK_KIWIFY)
+- **Impresso** — pela Amazon (print-on-demand).
+  👉 [Comprar na Amazon](LINK_AMAZON_KDP)
+
+## O que está incluído
+
+- **Parte I — Fundamentos:** por que DOE, metalurgia das ligas de alumínio, torneamento.
+- **Parte II — Metodologia DOE:** fatorial 2^k, PCC e superfícies de resposta (RSM), otimização multirresposta.
+- **Parte III — Estudo de caso:** torneamento de seis ligas de alumínio, da metalurgia à condição otimizada e validada.
+- **Parte IV — Aplicação:** adaptação da metodologia ao chão de fábrica.
+- **Apêndices:** instrumentação, **código-fonte completo em R e Python**, tabelas de referência e dados experimentais.
+
+## Garantia
+
+7 dias de garantia incondicional (direito de arrependimento, art. 49 do CDC).
+
+## Dúvidas frequentes
+
+- **Preciso saber estatística avançada?** Não — assume-se formação em engenharia (em andamento ou concluída) e estatística descritiva básica.
+- **Os códigos rodam em quê?** R e Python, de código aberto.
+- **Serve para além de alumínio?** Sim. As ligas são o veículo; o método é universal.

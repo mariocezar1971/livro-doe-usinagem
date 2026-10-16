@@ -70,7 +70,7 @@ jobs:
 
       - name: Renderizar livro (HTML)
         run: |
-          quarto render --to html
+          quarto render --to html --profile publico
         env:
           QUARTO_PRINT_STACK: true
 

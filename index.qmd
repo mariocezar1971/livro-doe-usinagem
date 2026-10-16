@@ -4,11 +4,6 @@ title: "Prefácio"
 
 # Prefácio {.unnumbered}
 
-::: {.callout-note}
-## Status do manuscrito
-Este livro está em desenvolvimento. Acompanhe o progresso em [o site do livro](https://mariocezar1971.github.io/livro-doe-usinagem/) ou [cadastre seu e-mail](https://mariocezar1971.github.io/livro-doe-usinagem/em-breve.html) para receber o capítulo de amostra quando disponível.
-:::
-
 ## Por que este livro existe
 
 A maioria dos textos sobre planejamento de experimentos (DOE) em português ou é uma tradução de obras genéricas, em que os exemplos têm pouca aderência à manufatura brasileira, ou é restrita ao formalismo estatístico, deixando o leitor com a tarefa de descobrir sozinho como aplicar a técnica em um problema industrial real.
