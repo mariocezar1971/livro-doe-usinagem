@@ -135,6 +135,8 @@ O R oferece o pacote **rsm**, especializado em superfícies de resposta. Ele cri
 
 ### Criando o PCC
 
+> **Código demonstrativo.** A versão completa e executável, com os dados reais, está no @sec-apendice-b e no repositório de códigos.
+
 ```r
 
 # install.packages("rsm")  # se necessario

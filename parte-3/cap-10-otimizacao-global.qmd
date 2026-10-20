@@ -90,9 +90,16 @@ Nessa condição, as respostas otimizadas ficam em: força $F_u \approx 723$ N, 
 
 Note que o ótimo inclui **propriedades da liga** (R, Ar, Hd), não só condições de corte. Isso é o poder do modelo global: ele indica não apenas *como usinar*, mas *que tipo de liga* (em termos de propriedades) usina melhor sob otimização conjunta.
 
+::: {.callout-warning}
+## Como ler o ótimo em propriedades
+O ponto ótimo combina resistência, alongamento e dureza como se fossem variáveis independentes — mas, como mostra o @sec-cap2, essas propriedades são **fisicamente acopladas**: resistência alta anda com ductilidade baixa e dureza alta. A combinação ótima ($R=323$ MPa, $Ar=44\%$, $Hd=34{,}5$ HV) é, portanto, uma **idealização matemática** do modelo, não uma liga realizável — nenhum material reúne, ao mesmo tempo, essa resistência, essa ductilidade e essa maciez. Ela deve ser lida como a *direção* preferida (ligas mais dúcteis e macias, dentro do envelope real estudado), e a seleção de liga deve respeitar a correlação $R$–$Ar$–$Hd$. Já o ótimo em **condições de corte** ($v_c$, $a_p$, $f$), por não ter esse acoplamento, é diretamente aplicável.
+:::
+
 ### Reproduzindo a otimização por algoritmo genético
 
 O estudo usou algoritmo genético (Capítulo @sec-cap6) para a busca do ótimo — apropriado dada a superfície multiobjetivo acidentada. O código abaixo reproduz a abordagem, minimizando uma desejabilidade global das quatro respostas.
+
+> **Código demonstrativo.** A versão completa e executável, com os dados reais, está no @sec-apendice-b e no repositório de códigos.
 
 ```r
 

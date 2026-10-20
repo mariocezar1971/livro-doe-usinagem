@@ -102,6 +102,8 @@ A interação $a_p \times f$ é a mais relevante para o operador: aumentar avan�
 
 A análise fatorial deste capítulo é inteiramente reproduzível. O código abaixo, usando os pacotes do Capítulo @sec-cap4, reproduz a estimativa de efeitos e a ANOVA, e refaz os gráficos com ggplot2.
 
+> **Código demonstrativo.** A versão completa e executável, com os dados reais, está no @sec-apendice-b e no repositório de códigos.
+
 ```r
 
 library(FrF2)

@@ -215,8 +215,7 @@ O repositório contém: os scripts R e Python completos (não apenas os trechos 
 Na edição impressa, o QR code abaixo leva diretamente ao repositório. Na edição digital, o link acima é clicável. Clone o repositório, instale os pacotes e execute os scripts com os dados fornecidos para reproduzir integralmente as análises do livro.
 :::
 
-<!-- QR-CODE-PLACEHOLDER: inserir imagem do QR code do repositorio aqui -->
-<!-- ![QR code do repositorio de codigos](../figuras/qr-repo-codigos.png){#fig-qr width=30%} -->
+![QR code do repositório de códigos — aponta para `github.com/mariocezar1971/livro-doe-usinagem-codigos`.](../figuras/qr-repo-codigos.png){#fig-qr width=30%}
 
 ::: {.callout-note}
 ## Reprodutibilidade

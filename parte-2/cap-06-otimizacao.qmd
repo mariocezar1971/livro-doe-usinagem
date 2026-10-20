@@ -142,6 +142,8 @@ Escalarizar (desejabilidade, AG mono) ou mapear Pareto (NSGA-II)? A regra: se vo
 
 O pacote **desirability** do R implementa Derringer-Suich diretamente sobre os modelos de segunda ordem do capítulo anterior.
 
+> **Código demonstrativo.** A versão completa e executável, com os dados reais, está no @sec-apendice-b e no repositório de códigos.
+
 ```r
 
 # install.packages("desirability")
