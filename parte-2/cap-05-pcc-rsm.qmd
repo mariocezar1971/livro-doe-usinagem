@@ -194,6 +194,8 @@ print(xs)
 
 O `contour()` gera as curvas de nível; o `persp()`, a superfície 3D. A função `canonical()` faz a **análise canônica**, que localiza o ponto estacionário (candidato a ótimo) e classifica sua natureza — máximo, mínimo ou sela — a partir dos autovalores.
 
+![Superfície de resposta (esq.) e curvas de nível (dir.) de um modelo de segunda ordem ilustrativo: a força cresce com a velocidade e a profundidade codificadas.](../figuras/fig-superficie.png){#fig-superficie width=100%}
+
 ### Visualização interativa com plotly
 
 ```r

@@ -274,6 +274,12 @@ IAPlot(modelo)     # graficos de interacao (Interaction)
 
 O `MEPlot` mostra os efeitos principais como retas — quanto mais inclinada, maior o efeito. O `IAPlot` mostra as interações: retas paralelas indicam ausência de interação; retas que se cruzam ou divergem indicam interação presente.
 
+![Gráfico de Pareto dos efeitos do exemplo: a liga e o avanço dominam a força; a velocidade tem efeito fraco. Cor indica o sinal do efeito.](figuras/fig-pareto-efeitos.png){#fig-pareto-ex width=85%}
+
+![Efeitos principais do exemplo: a inclinação de cada reta é a magnitude do efeito do fator (linha pontilhada = média geral).](figuras/fig-efeitos-principais.png){#fig-me-ex width=95%}
+
+![Gráfico de interação Liga × avanço: retas quase paralelas indicam interação fraca neste recorte didático.](figuras/fig-interacao.png){#fig-ia-ex width=62%}
+
 ### Validando: análise de resíduos
 
 ```r
@@ -285,6 +291,8 @@ par(mfrow = c(1, 1))
 ```
 
 O comando `plot(modelo)` gera os quatro diagnósticos padrão. Confira: nuvem sem forma nos resíduos vs. ajustados, pontos sobre a reta no QQ-plot. Se ambos passam, o modelo está validado.
+
+![Diagnóstico de resíduos do exemplo: resíduos sem padrão e pontos sobre a reta no Q-Q confirmam as suposições do modelo.](figuras/fig-residuos.png){#fig-res-ex width=90%}
 
 ::: {.callout-tip}
 ## Na prática

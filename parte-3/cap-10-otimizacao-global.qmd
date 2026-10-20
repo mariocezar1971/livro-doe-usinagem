@@ -169,7 +169,9 @@ res = minimize(UsinabilidadeGlobal(), NSGA2(pop_size=100),
 print("Solucoes na fronteira:", len(res.F))
 ```
 
-A fronteira resultante mostra, para cada nível de força aceitável, a menor rugosidade atingível — e vice-versa. O engenheiro escolhe o ponto conforme a prioridade do momento: se o acabamento é crítico, move-se para a região de baixa rugosidade (aceitando mais força); se a força é o gargalo, para o outro extremo. O ponto de desejabilidade (Tabela @tbl-otimo) é **um** dos pontos dessa fronteira — o que corresponde aos pesos escolhidos.
+A fronteira resultante mostra, para cada nível de força aceitável, a menor rugosidade atingível — e vice-versa.
+
+![Fronteira de Pareto força × rugosidade a partir dos modelos globais: cada ponto da fronteira é uma condição eficiente; o ponto de desejabilidade (Tab. @tbl-otimo) é um deles.](../figuras/fig-fronteira-pareto.png){#fig-fronteira-global width=80%} O engenheiro escolhe o ponto conforme a prioridade do momento: se o acabamento é crítico, move-se para a região de baixa rugosidade (aceitando mais força); se a força é o gargalo, para o outro extremo. O ponto de desejabilidade (Tabela @tbl-otimo) é **um** dos pontos dessa fronteira — o que corresponde aos pesos escolhidos.
 
 ::: {.callout-tip}
 ## Na prática

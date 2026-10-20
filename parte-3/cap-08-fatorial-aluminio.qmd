@@ -160,6 +160,8 @@ ggplot(ef_df, aes(x = reorder(fonte, abs_ef), y = abs_ef,
 
 O gráfico de Pareto em ggplot2 mostra, de relance, que $a_p$ domina (maior barra) e destaca os efeitos negativos (Liga, $v_c$) em cor distinta — tornando visual a descoberta contra-intuitiva.
 
+![Efeitos principais reais sobre a força de usinagem (estudo de caso): a profundidade $a_p$ domina; liga e velocidade têm efeito negativo.](../figuras/fig-pareto-efeitos-reais.png){#fig-pareto-real width=85%}
+
 ### Validação por análise de resíduos
 
 ```r

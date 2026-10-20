@@ -238,6 +238,8 @@ plt.show()
 
 O gráfico da fronteira é a entrega final: cada ponto é uma condição de corte eficiente. O joelho da curva — onde ela "dobra" — costuma ser o melhor compromisso prático, o ponto em que pequenos ganhos numa resposta passam a custar muito na outra.
 
+![Fronteira de Pareto força × rugosidade (modelos ilustrativos): os pontos escuros são as condições não-dominadas; o joelho da curva é o melhor compromisso prático.](../figuras/fig-fronteira-pareto.png){#fig-fronteira width=80%}
+
 ::: {.callout-warning}
 ## Erro comum
 Confundir "muitas soluções de Pareto" com "o algoritmo não decidiu". A fronteira de Pareto **não é indecisão** — é informação. Ela mostra que não existe uma única resposta certa, porque o problema é genuinamente de compromisso. Reduzir a fronteira a um ponto exige um julgamento de valor (os pesos), e esse julgamento é do engenheiro, não do algoritmo. O NSGA-II faz sua parte: entrega o mapa. Escolher o destino é com você.
