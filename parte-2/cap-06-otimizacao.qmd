@@ -3,7 +3,7 @@ title: "Otimização multiresposta"
 subtitle: "Conciliando respostas conflitantes: desejabilidade, algoritmos genéticos e NSGA-II"
 author: "Mário Cezar dos Santos Jr."
 abstract: |
-  Este capítulo enfrenta o problema central da usinagem real: otimizar várias respostas conflitantes ao mesmo tempo — minimizar força e rugosidade enquanto se maximiza a produtividade. Apresenta três abordagens complementares. A função desejabilidade de Derringer-Suich, que combina múltiplas respostas num único índice escalar. Os algoritmos genéticos (AG), que buscam o ótimo global por evolução de populações — o método usado no estudo de caso deste livro. E o NSGA-II, algoritmo multiobjetivo que entrega a fronteira de Pareto inteira, expondo os *trade-offs* em vez de escondê-los. Exemplos em Python (pymoo) e R (desirability) percorrem os métodos, com os modelos de segunda ordem do capítulo anterior como funções objetivo. Fecha com exercícios com gabarito.
+  Este capítulo enfrenta o problema central da usinagem real: otimizar várias respostas conflitantes ao mesmo tempo — minimizar força e rugosidade enquanto se maximiza a produtividade. Apresenta três abordagens complementares. A função desejabilidade de Derringer-Suich, que combina múltiplas respostas num único índice escalar. Os algoritmos genéticos (AG), que buscam o ótimo global por evolução de populações — o método usado no estudo de caso deste livro. E o NSGA-II, algoritmo multiobjetivo que entrega a fronteira de Pareto inteira, expondo os *trade-offs* em vez de escondê-los. Exemplos em Python (pymoo) e R (desirability) percorrem os métodos, com os modelos de segunda ordem do capítulo anterior como funções objetivo. Fecha com exercícios resolvidos passo a passo e uma lista de exercícios propostos.
 ---
 
 # Otimização multiresposta {#sec-cap6}
@@ -270,6 +270,76 @@ Com este capítulo, a Parte II está completa: o leitor domina o fatorial (triag
 ::: {.callout-tip}
 ## Aprofundamento
 A função desejabilidade tem sua origem no trabalho clássico de Derringer e Suich; Montgomery [@montgomery2005design] a apresenta no contexto de RSM. Sobre algoritmos genéticos em usinagem, @cus2006intellig e @baskar2006selectio trazem aplicações a condições de corte, e @abdelmagif1997optimal discute a convergência ao ótimo global. Para otimização multiobjetivo e NSGA-II, a documentação do pymoo (pymoo.org) é excelente e prática. O pacote desirability do R, de Max Kuhn, tem vinheta detalhada sobre Derringer-Suich.
+:::
+
+## Exercícios resolvidos {#sec-cap6-resolvidos .unnumbered}
+
+Os três exercícios a seguir resolvem, passo a passo, o núcleo do capítulo — desejabilidade individual, desejabilidade global e dominância de Pareto —, usando os mesmos limites de engenharia do exemplo em R (Seção @sec-cap6-exemplo-r), com expoente $s = 1$ (linear):
+
+| Resposta | Objetivo | $L$ | $U$ |
+|:---------|:--------:|:---:|:---:|
+| Força $F_u$ (N) | minimizar | 200 | 600 |
+| Rugosidade $R_a$ (µm) | minimizar | 0,4 | 3,2 |
+| Remoção $MRR$ (cm³/min) | maximizar | 10 | 80 |
+
+: Limites de desejabilidade usados nos exercícios. {#tbl-limites-desej}
+
+### Resolvido 1 — Desejabilidades individuais {.unnumbered}
+
+**Enunciado.** Uma condição de corte produz força $F_u = 360$ N, rugosidade $R_a = 1{,}6$ µm e taxa de remoção $MRR = 50$ cm³/min. Calcule a desejabilidade individual de cada resposta.
+
+**Solução.** Força e rugosidade são "menor-melhor" (fórmula de minimizar); a remoção é "maior-melhor" (fórmula de maximizar), todas com $s = 1$:
+
+$$
+d_{F_u} = \frac{U - y}{U - L} = \frac{600 - 360}{600 - 200} = \frac{240}{400} = 0{,}600 ,
+$$
+$$
+d_{R_a} = \frac{3{,}2 - 1{,}6}{3{,}2 - 0{,}4} = \frac{1{,}6}{2{,}8} = 0{,}571 ,
+\qquad
+d_{MRR} = \frac{y - L}{U - L} = \frac{50 - 10}{80 - 10} = \frac{40}{70} = 0{,}571 .
+$$
+
+**Interpretação.** Cada resposta, em sua unidade própria (N, µm, cm³/min), virou um número adimensional entre 0 e 1. A força está um pouco melhor (0,60) que as outras duas (0,57); nenhuma é excelente (perto de 1) nem inaceitável (0). É um ponto de compromisso mediano — o que a desejabilidade global vai resumir num só número.
+
+### Resolvido 2 — Desejabilidade global e o poder da média geométrica {.unnumbered}
+
+**Enunciado.** (a) Agregue as três desejabilidades do Resolvido 1 na desejabilidade global $D$. (b) Em outra condição, a força sobe para $F_u = 620$ N (as demais permanecem boas). Recalcule $D$ e explique o que a média geométrica faz.
+
+**Solução.** (a) A desejabilidade global é a média geométrica das $m = 3$ individuais:
+
+$$
+D = \left( d_{F_u} \cdot d_{R_a} \cdot d_{MRR} \right)^{1/3} = \left( 0{,}600 \times 0{,}571 \times 0{,}571 \right)^{1/3} = (0{,}1959)^{1/3} = 0{,}581 .
+$$
+
+(b) Com $F_u = 620$ N $\ge U = 600$, a força cai para a faixa **inaceitável**: $d_{F_u} = 0$. Logo
+
+$$
+D = \left( 0 \times d_{R_a} \times d_{MRR} \right)^{1/3} = 0 .
+$$
+
+**Interpretação.** Um único componente inaceitável **zera** a desejabilidade global — exatamente o que se quer: de nada adianta rugosidade e remoção ótimas se a força estoura o limite da máquina. A média **aritmética** daria $(0 + 0{,}571 + 0{,}571)/3 = 0{,}38$, sugerindo falsamente uma solução "razoável". A média geométrica pune o pior componente e força o compromisso — é por isso que Derringer-Suich a adota. (Note que, no caso equilibrado do item (a), as duas médias quase coincidem; a diferença só aparece — e decide — quando um componente vai mal.)
+
+### Resolvido 3 — Dominância e fronteira de Pareto {.unnumbered}
+
+**Enunciado.** Quatro condições de corte dão os pares (força, rugosidade), ambas a minimizar: S1 (300; 2,0), S2 (350; 1,5), S3 (400; 1,4) e S4 (380; 1,8). Quais estão na fronteira de Pareto e qual é descartada?
+
+**Solução.** Uma solução **domina** outra se é igual ou melhor em **todas** as respostas e estritamente melhor em pelo menos uma. Comparando S4 com S2:
+
+$$
+\text{S2}(350;\,1{,}5) \ \text{vs}\ \text{S4}(380;\,1{,}8): \quad 350 < 380 \ \text{e}\ 1{,}5 < 1{,}8 .
+$$
+
+S2 é melhor em **força e** rugosidade — logo **S2 domina S4**, e S4 sai. Entre S1, S2 e S3, nenhuma domina outra: S1 tem a menor força mas a maior rugosidade; S3, a menor rugosidade mas a maior força; S2 fica no meio. São **não-dominadas**.
+
+$$
+\text{Fronteira de Pareto} = \{\,\text{S1},\ \text{S2},\ \text{S3}\,\}, \qquad \text{S4 dominada (descartada)} .
+$$
+
+**Interpretação.** É isto que o NSGA-II entrega: o conjunto {S1, S2, S3}, cada ponto um compromisso válido — descer a rugosidade custa subir a força e vice-versa. A desejabilidade e o AG mono-objetivo, ao contrário, escolheriam **um** desses três conforme os pesos (os limites $L$, $U$ e o expoente $s$). Escalarizar dá a resposta; Pareto dá o mapa — a comparação da Seção @sec-cap6-comparacao em números.
+
+::: {.callout-tip}
+## O fio dos três exercícios
+A desejabilidade individual (1) traduz cada resposta para [0, 1]; a global (2) agrega com uma média que pune o pior componente; e a dominância (3) mostra a alternativa — não agregar, e expor todos os compromissos na fronteira de Pareto. São as duas filosofias do capítulo — escalarização e Pareto — reduzidas às suas contas essenciais.
 :::
 
 ## Exercícios propostos {.unnumbered}
