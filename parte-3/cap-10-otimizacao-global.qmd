@@ -274,3 +274,21 @@ $$
 7. **Desejabilidade vs. Pareto (integrador).** A otimização deu um ponto (desejabilidade); o NSGA-II daria uma fronteira. Descreva como você usaria as duas abordagens em conjunto num projeto real de seleção de condições de corte, e o que cada uma acrescenta.
 
 8. **Extrapolação.** Um engenheiro quer usar os modelos globais para prever a usinabilidade de uma liga com R = 650 MPa. Os modelos foram construídos com R até 540 MPa. Que cuidado ele deve ter, e por quê?
+
+## Gabarito dos exercícios propostos {#sec-cap10-gabarito .unnumbered}
+
+1. **Global vs. por liga.** O modelo por liga responde "como usinar **esta** liga"; o global, "como a usinabilidade varia **através das ligas**, em função das propriedades (R, Ar, Hd) e das condições". O global é mais poderoso por permitir otimizar conjuntamente **qual liga** e **como cortá-la**, e interpolar entre ligas.
+
+2. **Qualidade e generalização.** O $R^2$ global (0,88-0,99), um pouco menor que o por-liga, é **esperado**: o modelo global ajusta mais dados e mais heterogêneos (todas as ligas), logo não "cola" tão perfeitamente a cada uma. Isso não o invalida — reflete captura de tendência geral em vez de memorizar cada liga, e foi confirmado por **validação independente**.
+
+3. **Validação.** Testar numa liga reservada (6351-T6) mede a capacidade de **generalizar** a dados nunca vistos — a lógica treino-validação do aprendizado de máquina. Avaliar só no ajuste premia a memorização (superajuste); a validação independente é o teste honesto.
+
+4. **Interpretação do teste.** No teste predito-vs-observado, a hipótese nula é "predição = observação". Um **p-nível alto** (0,75) indica que **não há diferença detectável** — o modelo acerta. É o oposto da ANOVA de efeitos, onde se busca $p < 0{,}05$ para afirmar que um efeito é real. O que se deseja depende da hipótese testada.
+
+5. **Seleção de respostas.** Entraram $F_u$, $N_e$, $T_c$ e $R_a$ por sua **relevância prática** (esforço, energia, calor, acabamento). $R_a$ foi o parâmetro de rugosidade escolhido por ser o **mais usado na literatura** de usinagem de alumínio; $R_z$ e $R_q$ são correlacionados e redundantes para a otimização.
+
+6. **Ponto ótimo.** Otimizar sobre R, Ar, Hd indica **que tipo de liga** (em propriedades) usina melhor sob o compromisso buscado, orientando a **seleção de material**. Mas as propriedades são **acopladas** (resistência alta ↔ ductilidade baixa): o ótimo é uma **direção preferida**, não uma liga realizável; a escolha final respeita a correlação física.
+
+7. **Desejabilidade vs. Pareto.** Use o **NSGA-II** primeiro para **mapear a fronteira** e enxergar os trade-offs; depois a **desejabilidade** para **cravar um ponto**, dados os pesos e limites de engenharia. Pareto dá o mapa; desejabilidade dá o destino.
+
+8. **Extrapolação.** Prever para $R = 650$ MPa com modelos construídos até 540 MPa é **extrapolação**: fora do envelope dos dados, o modelo de segunda ordem pode divergir (a curvatura ajustada não vale além da faixa medida). A previsão é não confiável; o correto é **coletar dados nessa faixa** e reajustar, não confiar na extrapolação.

@@ -265,3 +265,27 @@ A profundidade responde por **~65%** da influência total sobre a força — é 
 7. **Código R.** Modifique o código do capítulo para analisar a **rugosidade** (Rug) em vez da força, incluindo o gráfico de Pareto dos efeitos. Que fatores você esperaria ver como dominantes, com base na Tabela @tbl-significancia?
 
 8. **Da triagem à modelagem.** Explique por que apenas Liga, $v_c$, $a_p$ e $f$ (e não a lubrificação) seguem para o PCC do próximo capítulo. Qual o critério que decidiu essa seleção?
+
+## Gabarito dos exercícios propostos {#sec-cap8-gabarito .unnumbered}
+
+1. **Efeito dominante.** A **profundidade $a_p$** (+714 N), o maior efeito sobre a força. Domina porque aumentar a profundidade amplia a **área dos planos de cisalhamento**, elevando diretamente o esforço de corte.
+
+2. **Sinal contra-intuitivo (Liga −52 N).** A 7075-T6, mais dura, é **menos dúctil**: forma cavaco mais segmentado e zona de cisalhamento mais estreita, exigindo **menos** força que a 1350-O, muito dúctil (cavaco contínuo, grande deformação plástica). Dureza alta não implica mais força de corte — a **ductilidade** (Capítulo @sec-cap2) é que pesa.
+
+3. **Força vs. potência.** Potência $\approx$ força $\times$ velocidade. Elevar $v_c$ reduz um pouco a força (−107 N, amolecimento térmico), mas a **multiplicação** por uma velocidade muito maior faz a potência subir fortemente (+3552 W). O produto cresce mesmo com a força caindo.
+
+4. **Lubrificação não significativa.** Autoriza **escolher a lubri-refrigeração por outros critérios** (custo, ambiente, MQF por sustentabilidade) sem perda de desempenho. Só um experimento planejado, medindo o efeito contra o ruído, permite afirmar "não faz diferença" com segurança — a impressão informal poderia enganar.
+
+5. **Interação $a_p \times f$ (mais esforço, menos calor).** Juntos, $a_p$ e $f$ elevam a taxa de remoção e os esforços; mas o cavaco mais espesso e volumoso **carrega mais calor embora** (o calor sai nas aparas em vez de ficar na peça), podendo **reduzir** a temperatura medida. Esforço e temperatura não andam sempre juntos.
+
+6. **Qualidade do modelo.** A força é altamente previsível ($R^2_{aj} = 0{,}99$); a vibração, bem menos (0,74 — muito ruído não modelado). Deve-se confiar mais no ótimo de força e tratar o de vibração com cautela, validando-o.
+
+7. **Código R (rugosidade).**
+```r
+modelo_Ra <- lm(Rug ~ (Liga + Vc + ap + f)^2, data = dados)
+anova(modelo_Ra); summary(modelo_Ra)
+library(FrF2); MEPlot(modelo_Ra); DanielPlot(modelo_Ra, half = TRUE)
+```
+Espera-se o **avanço ($f$)** como dominante — o fator-mestre do acabamento (Tabela @tbl-significancia).
+
+8. **Da triagem à modelagem.** Seguem para o PCC os fatores **significativos** no fatorial (Liga, $v_c$, $a_p$, $f$); a lubrificação, não significativa, é descartada. Critério: só vale refinar a curvatura dos fatores que o fatorial **provou** importarem — economia de ensaios.

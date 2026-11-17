@@ -210,3 +210,17 @@ $$
 5. **Estratégia em dois estágios.** Descreva a progressão fatorial → PCC aplicada no estudo. Por que rodar o fatorial antes do PCC, em vez de ir direto ao PCC?
 
 6. **Visão geral vs. detalhe (integrador).** Este capítulo descreve o dinamômetro apenas como "instrumento que mede as forças", remetendo os detalhes ao Apêndice A. Argumente a favor dessa separação do ponto de vista do leitor. Quando o detalhe de instrumentação é essencial no corpo do texto, e quando é melhor no apêndice?
+
+## Gabarito dos exercícios propostos {#sec-cap7-gabarito .unnumbered}
+
+1. **Papéis das ligas.** A 6351-T6 ficou fora da construção para servir de **conjunto de validação independente**: testar o modelo em dados que ele nunca "viu" evita a ilusão de bom ajuste por memorização (superajuste) e mede a real capacidade de generalização.
+
+2. **Fator Liga.** 1350-O (mole, muito dúctil, baixa resistência) contra 7075-T6 (dura, alta resistência, menos dúctil) representa a amplitude de **dureza/resistência/ductilidade**. Escolhem-se os extremos para **maximizar o contraste** — o efeito da liga fica detectável com o menor número de ensaios.
+
+3. **Dois planejamentos.** A lubri-refrigeração tinha **três** condições (seco, jorro, MQF), mas um fator de dois níveis só comporta duas. Desdobrou-se em 2kI (seco × jorro) e 2kII (seco × MQF), com o "seco" como referência comum — cobrindo as três condições sem abandonar o formato $2^k$.
+
+4. **Variáveis de entrada.** Condições de corte ($v_c$, $f$, $a_p$, lub) são **fatores controláveis** (o operador os ajusta na máquina); propriedades (R, Ar, Hd) são **propriedades do material** (definidas pela seleção de liga). Implicação: o ótimo em condições de corte é diretamente aplicável; o ótimo em propriedades orienta a **escolha de liga**, respeitando o acoplamento físico entre elas.
+
+5. **Estratégia em dois estágios.** Fatorial primeiro (triagem barata que identifica os poucos fatores vitais), PCC depois **só com os significativos** (modelagem fina da curvatura). Ir direto ao PCC gastaria ensaios estimando a curvatura de fatores que talvez nem importem.
+
+6. **Visão geral vs. detalhe.** A favor da separação: o leitor do corpo quer o **fluxo do método**, não a engenharia do dinamômetro — o detalhe no apêndice não interrompe o raciocínio. O detalhe é essencial no corpo quando **muda a interpretação do resultado** (ex.: uma limitação do sensor que afeta a conclusão); é melhor no apêndice quando é material de **consulta** (especificações, calibração).

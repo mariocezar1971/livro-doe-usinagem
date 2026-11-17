@@ -178,6 +178,26 @@ Com modelos confiáveis para cada resposta e cada liga, e com o cavaco e o desga
 A competição encruamento-amaciamento na formação do cavaco é discutida em @tash2007doty. O comportamento do grau de recalque com a velocidade, na série 1xxx, foi observado por @basti2007tools. O papel dos elementos de livre-corte na fragmentação do cavaco da 6262-T6 apoia-se em @elgallad2010machinab. A metodologia de superfícies de resposta segue @montgomery2005design (Capítulo @sec-cap5). Para o pacote metR de curvas de nível em ggplot2, consulte sua documentação no CRAN.
 :::
 
+## Exercícios resolvidos {#sec-cap9-resolvidos .unnumbered}
+
+Como este capítulo é de leitura e interpretação de resultados, os exercícios resolvidos raciocinam sobre as tabelas e curvas já apresentadas — sem novas contas, mas com a lógica de como extrair decisão delas.
+
+### Resolvido 1 — Lendo a tabela de $R^2$ {.unnumbered}
+
+**Enunciado.** Pela Tabela @tbl-r2-pcc, qual resposta é a **menos previsível** através das ligas, e o que isso implica para confiar na sua otimização?
+
+**Solução.** Varrendo as colunas, a **vibração ($V_b$)** tem os menores coeficientes em **todas** as ligas — de 0,857 (6082-T4) a 0,948 (1350-O) —, enquanto força, potência e temperatura ficam quase sempre acima de 0,98. O modelo de vibração explica, no melhor caso, 95% da variação; o restante é ruído não capturado.
+
+**Interpretação.** Previsões e ótimos de vibração carregam **mais incerteza** que os das demais respostas: deve-se confiar menos neles e, se a vibração for crítica para a aplicação, confirmá-los com ensaios adicionais. Há ainda um segundo ponto baixo, isolado: a temperatura da 7075-T73 ($R^2 = 0{,}869$), bem abaixo das outras temperaturas (todas $> 0{,}98$) — sinal de dispersão maior nessa combinação específica, que merece um olhar antes de otimizar temperatura naquela liga.
+
+### Resolvido 2 — Interpretando as curvas de nível {.unnumbered}
+
+**Enunciado.** Numa curva de nível de rugosidade com um vale em baixo avanço, onde está a condição de mínima rugosidade? Como uma interação $a_p \times f$ significativa altera o formato dessas curvas?
+
+**Solução.** A mínima rugosidade está no **fundo do vale** — a região de **baixo avanço** —, coerente com o domínio de $f$ sobre o acabamento e com o termo $f^2$, que curva (fecha) o fundo do vale.
+
+**Interpretação.** Fossem os efeitos puramente aditivos, as curvas de nível seriam aproximadamente **retas paralelas**. Uma interação $a_p \times f$ significativa faz as curvas **inclinarem e torcerem** — deixam de ser paralelas —, porque o efeito do avanço sobre a resposta passa a depender do nível da profundidade. Essa torção é a assinatura geométrica da não-aditividade: ler a inclinação das curvas é "ver" a interação que a ANOVA detectou nos números.
+
 ## Exercícios propostos {.unnumbered}
 
 1. **Qualidade dos modelos.** Pela Tabela @tbl-r2-pcc, qual resposta tem consistentemente os menores $R^2$ através das ligas? O que isso diz sobre sua previsibilidade, e como deveria afetar a confiança em sua otimização?
@@ -195,3 +215,26 @@ A competição encruamento-amaciamento na formação do cavaco é discutida em @
 7. **Desgaste.** Por que o estudo de desgaste é essencial mesmo quando os modelos de força e rugosidade já indicam uma condição ótima? Que mecanismo de desgaste predomina no alumínio, e como a geometria da ferramenta o mitiga?
 
 8. **Código R.** Adapte o código de curvas de nível do capítulo para plotar a **força de usinagem** ($F_u$) em função de $a_p$ e $f$ (com $v_c$ no centro). Que região do gráfico você esperaria conter a menor força, com base nos termos dominantes discutidos?
+
+## Gabarito dos exercícios propostos {#sec-cap9-gabarito .unnumbered}
+
+1. **Qualidade dos modelos.** A **vibração ($V_b$)** — menores $R^2$ (0,86-0,95) em todas as ligas. É a resposta menos previsível; convém confiar menos na sua otimização e validá-la com ensaios se for crítica.
+
+2. **Termos quadráticos.** Justificam o PCC porque o fatorial $2^k$, com apenas dois níveis por fator, **não consegue estimar curvatura** (dois pontos definem uma reta). Termos $x^2$ significativos provam que a superfície é curva — só o PCC, com pontos axiais e centrais, os captura.
+
+3. **Curvas de nível.** A mínima rugosidade está no **fundo do vale**, em baixo avanço. Uma interação $a_p \times f$ significativa faz as curvas **inclinarem e torcerem** (deixam de ser retas paralelas): o efeito de um fator passa a depender do nível do outro.
+
+4. **Grau de recalque.** A 1350-O, muito dúctil, sofre maior deformação plástica no cisalhamento, com cavaco mais recalcado ($R_c > 9$); a 6082-T4, menos dúctil, recalca menos. Mais ductilidade (Capítulo @sec-cap2) → maior recalque e maiores esforços de deformação.
+
+5. **Livre-corte e cavaco.** A 6262-T6 contém **Bi e Pb**, que formam inclusões de baixo ponto de fusão atuando como **quebra-cavaco** interno. Elas fragmentam o cavaco apesar da maior dureza, dando melhor controle que a 6082-T4 — o efeito de livre-corte supera o da dureza (Capítulo @sec-cap2).
+
+6. **Cavaco emaranhado (1350-O).** Primeiro ajuste: **aumentar o avanço** (cavaco mais espesso quebra com mais facilidade). Limite prático: avanço alto **piora a rugosidade** e eleva a força — há um compromisso. A 1350-O, muito dúctil, é intrinsecamente difícil de fragmentar.
+
+7. **Desgaste.** Mesmo com força e rugosidade ótimas, uma condição pode **desgastar a ferramenta rápido demais**, inviabilizando-a na prática. No alumínio predomina a **aresta postiça de corte (BUE)** e a adesão; geometrias afiadas, ângulos de saída altos e revestimentos adequados mitigam o problema.
+
+8. **Código R (força vs. $a_p$ e $f$).**
+```r
+library(rsm)
+contour(modelo_Fu, ~ x_ap + x_f, at = list(x_vc = 0))
+```
+A **menor força** fica na região de **baixo $a_p$ e baixo $f$** — ambos têm efeito positivo dominante sobre a força.
