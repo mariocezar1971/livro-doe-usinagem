@@ -220,6 +220,43 @@ Com este capítulo, a Parte III se completa: o estudo de caso percorreu todo o a
 Os modelos de regressão global seguem a metodologia de @montgomery2005design. A redução da força com a velocidade, por efeitos térmicos e de discordâncias, é discutida em @abukhshim2006heat. A dificuldade de prever o comportamento sob condições severas é destacada por @kilic2007observat. Sobre a escolha do $R_a$ como parâmetro de rugosidade em ligas de alumínio, ver @demir2009, @sreejith2008machinin e @dwivedi2008machinin. Para os algoritmos de otimização, a documentação do pacote GA (R) e do pymoo (Python) complementa o Capítulo @sec-cap6.
 :::
 
+## Exercícios resolvidos {#sec-cap10-resolvidos .unnumbered}
+
+### Resolvido 1 — Onde o ótimo se situa na região experimental {.unnumbered}
+
+**Enunciado.** Codifique a condição ótima de corte (Tabela @tbl-otimo: $v_c = 126$ m/min, $a_p = 2{,}43$ mm, $f = 0{,}19$ mm/volta) usando os níveis da Tabela @tbl-niveis-fatorial (Capítulo @sec-cap7). O ótimo está dentro ou fora da região fatorial?
+
+**Solução.** Com $x = (\text{valor} - \text{centro})/\text{semi-amplitude}$ e os centros/semi-amplitudes do Capítulo @sec-cap7:
+
+$$
+x_{v_c} = \frac{126 - 400}{200} = -1{,}37, \quad
+x_{a_p} = \frac{2{,}43 - 2{,}5}{1{,}5} = -0{,}05, \quad
+x_{f} = \frac{0{,}19 - 0{,}275}{0{,}075} = -1{,}13 .
+$$
+
+**Interpretação.** A profundidade ótima está praticamente no centro ($-0{,}05$), mas a **velocidade** ($-1{,}37$) e o **avanço** ($-1{,}13$) caem **abaixo** do nível baixo do fatorial ($-1$) — dentro da faixa axial do PCC, que alcança $\pm 1{,}68$. O ótimo mora, portanto, em território que o fatorial $2^k$ puro **não explorou**: foram os pontos axiais do PCC (Capítulo @sec-cap5) que tornaram essa região acessível ao modelo. E, por estar na borda do que foi efetivamente medido, é um ótimo a **confirmar** com ensaios ali, não a extrapolar.
+
+### Resolvido 2 — Pontuando o ótimo pela desejabilidade {.unnumbered}
+
+**Enunciado.** No ótimo, as respostas valem $F_u = 723$ N, $N_e = 1395$ W, $T_c = 344$ °C e $R_a = 2{,}47$ µm. Suponha que a engenharia fixe os limites aceitáveis (valores **ilustrativos**, apenas para este exercício): $F_u \in [600, 900]$, $N_e \in [1000, 5000]$, $T_c \in [300, 600]$, $R_a \in [1{,}5, 3{,}5]$, todos a minimizar, $s = 1$. Calcule a desejabilidade global.
+
+**Solução.** Para cada resposta, $d = \dfrac{U - y}{U - L}$ (fórmula de minimizar, Capítulo @sec-cap6):
+
+$$
+d_{F_u} = \frac{900 - 723}{300} = 0{,}59, \quad
+d_{N_e} = \frac{5000 - 1395}{4000} = 0{,}90, \quad
+d_{T_c} = \frac{600 - 344}{300} = 0{,}85, \quad
+d_{R_a} = \frac{3{,}5 - 2{,}47}{2{,}0} = 0{,}52 .
+$$
+
+A desejabilidade global é a média geométrica das quatro:
+
+$$
+D = \left( 0{,}59 \times 0{,}90 \times 0{,}85 \times 0{,}52 \right)^{1/4} = 0{,}70 .
+$$
+
+**Interpretação.** $D \approx 0{,}70$ é um bom compromisso — nenhuma resposta é excelente nem inaceitável, e a geométrica confirma o equilíbrio (nenhum $d$ perto de zero puxando o conjunto para baixo). As respostas menos satisfeitas são a rugosidade (0,52) e a força (0,59), coerente com o fato de que o ótimo as sacrifica um pouco para conciliar todas. **Atenção:** os limites acima são ilustrativos; no estudo real, eles vêm dos requisitos de engenharia (máquina, cliente, custo), e mudá-los desloca o ótimo — a desejabilidade é o método, os limites são a decisão.
+
 ## Exercícios propostos {.unnumbered}
 
 1. **Modelo global vs. por liga.** Explique a diferença entre um modelo de regressão por liga (Capítulo @sec-cap9) e um modelo global. Que pergunta cada um responde, e por que o global é mais poderoso?

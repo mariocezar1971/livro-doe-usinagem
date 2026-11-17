@@ -208,6 +208,46 @@ Com os fatores significativos identificados e seus efeitos compreendidos, o Cap�
 A interpretação dos efeitos pela mecânica do cisalhamento apoia-se em @trent2000metal e @zaghbani2009force sobre as tensões nos planos de cisalhamento. O comportamento peculiar da vibração (baixo $R^2$) é discutido em @tatar2008measurem. A metodologia fatorial aplicada segue @montgomery2005design (Capítulo @sec-cap4). Estudos comparáveis de fatorial na usinagem de alumínio incluem @keongng2006experime e @arumugam2006malshe.
 :::
 
+## Exercícios resolvidos {#sec-cap8-resolvidos .unnumbered}
+
+### Resolvido 1 — Do efeito ao modelo de predição {.unnumbered}
+
+**Enunciado.** Com os efeitos da Tabela @tbl-efeitos (planejamento 2kI), monte o modelo de efeitos principais para a força $F_u$ e preveja-a (a) na condição de todos os fatores no nível alto e (b) na condição de maior profundidade com os demais no nível baixo.
+
+**Solução.** O coeficiente de regressão de cada fator é **metade** do efeito tabelado (o efeito é a variação de $-1$ para $+1$; o coeficiente é por unidade codificada). Em fatores codificados:
+
+$$
+\hat{F}_u = 585 - \tfrac{52}{2}\,\text{Liga} - \tfrac{107}{2}\,v_c + \tfrac{714}{2}\,a_p + \tfrac{221}{2}\,f
+= 585 - 26\,\text{Liga} - 53{,}5\,v_c + 357\,a_p + 110{,}5\,f .
+$$
+
+(a) Todos em $+1$:
+$$
+\hat{F}_u = 585 + (-26 - 53{,}5 + 357 + 110{,}5) = 585 + 388 = 973 \text{ N}.
+$$
+
+(b) $\text{Liga} = -1,\ v_c = -1,\ a_p = +1,\ f = -1$:
+$$
+\hat{F}_u = 585 + 26 + 53{,}5 + 357 - 110{,}5 = 911 \text{ N}.
+$$
+
+**Interpretação.** Nas duas condições a força é alta porque a profundidade está no nível $+1$, e seu coeficiente ($+357$ por unidade) domina — sozinho ele desloca a força mais do que todos os outros fatores somados. É o fator vital do processo.
+
+### Resolvido 2 — Dominância e o efeito contra-intuitivo {.unnumbered}
+
+**Enunciado.** (a) Que fração da soma das magnitudes dos efeitos sobre $F_u$ vem da profundidade $a_p$? (b) O efeito de $v_c$ sobre $F_u$ é $-107$ N, **negativo**. Isso contraria a intuição? Explique fisicamente.
+
+**Solução.** (a) Somando as magnitudes dos quatro efeitos sobre a força:
+
+$$
+|{-}52| + |{-}107| + |714| + |221| = 1094 \text{ N}, \qquad
+\frac{|a_p|}{\text{soma}} = \frac{714}{1094} = 65\% .
+$$
+
+A profundidade responde por **~65%** da influência total sobre a força — é a origem do padrão de Pareto do capítulo.
+
+(b) A intuição ingênua diz "cortar mais rápido exige mais força". Mas o sinal é **negativo**: elevar $v_c$ de $-1$ para $+1$ **reduz** a força em 107 N. A explicação é térmica — em alta velocidade, mais calor é gerado na zona de corte, amolecendo o material e facilitando o cisalhamento; a força de usinagem cai. É uma das descobertas contra-intuitivas da Seção @sec-cap8-contraintuitivo, e só o planejamento fatorial, ao medir o **sinal** do efeito, a tornou visível.
+
 ## Exercícios propostos {.unnumbered}
 
 1. **Efeito dominante.** Pela Tabela @tbl-efeitos, qual fator tem o maior efeito sobre a força de usinagem? Interprete fisicamente por que esse fator domina.

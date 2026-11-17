@@ -173,6 +173,30 @@ Com o experimento projetado, os próximos capítulos apresentam seus frutos: o C
 Os detalhes de instrumentação, equipamentos e cadeias de medição deste estudo estão no **Apêndice A**. Para fundamentos de metrologia aplicada à usinagem, @machado2009teoria. Sobre técnicas de lubri-refrigeração e MQF na usinagem de alumínio, @braga2002minimum (furação de liga Al-Si com MQF) e @dasilva1999cutting. Os planejamentos aqui aplicados seguem @montgomery2005design, detalhado nos Capítulos @sec-cap4 e @sec-cap5.
 :::
 
+## Exercícios resolvidos {#sec-cap7-resolvidos .unnumbered}
+
+### Resolvido 1 — Codificando os níveis reais do estudo {.unnumbered}
+
+**Enunciado.** A partir dos níveis da Tabela @tbl-niveis-fatorial, escreva as fórmulas de codificação de $v_c$, $f$ e $a_p$ e calcule os valores codificados dos **níveis ajustados** usados nos ensaios de temperatura ($v_c = 300$ m/min, $f = 0{,}30$ mm/volta, $a_p = 3$ mm).
+
+**Solução.** A codificação leva cada fator para a escala adimensional $[-1, +1]$ por $x = \dfrac{\text{valor} - \text{centro}}{\text{semi-amplitude}}$, com centro = média dos dois níveis e semi-amplitude = metade da faixa:
+
+$$
+x_{v_c} = \frac{v_c - 400}{200}, \qquad
+x_{f} = \frac{f - 0{,}275}{0{,}075}, \qquad
+x_{a_p} = \frac{a_p - 2{,}5}{1{,}5}.
+$$
+
+Aplicando aos níveis ajustados:
+
+$$
+x_{v_c}(300) = \frac{300 - 400}{200} = -0{,}50, \quad
+x_{f}(0{,}30) = \frac{0{,}30 - 0{,}275}{0{,}075} = +0{,}33, \quad
+x_{a_p}(3) = \frac{3 - 2{,}5}{1{,}5} = +0{,}33 .
+$$
+
+**Interpretação.** Os três valores ficam **dentro** da região fatorial (todos entre $-1$ e $+1$), apenas deslocados do centro. É o esperado: os níveis de temperatura foram ajustados por limitação da ferramenta B, mas sem sair do envelope experimental — garantindo que as leituras de temperatura ainda sejam comparáveis às demais respostas.
+
 ## Exercícios propostos {.unnumbered}
 
 1. **Papéis das ligas.** Explique por que o estudo reservou a liga 6351-T6 exclusivamente para validação, sem usá-la na construção dos modelos. Que problema essa separação previne?
