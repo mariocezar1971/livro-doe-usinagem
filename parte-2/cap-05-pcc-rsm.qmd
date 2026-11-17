@@ -3,7 +3,7 @@ title: "Planejamento composto central e superfícies de resposta"
 subtitle: "Modelando curvatura e localizando o ótimo"
 author: "Mário Cezar dos Santos Jr."
 abstract: |
-  Este capítulo estende o fatorial 2^k para modelar curvatura e localizar condições ótimas de operação. Parte das limitações do fatorial puro — dois níveis não capturam comportamento quadrático — e apresenta o planejamento composto central (PCC), que adiciona pontos axiais e centrais para estimar curvatura com poucos ensaios extras. Cobre a regressão múltipla em forma matricial e o método dos mínimos quadrados; o modelo de segunda ordem da metodologia de superfícies de resposta (RSM); e a interpretação geométrica via curvas de nível e vetor gradiente. Um exemplo com o pacote rsm do R, ancorado nos fatores reais do estudo de caso (velocidade, avanço, profundidade), percorre todo o fluxo, com visualizações 3D. Fecha com exercícios com gabarito.
+  Este capítulo estende o fatorial 2^k para modelar curvatura e localizar condições ótimas de operação. Parte das limitações do fatorial puro — dois níveis não capturam comportamento quadrático — e apresenta o planejamento composto central (PCC), que adiciona pontos axiais e centrais para estimar curvatura com poucos ensaios extras. Cobre a regressão múltipla em forma matricial e o método dos mínimos quadrados; o modelo de segunda ordem da metodologia de superfícies de resposta (RSM); e a interpretação geométrica via curvas de nível e vetor gradiente. Um exemplo com o pacote rsm do R, ancorado nos fatores reais do estudo de caso (velocidade, avanço, profundidade), percorre todo o fluxo, com visualizações 3D. Fecha com exercícios resolvidos passo a passo e uma lista de exercícios propostos.
 ---
 
 # Planejamento composto central e superfícies de resposta {#sec-cap5}
@@ -248,6 +248,102 @@ O PCC/RSM localiza o ótimo de **uma** resposta por vez. Mas a usinagem real tem
 ::: {.callout-tip}
 ## Aprofundamento
 Para superfícies de resposta em profundidade, @montgomery2005design (*Design and Analysis of Experiments*) dedica capítulos completos ao PCC e à RSM. Aplicações à usinagem de alumínio com modelos de segunda ordem estão em @fuh1995residual (tensões residuais no fresamento da 2014-T6) e @fuh1997chang (precisão dimensional em cinco ligas). Os fundamentos de curva de nível e gradiente vêm do cálculo de várias variáveis [@galvo2010diferenc]. A documentação do pacote rsm no CRAN, de Russell Lenth, traz uma vinheta exemplar sobre o fluxo completo.
+:::
+
+## Exercícios resolvidos {#sec-cap5-resolvidos .unnumbered}
+
+Os quatro exercícios a seguir resolvem, passo a passo, as contas centrais do capítulo — detecção de curvatura, dimensionamento do PCC, predição com o modelo quadrático e localização do ponto ótimo pelo gradiente. São a contrapartida "no papel" do que as funções `rsm()` e `canonical()` fazem automaticamente. Os exercícios 3 e 4 usam o mesmo **modelo de segunda ordem** para a rugosidade $R_a$ (em µm), em coordenadas codificadas $x_1 = v_c$ e $x_2 = f$:
+
+$$
+\hat{R}_a = 1{,}60 + 0{,}10\,x_1 + 0{,}70\,x_2 + 0{,}30\,x_1^2 + 0{,}25\,x_2^2 + 0{,}10\,x_1 x_2 .
+$$
+
+### Resolvido 1 — Detectando curvatura com pontos centrais {.unnumbered}
+
+**Enunciado.** Num fatorial $2^2$ com 3 pontos centrais, a média das respostas dos 4 vértices foi $\bar{y}_f = 2{,}10$ µm e a dos 3 pontos centrais, $\bar{y}_c = 1{,}65$ µm. Há evidência de curvatura? O que isso significa para o modelo?
+
+**Solução.** Se a superfície fosse **plana**, os pontos centrais cairiam sobre a média dos vértices, e $\bar{y}_f - \bar{y}_c \approx 0$. A diferença observada estima a curvatura:
+
+$$
+\bar{y}_f - \bar{y}_c = 2{,}10 - 1{,}65 = 0{,}45 \text{ µm}.
+$$
+
+Sua soma de quadrados (um grau de liberdade) é
+
+$$
+SS_{\text{curv}} = \frac{n_f\, n_c}{n_f + n_c}\,(\bar{y}_f - \bar{y}_c)^2 = \frac{4 \cdot 3}{4 + 3}\,(0{,}45)^2 = 0{,}347 .
+$$
+
+**Interpretação.** Comparado ao ruído experimental (o $MQ_e$ das réplicas), um $SS_{\text{curv}}$ dessa ordem indica **curvatura significativa**: o fatorial de dois níveis é insuficiente e justifica estender para o PCC. O sinal — vértices **acima** do centro — revela uma superfície côncava para cima (um vale), coerente com a existência de um **mínimo** de rugosidade perto do centro, que é justamente o que se quer localizar.
+
+### Resolvido 2 — Dimensionando o PCC {.unnumbered}
+
+**Enunciado.** Monte a contagem de ensaios de um PCC para $k = 3$ fatores com 4 pontos centrais e calcule a distância axial $\alpha$ que torna o planejamento rotacionável.
+
+**Solução.** O PCC soma três blocos: fatorial, axial e central.
+
+| Bloco | Nº de pontos | Cálculo |
+|:------|:------------:|:--------|
+| Fatorial | 8 | $2^k = 2^3$ |
+| Axial | 6 | $2k = 2 \cdot 3$ |
+| Central | 4 | escolhido |
+| **Total** | **18** | |
+
+: Composição de um PCC para $k=3$. {#tbl-pcc-k3}
+
+A distância axial para **rotatabilidade** (variância de predição igual em todas as direções a uma mesma distância do centro) é
+
+$$
+\alpha = \left(2^{k}\right)^{1/4} = 8^{1/4} \approx 1{,}682 .
+$$
+
+**Interpretação.** Os 6 pontos axiais ficam em $\pm 1{,}682$ em **um** fator por vez (zero nos demais), e são eles que permitem estimar os termos quadráticos $x_i^2$. Partindo de um fatorial $2^3$ que já existia (8 ensaios), o PCC completo custa apenas **10 ensaios extras** (6 axiais + 4 centrais) — e com isso ganha-se toda a curvatura. É o reaproveitamento sequencial descrito na Seção @sec-cap5-pcc.
+
+### Resolvido 3 — Prevendo a resposta com o modelo quadrático {.unnumbered}
+
+**Enunciado.** Use o modelo de segunda ordem para prever a rugosidade na condição codificada $(x_1, x_2) = (+1,\, -1)$ — velocidade alta, avanço baixo.
+
+**Solução.** Substituição direta na equação:
+
+$$
+\begin{aligned}
+\hat{R}_a(1, -1) &= 1{,}60 + 0{,}10(1) + 0{,}70(-1) + 0{,}30(1)^2 + 0{,}25(-1)^2 + 0{,}10(1)(-1) \\
+&= 1{,}60 + 0{,}10 - 0{,}70 + 0{,}30 + 0{,}25 - 0{,}10 = 1{,}45 \text{ µm}.
+\end{aligned}
+$$
+
+**Interpretação.** O termo do avanço ($+0{,}70\,x_2$) domina: baixá-lo para o nível $-1$ subtrai 0,70 µm e é o que mais derruba a rugosidade. Velocidade alta, sozinha, contribui pouco (+0,10). Isso antecipa, numericamente, o que a superfície mostrará: a rugosidade cai na direção do avanço baixo.
+
+### Resolvido 4 — Gradiente e ponto estacionário (o ótimo) {.unnumbered}
+
+**Enunciado.** Localize o ponto estacionário do modelo, classifique-o (máximo, mínimo ou sela) e diga se é utilizável.
+
+**Solução.** O **gradiente** é o vetor das derivadas parciais:
+
+$$
+\nabla \hat{R}_a = \left( \frac{\partial \hat{R}_a}{\partial x_1},\ \frac{\partial \hat{R}_a}{\partial x_2} \right)
+= \big(\, 0{,}10 + 0{,}60\,x_1 + 0{,}10\,x_2,\ \ 0{,}70 + 0{,}10\,x_1 + 0{,}50\,x_2 \,\big).
+$$
+
+No ponto estacionário o gradiente se anula. Igualando a zero, chega-se ao sistema linear
+
+$$
+\begin{cases} 0{,}60\,x_1 + 0{,}10\,x_2 = -0{,}10 \\ 0{,}10\,x_1 + 0{,}50\,x_2 = -0{,}70 \end{cases}
+\quad\Longrightarrow\quad (x_1^*, x_2^*) = (0{,}07,\ -1{,}41),
+$$
+
+com $\hat{R}_a$ mínimo de **1,11 µm**. Para **classificar** o ponto, usa-se a matriz Hessiana (os segundos derivados):
+
+$$
+H = \begin{pmatrix} 0{,}60 & 0{,}10 \\ 0{,}10 & 0{,}50 \end{pmatrix},
+\qquad \text{autovalores: } 0{,}44 \text{ e } 0{,}66 .
+$$
+
+**Interpretação.** Os dois autovalores são **positivos**, logo $H$ é positiva definida e o ponto estacionário é um **mínimo** — exatamente o que se busca para rugosidade. Quanto à utilização: em $x_2$ (avanço), $x_2^* = -1{,}41$ cai praticamente na **borda axial** da região (para $k=2$, $\alpha = \sqrt{2} \approx 1{,}414$). O ótimo está, portanto, **dentro** da região explorada, mas no seu limite — um candidato válido que convém confirmar com ensaios próximos antes de adotar, como alerta a "Decisão de projeto" do capítulo. Esse é precisamente o trabalho da função `canonical()` do pacote `rsm`: localizar $(x_1^*, x_2^*)$, classificá-lo pelos autovalores e sinalizar se o ótimo escapou da região experimental.
+
+::: {.callout-tip}
+## O fluxo dos quatro exercícios
+Curvatura (1) diz **se** vale a pena ir além do fatorial; o PCC (2) fornece **os dados** para estimar a curvatura; a regressão (3) **ajusta** a superfície; e o gradiente (4) **encontra e classifica** o ótimo. É o caminho inteiro do Capítulo 5 em quatro contas.
 :::
 
 ## Exercícios propostos {.unnumbered}
