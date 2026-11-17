@@ -3,7 +3,7 @@ title: "Planejamento fatorial 2^k"
 subtitle: "Investigando muitos fatores de uma vez, com poucos ensaios"
 author: "Mário Cezar dos Santos Jr."
 abstract: |
-  Este capítulo apresenta o planejamento fatorial em dois níveis (2^k), a ferramenta que operacionaliza o argumento do Capítulo 1: estudar vários fatores simultaneamente, capturar interações e separar sinal de ruído. Cobre a matriz 2^k, codificação de níveis, replicação e aleatorização; a estimativa de efeitos principais e de interações via contrastes; a análise de variância (ANOVA) interpretada; e a análise de resíduos que valida o modelo. Um exemplo resolvido com os dados reais do estudo de caso — o torneamento das ligas 1350-O e 7075-T6 — percorre todo o fluxo, e o código R (pacote FrF2) reproduz cada etapa. Fecha com exercícios com gabarito.
+  Este capítulo apresenta o planejamento fatorial em dois níveis (2^k), a ferramenta que operacionaliza o argumento do Capítulo 1: estudar vários fatores simultaneamente, capturar interações e separar sinal de ruído. Cobre a matriz 2^k, codificação de níveis, replicação e aleatorização; a estimativa de efeitos principais e de interações via contrastes; a análise de variância (ANOVA) interpretada; e a análise de resíduos que valida o modelo. Um exemplo resolvido com os dados reais do estudo de caso — o torneamento das ligas 1350-O e 7075-T6 — percorre todo o fluxo, e o código R (pacote FrF2) reproduz cada etapa. Fecha com exercícios resolvidos passo a passo e uma lista de exercícios propostos.
 ---
 
 # Planejamento fatorial 2^k {#sec-cap4}
@@ -323,6 +323,91 @@ Justamente essa limitação — dois níveis não modelam curvatura — motiva o
 ::: {.callout-tip}
 ## Aprofundamento
 A referência definitiva de planejamento de experimentos é @montgomery2005design (*Design and Analysis of Experiments*), complementada no português por @montgomery2008aplicada e @barrosneto2007como (*Como Fazer Experimentos*). Para os fundamentos estatísticos, @freund2000aplicada e @webster2006aplicada. Exemplos de fatorial aplicado à usinagem de alumínio estão em @keongng2006experime (7075-T6) e @arumugam2006malshe (A390). A documentação do pacote FrF2 no CRAN traz vinhetas detalhadas para a prática em R.
+:::
+
+## Exercícios resolvidos {#sec-cap4-resolvidos .unnumbered}
+
+Os três exercícios a seguir percorrem, com solução completa, as contas centrais do capítulo — efeito principal, efeito de interação e soma de quadrados — usando os dados do exemplo resolvido (Tabela @tbl-exemplo-matriz). Use-os como modelo antes de atacar os exercícios propostos.
+
+### Resolvido 1 — Efeito principal do avanço (fator C) {.unnumbered}
+
+**Enunciado.** A partir da Tabela @tbl-exemplo-matriz, calcule o contraste e o efeito principal do avanço (fator C) sobre a força de usinagem. Interprete o sinal e a magnitude.
+
+**Solução.** O contraste soma as respostas com o sinal da coluna C (negativo nos ensaios 1–4, positivo nos 5–8):
+
+$$
+\text{Contraste}_C = -210 -385 -195 -360 +340 +590 +315 +555 = +650 \text{ N}.
+$$
+
+O efeito divide o contraste pelo número de ensaios em cada nível, $2^{k-1} = 2^{2} = 4$:
+
+$$
+\text{Efeito}_C = \frac{\text{Contraste}_C}{2^{k-1}} = \frac{650}{4} = +162{,}5 \text{ N}.
+$$
+
+**Interpretação.** Ao elevar o avanço de 0,20 para 0,35 mm/volta, a força de usinagem sobe, em média, **162,5 N**. O sinal positivo é fisicamente esperado: mais avanço significa maior área de cavaco por volta, logo maior força. Note que a leitura rápida de um único par de ensaios (1 → 5) dava 130 N; o efeito correto usa os **quatro** pares de uma vez, via contraste, resultando em 162,5 N.
+
+### Resolvido 2 — Efeito de interação Liga × avanço (A × C) {.unnumbered}
+
+**Enunciado.** Calcule o efeito da interação entre Liga (A) e avanço (C) e interprete seu significado prático.
+
+**Solução.** A coluna da interação AC é o **produto, sinal a sinal**, das colunas A e C:
+
+| Ens. | A | C | AC | $F_u$ (N) |
+|:----:|:-:|:-:|:--:|:---------:|
+| 1 | −1 | −1 | +1 | 210 |
+| 2 | +1 | −1 | −1 | 385 |
+| 3 | −1 | −1 | +1 | 195 |
+| 4 | +1 | −1 | −1 | 360 |
+| 5 | −1 | +1 | −1 | 340 |
+| 6 | +1 | +1 | +1 | 590 |
+| 7 | −1 | +1 | −1 | 315 |
+| 8 | +1 | +1 | +1 | 555 |
+
+: Construção da coluna de interação AC. {#tbl-exemplo-ac}
+
+$$
+\text{Contraste}_{AC} = +210 -385 +195 -360 -340 +590 -315 +555 = +150 \text{ N},
+\qquad
+\text{Efeito}_{AC} = \frac{150}{4} = +37{,}5 \text{ N}.
+$$
+
+**Interpretação.** O jeito mais intuitivo de ler uma interação é calcular o efeito de um fator **dentro de cada nível do outro**. O efeito do avanço vale:
+
+- na liga **mole** (A = −1, ensaios 1,3,5,7): $\frac{340+315}{2} - \frac{210+195}{2} = 327{,}5 - 202{,}5 = 125$ N;
+- na liga **dura** (A = +1, ensaios 2,4,6,8): $\frac{590+555}{2} - \frac{385+360}{2} = 572{,}5 - 372{,}5 = 200$ N.
+
+O efeito de interação é a **metade da diferença** entre esses dois: $(200 - 125)/2 = 37{,}5$ N — o mesmo valor obtido pelo contraste. Ou seja: o avanço pesa mais na liga dura (200 N) do que na mole (125 N). A interação é real, mas pequena perto dos efeitos principais — como se confirma a seguir.
+
+### Resolvido 3 — Soma de quadrados e contribuição percentual {.unnumbered}
+
+**Enunciado.** Calcule a soma de quadrados ($SS$) de cada efeito e sua contribuição percentual para a variação total. O que o resultado revela sobre quais fatores importam?
+
+**Solução.** Para um $2^k$ com $n$ réplicas, a soma de quadrados de um efeito é
+
+$$
+SS_{\text{efeito}} = \frac{(\text{Contraste})^2}{n \cdot 2^{k}} = \frac{(\text{Contraste})^2}{1 \cdot 8}.
+$$
+
+A variação total é $SS_T = \sum (y_i - \bar{y})^2 = 143\,087{,}5$ (com $\bar{y} = 368{,}75$ N). Aplicando a fórmula a cada termo:
+
+| Termo | Contraste | $SS$ | Contribuição |
+|:------|:---------:|:----:|:------------:|
+| A (Liga) | +830 | 86 112,5 | **60,2 %** |
+| C (avanço) | +650 | 52 812,5 | **36,9 %** |
+| AC | +150 | 2 812,5 | 2,0 % |
+| B (vel.) | −100 | 1 250,0 | 0,9 % |
+| AB | −20 | 50,0 | 0,03 % |
+| BC | −20 | 50,0 | 0,03 % |
+| ABC | 0 | 0,0 | 0 % |
+
+: Soma de quadrados e contribuição de cada efeito. {#tbl-exemplo-ss}
+
+**Interpretação.** Dois fatores — Liga (A) e avanço (C) — respondem por **~97 %** da variação da força. A velocidade (B) e **todas** as interações somadas valem menos de 3 %. Esse é o princípio de Pareto dos efeitos (Seção @sec-cap4-efeitos): poucos fatores dominam. A decisão de projeto decorre direto da tabela — modelar a força com A e C (e, se quiser rigor, AC), tratando B como fator que pode ser fixado por conveniência operacional (por exemplo, pela produtividade), sem penalizar a força.
+
+::: {.callout-tip}
+## O fio condutor dos três exercícios
+Contraste → efeito → soma de quadrados são a **mesma informação** vista de três ângulos: o contraste mede o "empurrão" de cada fator; o efeito o traduz na unidade da resposta (N); o $SS$ o converte em "fatia da variação", que é o que o gráfico de Pareto e a ANOVA usam para decidir o que fica no modelo.
 :::
 
 ## Exercícios propostos {.unnumbered}
