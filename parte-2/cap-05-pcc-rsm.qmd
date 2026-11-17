@@ -363,3 +363,27 @@ Curvatura (1) diz **se** vale a pena ir além do fatorial; o PCC (2) fornece **o
 7. **Gradiente.** Um modelo de força tem gradiente $\nabla F = (12, -5)$ no ponto atual (coordenadas $v_c, f$). Para **minimizar** a força, em que direção você deve mover os fatores? Justifique.
 
 8. **Código R (integrador).** Modifique o exemplo `ccd()` do capítulo para um PCC de **2 fatores** ($v_c$ e $f$) com 6 pontos centrais e $\alpha$ para rotabilidade. Depois escreva a chamada `rsm()` com `SO()` para ajustar o modelo de segunda ordem da resposta rugosidade `Ra`.
+
+## Gabarito dos exercícios propostos {#sec-cap5-gabarito .unnumbered}
+
+1. **Por que três níveis.** Dois pontos definem uma **reta** — com dois níveis só se estima o efeito linear. Uma **parábola** exige três pontos; por isso três níveis (os axiais e centrais do PCC) são o mínimo para estimar a curvatura (o termo quadrático).
+
+2. **Contando tratamentos.** Fatoriais $2^3=8$; axiais $2\cdot3=6$; centrais $5$. Total $=8+6+5=19$ tratamentos.
+
+3. **Ponto central.** A diferença $320-285=35$ (pontos fatoriais acima dos centrais) sugere **curvatura** — a superfície não é plana (é côncava para cima). Recomenda-se estender para um **PCC**, acrescentando os pontos axiais para estimar os termos quadráticos.
+
+4. **Mínimos quadrados.** $\hat{\beta}=(X'X)^{-1}X'Y$ calcula os coeficientes que **minimizam a soma dos quadrados dos resíduos** (a projeção de $Y$ no espaço gerado pelas colunas de $X$). O número de observações deve exceder o de regressores para que $X'X$ seja inversível e sobrem graus de liberdade para estimar a variância do erro.
+
+5. **Modelo de segunda ordem.** $\hat{y}=\beta_0+\beta_1 x_1+\beta_2 x_2+\beta_{12}x_1 x_2+\beta_{11}x_1^2+\beta_{22}x_2^2$. Lineares: $\beta_1 x_1$ e $\beta_2 x_2$; interação: $\beta_{12}x_1 x_2$; quadráticos: $\beta_{11}x_1^2$ e $\beta_{22}x_2^2$.
+
+6. **Curvas de nível.** Curvas fechadas e concêntricas indicam um extremo **interno** à região. Para rugosidade (que se minimiza), o ótimo é o **centro** das curvas — a região de baixo avanço e alta velocidade.
+
+7. **Gradiente.** O gradiente aponta para o crescimento mais rápido; para **minimizar**, caminha-se no sentido **oposto**: $-\nabla F=(-12,+5)$. Ou seja, **diminuir** $v_c$ e **aumentar** $f$.
+
+8. **Código R.**
+```r
+plano <- ccd(2, n0 = 6, alpha = "rotatable", randomize = TRUE,
+             coding = list(x1 ~ (Vc - 400)/200, x2 ~ (f - 0.275)/0.075))
+modelo <- rsm(Ra ~ SO(x1, x2), data = plano)
+summary(modelo)
+```

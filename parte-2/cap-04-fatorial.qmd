@@ -431,3 +431,34 @@ Contraste → efeito → soma de quadrados são a **mesma informação** vista d
 9. **Aleatorização.** Um aluno executou todos os ensaios de nível baixo de velocidade pela manhã e os de nível alto à tarde. Que problema isso cria? Como a aleatorização o evita?
 
 10. **Código R.** Modifique o código FrF2 do capítulo para um planejamento 2⁴ (quatro fatores) com 3 réplicas, adicionando um quarto fator "profundidade de corte" ($a_p$) variando entre 1 e 4 mm. Escreva a chamada `FrF2()` completa.
+
+## Gabarito dos exercícios propostos {#sec-cap4-gabarito .unnumbered}
+
+1. **Codificação.** Centro $=(150+450)/2=300$; semi-amplitude $=150$. Fórmula: $x=\dfrac{v_c-300}{150}$. Logo $x(300)=0$ e $x(375)=\dfrac{75}{150}=0{,}5$.
+
+2. **Tamanho do planejamento.** $2^4=16$ tratamentos; com 3 réplicas, $16\times3=48$ ensaios. O modelo fatorial completo usa 16 parâmetros (média + 4 principais + 6 duplas + 4 triplas + 1 quádrupla), restando $48-16=32$ graus de liberdade para o erro.
+
+3. **Matriz e ortogonalidade.** Para o $2^2$: A $=(-,+,-,+)$, B $=(-,-,+,+)$, AB $=$ A·B $=(+,-,-,+)$. A soma dos produtos A·AB $=(-)(+)+(+)(-)+(-)(-)+(+)(+)=-1-1+1+1=0$. Colunas ortogonais — por isso os efeitos são estimados de forma independente.
+
+4. **Contraste e efeito de A.** Contraste$_A=-210+385-195+360-340+590-315+555=+830$ N; efeito $=830/4=+207{,}5$ N. O sinal positivo e a magnitude grande mostram que trocar a liga mole (1350-O) pela dura (7075-T6) eleva a força em ~207 N — o fator dominante, coerente com a metalurgia do Capítulo @sec-cap2.
+
+5. **Interação.** O efeito da velocidade sobre a força **depende da liga**: na liga dura, o maior calor gerado em alta velocidade amolece a zona de corte de forma mais acentuada, alterando a força diferentemente da liga mole. Quando o efeito de um fator muda conforme o nível de outro, há interação. É a "inversão força-dureza-velocidade" de Demir & Gündüz: em velocidades altas, a ordem das forças entre ligas pode se inverter.
+
+6. **ANOVA.** $F_0=\dfrac{MQ}{MQ_e}=\dfrac{4200}{150}=28$. Como $28>5{,}32$, o efeito é **significativo** a 5%.
+
+7. **R² vs R² ajustado.** O $R^2$ nunca diminui ao acrescentar um termo, pois a soma de quadrados dos resíduos nunca aumenta — mesmo termos inúteis "absorvem" um pouco de ruído. O $R^2$ ajustado desconta o grau de liberdade gasto por cada termo e **cai** se o termo não compensar. Reporta-se o **ajustado** (ou ambos), por proteger contra superajuste.
+
+8. **Resíduos.** (i) *Resíduos vs. ajustados*: nuvem aleatória = ok; **funil** = variância não constante (heterocedasticidade — ex.: o ruído cresce com a força) → transformar a resposta (log) ou ponderar. (ii) *QQ-plot normal*: pontos na reta = normalidade; caudas curvadas = assimetria/outliers. (iii) *Resíduos vs. ordem de execução*: tendência = efeito temporal não aleatorizado (desgaste de ferramenta, aquecimento). (iv) *Escala-locação*: variância dependente do nível.
+
+9. **Aleatorização.** Confunde o efeito da velocidade com o do **período do dia** (temperatura da máquina, desgaste, operador): uma variável de perturbação fica colinear com o fator, viesando sua estimativa. Aleatorizar a ordem espalha essas perturbações por todos os níveis, convertendo viés sistemático em ruído aleatório.
+
+10. **Código R.**
+```r
+plano <- FrF2(
+  nruns = 16, nfactors = 4, replications = 3, randomize = TRUE,
+  factor.names = list(
+    Liga = c("1350-O", "7075-T6"),
+    Vc   = c(200, 600),
+    f    = c(0.20, 0.35),
+    ap   = c(1, 4)))
+```

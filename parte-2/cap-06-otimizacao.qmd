@@ -355,3 +355,17 @@ A desejabilidade individual (1) traduz cada resposta para [0, 1]; a global (2) a
 5. **Global vs local.** Explique por que um algoritmo genético tem mais chance de encontrar o ótimo global do que um método de subida de encosta (hill-climbing). Relacione com o conceito de população e diversidade.
 
 6. **Pareto (integrador).** Explique o que significa uma solução ser "não-dominada". Numa fronteira de Pareto força × rugosidade, o que representa o "joelho" da curva, e por que ele costuma ser um bom compromisso prático? Como você usaria o NSGA-II (pymoo) e depois a desejabilidade (R) de forma combinada num projeto real?
+
+## Gabarito dos exercícios propostos {#sec-cap6-gabarito .unnumbered}
+
+1. **Conflito.** Aumentar o **avanço** eleva a taxa de remoção (produtividade), mas piora a **rugosidade** (sulcos de avanço maiores) e tende a elevar a **força**. Otimizar a produtividade degrada o acabamento — conflito direto, pela geometria do cavaco (Capítulo @sec-cap3).
+
+2. **Desejabilidade individual.** Minimizar, $L=0{,}5$, $U=3{,}0$, $s=1$. Para $R_a=1{,}5$: $d=\dfrac{3{,}0-1{,}5}{3{,}0-0{,}5}=\dfrac{1{,}5}{2{,}5}=0{,}60$. Para $R_a=3{,}5\ge U$: $d=0$ (inaceitável).
+
+3. **Média geométrica.** $D=(0{,}9\cdot0{,}8\cdot0)^{1/3}=0$. A média geométrica **zera** quando qualquer $d_r=0$ — uma resposta inaceitável invalida a solução inteira. A aritmética daria $(0{,}9+0{,}8+0)/3=0{,}567$, mascarando o componente inaceitável.
+
+4. **Algoritmo genético.** *Seleção*: escolhe os melhores indivíduos como pais (pressão de melhoria). *Cruzamento*: combina pares de pais, explorando novas combinações de boas características. *Mutação*: altera aleatoriamente alguns genes, mantendo **diversidade** e evitando convergência prematura — sem ela, a seleção empobreceria a população e ela ficaria presa num ótimo local.
+
+5. **Global vs. local.** O AG mantém uma **população** espalhada pelo espaço de busca, explorando vários "vales" ao mesmo tempo; o hill-climbing segue um único caminho de subida e para no primeiro pico. A diversidade (população + mutação) dá ao AG chance de **escapar de ótimos locais** e encontrar o global.
+
+6. **Pareto (integrador).** Uma solução é **não-dominada** quando nenhuma outra é melhor em **todas** as respostas simultaneamente. O **"joelho"** da fronteira é o ponto de maior curvatura — onde continuar melhorando uma resposta passa a custar muito na outra; costuma ser o melhor compromisso prático. Uso combinado: **NSGA-II (pymoo)** para mapear a fronteira e enxergar os trade-offs; depois **desejabilidade (R)** para cravar um ponto, dados os limites e pesos do projeto.
