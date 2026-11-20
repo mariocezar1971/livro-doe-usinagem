@@ -1,0 +1,248 @@
+---
+title: "Projeto robusto e métodos de Taguchi"
+subtitle: "Otimizar a média e domar a variabilidade com poucos ensaios"
+author: "Mário Cezar dos Santos Jr."
+abstract: |
+  Um processo bom não é só o que acerta a média — é o que varia pouco apesar do ruído. Este capítulo apresenta a abordagem de Genichi Taguchi para o projeto robusto de parâmetros: a filosofia da função perda, a distinção entre fatores de controle e fatores de ruído, os arranjos ortogonais (L8, L9, L16) que estudam muitos fatores com pouquíssimos ensaios, e a razão sinal-ruído (S/N) nos três casos — menor-melhor, maior-melhor e nominal-melhor. Situa o método ao lado do DOE clássico, com suas forças e suas críticas. Um exemplo resolvido reanalisa, pela razão S/N, os dados replicados do fatorial do Capítulo @sec-cap4, e o código R (pacotes qualityTools e FrF2) reproduz o cálculo. Fecha com exercícios resolvidos passo a passo e uma lista de exercícios propostos com gabarito.
+---
+
+# Projeto robusto e métodos de Taguchi {#sec-cap-taguchi}
+
+## Introdução {#sec-captag-intro}
+
+Até aqui, otimizar significou **acertar a média** da resposta — minimizar a força, reduzir a rugosidade, maximizar a produtividade. Mas um processo que acerta a média e **varia muito** é um processo ruim: peças ora dentro, ora fora da especificação. Na usinagem real, essa variação vem de fontes que não se controla na máquina — dureza do lote de material, desgaste progressivo da ferramenta, temperatura ambiente, folgas.
+
+O engenheiro japonês **Genichi Taguchi** propôs uma mudança de foco: em vez de só perseguir a média ideal, buscar condições de operação que tornem a resposta **insensível ao ruído**. É o **projeto robusto de parâmetros** — e, com ele, os **arranjos ortogonais** e a **razão sinal-ruído**, que se tornaram as ferramentas de DOE mais citadas na literatura de usinagem.
+
+## O que você vai conseguir fazer ao fim deste capítulo
+
+Distinguir fatores de controle de fatores de ruído; montar e ler um arranjo ortogonal (L8, L9, L16); calcular a razão sinal-ruído nos três casos e usá-la para escolher os níveis mais robustos; situar Taguchi diante do DOE clássico, sabendo quando cada um serve; e reproduzir a análise em R.
+
+## A filosofia: robustez e função perda {#sec-captag-filosofia}
+
+A ideia central de Taguchi é a **função perda de qualidade**: qualquer desvio em relação ao alvo gera perda, e essa perda cresce com o **quadrado** do desvio. Não basta estar "dentro da tolerância" — quanto mais longe do alvo, pior, de forma acelerada. Reduzir a **variabilidade** em torno do alvo é, então, tão importante quanto acertar o alvo.
+
+Para isso, Taguchi separa os fatores em duas classes:
+
+- **Fatores de controle** — os que o engenheiro **ajusta** no processo (velocidade, avanço, profundidade, geometria da ferramenta). São as alavancas do projeto.
+- **Fatores de ruído** — os que causam variação mas **não** se controla na operação (dureza do lote, desgaste, temperatura). Na bancada do experimento, podem ser induzidos de propósito, para testar a robustez.
+
+O objetivo do projeto robusto é encontrar a combinação de **fatores de controle** que torna a resposta o mais **insensível** possível aos **fatores de ruído** — uma condição que entrega qualidade estável mesmo quando o ruído age.
+
+## Arranjos ortogonais {#sec-captag-arranjos}
+
+Taguchi popularizou os **arranjos ortogonais** — matrizes pré-tabeladas, altamente fracionadas, que estudam muitos fatores com um mínimo de ensaios. São parentes dos fatoriais fracionados do Capítulo @sec-cap-frac, apresentados em forma de catálogo pronto. Os mais usados:
+
+| Arranjo | Fatores (máx.) | Níveis | Corridas |
+|:-------:|:--------------:|:------:|:--------:|
+| L4 | 3 | 2 | 4 |
+| L8 | 7 | 2 | 8 |
+| L9 | 4 | 3 | 9 |
+| L16 | 15 | 2 | 16 |
+| L27 | 13 | 3 | 27 |
+
+: Arranjos ortogonais de Taguchi mais comuns. {#tbl-tag-arranjos}
+
+O L9, por exemplo, estuda **4 fatores em 3 níveis** com apenas **9 ensaios** — contra $3^4 = 81$ do fatorial completo. Cada coluna recebe um fator; cada linha é uma corrida. A tabela do L9:
+
+| Corrida | A | B | C | D |
+|:-------:|:-:|:-:|:-:|:-:|
+| 1 | 1 | 1 | 1 | 1 |
+| 2 | 1 | 2 | 2 | 2 |
+| 3 | 1 | 3 | 3 | 3 |
+| 4 | 2 | 1 | 2 | 3 |
+| 5 | 2 | 2 | 3 | 1 |
+| 6 | 2 | 3 | 1 | 2 |
+| 7 | 3 | 1 | 3 | 2 |
+| 8 | 3 | 2 | 1 | 3 |
+| 9 | 3 | 3 | 2 | 1 |
+
+: Arranjo ortogonal L9 (4 fatores, 3 níveis, 9 corridas). {#tbl-tag-l9}
+
+A ortogonalidade (cada par de níveis aparece o mesmo número de vezes entre colunas) garante que os efeitos dos fatores sejam estimados de forma balanceada — a mesma propriedade dos fatoriais dos capítulos anteriores. O preço, como todo planejamento muito fracionado, é o **confundimento** das interações (Capítulo @sec-cap-frac): os arranjos de Taguchi assumem, por padrão, que as interações são desprezíveis — hipótese a ser usada com consciência.
+
+## A razão sinal-ruído {#sec-captag-sn}
+
+Como medir "robustez" num único número? Taguchi propôs a **razão sinal-ruído (S/N)**, em decibéis — quanto **maior** a S/N, melhor (mais sinal, menos ruído). A fórmula depende do objetivo da resposta:
+
+**Menor-melhor** (força, rugosidade — quanto menor, melhor):
+$$
+S/N = -10 \log_{10}\!\left( \frac{1}{n}\sum_{i=1}^{n} y_i^2 \right).
+$$
+
+**Maior-melhor** (produtividade, vida de ferramenta — quanto maior, melhor):
+$$
+S/N = -10 \log_{10}\!\left( \frac{1}{n}\sum_{i=1}^{n} \frac{1}{y_i^2} \right).
+$$
+
+**Nominal-melhor** (acertar um alvo, ex.: uma dimensão):
+$$
+S/N = 10 \log_{10}\!\left( \frac{\bar{y}^2}{s^2} \right),
+$$
+
+onde $\bar{y}$ é a média e $s^2$ a variância das réplicas. Repare que o caso nominal-melhor premia explicitamente a **baixa variância** ($s^2$ pequeno) — é a robustez traduzida em número. Em todos os casos, a análise segue como a de efeitos: calcula-se a **S/N média por nível** de cada fator e escolhe-se o nível de **maior S/N** — a condição mais robusta.
+
+## Taguchi × DOE clássico {#sec-captag-comparacao}
+
+As duas abordagens não são rivais; ocupam espaços diferentes.
+
+| Aspecto | Taguchi | DOE clássico |
+|:--------|:--------|:-------------|
+| Foco | Robustez (média **e** variância) | Média da resposta |
+| Planejamento | Arranjos ortogonais prontos | Fatorial, PCC, fracionado |
+| Interações | Assumidas desprezíveis | Estimadas (se o planejamento permite) |
+| Métrica | Razão sinal-ruído (dB) | Efeitos, ANOVA, modelos |
+| Público | Engenheiro de chão de fábrica | Pesquisador / analista |
+
+: Taguchi diante do DOE clássico. {#tbl-tag-comparacao}
+
+Os **pontos fortes** de Taguchi: a ênfase explícita na variabilidade, a economia de ensaios, e a linguagem acessível ao praticante. As **críticas** da estatística clássica: a razão S/N mistura média e variância de um jeito às vezes opaco, e os arranjos, ao assumir interações nulas, podem confundi-las com efeitos principais sem avisar. A síntese madura: usar o **pensamento** de Taguchi (robustez, fatores de ruído) com o **rigor** do DOE clássico (planejar para estimar o que importa, validar com resíduos).
+
+## Exemplo resolvido: reanálise por S/N {#sec-captag-exemplo}
+
+Retome os dados **replicados** do fatorial $2^3$ do Capítulo @sec-cap4 — força de usinagem $F_u$, com duas réplicas por condição. Como se quer **minimizar** a força, o caso é **menor-melhor**. Para cada condição, a razão sinal-ruído é $S/N = -10\log_{10}\!\left[(y_1^2 + y_2^2)/2\right]$:
+
+| Cond. | A | B | C | $F_u$ (réplicas) | S/N (dB) |
+|:-----:|:-:|:-:|:-:|:----------------:|:--------:|
+| 1 | −1 | −1 | −1 | 210, 215 | −46,55 |
+| 2 | +1 | −1 | −1 | 385, 380 | −51,65 |
+| 3 | −1 | +1 | −1 | 195, 200 | −45,91 |
+| 4 | +1 | +1 | −1 | 360, 365 | −51,19 |
+| 5 | −1 | −1 | +1 | 340, 335 | −50,57 |
+| 6 | +1 | −1 | +1 | 590, 585 | −55,38 |
+| 7 | −1 | +1 | +1 | 315, 320 | −50,04 |
+| 8 | +1 | +1 | +1 | 555, 560 | −54,92 |
+
+: Razão S/N (menor-melhor) por condição, dados do Capítulo @sec-cap4. {#tbl-tag-exemplo}
+
+Calculando a **S/N média por nível** de cada fator (lembre: maior S/N é melhor):
+
+| Fator | Nível −1 | Nível +1 | Melhor | $\Delta$ |
+|:------|:--------:|:--------:|:------:|:--------:|
+| A (Liga) | −48,27 | −53,29 | **−1** | 5,02 |
+| B ($v_c$) | −51,04 | −50,51 | +1 | 0,52 |
+| C ($f$) | −48,82 | −52,73 | **−1** | 3,90 |
+
+: Análise de níveis pela razão S/N. {#tbl-tag-niveis}
+
+**Interpretação.** A condição mais robusta (maior S/N em cada fator) é **A = −1 (liga mole), B = +1 (velocidade alta), C = −1 (avanço baixo)**. O tamanho de $\Delta$ ordena a importância dos fatores: A (5,02) > C (3,90) > B (0,52) — exatamente a mesma hierarquia da análise de efeitos clássica do Capítulo @sec-cap4, onde Liga e avanço dominavam a força. Os dois caminhos convergem — e é assim que deve ser: quando a variabilidade entre réplicas é pequena, a S/N "menor-melhor" essencialmente ordena pela magnitude da resposta. A razão S/N mostra sua força extra quando as condições diferem **na dispersão**, não só na média — aí ela separa o que a análise da média sozinha não vê.
+
+## Implementação em R {#sec-captag-codigo}
+
+Vários pacotes implementam a análise de Taguchi. O **qualityTools** gera arranjos e calcula a razão S/N diretamente.
+
+```r
+library(qualityTools)
+
+# Cria um arranjo L9 (4 fatores em 3 niveis)
+plano <- taguchiDesign("L9")
+
+# Insere as respostas medidas (uma por corrida, ou matriz de replicas)
+response(plano) <- c(/* ... valores medidos ... */)
+
+# Razao sinal-ruido: "smaller" (menor-melhor), "larger" ou "nominal"
+plano <- snPlot(plano, type = "smaller")
+
+# Efeitos medios por nivel (escolher o nivel de maior S/N)
+effectPlot(plano)
+```
+
+Para o exemplo acima (dados do Capítulo @sec-cap4), a razão menor-melhor pode ser calculada à mão em poucas linhas:
+
+```r
+rep1 <- c(210,385,195,360,340,590,315,555)
+rep2 <- c(215,380,200,365,335,585,320,560)
+SN   <- -10*log10((rep1^2 + rep2^2)/2)   # menor-melhor
+
+A <- c(-1,1,-1,1,-1,1,-1,1); C <- c(-1,-1,-1,-1,1,1,1,1)
+tapply(SN, A, mean)   # S/N media por nivel de A
+tapply(SN, C, mean)   # idem para C  -> escolher o nivel de maior S/N
+```
+
+## Na prática
+
+O erro mais comum com Taguchi é tratar a razão S/N como uma caixa-preta e **ignorar a variabilidade que ela resume**. A S/N só agrega valor se houver **réplicas** (ou fatores de ruído induzidos) que capturem a dispersão; com uma única medida por condição, ela degenera numa função monótona da média, e a análise clássica de efeitos basta. Use Taguchi quando a **robustez** é o objetivo declarado — e sempre pergunte: *de onde vem o ruído que estou tentando domar?*
+
+## Síntese do capítulo {#sec-captag-sintese}
+
+| Conceito | O que é | Para que serve |
+|:---------|:--------|:---------------|
+| Função perda | Perda cresce com o quadrado do desvio | Justificar reduzir variância, não só acertar a média |
+| Controle × ruído | Fatores ajustáveis × não ajustáveis | Buscar robustez ao ruído |
+| Arranjo ortogonal | Matriz fracionada pronta (L8/L9/L16) | Muitos fatores, pouquíssimos ensaios |
+| Razão S/N | Índice único (dB), maior = melhor | Escolher os níveis mais robustos |
+
+: Síntese do projeto robusto de Taguchi. {#tbl-tag-sintese}
+
+Três ideias devem permanecer:
+
+1. **Qualidade é média certa com pouca variação.** Taguchi coloca a **variabilidade** no centro do projeto — não só o alvo.
+2. **Robustez é insensibilidade ao ruído.** Escolhem-se os fatores de controle que blindam a resposta contra os fatores de ruído.
+3. **Taguchi e DOE clássico se complementam.** O pensamento de robustez, somado ao rigor de planejar e validar, é mais forte que qualquer um isolado.
+
+## Para saber mais {#sec-captag-saibamais}
+
+::: {.callout-tip}
+## Aprofundamento
+A obra de referência é @montgomery2005design, que dedica um capítulo ao projeto robusto de parâmetros e discute criticamente a razão sinal-ruído à luz da estatística clássica. Aplicações de Taguchi à usinagem de alumínio são abundantes na literatura de manufatura; o pacote qualityTools, no CRAN, implementa os arranjos e as análises de S/N em R.
+:::
+
+## Exercícios resolvidos {#sec-captag-resolvidos .unnumbered}
+
+### Resolvido 1 — Calculando a razão S/N nos três casos {.unnumbered}
+
+**Enunciado.** Uma condição foi medida três vezes, obtendo-se $y = \{48, 52, 50\}$. Calcule a razão sinal-ruído para os três objetivos: menor-melhor, maior-melhor e nominal-melhor.
+
+**Solução.** Primeiro, $\bar{y} = 50$ e $s^2 = \dfrac{(48-50)^2+(52-50)^2+(50-50)^2}{3-1} = \dfrac{8}{2} = 4$.
+
+$$
+S/N_{\text{menor}} = -10\log_{10}\!\left(\frac{48^2+52^2+50^2}{3}\right) = -33{,}98 \text{ dB},
+$$
+$$
+S/N_{\text{maior}} = -10\log_{10}\!\left(\frac{1/48^2+1/52^2+1/50^2}{3}\right) = 33{,}97 \text{ dB},
+$$
+$$
+S/N_{\text{nominal}} = 10\log_{10}\!\left(\frac{\bar{y}^2}{s^2}\right) = 10\log_{10}\!\left(\frac{2500}{4}\right) = 27{,}96 \text{ dB}.
+$$
+
+**Interpretação.** O caso **nominal-melhor** é o único que isola a variabilidade: com $\bar{y}$ fixo, reduzir $s^2$ **aumenta** a S/N. Se as três réplicas fossem idênticas ($s^2 \to 0$), a S/N nominal tenderia ao infinito — robustez perfeita.
+
+### Resolvido 2 — O que um L9 economiza {.unnumbered}
+
+**Enunciado.** Você quer estudar 4 fatores em 3 níveis. Quantos ensaios teria o fatorial completo? Quantos tem o L9? O que se abre mão com essa economia?
+
+**Solução.** O fatorial completo de 4 fatores em 3 níveis tem $3^4 = 81$ tratamentos; o **L9** usa apenas **9** — uma economia de **72 ensaios**. O que se abre mão: por ser um arranjo muito fracionado, o L9 **confunde as interações** com os efeitos principais (Capítulo @sec-cap-frac). Ele é válido sob a hipótese de que as interações entre os fatores são desprezíveis — adequada para triagem robusta, arriscada se houver interações fortes.
+
+### Resolvido 3 — Escolhendo a condição robusta {.unnumbered}
+
+**Enunciado.** Pela Tabela @tbl-tag-niveis, qual é a condição de operação mais robusta para minimizar a força, e qual fator é o mais influente?
+
+**Solução.** Escolhe-se, para cada fator, o nível de **maior** S/N: A no nível **−1** (−48,27 > −53,29), B no nível **+1** (−50,51 > −51,04) e C no nível **−1** (−48,82 > −52,73). A condição robusta é, portanto, **A = −1 (liga mole), B = +1 (velocidade alta), C = −1 (avanço baixo)**. O fator mais influente é o de maior $\Delta$ entre níveis: **A (Liga)**, com $\Delta = 5{,}02$ dB, seguido de C ($f$, 3,90) e, bem atrás, B ($v_c$, 0,52) — a mesma ordem de importância da análise de efeitos clássica.
+
+## Exercícios propostos {.unnumbered}
+
+1. **Controle vs. ruído.** Classifique como fator de controle ou de ruído, num torneamento: avanço, dureza do lote de material, profundidade de corte, temperatura ambiente, geometria da pastilha, desgaste da ferramenta.
+
+2. **Qual S/N.** Para cada resposta, diga qual razão sinal-ruído usar (menor, maior ou nominal): rugosidade $R_a$; vida da ferramenta; diâmetro usinado com alvo de 20,00 mm; taxa de remoção de material.
+
+3. **Cálculo.** Uma resposta "maior-melhor" foi medida três vezes: $y = \{95, 100, 90\}$. Calcule a razão S/N.
+
+4. **Função perda.** Explique, com a ideia da função perda de qualidade, por que "estar dentro da tolerância" não é bom o suficiente para Taguchi.
+
+5. **Arranjo.** Você tem 7 fatores em 2 níveis. Qual arranjo ortogonal usar? Quantos ensaios? O que ele assume sobre interações?
+
+6. **Taguchi vs. clássico.** Em que situação você preferiria um PCC clássico (Capítulo @sec-cap5) a um arranjo de Taguchi? E o contrário?
+
+## Gabarito dos exercícios propostos {#sec-captag-gabarito .unnumbered}
+
+1. **Controle vs. ruído.** Controle (ajustáveis na máquina): avanço, profundidade de corte, geometria da pastilha. Ruído (não controlados na operação): dureza do lote, temperatura ambiente, desgaste da ferramenta.
+
+2. **Qual S/N.** $R_a$: **menor-melhor**. Vida da ferramenta: **maior-melhor**. Diâmetro com alvo 20,00 mm: **nominal-melhor**. Taxa de remoção: **maior-melhor**.
+
+3. **Cálculo.** Maior-melhor: $S/N = -10\log_{10}\!\left(\frac{1/95^2 + 1/100^2 + 1/90^2}{3}\right) \approx 39{,}5$ dB. (Calcule a média dos inversos dos quadrados, tome o $\log_{10}$ e multiplique por $-10$.)
+
+4. **Função perda.** Porque a perda cresce com o **quadrado do desvio** em relação ao alvo, de forma contínua: uma peça no limite da tolerância já acumula perda considerável, e duas peças "dentro da tolerância" podem ter qualidades muito diferentes. Minimizar o desvio (e a variância em torno do alvo) é o objetivo, não apenas "passar" na tolerância.
+
+5. **Arranjo.** O **L8** (7 fatores em 2 níveis, 8 corridas). Ele assume que as **interações são desprezíveis** — os efeitos principais podem estar confundidos com interações de dois fatores (resolução III).
+
+6. **Taguchi vs. clássico.** Prefere-se o **PCC** quando o objetivo é **modelar a superfície** e localizar um ótimo contínuo, com estimativa de curvatura e de interações — por exemplo, para otimizar condições de corte dentro de uma faixa. Prefere-se **Taguchi** quando o objetivo é **robustez** a fontes de ruído, com muitos fatores e poucos ensaios, e a modelagem fina não é necessária — típico de ajuste rápido no chão de fábrica.

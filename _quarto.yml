@@ -56,6 +56,7 @@ book:
         - parte-2/cap-fatorial-fracionado.qmd
         - parte-2/cap-05-pcc-rsm.qmd
         - parte-2/cap-06-otimizacao.qmd
+        - parte-2/cap-taguchi-robusto.qmd
     - part: "Parte III — Estudo de caso"
       chapters:
         - parte-3/cap-07-projeto.qmd
