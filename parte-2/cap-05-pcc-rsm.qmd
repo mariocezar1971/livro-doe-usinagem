@@ -343,7 +343,7 @@ $$
 
 ::: {.callout-tip}
 ## O fluxo dos quatro exercícios
-Curvatura (1) diz **se** vale a pena ir além do fatorial; o PCC (2) fornece **os dados** para estimar a curvatura; a regressão (3) **ajusta** a superfície; e o gradiente (4) **encontra e classifica** o ótimo. É o caminho inteiro do Capítulo 5 em quatro contas.
+Curvatura (1) diz **se** vale a pena ir além do fatorial; o PCC (2) fornece **os dados** para estimar a curvatura; a regressão (3) **ajusta** a superfície; e o gradiente (4) **encontra e classifica** o ótimo. É o caminho inteiro do Capítulo 6 em quatro contas.
 :::
 
 ## Exercícios propostos {.unnumbered}

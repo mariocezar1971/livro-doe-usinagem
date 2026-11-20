@@ -53,6 +53,7 @@ book:
     - part: "Parte II — Metodologia DOE"
       chapters:
         - parte-2/cap-04-fatorial.qmd
+        - parte-2/cap-fatorial-fracionado.qmd
         - parte-2/cap-05-pcc-rsm.qmd
         - parte-2/cap-06-otimizacao.qmd
     - part: "Parte III — Estudo de caso"

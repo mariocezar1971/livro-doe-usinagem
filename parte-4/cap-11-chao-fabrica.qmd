@@ -27,9 +27,9 @@ O primeiro ajuste é mental: no laboratório, o objetivo é **conhecimento**; na
 
 ### Triagem primeiro, sempre
 
-Na indústria, o fatorial fracionário é o melhor amigo do engenheiro. Se um estudo de laboratório pode se dar ao luxo de um fatorial completo $2^k$, a fábrica raramente pode. Um **fatorial fracionário** $2^{k-p}$ reduz drasticamente o número de ensaios, ao custo de confundir alguns efeitos de alta ordem (interações triplas, quádruplas) — que, na prática, quase nunca importam.
+Na indústria, o fatorial fracionário é o melhor amigo do engenheiro. Se um estudo de laboratório pode se dar ao luxo de um fatorial completo $2^k$, a fábrica raramente pode. Um **fatorial fracionário** $2^{k-p}$ (apresentado no Capítulo @sec-cap-frac) reduz drasticamente o número de ensaios, ao custo de confundir alguns efeitos de alta ordem (interações triplas, quádruplas) — que, na prática, quase nunca importam.
 
-A estratégia industrial é sempre em duas etapas, como nos Capítulos @sec-cap4 e @sec-cap5, mas comprimida: um fatorial fracionário de **triagem** para achar os poucos fatores vitais entre os muitos triviais, e só então, se necessário, um planejamento de segunda ordem **apenas nesses poucos fatores**. Investir ensaios num PCC de seis fatores antes da triagem é desperdício que a fábrica não perdoa.
+A estratégia industrial é sempre em duas etapas, como nos Capítulos @sec-cap4, @sec-cap-frac e @sec-cap5, mas comprimida: um fatorial fracionário de **triagem** para achar os poucos fatores vitais entre os muitos triviais, e só então, se necessário, um planejamento de segunda ordem **apenas nesses poucos fatores**. Investir ensaios num PCC de seis fatores antes da triagem é desperdício que a fábrica não perdoa.
 
 ### Menos réplicas, mais inteligência
 

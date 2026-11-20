@@ -19,7 +19,7 @@ O Capítulo 1 argumentou que testar um fator por vez (OFAT) desperdiça ensaios 
 
 A ideia é direta e poderosa. Em vez de variar um fator e travar os demais, o fatorial varia **todos os fatores ao mesmo tempo**, de forma organizada, testando todas as combinações possíveis de níveis. Com $k$ fatores em dois níveis cada, isso gera $2^k$ tratamentos — daí o nome. Com esse conjunto, é possível estimar não só o efeito de cada fator, mas também os efeitos de **interação** entre eles, com o mesmo número de ensaios que o OFAT gastaria para muito menos informação.
 
-O planejamento fatorial é um método econômico e eficiente de investigar a influência de um conjunto de fatores no desempenho de um processo [@montgomery2005design; @montgomery2008aplicada]. É a base sobre a qual se constroem as ferramentas mais avançadas dos capítulos seguintes — o planejamento composto central (Capítulo 5) e a otimização multiresposta (Capítulo 6). Dominar o 2^k é o pré-requisito de tudo o que vem depois.
+O planejamento fatorial é um método econômico e eficiente de investigar a influência de um conjunto de fatores no desempenho de um processo [@montgomery2005design; @montgomery2008aplicada]. É a base sobre a qual se constroem as ferramentas mais avançadas dos capítulos seguintes — o planejamento composto central (Capítulo 6) e a otimização multiresposta (Capítulo 7). Dominar o 2^k é o pré-requisito de tudo o que vem depois.
 
 Este capítulo usa como exemplo condutor o próprio estudo de caso do livro: o torneamento das ligas de alumínio, em que os fatores foram o material (Liga), a velocidade de corte ($v_c$), a profundidade ($a_p$), o avanço ($f$) e a lubri-refrigeração, e as respostas foram força, potência, temperatura, vibração e rugosidade [@keongng2006experime; @arumugam2006malshe].
 
@@ -321,7 +321,7 @@ Três ideias devem permanecer:
 2. **A ANOVA decide, o Pareto só ordena.** Magnitude de efeito não é significância; o teste F, com seus resíduos validados, é quem separa o real do acaso.
 3. **Dois níveis são triagem, não modelagem fina.** O 2^k identifica os fatores vitais; capturar curvatura exige o passo seguinte — o planejamento composto central.
 
-Justamente essa limitação — dois níveis não modelam curvatura — motiva o próximo capítulo. O Capítulo 5 apresenta o planejamento composto central (PCC) e as superfícies de resposta, que estendem o fatorial para modelar o comportamento quadrático e localizar pontos ótimos.
+Justamente essa limitação — dois níveis não modelam curvatura — motiva o próximo capítulo. O Capítulo 6 apresenta o planejamento composto central (PCC) e as superfícies de resposta, que estendem o fatorial para modelar o comportamento quadrático e localizar pontos ótimos.
 
 ## Para saber mais {#sec-cap4-saibamais}
 

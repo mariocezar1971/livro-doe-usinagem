@@ -3,7 +3,7 @@ title: "Apêndice A — Instrumentação e cadeias de medição"
 subtitle: "Detalhes dos equipamentos e procedimentos do estudo de caso"
 author: "Mário Cezar dos Santos Jr."
 abstract: |
-  Este apêndice reúne os detalhes de instrumentação do projeto experimental descrito no Capítulo 7: os equipamentos, as cadeias de medição e os procedimentos de aquisição de cada resposta de usinabilidade. Enquanto o capítulo apresenta a visão geral do experimento, aqui estão as especificações que permitem reproduzi-lo — modelos de máquina e ferramentas, fluidos e vazões, e as cadeias de medição de força, potência, temperatura, rugosidade e vibração.
+  Este apêndice reúne os detalhes de instrumentação do projeto experimental descrito no Capítulo 8: os equipamentos, as cadeias de medição e os procedimentos de aquisição de cada resposta de usinabilidade. Enquanto o capítulo apresenta a visão geral do experimento, aqui estão as especificações que permitem reproduzi-lo — modelos de máquina e ferramentas, fluidos e vazões, e as cadeias de medição de força, potência, temperatura, rugosidade e vibração.
 ---
 
 # Apêndice A — Instrumentação e cadeias de medição {#sec-apendice-a}

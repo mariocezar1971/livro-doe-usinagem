@@ -1,0 +1,258 @@
+---
+title: "Planejamento fatorial fracionado"
+subtitle: "Estudar muitos fatores com metade (ou menos) dos ensaios"
+author: "Mário Cezar dos Santos Jr."
+abstract: |
+  Quando os fatores se multiplicam, o fatorial completo explode: sete fatores já exigem 128 ensaios. Este capítulo apresenta o planejamento fatorial fracionado — a ferramenta que estuda muitos fatores com uma fração dos ensaios, apoiada no princípio da esparsidade dos efeitos. Cobre o gerador e a relação de definição; a resolução (III, IV e V) e o que cada uma confunde; a estrutura de confundimento (aliasing) e como lê-la; e os planejamentos de triagem de Plackett-Burman. Um exemplo resolvido aplica um 2^(5-1) de resolução V aos cinco fatores do estudo de caso, cortando de 32 para 16 ensaios sem perder os efeitos principais nem as interações de dois fatores, e o código R (pacote FrF2) reproduz cada etapa. Fecha com exercícios resolvidos passo a passo e uma lista de exercícios propostos com gabarito.
+---
+
+# Planejamento fatorial fracionado {#sec-cap-frac}
+
+## Introdução {#sec-capfrac-intro}
+
+O fatorial completo do Capítulo @sec-cap4 tem um custo que cresce depressa: cada fator a mais **dobra** o número de tratamentos. Com quatro fatores são 16 ensaios; com sete, já são $2^7 = 128$. Em muitos estudos de usinagem — onde cada ensaio consome material, ferramenta, tempo de máquina e medição —, rodar o fatorial completo de seis ou sete fatores é simplesmente inviável.
+
+A saída não é estudar menos fatores. É estudar todos eles com **menos ensaios**, usando um **planejamento fatorial fracionado** ($2^{k-p}$): uma fração cuidadosamente escolhida do fatorial completo, que mantém a ortogonalidade e permite estimar o que de fato importa.
+
+## O que você vai conseguir fazer ao fim deste capítulo
+
+Decidir quando fracionar; construir um planejamento $2^{k-p}$ a partir de um gerador; escrever a relação de definição e determinar a resolução; ler a estrutura de confundimento (quais efeitos ficam aliados); escolher entre planejamentos pela resolução; e montar tudo em R com o pacote **FrF2**.
+
+## Por que fracionar funciona {#sec-capfrac-porque}
+
+Fracionar parece bom demais: como estimar os efeitos de muitos fatores com metade dos dados? A resposta está em dois princípios empíricos que valem na quase totalidade dos processos reais:
+
+- **Esparsidade dos efeitos.** Entre muitos fatores possíveis, apenas **poucos** dominam a resposta (os "poucos vitais" de Pareto, Capítulo @sec-cap4). O fatorial completo gasta metade dos ensaios estimando interações de alta ordem que, quase sempre, são ruído.
+- **Hierarquia dos efeitos.** Efeitos principais tendem a ser maiores que interações de dois fatores; estas, maiores que as de três; e assim por diante. Interações de três ou mais fatores são **raramente significativas** na prática.
+
+Juntos, esses princípios dizem: não vale a pena pagar por ensaios que só servem para estimar interações de alta ordem desprezíveis. O fatorial fracionado troca essa informação inútil por **economia de ensaios** — deliberadamente, e de forma controlada.
+
+## O gerador e a relação de definição {#sec-capfrac-gerador}
+
+A meia-fração de um fatorial $2^k$ — o planejamento $2^{k-1}$ — usa **metade** dos tratamentos. A questão é: qual metade? A escolha é feita por um **gerador**.
+
+Tome o menor caso ilustrativo: três fatores (A, B, C) em meia-fração, $2^{3-1} = 4$ ensaios. Monta-se o fatorial completo dos dois primeiros fatores (A, B) e define-se o terceiro por um gerador — por exemplo, $C = AB$:
+
+| Ens. | A | B | C = AB |
+|:----:|:-:|:-:|:------:|
+| 1 | −1 | −1 | +1 |
+| 2 | −1 | +1 | −1 |
+| 3 | +1 | −1 | −1 |
+| 4 | +1 | +1 | +1 |
+
+: Meia-fração $2^{3-1}$ com gerador $C = AB$. {#tbl-frac-meia}
+
+Multiplicando os dois lados de $C = AB$ por $C$ (e lembrando que qualquer coluna ao quadrado é a coluna de uns, $I$), obtém-se a **relação de definição**:
+
+$$
+C = AB \;\Longrightarrow\; C \cdot C = AB \cdot C \;\Longrightarrow\; I = ABC .
+$$
+
+A relação de definição $I = ABC$ é a "impressão digital" do planejamento: dela se deduz **tudo** sobre o que fica confundido. A palavra geradora ($ABC$) tem **comprimento 3** — e é esse comprimento que define a resolução.
+
+## Resolução: o que cada fração confunde {#sec-capfrac-resolucao}
+
+A **resolução** de um fatorial fracionado é o comprimento da menor palavra na relação de definição. Ela diz **quão graves** são os confundimentos — quanto maior a resolução, mais limpos os efeitos de interesse. As três resoluções úteis na prática:
+
+| Resolução | Relação de definição (menor palavra) | O que fica confundido |
+|:---------:|:-----|:-----|
+| **III** | comprimento 3 | efeito principal com interação de 2 fatores |
+| **IV** | comprimento 4 | efeito principal com interação de 3 fatores; 2 fatores entre si |
+| **V** | comprimento 5 | efeito principal com interação de 4 fatores; 2 com 3 fatores |
+
+: As resoluções e seus confundimentos. {#tbl-frac-resolucao}
+
+A leitura prática:
+
+- **Resolução III** — barata e perigosa: efeitos principais confundidos com interações de dois fatores. Serve para **triagem** (descobrir quais fatores importam), não para modelagem.
+- **Resolução IV** — os efeitos principais ficam limpos (só confundidos com interações de três fatores, desprezíveis), mas as interações de dois fatores se confundem entre si.
+- **Resolução V** — o melhor custo-benefício: efeitos principais **e** interações de dois fatores ficam limpos. É resolução suficiente para a maioria dos estudos.
+
+## Confundimento (aliasing): lendo a estrutura {#sec-capfrac-aliasing}
+
+Dois efeitos **confundidos** (ou *aliados*) não podem ser separados: o planejamento estima a **soma** dos dois. No $2^{3-1}$ acima, com $I = ABC$, o efeito principal de C está aliado com a interação AB:
+
+$$
+C \cdot I = C \cdot ABC = AB \;\Longrightarrow\; C = AB .
+$$
+
+Ou seja: o que o planejamento chama de "efeito de C" é, na verdade, $C + AB$. Se a interação AB for desprezível (hipótese razoável na triagem), a estimativa é limpa; se não for, há ambiguidade.
+
+**A regra geral** para achar o aliado de qualquer efeito: multiplique-o pela relação de definição. Num $2^{5-1}$ com $I = ABCDE$:
+
+$$
+A \cdot ABCDE = BCDE, \qquad AB \cdot ABCDE = CDE .
+$$
+
+O efeito principal A fica aliado com a interação de **quatro** fatores BCDE (desprezível), e a interação AB com a de **três** fatores CDE (também desprezível). É por isso que a resolução V entrega efeitos principais e interações de dois fatores confiáveis.
+
+## Planejamentos de triagem: Plackett-Burman {#sec-capfrac-pb}
+
+Quando o objetivo é apenas **triar** muitos fatores — separar os poucos vitais dos triviais, sem ainda modelar interações —, existem planejamentos ainda mais econômicos: os de **Plackett-Burman**. Eles permitem estudar até $N-1$ fatores em apenas $N$ ensaios (com $N$ múltiplo de 4): até 7 fatores em 8 ensaios, até 11 em 12, e assim por diante.
+
+São planejamentos de **resolução III** (efeitos principais confundidos com interações de dois fatores), e sua estrutura de confundimento é complexa e "espalhada". Por isso têm um papel bem definido: a **primeira peneira** de um estudo com muitos candidatos. Identificados os fatores importantes, passa-se a um fatorial de resolução maior (ou ao PCC do Capítulo @sec-cap5) apenas com eles.
+
+## Quando fracionar (e quando não) {#sec-capfrac-quando}
+
+::: {.callout-important}
+## Decisão de projeto
+Fracione quando há **muitos fatores** e o objetivo é **triagem** — descobrir quais importam. Comece por uma resolução III ou IV (ou Plackett-Burman), rode poucos ensaios e identifique os vitais. **Não** fracione (ou use resolução V) quando já se sabe que as interações de dois fatores importam e precisam ser estimadas sem ambiguidade — caso em que o fatorial completo, ou um fracionado de alta resolução, é a escolha. A pergunta-chave é sempre: *de quais efeitos eu preciso de uma estimativa limpa?* A resolução necessária decorre dela.
+:::
+
+## Exemplo resolvido: triando os fatores do estudo {#sec-capfrac-exemplo}
+
+Suponha que, antes do estudo de caso (Capítulo @sec-cap7), se quisesse triar **cinco** fatores de uma vez — Liga (A), velocidade de corte (B), avanço (C), profundidade (D) e lubri-refrigeração (E) — sobre a força de usinagem.
+
+O fatorial completo seria $2^5 = 32$ ensaios. Uma **meia-fração** $2^{5-1}$ usa apenas **16**. Escolhendo o gerador $E = ABCD$, a relação de definição é
+
+$$
+I = ABCDE \quad (\text{palavra de comprimento 5} \Rightarrow \textbf{resolução V}).
+$$
+
+A matriz se constrói com o fatorial completo de A, B, C, D (16 linhas) e a coluna E dada pelo produto $E = A \cdot B \cdot C \cdot D$:
+
+| Ens. | A | B | C | D | E = ABCD |
+|:----:|:-:|:-:|:-:|:-:|:--------:|
+| 1 | −1 | −1 | −1 | −1 | +1 |
+| 2 | +1 | −1 | −1 | −1 | −1 |
+| 3 | −1 | +1 | −1 | −1 | −1 |
+| … | … | … | … | … | … |
+| 16 | +1 | +1 | +1 | +1 | +1 |
+
+: Primeiras linhas da meia-fração $2^{5-1}$ (gerador $E = ABCD$). {#tbl-frac-estudo}
+
+**O que esses 16 ensaios compram.** Pela regra do confundimento, cada efeito principal fica aliado a uma interação de **quatro** fatores (A↔BCDE, B↔ACDE, …), e cada interação de dois fatores a uma de **três** (AB↔CDE, AC↔BDE, …). Como interações de três e quatro fatores são desprezíveis na usinagem, o planejamento entrega **os cinco efeitos principais e todas as dez interações de dois fatores de forma limpa** — tudo com metade dos ensaios do fatorial completo.
+
+É exatamente o uso ideal: uma triagem barata que, confirmando os fatores vitais, autoriza avançar com segurança para o fatorial completo (Capítulo @sec-cap4) e depois para o PCC (Capítulo @sec-cap5).
+
+## Implementação em R (pacote FrF2) {#sec-capfrac-codigo}
+
+O mesmo pacote **FrF2** do Capítulo @sec-cap4 cria planejamentos fracionados — e escolhe automaticamente o gerador de **maior resolução** possível.
+
+```r
+library(FrF2)
+
+# Meia-fracao 2^(5-1): 16 corridas, 5 fatores.
+# O FrF2 escolhe sozinho o gerador de maior resolucao (aqui, resolucao V).
+plano_frac <- FrF2(
+  nruns    = 16,          # 16 corridas (full seria 32)
+  nfactors = 5,           # cinco fatores
+  randomize = TRUE,
+  factor.names = list(
+    Liga = c("1350-O", "7075-T6"),
+    Vc   = c(200, 600),
+    f    = c(0.20, 0.35),
+    ap   = c(1, 4),
+    Lub  = c("Seco", "Jorro")))
+
+# Mostra o gerador usado, a resolucao e a estrutura de confundimento
+design.info(plano_frac)$catlg.entry   # gerador e resolucao
+aliasprint(plano_frac)                # quem esta aliado com quem
+```
+
+```r
+# Triagem com muitos fatores: Plackett-Burman (ate 7 fatores em 8 corridas)
+plano_pb <- pb(nruns = 8, nfactors = 7, randomize = TRUE)
+```
+
+O `FrF2()` constrói a fração e informa a resolução; `aliasprint()` lista os confundimentos (confirmando que efeitos principais e interações de dois fatores estão limpos); e `pb()` gera os planejamentos de Plackett-Burman para triagem de muitos fatores.
+
+## Na prática
+
+A tentação é fracionar demais, buscando o menor número de ensaios. O erro clássico é usar resolução III (ou Plackett-Burman) e depois **interpretar os efeitos como se fossem limpos** — quando, na verdade, cada um carrega uma interação de dois fatores embutida. A regra de ouro: a resolução do planejamento tem de ser compatível com a **pergunta**. Para triar, III ou IV bastam; para estimar interações, V ou o fatorial completo.
+
+## Síntese do capítulo {#sec-capfrac-sintese}
+
+| Conceito | O que é | Para que serve |
+|:---------|:--------|:---------------|
+| Gerador | Regra que define a fração (ex.: $E = ABCD$) | Escolher *qual* metade rodar |
+| Relação de definição | $I = \ldots$ (produto do gerador) | Deduzir todos os confundimentos |
+| Resolução | Comprimento da menor palavra | Medir a gravidade do confundimento |
+| Confundimento (alias) | Efeitos que se somam | Saber o que se pode (ou não) separar |
+| Plackett-Burman | Fração de resolução III | Triar muitos fatores com pouquíssimos ensaios |
+
+: Síntese do planejamento fatorial fracionado. {#tbl-frac-sintese}
+
+Três ideias devem permanecer:
+
+1. **Fracionar é trocar informação desprezível por economia.** A esparsidade e a hierarquia dos efeitos garantem que o que se perde (interações de alta ordem) quase nunca importa.
+2. **A resolução governa tudo.** Ela decorre da relação de definição e diz exatamente o que fica confundido — escolha-a pela pergunta a responder.
+3. **Fracionado é para triar; completo e PCC, para modelar.** O fracionado abre o estudo, peneirando os fatores vitais; o fatorial completo (Capítulo @sec-cap4) e o PCC (Capítulo @sec-cap5) os refinam.
+
+## Para saber mais {#sec-capfrac-saibamais}
+
+::: {.callout-tip}
+## Aprofundamento
+O tratamento clássico de planejamentos fracionados está em @montgomery2005design, com capítulos dedicados à construção, à resolução e às famílias de Plackett-Burman. A documentação do pacote FrF2 no CRAN, de Ulrike Grömping, traz o catálogo de geradores de maior resolução para cada combinação de fatores e corridas.
+:::
+
+## Exercícios resolvidos {#sec-capfrac-resolvidos .unnumbered}
+
+### Resolvido 1 — Construindo uma meia-fração e achando a resolução {.unnumbered}
+
+**Enunciado.** Construa a matriz de um $2^{3-1}$ com gerador $C = AB$. Escreva a relação de definição, determine a resolução e diga com que efeito o fator C fica confundido.
+
+**Solução.** Com o fatorial completo de A e B e $C = A \cdot B$:
+
+| A | B | C = AB |
+|:-:|:-:|:------:|
+| −1 | −1 | +1 |
+| −1 | +1 | −1 |
+| +1 | −1 | −1 |
+| +1 | +1 | +1 |
+
+Multiplicando $C = AB$ por $C$: $I = ABC$. A menor (única) palavra tem comprimento 3 → **resolução III**. O aliado de C vem de $C \cdot I = C \cdot ABC = AB$: o efeito principal **C está confundido com a interação AB**. O planejamento estima, na verdade, $C + AB$ — aceitável só se AB for desprezível.
+
+### Resolvido 2 — Achando o aliado de um efeito {.unnumbered}
+
+**Enunciado.** Num $2^{5-1}$ com relação de definição $I = ABCDE$, com que efeitos ficam aliados (a) o efeito principal B e (b) a interação AC?
+
+**Solução.** Multiplica-se cada efeito pela relação de definição, cancelando letras repetidas (pois qualquer letra ao quadrado vira $I$):
+
+$$
+\text{(a)}\quad B \cdot ABCDE = ACDE, \qquad\qquad
+\text{(b)}\quad AC \cdot ABCDE = BDE .
+$$
+
+O efeito principal B está aliado com a interação de **quatro** fatores ACDE; a interação AC, com a de **três** fatores BDE. Como ambas são desprezíveis, as estimativas de B e de AC são, na prática, **limpas** — a vantagem da resolução V.
+
+### Resolvido 3 — Escolhendo o planejamento pela resolução {.unnumbered}
+
+**Enunciado.** Um engenheiro precisa estimar, **sem ambiguidade**, as interações de dois fatores entre 6 fatores, mas quer o menor número de ensaios possível. Entre um $2^{6-2}$ (16 corridas, resolução IV) e um $2^{6-1}$ (32 corridas, resolução VI), qual ele deve escolher? E se o objetivo fosse apenas triar?
+
+**Solução.** Para **estimar interações de dois fatores sem ambiguidade**, é preciso que elas **não** se confundam entre si — o que exige resolução **V ou maior**. O $2^{6-2}$ de resolução IV **não serve**: nele, as interações de dois fatores se confundem umas com as outras. Logo, para o objetivo declarado, a escolha é o $2^{6-1}$ (resolução VI, 32 corridas), onde até as interações de dois fatores ficam limpas. **Mas**, se o objetivo fosse apenas **triar** os fatores principais, o $2^{6-2}$ de 16 corridas bastaria — metade dos ensaios —, pois a resolução IV já mantém os efeitos principais limpos. A resolução necessária decorre da pergunta.
+
+## Exercícios propostos {.unnumbered}
+
+1. **Contando corridas.** Quantos ensaios tem um fatorial completo de 6 fatores? E uma meia-fração ($2^{6-1}$)? E um quarto de fração ($2^{6-2}$)?
+
+2. **Relação de definição.** Um $2^{4-1}$ usa o gerador $D = ABC$. Escreva a relação de definição e determine a resolução.
+
+3. **Confundimento.** No planejamento do exercício 2 ($I = ABCD$), com que efeito fica aliado o efeito principal A? E a interação AB? O planejamento é bom para estimar interações de dois fatores? Justifique.
+
+4. **Esparsidade dos efeitos.** Explique, com suas palavras, por que o princípio da esparsidade dos efeitos torna o fracionamento uma troca vantajosa, e não uma perda.
+
+5. **Triagem.** Você tem 7 fatores candidatos e orçamento para 8 ensaios. Que planejamento usar? Que tipo de conclusão ele permite — e qual **não** permite?
+
+6. **Código R.** Escreva a chamada `FrF2()` para um $2^{6-2}$ (6 fatores, 16 corridas) e a chamada `pb()` para triar 11 fatores em 12 corridas.
+
+## Gabarito dos exercícios propostos {#sec-capfrac-gabarito .unnumbered}
+
+1. **Contando corridas.** Completo: $2^6 = 64$. Meia-fração: $2^{6-1} = 32$. Quarto de fração: $2^{6-2} = 16$.
+
+2. **Relação de definição.** De $D = ABC$, multiplicando por $D$: $I = ABCD$. A menor palavra tem comprimento 4 → **resolução IV**.
+
+3. **Confundimento.** Com $I = ABCD$: $A \cdot ABCD = BCD$ (A aliado com a interação de três fatores BCD, desprezível) e $AB \cdot ABCD = CD$ (AB aliado com CD — **duas interações de dois fatores confundidas entre si**). Logo, os efeitos principais ficam limpos, mas o planejamento **não** serve para estimar interações de dois fatores sem ambiguidade — é o que caracteriza a resolução IV.
+
+4. **Esparsidade dos efeitos.** Porque, na prática, só poucos efeitos (principais e algumas interações de dois fatores) são relevantes; interações de alta ordem são quase sempre ruído. O fracionamento sacrifica justamente a capacidade de estimar essas interações de alta ordem — informação que, pela esparsidade, não se perde de fato. Troca-se o que não importa por ensaios economizados.
+
+5. **Triagem.** Um **Plackett-Burman de 8 corridas** (ou um $2^{7-4}$ de resolução III). Ele permite **identificar quais dos 7 fatores têm efeito principal relevante** (triagem), mas **não** permite estimar interações de dois fatores de forma limpa — elas ficam confundidas com os efeitos principais. Serve de primeira peneira; os fatores vitais seguem para um planejamento de maior resolução.
+
+6. **Código R.**
+```r
+library(FrF2)
+# 2^(6-2): 6 fatores em 16 corridas (FrF2 escolhe a maior resolucao)
+plano <- FrF2(nruns = 16, nfactors = 6, randomize = TRUE)
+# Plackett-Burman: 11 fatores em 12 corridas
+plano_pb <- pb(nruns = 12, nfactors = 11, randomize = TRUE)
+```
