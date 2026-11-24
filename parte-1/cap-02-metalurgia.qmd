@@ -1,12 +1,8 @@
----
-title: "Metalurgia aplicada das ligas de alumínio"
-subtitle: "Propriedades, tratamentos e microestrutura que decidem a usinabilidade"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Este capítulo condensa a metalurgia das ligas de alumínio trabalháveis das séries 1xxx, 6xxx e 7xxx sob a ótica de quem vai usiná-las. Parte da classificação e da nomenclatura de têmperas, percorre os mecanismos de endurecimento por precipitação e por encruamento, detalha os tratamentos térmicos e mecânicos, e chega às propriedades — dureza, resistência, ductilidade — que governam o comportamento na usinagem. Como fio condutor, usa as seis ligas do estudo de caso deste livro (1350-O, 6082-T4, 6262-T6, 6351-T6, 7075-T73 e 7075-T6), da mais dúctil à mais resistente, mostrando ao microscópio por que cada uma se comporta como se comporta.
----
-
 # Metalurgia aplicada das ligas de alumínio {#sec-cap2}
+
+*Propriedades, tratamentos e microestrutura que decidem a usinabilidade*
+
+> Este capítulo condensa a metalurgia das ligas de alumínio trabalháveis das séries 1xxx, 6xxx e 7xxx sob a ótica de quem vai usiná-las. Parte da classificação e da nomenclatura de têmperas, percorre os mecanismos de endurecimento por precipitação e por encruamento, detalha os tratamentos térmicos e mecânicos, e chega às propriedades — dureza, resistência, ductilidade — que governam o comportamento na usinagem. Como fio condutor, usa as seis ligas do estudo de caso deste livro (1350-O, 6082-T4, 6262-T6, 6351-T6, 7075-T73 e 7075-T6), da mais dúctil à mais resistente, mostrando ao microscópio por que cada uma se comporta como se comporta.
 
 ## Introdução {#sec-cap2-intro}
 

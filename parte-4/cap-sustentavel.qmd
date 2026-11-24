@@ -1,12 +1,8 @@
----
-title: "Usinagem sustentável"
-subtitle: "Energia, fluidos e a dimensão ambiental do corte"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Custo e desempenho não esgotam mais os objetivos da usinagem: energia, fluidos e pegada de carbono entraram na conta. Este capítulo traz a sustentabilidade para dentro do DOE. Apresenta as estratégias de lubri-refrigeração — corte a seco, por jorro e por mínima quantidade de fluido (MQF) — e seus trade-offs; define a energia específica de corte como indicador objetivo de eficiência energética; discute a pegada de carbono e o descarte de fluidos; e mostra como incluir uma resposta ambiental na otimização multiobjetivo, para que a condição recomendada seja ótima também sob a ótica ESG. Reanalisa, sob essa lente, a lubri-refrigeração do estudo de caso.
----
-
 # Usinagem sustentável {#sec-cap-sust}
+
+*Energia, fluidos e a dimensão ambiental do corte*
+
+> Custo e desempenho não esgotam mais os objetivos da usinagem: energia, fluidos e pegada de carbono entraram na conta. Este capítulo traz a sustentabilidade para dentro do DOE. Apresenta as estratégias de lubri-refrigeração — corte a seco, por jorro e por mínima quantidade de fluido (MQF) — e seus trade-offs; define a energia específica de corte como indicador objetivo de eficiência energética; discute a pegada de carbono e o descarte de fluidos; e mostra como incluir uma resposta ambiental na otimização multiobjetivo, para que a condição recomendada seja ótima também sob a ótica ESG. Reanalisa, sob essa lente, a lubri-refrigeração do estudo de caso.
 
 ## Introdução {#sec-cap-sust-intro}
 

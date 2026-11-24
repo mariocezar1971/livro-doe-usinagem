@@ -1,12 +1,8 @@
----
-title: "Planejamento fatorial 2^k"
-subtitle: "Investigando muitos fatores de uma vez, com poucos ensaios"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Este capítulo apresenta o planejamento fatorial em dois níveis (2^k), a ferramenta que operacionaliza o argumento do Capítulo 1: estudar vários fatores simultaneamente, capturar interações e separar sinal de ruído. Cobre a matriz 2^k, codificação de níveis, replicação e aleatorização; a estimativa de efeitos principais e de interações via contrastes; a análise de variância (ANOVA) interpretada; e a análise de resíduos que valida o modelo. Um exemplo resolvido com os dados reais do estudo de caso — o torneamento das ligas 1350-O e 7075-T6 — percorre todo o fluxo, e o código R (pacote FrF2) reproduz cada etapa. Fecha com exercícios resolvidos passo a passo e uma lista de exercícios propostos.
----
-
 # Planejamento fatorial 2^k {#sec-cap4}
+
+*Investigando muitos fatores de uma vez, com poucos ensaios*
+
+> Este capítulo apresenta o planejamento fatorial em dois níveis (2^k), a ferramenta que operacionaliza o argumento do Capítulo 1: estudar vários fatores simultaneamente, capturar interações e separar sinal de ruído. Cobre a matriz 2^k, codificação de níveis, replicação e aleatorização; a estimativa de efeitos principais e de interações via contrastes; a análise de variância (ANOVA) interpretada; e a análise de resíduos que valida o modelo. Um exemplo resolvido com os dados reais do estudo de caso — o torneamento das ligas 1350-O e 7075-T6 — percorre todo o fluxo, e o código R (pacote FrF2) reproduz cada etapa. Fecha com exercícios resolvidos passo a passo e uma lista de exercícios propostos.
 
 ## Introdução {#sec-cap4-intro}
 

@@ -1,12 +1,8 @@
----
-title: "Otimização multiresposta"
-subtitle: "Conciliando respostas conflitantes: desejabilidade, algoritmos genéticos e NSGA-II"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Este capítulo enfrenta o problema central da usinagem real: otimizar várias respostas conflitantes ao mesmo tempo — minimizar força e rugosidade enquanto se maximiza a produtividade. Apresenta três abordagens complementares. A função desejabilidade de Derringer-Suich, que combina múltiplas respostas num único índice escalar. Os algoritmos genéticos (AG), que buscam o ótimo global por evolução de populações — o método usado no estudo de caso deste livro. E o NSGA-II, algoritmo multiobjetivo que entrega a fronteira de Pareto inteira, expondo os *trade-offs* em vez de escondê-los. Exemplos em Python (pymoo) e R (desirability) percorrem os métodos, com os modelos de segunda ordem do capítulo anterior como funções objetivo. Fecha com exercícios resolvidos passo a passo e uma lista de exercícios propostos.
----
-
 # Otimização multiresposta {#sec-cap6}
+
+*Conciliando respostas conflitantes: desejabilidade, algoritmos genéticos e NSGA-II*
+
+> Este capítulo enfrenta o problema central da usinagem real: otimizar várias respostas conflitantes ao mesmo tempo — minimizar força e rugosidade enquanto se maximiza a produtividade. Apresenta três abordagens complementares. A função desejabilidade de Derringer-Suich, que combina múltiplas respostas num único índice escalar. Os algoritmos genéticos (AG), que buscam o ótimo global por evolução de populações — o método usado no estudo de caso deste livro. E o NSGA-II, algoritmo multiobjetivo que entrega a fronteira de Pareto inteira, expondo os *trade-offs* em vez de escondê-los. Exemplos em Python (pymoo) e R (desirability) percorrem os métodos, com os modelos de segunda ordem do capítulo anterior como funções objetivo. Fecha com exercícios resolvidos passo a passo e uma lista de exercícios propostos.
 
 ## Introdução {#sec-cap6-intro}
 

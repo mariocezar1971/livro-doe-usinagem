@@ -1,12 +1,8 @@
----
-title: "Planejamento composto central e superfícies de resposta"
-subtitle: "Modelando curvatura e localizando o ótimo"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Este capítulo estende o fatorial 2^k para modelar curvatura e localizar condições ótimas de operação. Parte das limitações do fatorial puro — dois níveis não capturam comportamento quadrático — e apresenta o planejamento composto central (PCC), que adiciona pontos axiais e centrais para estimar curvatura com poucos ensaios extras. Cobre a regressão múltipla em forma matricial e o método dos mínimos quadrados; o modelo de segunda ordem da metodologia de superfícies de resposta (RSM); e a interpretação geométrica via curvas de nível e vetor gradiente. Um exemplo com o pacote rsm do R, ancorado nos fatores reais do estudo de caso (velocidade, avanço, profundidade), percorre todo o fluxo, com visualizações 3D. Fecha com exercícios resolvidos passo a passo e uma lista de exercícios propostos.
----
-
 # Planejamento composto central e superfícies de resposta {#sec-cap5}
+
+*Modelando curvatura e localizando o ótimo*
+
+> Este capítulo estende o fatorial 2^k para modelar curvatura e localizar condições ótimas de operação. Parte das limitações do fatorial puro — dois níveis não capturam comportamento quadrático — e apresenta o planejamento composto central (PCC), que adiciona pontos axiais e centrais para estimar curvatura com poucos ensaios extras. Cobre a regressão múltipla em forma matricial e o método dos mínimos quadrados; o modelo de segunda ordem da metodologia de superfícies de resposta (RSM); e a interpretação geométrica via curvas de nível e vetor gradiente. Um exemplo com o pacote rsm do R, ancorado nos fatores reais do estudo de caso (velocidade, avanço, profundidade), percorre todo o fluxo, com visualizações 3D. Fecha com exercícios resolvidos passo a passo e uma lista de exercícios propostos.
 
 ## Introdução {#sec-cap5-intro}
 

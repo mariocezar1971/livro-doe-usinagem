@@ -1,12 +1,8 @@
----
-title: "Análise fatorial 2^k das ligas de alumínio"
-subtitle: "Quais fatores realmente importam — e as interações que surpreendem"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Este capítulo apresenta e discute os resultados do planejamento fatorial 2^k aplicado ao torneamento das ligas de alumínio. A análise de variância revela, para cada resposta de usinabilidade, quais fatores são significativos — e o resultado surpreende: a profundidade de corte domina, a lubri-refrigeração não afeta significativamente nenhuma resposta, e vários efeitos têm sinal contra-intuitivo (a liga mais dura exige menos força; aumentar a velocidade reduz a força). O capítulo dá especial atenção às interações contra-intuitivas, explicando-as pela mecânica do cisalhamento, e traduz cada achado em orientação industrial prática. Os gráficos são refeitos e a análise é reproduzível no código R do estudo.
----
-
 # Análise fatorial 2^k das ligas de alumínio {#sec-cap8}
+
+*Quais fatores realmente importam — e as interações que surpreendem*
+
+> Este capítulo apresenta e discute os resultados do planejamento fatorial 2^k aplicado ao torneamento das ligas de alumínio. A análise de variância revela, para cada resposta de usinabilidade, quais fatores são significativos — e o resultado surpreende: a profundidade de corte domina, a lubri-refrigeração não afeta significativamente nenhuma resposta, e vários efeitos têm sinal contra-intuitivo (a liga mais dura exige menos força; aumentar a velocidade reduz a força). O capítulo dá especial atenção às interações contra-intuitivas, explicando-as pela mecânica do cisalhamento, e traduz cada achado em orientação industrial prática. Os gráficos são refeitos e a análise é reproduzível no código R do estudo.
 
 ## Introdução {#sec-cap8-intro}
 

@@ -1,12 +1,8 @@
----
-title: "Modelos globais e otimização multiresposta"
-subtitle: "O ponto ótimo, a validação e as recomendações operacionais"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Este capítulo é o clímax do estudo de caso. Apresenta os modelos de regressão global, que descrevem a usinabilidade em função das propriedades das ligas (resistência, alongamento, dureza) e das condições de corte; valida esses modelos numa liga que não participou de sua construção — a 6351-T6; e executa a otimização multiresposta que concilia força, potência, temperatura e rugosidade numa única condição de corte recomendada. Reproduz a otimização por algoritmo genético e apresenta a fronteira de Pareto (NSGA-II) como alternativa que expõe os *trade-offs*. Fecha com recomendações operacionais por liga e uma nota sobre a extensão do estudo a novas ligas.
----
-
 # Modelos globais e otimização multiresposta {#sec-cap10}
+
+*O ponto ótimo, a validação e as recomendações operacionais*
+
+> Este capítulo é o clímax do estudo de caso. Apresenta os modelos de regressão global, que descrevem a usinabilidade em função das propriedades das ligas (resistência, alongamento, dureza) e das condições de corte; valida esses modelos numa liga que não participou de sua construção — a 6351-T6; e executa a otimização multiresposta que concilia força, potência, temperatura e rugosidade numa única condição de corte recomendada. Reproduz a otimização por algoritmo genético e apresenta a fronteira de Pareto (NSGA-II) como alternativa que expõe os *trade-offs*. Fecha com recomendações operacionais por liga e uma nota sobre a extensão do estudo a novas ligas.
 
 ## Introdução {#sec-cap10-intro}
 

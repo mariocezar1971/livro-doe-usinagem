@@ -1,12 +1,8 @@
----
-title: "Do laboratório ao chão de fábrica"
-subtitle: "Adaptando o planejamento de experimentos às restrições da indústria"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Este capítulo faz a ponte entre o rigor acadêmico das partes anteriores e a realidade da indústria. O planejamento de experimentos que funcionou no laboratório precisa ser adaptado quando a máquina é de produção, o tempo é dinheiro e cada ensaio compete com a entrega. O capítulo discute como ajustar a metodologia às restrições típicas — custo, tempo, disponibilidade de máquina, ruído do ambiente fabril —, oferece um checklist prático para conduzir um projeto experimental industrial do início ao fim, e cataloga os erros mais frequentes de quem aplica DOE na fábrica, com orientações para evitá-los. É o capítulo que transforma o método em prática.
----
-
 # Do laboratório ao chão de fábrica {#sec-cap11}
+
+*Adaptando o planejamento de experimentos às restrições da indústria*
+
+> Este capítulo faz a ponte entre o rigor acadêmico das partes anteriores e a realidade da indústria. O planejamento de experimentos que funcionou no laboratório precisa ser adaptado quando a máquina é de produção, o tempo é dinheiro e cada ensaio compete com a entrega. O capítulo discute como ajustar a metodologia às restrições típicas — custo, tempo, disponibilidade de máquina, ruído do ambiente fabril —, oferece um checklist prático para conduzir um projeto experimental industrial do início ao fim, e cataloga os erros mais frequentes de quem aplica DOE na fábrica, com orientações para evitá-los. É o capítulo que transforma o método em prática.
 
 ## Introdução {#sec-cap11-intro}
 

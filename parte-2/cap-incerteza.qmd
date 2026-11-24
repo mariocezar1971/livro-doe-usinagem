@@ -1,12 +1,8 @@
----
-title: "Incerteza de medição e reprodutibilidade"
-subtitle: "Quanto confiar nos números que o experimento produz"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Todo resultado experimental traz uma incerteza — e ignorá-la é a forma mais sutil de errar. Este capítulo curto fecha a metodologia com o rigor que falta: a incerteza de medição e a reprodutibilidade das conclusões do DOE. Apresenta a estrutura do GUM para quantificar e propagar incerteza, distingue o intervalo de confiança do intervalo de predição — uma confusão frequente e cara —, mostra como a validação cruzada e o bootstrap estimam a incerteza sem fórmulas fechadas, e discute como a incerteza de medição afeta quais efeitos podemos declarar reais. Fecha propagando a incerteza até o ponto ótimo do estudo de caso, para que a recomendação final venha com sua margem de confiança explícita.
----
-
 # Incerteza de medição e reprodutibilidade {#sec-cap-incerteza}
+
+*Quanto confiar nos números que o experimento produz*
+
+> Todo resultado experimental traz uma incerteza — e ignorá-la é a forma mais sutil de errar. Este capítulo curto fecha a metodologia com o rigor que falta: a incerteza de medição e a reprodutibilidade das conclusões do DOE. Apresenta a estrutura do GUM para quantificar e propagar incerteza, distingue o intervalo de confiança do intervalo de predição — uma confusão frequente e cara —, mostra como a validação cruzada e o bootstrap estimam a incerteza sem fórmulas fechadas, e discute como a incerteza de medição afeta quais efeitos podemos declarar reais. Fecha propagando a incerteza até o ponto ótimo do estudo de caso, para que a recomendação final venha com sua margem de confiança explícita.
 
 ## Introdução {#sec-cap-incerteza-intro}
 

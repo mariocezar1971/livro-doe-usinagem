@@ -1,12 +1,8 @@
----
-title: "Modelagem por superfícies de resposta via PCC"
-subtitle: "Os modelos de segunda ordem, o cavaco e o desgaste das ferramentas"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Este capítulo apresenta os resultados da modelagem por superfícies de resposta, obtida pelo planejamento composto central aplicado às cinco ligas de alumínio. Traz os modelos de segunda ordem ajustados para cada resposta de usinabilidade — força, potência, temperatura, rugosidade e vibração — com seus coeficientes de determinação e termos significativos; discute as curvas de nível que revelam a geometria das superfícies; e reúne dois estudos complementares fundamentais para a prática: o controle do cavaco (com o grau de recalque) e o desgaste das ferramentas. Os modelos aqui construídos são a base da otimização multiresposta do capítulo seguinte.
----
-
 # Modelagem por superfícies de resposta via PCC {#sec-cap9}
+
+*Os modelos de segunda ordem, o cavaco e o desgaste das ferramentas*
+
+> Este capítulo apresenta os resultados da modelagem por superfícies de resposta, obtida pelo planejamento composto central aplicado às cinco ligas de alumínio. Traz os modelos de segunda ordem ajustados para cada resposta de usinabilidade — força, potência, temperatura, rugosidade e vibração — com seus coeficientes de determinação e termos significativos; discute as curvas de nível que revelam a geometria das superfícies; e reúne dois estudos complementares fundamentais para a prática: o controle do cavaco (com o grau de recalque) e o desgaste das ferramentas. Os modelos aqui construídos são a base da otimização multiresposta do capítulo seguinte.
 
 ## Introdução {#sec-cap9-intro}
 

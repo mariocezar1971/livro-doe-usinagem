@@ -1,12 +1,8 @@
----
-title: "Por que DOE em manufatura?"
-subtitle: "O custo de não planejar experimentos industriais"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Apresenta a motivação central do livro: por que abordagens 'um fator por vez' (OFAT) falham em revelar interações relevantes, e como o planejamento de experimentos sistematiza a investigação industrial. Discute os limites cognitivos e econômicos da experimentação ingênua e situa o DOE dentro de setores estratégicos da manufatura brasileira.
----
-
 # Por que DOE em manufatura? {#sec-cap1}
+
+*O custo de não planejar experimentos industriais*
+
+> Apresenta a motivação central do livro: por que abordagens 'um fator por vez' (OFAT) falham em revelar interações relevantes, e como o planejamento de experimentos sistematiza a investigação industrial. Discute os limites cognitivos e econômicos da experimentação ingênua e situa o DOE dentro de setores estratégicos da manufatura brasileira.
 
 ## Uma pergunta que custa milhões {#sec-pergunta-milhoes}
 

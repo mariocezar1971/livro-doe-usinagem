@@ -1,7 +1,3 @@
----
-title: "Prefácio"
----
-
 # Prefácio {.unnumbered}
 
 ## Por que este livro existe

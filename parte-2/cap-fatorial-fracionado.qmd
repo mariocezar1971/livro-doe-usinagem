@@ -1,12 +1,8 @@
----
-title: "Planejamento fatorial fracionado"
-subtitle: "Estudar muitos fatores com metade (ou menos) dos ensaios"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Quando os fatores se multiplicam, o fatorial completo explode: sete fatores já exigem 128 ensaios. Este capítulo apresenta o planejamento fatorial fracionado — a ferramenta que estuda muitos fatores com uma fração dos ensaios, apoiada no princípio da esparsidade dos efeitos. Cobre o gerador e a relação de definição; a resolução (III, IV e V) e o que cada uma confunde; a estrutura de confundimento (aliasing) e como lê-la; e os planejamentos de triagem de Plackett-Burman. Um exemplo resolvido aplica um 2^(5-1) de resolução V aos cinco fatores do estudo de caso, cortando de 32 para 16 ensaios sem perder os efeitos principais nem as interações de dois fatores, e o código R (pacote FrF2) reproduz cada etapa. Fecha com exercícios resolvidos passo a passo e uma lista de exercícios propostos com gabarito.
----
-
 # Planejamento fatorial fracionado {#sec-cap-frac}
+
+*Estudar muitos fatores com metade (ou menos) dos ensaios*
+
+> Quando os fatores se multiplicam, o fatorial completo explode: sete fatores já exigem 128 ensaios. Este capítulo apresenta o planejamento fatorial fracionado — a ferramenta que estuda muitos fatores com uma fração dos ensaios, apoiada no princípio da esparsidade dos efeitos. Cobre o gerador e a relação de definição; a resolução (III, IV e V) e o que cada uma confunde; a estrutura de confundimento (aliasing) e como lê-la; e os planejamentos de triagem de Plackett-Burman. Um exemplo resolvido aplica um 2^(5-1) de resolução V aos cinco fatores do estudo de caso, cortando de 32 para 16 ensaios sem perder os efeitos principais nem as interações de dois fatores, e o código R (pacote FrF2) reproduz cada etapa. Fecha com exercícios resolvidos passo a passo e uma lista de exercícios propostos com gabarito.
 
 ## Introdução {#sec-capfrac-intro}
 

@@ -1,12 +1,8 @@
----
-title: "Síntese e direções de pesquisa"
-subtitle: "O que ficou provado, e para onde a área caminha"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Este capítulo final sintetiza as lições do livro em formato executivo — as conclusões que um engenheiro ou gestor precisa levar consigo — e aponta as direções de pesquisa que o futuro reserva ao planejamento de experimentos em usinagem. Condensa os achados centrais do estudo de caso (efeitos, interações, modelos e otimização das ligas de alumínio), destila as recomendações práticas, e projeta as tendências que já reformam a área: lubri-refrigeração sustentável (MQL, criogenia), inteligência artificial aplicada à usinagem, e a integração com a Indústria 4.0. É onde o livro fecha o arco do laboratório ao futuro.
----
-
 # Síntese e direções de pesquisa {#sec-cap12}
+
+*O que ficou provado, e para onde a área caminha*
+
+> Este capítulo final sintetiza as lições do livro em formato executivo — as conclusões que um engenheiro ou gestor precisa levar consigo — e aponta as direções de pesquisa que o futuro reserva ao planejamento de experimentos em usinagem. Condensa os achados centrais do estudo de caso (efeitos, interações, modelos e otimização das ligas de alumínio), destila as recomendações práticas, e projeta as tendências que já reformam a área: lubri-refrigeração sustentável (MQL, criogenia), inteligência artificial aplicada à usinagem, e a integração com a Indústria 4.0. É onde o livro fecha o arco do laboratório ao futuro.
 
 ## Introdução {#sec-cap12-intro}
 

@@ -1,12 +1,8 @@
----
-title: "Projeto experimental do estudo de caso"
-subtitle: "As seis ligas, os ensaios de torneamento e os planejamentos aplicados"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Este capítulo abre a Parte III apresentando o projeto experimental que gerou todos os dados do estudo de caso do livro. Descreve a caracterização das seis ligas de alumínio (microestrutura, dureza e tração); a configuração dos ensaios de torneamento (máquina, ferramentas, condições de lubri-refrigeração e as respostas medidas); e os dois planejamentos aplicados — o fatorial 2^k, que identifica os fatores significativos, e o planejamento composto central, que modela as superfícies de resposta. A visão de conjunto fica aqui; os detalhes de instrumentação e das cadeias de medição estão reunidos no Apêndice A. É o capítulo que conecta a metodologia da Parte II aos resultados dos capítulos seguintes.
----
-
 # Projeto experimental do estudo de caso {#sec-cap7}
+
+*As seis ligas, os ensaios de torneamento e os planejamentos aplicados*
+
+> Este capítulo abre a Parte III apresentando o projeto experimental que gerou todos os dados do estudo de caso do livro. Descreve a caracterização das seis ligas de alumínio (microestrutura, dureza e tração); a configuração dos ensaios de torneamento (máquina, ferramentas, condições de lubri-refrigeração e as respostas medidas); e os dois planejamentos aplicados — o fatorial 2^k, que identifica os fatores significativos, e o planejamento composto central, que modela as superfícies de resposta. A visão de conjunto fica aqui; os detalhes de instrumentação e das cadeias de medição estão reunidos no Apêndice A. É o capítulo que conecta a metodologia da Parte II aos resultados dos capítulos seguintes.
 
 ## Introdução {#sec-cap7-intro}
 

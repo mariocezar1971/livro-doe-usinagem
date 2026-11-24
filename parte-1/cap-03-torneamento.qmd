@@ -1,12 +1,8 @@
----
-title: "Fundamentos de torneamento"
-subtitle: "Geometria, cavaco e os fenômenos que decidem a usinabilidade"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Este capítulo estabelece a mecânica do torneamento que sustenta os estudos experimentais das próximas partes do livro. Parte da definição do processo e da geometria das ferramentas monocortantes, reconstrói didaticamente a formação do cavaco e o Círculo de Merchant, classifica tipos e formas de cavaco segundo a ISO 3685, e descreve os fenômenos da interface cavaco-ferramenta — zonas de aderência, escorregamento e fluxo, e a aresta postiça de corte. Fecha conectando as variáveis controláveis (velocidade, avanço, profundidade) às respostas mensuráveis (força, potência, temperatura, rugosidade) que serão os fatores e as respostas dos planejamentos de experimentos.
----
-
 # Fundamentos de torneamento {#sec-cap3}
+
+*Geometria, cavaco e os fenômenos que decidem a usinabilidade*
+
+> Este capítulo estabelece a mecânica do torneamento que sustenta os estudos experimentais das próximas partes do livro. Parte da definição do processo e da geometria das ferramentas monocortantes, reconstrói didaticamente a formação do cavaco e o Círculo de Merchant, classifica tipos e formas de cavaco segundo a ISO 3685, e descreve os fenômenos da interface cavaco-ferramenta — zonas de aderência, escorregamento e fluxo, e a aresta postiça de corte. Fecha conectando as variáveis controláveis (velocidade, avanço, profundidade) às respostas mensuráveis (força, potência, temperatura, rugosidade) que serão os fatores e as respostas dos planejamentos de experimentos.
 
 ## Introdução {#sec-cap3-intro}
 

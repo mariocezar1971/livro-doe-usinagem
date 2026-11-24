@@ -1,7 +1,3 @@
----
-title: "Sobre o autor"
----
-
 # Sobre o autor {#sec-sobre-autor .unnumbered}
 
 **Mário Cezar dos Santos Júnior** é Professor do Ensino Básico, Técnico e Tecnológico (EBTT), em regime de Dedicação Exclusiva, no Instituto Federal do Espírito Santo (IFES), Campus Vitória, lotado na Coordenadoria de Mecânica. Leciona disciplinas de Usinagem, Ajustagem Mecânica, Soldagem e Planejamento de Experimentos, e orienta estudantes de iniciação científica (PIBIC).

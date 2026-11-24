@@ -1,12 +1,8 @@
----
-title: "Apêndice B — Códigos R e Python"
-subtitle: "Os scripts das análises, comentados e prontos para uso"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Este apêndice consolida os códigos R e Python usados nas análises do livro, organizados por tarefa: planejamento fatorial, superfícies de resposta, otimização multiresposta e visualização. Cada bloco é comentado para uso direto. Os códigos completos e os dados que os alimentam estão disponíveis em repositório aberto, cujo acesso é indicado ao final. O objetivo é que o leitor reproduza cada análise do livro e a adapte ao seu próprio problema.
----
-
 # Apêndice B — Códigos R e Python {#sec-apendice-b}
+
+*Os scripts das análises, comentados e prontos para uso*
+
+> Este apêndice consolida os códigos R e Python usados nas análises do livro, organizados por tarefa: planejamento fatorial, superfícies de resposta, otimização multiresposta e visualização. Cada bloco é comentado para uso direto. Os códigos completos e os dados que os alimentam estão disponíveis em repositório aberto, cujo acesso é indicado ao final. O objetivo é que o leitor reproduza cada análise do livro e a adapte ao seu próprio problema.
 
 ## Propósito {#sec-apb-proposito}
 

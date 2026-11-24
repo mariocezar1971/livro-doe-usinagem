@@ -1,12 +1,8 @@
----
-title: "Apêndice D — Dados experimentais consolidados"
-subtitle: "Estrutura, dicionário e acesso aos dados abertos do estudo"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Este apêndice documenta os dados experimentais que originaram as análises do livro e sua disponibilização como recurso aberto. Descreve a estrutura das tabelas, o dicionário de dados (variáveis, unidades e formatos) e o acesso aos arquivos. A abertura dos dados permite reproduzir as análises do livro, validar os modelos e aplicar os métodos aos dados reais que os geraram.
----
-
 # Apêndice D — Dados experimentais consolidados {#sec-apendice-d}
+
+*Estrutura, dicionário e acesso aos dados abertos do estudo*
+
+> Este apêndice documenta os dados experimentais que originaram as análises do livro e sua disponibilização como recurso aberto. Descreve a estrutura das tabelas, o dicionário de dados (variáveis, unidades e formatos) e o acesso aos arquivos. A abertura dos dados permite reproduzir as análises do livro, validar os modelos e aplicar os métodos aos dados reais que os geraram.
 
 ## Propósito {#sec-apd-proposito}
 

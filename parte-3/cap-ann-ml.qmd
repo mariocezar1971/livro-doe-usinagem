@@ -1,12 +1,8 @@
----
-title: "Do RSM ao aprendizado de máquina"
-subtitle: "Redes neurais, modelos substitutos e interpretabilidade"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Os modelos de segunda ordem do capítulo anterior são excelentes quando a superfície de resposta é suave e quase quadrática — mas nem toda resposta de usinabilidade se deixa descrever por um polinômio. Este capítulo estende a modelagem do RSM ao aprendizado de máquina: apresenta o conceito de modelo substituto (surrogate), as redes neurais do tipo perceptron multicamadas, o problema central do sobreajuste e sua regularização, e dois substitutos alternativos — florestas aleatórias e processos gaussianos. Compara, em dados do planejamento composto central, o modelo de segunda ordem com cada técnica de aprendizado, mostrando quando cada abordagem ganha. Fecha com a interpretabilidade: como recuperar, de um modelo "caixa-preta", a física que o experimento já ensinara.
----
-
 # Do RSM ao aprendizado de máquina {#sec-cap-ann}
+
+*Redes neurais, modelos substitutos e interpretabilidade*
+
+> Os modelos de segunda ordem do capítulo anterior são excelentes quando a superfície de resposta é suave e quase quadrática — mas nem toda resposta de usinabilidade se deixa descrever por um polinômio. Este capítulo estende a modelagem do RSM ao aprendizado de máquina: apresenta o conceito de modelo substituto (surrogate), as redes neurais do tipo perceptron multicamadas, o problema central do sobreajuste e sua regularização, e dois substitutos alternativos — florestas aleatórias e processos gaussianos. Compara, em dados do planejamento composto central, o modelo de segunda ordem com cada técnica de aprendizado, mostrando quando cada abordagem ganha. Fecha com a interpretabilidade: como recuperar, de um modelo "caixa-preta", a física que o experimento já ensinara.
 
 ## Introdução {#sec-cap-ann-intro}
 

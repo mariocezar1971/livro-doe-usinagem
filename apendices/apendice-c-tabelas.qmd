@@ -1,12 +1,8 @@
----
-title: "Apêndice C — Tabelas estatísticas"
-subtitle: "Valores críticos e coeficientes para o planejamento de experimentos"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Este apêndice reúne as tabelas estatísticas de consulta necessárias para aplicar os métodos do livro: valores críticos das distribuições t de Student, F de Snedecor e qui-quadrado, usados nos testes de significância da ANOVA e das regressões; e os coeficientes para a construção do planejamento composto central. São tabelas de referência rápida para o leitor que conduz suas próprias análises.
----
-
 # Apêndice C — Tabelas estatísticas {#sec-apendice-c}
+
+*Valores críticos e coeficientes para o planejamento de experimentos*
+
+> Este apêndice reúne as tabelas estatísticas de consulta necessárias para aplicar os métodos do livro: valores críticos das distribuições t de Student, F de Snedecor e qui-quadrado, usados nos testes de significância da ANOVA e das regressões; e os coeficientes para a construção do planejamento composto central. São tabelas de referência rápida para o leitor que conduz suas próprias análises.
 
 ## Propósito {#sec-apc-proposito}
 

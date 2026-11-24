@@ -1,7 +1,3 @@
----
-title: "Glossário"
----
-
 # Glossário {#sec-glossario .unnumbered}
 
 Definições dos principais termos técnicos empregados no livro, organizados por área. Os termos em inglês de uso consagrado aparecem entre parênteses.

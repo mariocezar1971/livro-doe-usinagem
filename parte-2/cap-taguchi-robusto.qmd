@@ -1,12 +1,8 @@
----
-title: "Projeto robusto e métodos de Taguchi"
-subtitle: "Otimizar a média e domar a variabilidade com poucos ensaios"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Um processo bom não é só o que acerta a média — é o que varia pouco apesar do ruído. Este capítulo apresenta a abordagem de Genichi Taguchi para o projeto robusto de parâmetros: a filosofia da função perda, a distinção entre fatores de controle e fatores de ruído, os arranjos ortogonais (L8, L9, L16) que estudam muitos fatores com pouquíssimos ensaios, e a razão sinal-ruído (S/N) nos três casos — menor-melhor, maior-melhor e nominal-melhor. Situa o método ao lado do DOE clássico, com suas forças e suas críticas. Um exemplo resolvido reanalisa, pela razão S/N, os dados replicados do fatorial do Capítulo @sec-cap4, e o código R (pacotes qualityTools e FrF2) reproduz o cálculo. Fecha com exercícios resolvidos passo a passo e uma lista de exercícios propostos com gabarito.
----
-
 # Projeto robusto e métodos de Taguchi {#sec-cap-taguchi}
+
+*Otimizar a média e domar a variabilidade com poucos ensaios*
+
+> Um processo bom não é só o que acerta a média — é o que varia pouco apesar do ruído. Este capítulo apresenta a abordagem de Genichi Taguchi para o projeto robusto de parâmetros: a filosofia da função perda, a distinção entre fatores de controle e fatores de ruído, os arranjos ortogonais (L8, L9, L16) que estudam muitos fatores com pouquíssimos ensaios, e a razão sinal-ruído (S/N) nos três casos — menor-melhor, maior-melhor e nominal-melhor. Situa o método ao lado do DOE clássico, com suas forças e suas críticas. Um exemplo resolvido reanalisa, pela razão S/N, os dados replicados do fatorial do Capítulo @sec-cap4, e o código R (pacotes qualityTools e FrF2) reproduz o cálculo. Fecha com exercícios resolvidos passo a passo e uma lista de exercícios propostos com gabarito.
 
 ## Introdução {#sec-captag-intro}
 

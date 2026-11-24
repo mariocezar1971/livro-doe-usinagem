@@ -1,12 +1,8 @@
----
-title: "Otimização econômica da usinagem"
-subtitle: "Custo, produtividade e vida de ferramenta"
-author: "Mário Cezar dos Santos Jr."
-abstract: |
-  Até aqui a otimização buscou o melhor desempenho técnico — menor força, menor rugosidade, menor vibração. Mas o chão de fábrica cobra uma pergunta adicional: quanto custa, e quão rápido? Este capítulo traz a economia da usinagem para dentro do DOE. Apresenta a equação de Taylor da vida de ferramenta, o modelo de custo por peça, a taxa de produção, e deduz as duas velocidades notáveis — a de mínimo custo e a de máxima produção — e o intervalo de máxima eficiência entre elas. Mostra, por fim, como acrescentar o objetivo econômico à otimização multiresposta, para que a condição recomendada seja ótima não só na bancada, mas na planilha de custos.
----
-
 # Otimização econômica da usinagem {#sec-cap-econ}
+
+*Custo, produtividade e vida de ferramenta*
+
+> Até aqui a otimização buscou o melhor desempenho técnico — menor força, menor rugosidade, menor vibração. Mas o chão de fábrica cobra uma pergunta adicional: quanto custa, e quão rápido? Este capítulo traz a economia da usinagem para dentro do DOE. Apresenta a equação de Taylor da vida de ferramenta, o modelo de custo por peça, a taxa de produção, e deduz as duas velocidades notáveis — a de mínimo custo e a de máxima produção — e o intervalo de máxima eficiência entre elas. Mostra, por fim, como acrescentar o objetivo econômico à otimização multiresposta, para que a condição recomendada seja ótima não só na bancada, mas na planilha de custos.
 
 ## Introdução {#sec-cap-econ-intro}
 
