@@ -136,6 +136,8 @@ Calculando a **S/N média por nível** de cada fator (lembre: maior S/N é melho
 
 **Interpretação.** A condição mais robusta (maior S/N em cada fator) é **A = −1 (liga mole), B = +1 (velocidade alta), C = −1 (avanço baixo)**. O tamanho de $\Delta$ ordena a importância dos fatores: A (5,02) > C (3,90) > B (0,52) — exatamente a mesma hierarquia da análise de efeitos clássica do Capítulo @sec-cap4, onde Liga e avanço dominavam a força. Os dois caminhos convergem — e é assim que deve ser: quando a variabilidade entre réplicas é pequena, a S/N "menor-melhor" essencialmente ordena pela magnitude da resposta. A razão S/N mostra sua força extra quando as condições diferem **na dispersão**, não só na média — aí ela separa o que a análise da média sozinha não vê.
 
+![Esquerda: efeitos principais da razão S/N por nível — o fator A tem o maior $\Delta$ (5,02 dB), C é intermediário (3,90) e B quase plano (0,52); escolhe-se o nível de maior S/N. Direita: a função perda quadrática de Taguchi, cuja perda esperada se decompõe em viés$^2$ + variância.](../figuras/fig-taguchi-sn.png){#fig-taguchi width=100%}
+
 ## Implementação em R {#sec-captag-codigo}
 
 Vários pacotes implementam a análise de Taguchi. O **qualityTools** gera arranjos e calcula a razão S/N diretamente.

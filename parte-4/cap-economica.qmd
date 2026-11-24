@@ -158,6 +158,8 @@ O **intervalo de máxima eficiência** vai, portanto, de **323 a 447 m/min**. A 
 
 A leitura é instrutiva: ir do mínimo custo à máxima produção **encurta o tempo por peça em apenas 3%** (1,27 → 1,23 min), mas **encarece a peça em 5%** (R\$ 1,99 → R\$ 2,09) e **triplica o consumo de ferramenta** (vida de 22 para 6 min). Produzir no limite da máxima produção só se justifica quando a máquina é gargalo e cada minuto de produção vale mais que o custo extra de ferramenta.
 
+![Custo e tempo por peça em função da velocidade de corte (esq.) e a vida de ferramenta de Taylor (dir.). O custo é mínimo em ~323 m/min e a produção máxima em ~447 m/min; entre elas fica a faixa de máxima eficiência. Parâmetros ilustrativos.](../figuras/fig-econ-custo-velocidade.png){#fig-econ-curvas width=100%}
+
 ### O trade-off custo × rugosidade {#sec-cap-econ-pareto}
 
 E o avanço? Ele não muda a velocidade de mínimo custo, mas governa um trade-off próprio: **avanço maior barateia a peça** (usina mais rápido) **e piora a rugosidade** (@sec-cap9). Com a rugosidade teórica $R_a \approx f^2/(32\, r_\varepsilon)$ (raio de ponta $r_\varepsilon = 0{,}8$ mm), cada avanço, operado em sua velocidade de mínimo custo, dá o par da Tabela @tbl-econ-pareto.

@@ -62,6 +62,8 @@ $$d_r = \begin{cases} 0 & y_r \le L \\ \left(\dfrac{y_r - L}{U - L}\right)^s & L
 
 Aqui $L$ e $U$ são os limites inferior e superior aceitáveis, e o expoente $s$ (o "peso") controla o rigor: $s > 1$ exige aproximar-se muito do ideal para pontuar bem; $s < 1$ é mais tolerante. Há também a forma "alvo" (target), para respostas que devem atingir um valor específico, nem maior nem menor.
 
+![Funções de desejabilidade de Derringer-Suich: menor é melhor, maior é melhor e alvo (nominal). O expoente $s$ controla o rigor — $s>1$ exige aproximar-se muito do ideal para pontuar bem; $s<1$ é mais tolerante.](../figuras/fig-desejabilidade.png){#fig-desejabilidade width=100%}
+
 ### A desejabilidade global
 
 O passo genial é a agregação. As $m$ desejabilidades individuais combinam-se numa **desejabilidade global** $D$, pela média geométrica:

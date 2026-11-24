@@ -97,6 +97,8 @@ No ponto central $(0,0,0)$, o modelo prevê $\hat{y} = 300{,}0$ N. Aplicando @eq
 
 O **intervalo de predição é 2,7 vezes mais largo** que o de confiança: a média do processo é conhecida a ±9 N, mas uma peça individual pode cair em uma faixa de ±25 N. Nas **bordas** do domínio a diferença muda de caráter: num ponto axial ($a_p = +1{,}68$), a alavancagem $h_0$ cresce e o próprio IC alarga para ±17,8 N — longe do centro, o modelo é menos preciso, e extrapolar além dos pontos amostrados amplia ainda mais a incerteza.
 
+![Intervalo de confiança (faixa escura, incerteza da média do processo) e intervalo de predição (faixa clara, uma peça individual) ao longo de um fator codificado. O IP é sempre mais largo; ambos se estreitam no centro e alargam nas bordas (alavancagem).](../figuras/fig-incerteza-ic-ip.png){#fig-ic-ip width=85%}
+
 ### Bootstrap de um efeito {.unnumbered}
 
 O coeficiente linear da profundidade $a_p$ — o fator dominante da força — vale $99{,}6$ N, com erro padrão analítico de $2{,}78$ N. Um **bootstrap de resíduos** com 5000 reamostras (o método correto para o projeto fixo) devolve erro padrão de $2{,}78$ N e intervalo de 95% de $[93{,}9;\ 104{,}9]$ N — idêntico ao analítico, confirmando a estimativa por via independente de qualquer suposição de normalidade. A razão $t = 99{,}6/2{,}78 = 35{,}8$ coloca o efeito muito acima do limiar de significância: é um fato sólido, não ruído.
