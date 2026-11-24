@@ -134,7 +134,7 @@ O quadro abaixo compara as duas abordagens no cenário do exemplo anterior (trê
 
 À medida que o número de fatores cresce, a vantagem quantitativa do DOE se amplia. Considere sete fatores a dois níveis. O fatorial completo $2^7 = 128$ experimentos, o que é excessivo. Mas o DOE oferece **planejamentos fracionários**, como o $2^{7-3}_{IV}$, que estima os sete efeitos principais e as principais interações de dois fatores com apenas 16 experimentos. Fazer OFAT com sete variáveis exigiria pelo menos 14 experimentos e ainda não estimaria interação alguma.
 
-Este livro dedica os Capítulos 4 a 8 (@sec-cap4, @sec-cap-frac, @sec-cap5, @sec-cap6, @sec-cap-taguchi) à mecânica do DOE: como escolher fatores e níveis, como executar planejamentos fatoriais completos e fracionários, como ajustar superfícies de resposta, como combinar múltiplas respostas conflitantes em uma otimização única e como obter processos robustos à variação de ruído. Os Capítulos 9 a 13 (@sec-cap7, @sec-cap8, @sec-cap9, @sec-cap-ann, @sec-cap10) aplicam a metodologia ao torneamento de seis ligas de alumínio comerciais — incluindo uma ponte do RSM ao aprendizado de máquina — fechando o ciclo teoria-prática.
+Este livro dedica os Capítulos 4 a 9 (@sec-cap4, @sec-cap-frac, @sec-cap5, @sec-cap6, @sec-cap-taguchi, @sec-cap-incerteza) à mecânica do DOE: como escolher fatores e níveis, como executar planejamentos fatoriais completos e fracionários, como ajustar superfícies de resposta, como combinar múltiplas respostas conflitantes em uma otimização única, como obter processos robustos à variação de ruído e como quantificar a incerteza das conclusões. Os Capítulos 10 a 14 (@sec-cap7, @sec-cap8, @sec-cap9, @sec-cap-ann, @sec-cap10) aplicam a metodologia ao torneamento de seis ligas de alumínio comerciais — incluindo uma ponte do RSM ao aprendizado de máquina — fechando o ciclo teoria-prática.
 
 ## Onde o DOE mora na indústria brasileira {#sec-doe-industria-br}
 
@@ -160,7 +160,7 @@ Empresas do porte de Gerdau e Vale, em suas operações de laminação e de bene
 
 Este livro nasce de uma tese de doutorado defendida em 2012 na Faculdade de Engenharia Mecânica da Universidade Federal de Uberlândia. O estudo aplicou planejamento fatorial completo, planejamento composto central e otimização multiresposta a seis ligas de alumínio da série 6xxx e 7xxx, com foco em torneamento a seco e com fluido em condições próximas às praticadas na indústria automotiva de auto peças. As decisões metodológicas tomadas ali foram, ao longo da década seguinte, refinadas em sala de aula com alunos de graduação e pós-graduação do IFES, e ajustadas pela experiência de aplicação em colaborações pontuais com indústrias do Espírito Santo.
 
-Nada do que este livro apresenta é original em termos de teoria: DOE é um corpo consolidado de conhecimento desde os anos 1950, refinado por décadas na comunidade estatística e industrial internacional. O que se propõe original é a **integração didática**: uma sequência única que parte da motivação (este capítulo), passa pela metalurgia e pela usinagem específicas do alumínio (Capítulos 2 e 3, @sec-cap2 e @sec-cap3), estabelece a metodologia (Capítulos 4 a 8), aplica ao caso real (Capítulos 9 a 13) e discute a aplicação à indústria (Capítulos 14 a 17, @sec-cap11, @sec-cap-econ, @sec-cap-sust e @sec-cap12).
+Nada do que este livro apresenta é original em termos de teoria: DOE é um corpo consolidado de conhecimento desde os anos 1950, refinado por décadas na comunidade estatística e industrial internacional. O que se propõe original é a **integração didática**: uma sequência única que parte da motivação (este capítulo), passa pela metalurgia e pela usinagem específicas do alumínio (Capítulos 2 e 3, @sec-cap2 e @sec-cap3), estabelece a metodologia (Capítulos 4 a 9), aplica ao caso real (Capítulos 10 a 14) e discute a aplicação à indústria (Capítulos 15 a 18, @sec-cap11, @sec-cap-econ, @sec-cap-sust e @sec-cap12).
 
 ## O mapa deste livro {#sec-mapa-livro}
 
@@ -168,19 +168,19 @@ Este livro está organizado em quatro partes e quatro apêndices. O caminho reco
 
 ### Parte I --- Fundamentos (Capítulos 1 a 3)
 
-O leitor está aqui. Os Capítulos 2 (@sec-cap2) e 3 (@sec-cap3) apresentam, respectivamente, a metalurgia das ligas de alumínio trabalháveis e os fundamentos do torneamento por arrancamento de cavaco. Um leitor com formação em manufatura pode pular ou consultar por referência. Um leitor com formação em estatística e aplicação industrial em outro setor deveria ler ambos, pois o vocabulário técnico dos Capítulos 9 a 13 é construído em cima deles.
+O leitor está aqui. Os Capítulos 2 (@sec-cap2) e 3 (@sec-cap3) apresentam, respectivamente, a metalurgia das ligas de alumínio trabalháveis e os fundamentos do torneamento por arrancamento de cavaco. Um leitor com formação em manufatura pode pular ou consultar por referência. Um leitor com formação em estatística e aplicação industrial em outro setor deveria ler ambos, pois o vocabulário técnico dos Capítulos 10 a 14 é construído em cima deles.
 
-### Parte II --- Metodologia DOE (Capítulos 4 a 8)
+### Parte II --- Metodologia DOE (Capítulos 4 a 9)
 
-Núcleo estatístico do livro. O Capítulo 4 (@sec-cap4) apresenta o planejamento fatorial $2^k$ completo, com análise de significância. O Capítulo 5 (@sec-cap-frac) estende-o ao **planejamento fatorial fracionado**, que estuda muitos fatores com uma fração dos ensaios. O Capítulo 6 (@sec-cap5) introduz o planejamento composto central (PCC) e o ajuste de superfícies de resposta (RSM). O Capítulo 7 (@sec-cap6) trata da otimização multiresposta, incluindo função desejabilidade e algoritmos genéticos. O Capítulo 8 (@sec-cap-taguchi) apresenta o **projeto robusto e os métodos de Taguchi**, voltados a reduzir a variabilidade diante do ruído. Essa parte é auto-suficiente e pode ser lida como um curso curto de DOE, independentemente do estudo de caso.
+Núcleo estatístico do livro. O Capítulo 4 (@sec-cap4) apresenta o planejamento fatorial $2^k$ completo, com análise de significância. O Capítulo 5 (@sec-cap-frac) estende-o ao **planejamento fatorial fracionado**, que estuda muitos fatores com uma fração dos ensaios. O Capítulo 6 (@sec-cap5) introduz o planejamento composto central (PCC) e o ajuste de superfícies de resposta (RSM). O Capítulo 7 (@sec-cap6) trata da otimização multiresposta, incluindo função desejabilidade e algoritmos genéticos. O Capítulo 8 (@sec-cap-taguchi) apresenta o **projeto robusto e os métodos de Taguchi**, voltados a reduzir a variabilidade diante do ruído. O Capítulo 9 (@sec-cap-incerteza) fecha a metodologia com a **incerteza de medição e a reprodutibilidade** — intervalos de confiança e de predição, propagação de incerteza e bootstrap. Essa parte é auto-suficiente e pode ser lida como um curso curto de DOE, independentemente do estudo de caso.
 
-### Parte III --- Estudo de caso (Capítulos 9 a 13)
+### Parte III --- Estudo de caso (Capítulos 10 a 14)
 
-Aplicação integral da metodologia. O Capítulo 9 (@sec-cap7) descreve o projeto experimental: fatores escolhidos, respostas medidas, matriz de planejamento. O Capítulo 10 (@sec-cap8) executa a análise fatorial. O Capítulo 11 (@sec-cap9) executa o PCC e ajusta as superfícies. O Capítulo 12 (@sec-cap-ann) estende a modelagem ao aprendizado de máquina — redes neurais e modelos substitutos. O Capítulo 13 (@sec-cap10) apresenta a otimização global, com múltiplas respostas conflitantes.
+Aplicação integral da metodologia. O Capítulo 10 (@sec-cap7) descreve o projeto experimental: fatores escolhidos, respostas medidas, matriz de planejamento. O Capítulo 11 (@sec-cap8) executa a análise fatorial. O Capítulo 12 (@sec-cap9) executa o PCC e ajusta as superfícies. O Capítulo 13 (@sec-cap-ann) estende a modelagem ao aprendizado de máquina — redes neurais e modelos substitutos. O Capítulo 14 (@sec-cap10) apresenta a otimização global, com múltiplas respostas conflitantes.
 
-### Parte IV --- Aplicação (Capítulos 14 a 17)
+### Parte IV --- Aplicação (Capítulos 15 a 18)
 
-Discussão pragmática. O Capítulo 14 (@sec-cap11) aborda o DOE no ambiente de chão de fábrica, com restrições reais de disponibilidade de máquina, tempo de setup, custo de matéria-prima e coleta de dados durante produção. O Capítulo 15 (@sec-cap-econ) traz a otimização econômica — custo por peça, produtividade e vida de ferramenta (equação de Taylor). O Capítulo 16 (@sec-cap-sust) incorpora a sustentabilidade — energia, fluidos e pegada ambiental. O Capítulo 17 (@sec-cap12) sintetiza os aprendizados e discute tendências: IA, criogenia, digitalização de processos.
+Discussão pragmática. O Capítulo 15 (@sec-cap11) aborda o DOE no ambiente de chão de fábrica, com restrições reais de disponibilidade de máquina, tempo de setup, custo de matéria-prima e coleta de dados durante produção. O Capítulo 16 (@sec-cap-econ) traz a otimização econômica — custo por peça, produtividade e vida de ferramenta (equação de Taylor). O Capítulo 17 (@sec-cap-sust) incorpora a sustentabilidade — energia, fluidos e pegada ambiental. O Capítulo 18 (@sec-cap12) sintetiza os aprendizados e discute tendências: IA, criogenia, digitalização de processos.
 
 ### Apêndices
 
@@ -192,8 +192,8 @@ Três perfis de leitor e três caminhos sugeridos:
 
 ::: {.callout-important}
 ## Decisão de projeto: qual caminho seguir?
-- **Aluno de pós-graduação com projeto de DOE em curso.** Ler Capítulos 1, 4, 5, 6, 7 e 8 em sequência. Consultar Capítulos 2 e 3 conforme a aplicação. Usar os Capítulos 9 a 13 como estudo de caso resolvido para comparar com o próprio projeto.
-- **Engenheiro de processo com problema específico de usinagem.** Ler Capítulos 1 e 14 primeiro (motivação e restrições práticas). Depois, ir direto ao Capítulo 4 e voltar aos Capítulos 6 e 7 conforme a complexidade do problema. Os Capítulos 2, 3 e o estudo de caso servem como referência.
+- **Aluno de pós-graduação com projeto de DOE em curso.** Ler Capítulos 1, 4, 5, 6, 7, 8 e 9 em sequência. Consultar Capítulos 2 e 3 conforme a aplicação. Usar os Capítulos 10 a 14 como estudo de caso resolvido para comparar com o próprio projeto.
+- **Engenheiro de processo com problema específico de usinagem.** Ler Capítulos 1 e 15 primeiro (motivação e restrições práticas). Depois, ir direto ao Capítulo 4 e voltar aos Capítulos 6 e 7 conforme a complexidade do problema. Os Capítulos 2, 3 e o estudo de caso servem como referência.
 - **Professor preparando disciplina de DOE.** Ler o livro inteiro em ordem, usando os exercícios propostos ao fim de cada capítulo como banco de questões. O estudo de caso oferece um exemplo integrado que pode ser distribuído ao longo do semestre.
 :::
 
@@ -219,7 +219,7 @@ Este livro trata da segunda opção. O próximo capítulo (@sec-cap2) começa po
 
 ::: {.callout-note}
 ## Objetivos dos exercícios
-Os exercícios abaixo têm três finalidades: (1) verificar a compreensão dos conceitos apresentados, (2) desenvolver a intuição para reconhecer situações em que OFAT falha, e (3) preparar o leitor para as questões técnicas dos Capítulos 4 a 8. Não é necessário fazer todos: escolha os que mais se aproximam da sua realidade.
+Os exercícios abaixo têm três finalidades: (1) verificar a compreensão dos conceitos apresentados, (2) desenvolver a intuição para reconhecer situações em que OFAT falha, e (3) preparar o leitor para as questões técnicas dos Capítulos 4 a 9. Não é necessário fazer todos: escolha os que mais se aproximam da sua realidade.
 :::
 
 **Exercício 1.1** --- Identifique, em um processo de usinagem com o qual você tenha familiaridade, **três interações plausíveis entre parâmetros de processo**. Para cada uma, descreva em uma frase o mecanismo físico que justifica a interação.
