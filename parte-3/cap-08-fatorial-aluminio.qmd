@@ -175,6 +175,14 @@ cat("R2:", round(resumo$r.squared, 3),
     "| R2 ajustado:", round(resumo$adj.r.squared, 3), "\n")
 ```
 
+*Saída* (estudo de caso, força):
+
+```
+R2: 0.99 | R2 ajustado: 0.99
+```
+
+Os quatro gráficos de resíduos (nuvem sem padrão, pontos sobre a reta no Q-Q) acompanham esse $R^2$ — o modelo está validado.
+
 A validação por resíduos confirma a adequação dos modelos — para a força, $R^2$ ajustado de 0,99, como reportado. Reproduzir essa validação é o que distingue a análise rigorosa da mera aceitação dos números.
 
 ## Interpretação industrial {#sec-cap8-industrial}
