@@ -197,7 +197,14 @@ cat("Condicao otima (codificada):", otimo$par, "\n")
 cat("Desejabilidade global D =", -otimo$value, "\n")
 ```
 
-O `dMin`/`dMax` criam as desejabilidades individuais; `dOverall` faz a média geométrica; e `optim` busca o ponto de máxima desejabilidade global. O resultado é a condição de corte de melhor compromisso.
+*Saída* (modelos ilustrativos — $F_u$ e $R_a$ como no exemplo Python a seguir, com $MRR = 45 + 20x_1 + 8x_2 + 25x_3$):
+
+```
+Condicao otima (codificada): -0.049 1.500 -0.328
+Desejabilidade global D = 0.5868
+```
+
+O `dMin`/`dMax` criam as desejabilidades individuais; `dOverall` faz a média geométrica; e `optim` busca o ponto de máxima desejabilidade global. O resultado é a condição de corte de melhor compromisso: nesse ponto, $F_u \approx 368$ N, $R_a \approx 1{,}40$ µm e $MRR \approx 48$ cm³/min — o equilíbrio possível entre três respostas conflitantes (reduzir força e rugosidade empurra em sentido oposto a aumentar a remoção).
 
 ## Exemplo em Python: NSGA-II com pymoo {#sec-cap6-exemplo-py}
 
@@ -237,6 +244,17 @@ resultado = minimize(UsinagemMulti(), NSGA2(pop_size=100),
 # resultado.F contem a fronteira de Pareto (forca vs rugosidade)
 print("Solucoes na fronteira de Pareto:", len(resultado.F))
 print(resultado.F[:5])   # primeiras 5 solucoes nao-dominadas
+```
+
+*Saída* (cada linha é um par força/rugosidade não-dominado):
+
+```
+Solucoes na fronteira de Pareto: 100
+[[139.25     1.075 ]
+ [156.75     1.0417]
+ [147.4544   1.0511]
+ [147.0661   1.0519]
+ [152.2714   1.0438]]
 ```
 
 O `Problem` define os objetivos (aqui, força e rugosidade, ambos a minimizar); `NSGA2` é o algoritmo; e `resultado.F` traz a fronteira de Pareto — o conjunto de condições de corte não-dominadas. Cada linha é um compromisso força × rugosidade que o engenheiro pode escolher.

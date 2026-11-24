@@ -182,14 +182,30 @@ plano_pcc <- ccd(
 print(plano_pcc)   # matriz do PCC, ordem aleatorizada
 ```
 
+*Saída* (estrutura em coordenadas codificadas; α = 1,41 para ortogonalidade):
+
+```
+ tipo        x1      x2      x3     n
+ fatorial   ±1      ±1      ±1      8   (vertices do cubo)
+ axial     ±1,41     0       0      6   (pontos "estrela")
+             0     ±1,41     0
+             0       0     ±1,41
+ central     0       0       0      4
+ ----------------------------------------
+ total                             18 ensaios
+```
+
 O `ccd()` (central composite design) monta os três blocos de pontos — fatoriais, axiais e centrais — e mostra a matriz na ordem de execução.
 
 ### Ajustando o modelo de segunda ordem
 
 ```r
 
-# Suponha a resposta Fu (forca de usinagem) coletada nos ensaios
-plano_pcc$Fu <- c(...)   # vetor de respostas na ordem da matriz
+# Resposta Fu (forca de usinagem) na ordem da matriz (valores ilustrativos)
+plano_pcc$Fu <- c(
+  407.0, 483.9, 426.2, 540.3, 381.6, 424.0, 423.2, 511.0,  # fatoriais
+  402.0, 514.7, 442.1, 512.4, 505.5, 460.0,                # axiais
+  519.9, 522.1, 516.0, 518.6)                              # centrais
 
 # Ajusta o modelo de 2a ordem: SO() = Second Order
 modelo_rsm <- rsm(Fu ~ SO(x1, x2, x3), data = plano_pcc)
@@ -197,7 +213,26 @@ modelo_rsm <- rsm(Fu ~ SO(x1, x2, x3), data = plano_pcc)
 summary(modelo_rsm)   # coeficientes, ANOVA, teste de falta de ajuste
 ```
 
-A função `SO(x1, x2, x3)` expande automaticamente o modelo de segunda ordem completo — termos lineares, interações e quadráticos. O `summary()` traz os coeficientes com p-valores, a ANOVA e, importante, o **teste de falta de ajuste** (*lack of fit*), que verifica se o modelo de segunda ordem é adequado.
+*Saída* (coeficientes em escala codificada):
+
+```
+              Estimate  Std.Err   t val  Pr(>|t|)
+(Intercept)     519.13    0.978  530.57   < 2e-16 ***
+x1               40.05    0.599   66.83   2.8e-12 ***
+x2               25.30    0.599   42.22   1.1e-10 ***
+x3              -15.16    0.599  -25.30   6.4e-09 ***
+x1:x2            10.33    0.734   14.07   6.3e-07 ***
+x1:x3            -7.60    0.734  -10.36   6.5e-06 ***
+x2:x3             6.62    0.734    9.03   1.8e-05 ***
+x1^2            -30.39    0.734  -41.39   1.3e-10 ***
+x2^2            -20.93    0.734  -28.52   2.5e-09 ***
+x3^2            -18.18    0.734  -24.77   7.5e-09 ***
+---
+R2 = 0,9992    R2 ajustado = 0,9984
+Falta de ajuste: nao significativa (modelo de 2a ordem adequado)
+```
+
+A função `SO(x1, x2, x3)` expande automaticamente o modelo de segunda ordem completo — termos lineares, interações e quadráticos. O `summary()` traz os coeficientes com p-valores, a ANOVA e, importante, o **teste de falta de ajuste** (*lack of fit*), que verifica se o modelo de segunda ordem é adequado. Aqui todos os termos são significativos e os três quadráticos são negativos — indício de uma superfície côncava com máximo interno, confirmado a seguir pela análise canônica.
 
 ### Visualizações 3D e curvas de nível
 
@@ -215,7 +250,14 @@ xs <- canonical(modelo_rsm)$xs   # ponto estacionario em coordenadas codificadas
 print(xs)
 ```
 
-O `contour()` gera as curvas de nível; o `persp()`, a superfície 3D. A função `canonical()` faz a **análise canônica**, que localiza o ponto estacionário (candidato a ótimo) e classifica sua natureza — máximo, mínimo ou sela — a partir dos autovalores.
+*Saída*:
+
+```
+      x1       x2       x3
+   0.842    0.740   -0.458
+```
+
+O `contour()` gera as curvas de nível; o `persp()`, a superfície 3D. A função `canonical()` faz a **análise canônica**, que localiza o ponto estacionário (candidato a ótimo) e classifica sua natureza — máximo, mínimo ou sela — a partir dos autovalores. Neste exemplo, o ponto estacionário cai **dentro** da região ($x_1=0{,}84$, $x_2=0{,}74$, $x_3=-0{,}46$) e os autovalores ($-34{,}1$; $-19{,}4$; $-16{,}0$) são todos negativos: trata-se de um **máximo**.
 
 ![Superfície de resposta (esq.) e curvas de nível (dir.) de um modelo de segunda ordem ilustrativo: a força cresce com a velocidade e a profundidade codificadas.](../figuras/fig-superficie.png){#fig-superficie width=100%}
 

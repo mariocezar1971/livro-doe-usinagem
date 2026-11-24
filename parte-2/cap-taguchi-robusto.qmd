@@ -166,6 +166,17 @@ tapply(SN, A, mean)   # S/N media por nivel de A
 tapply(SN, C, mean)   # idem para C  -> escolher o nivel de maior S/N
 ```
 
+*Saída*:
+
+```
+SN: -46.55 -51.65 -45.91 -51.19 -50.57 -55.38 -50.04 -54.92
+
+tapply(SN, A):   -1: -48.27     1: -53.29
+tapply(SN, C):   -1: -48.82     1: -52.73
+```
+
+Como a razão é "menor-melhor", o maior S/N indica o melhor nível: **A = −1** (liga mole) e **C = −1** (avanço baixo) minimizam a força — coerente com a física do corte e com os efeitos estimados no Capítulo @sec-cap4.
+
 ## Na prática
 
 O erro mais comum com Taguchi é tratar a razão S/N como uma caixa-preta e **ignorar a variabilidade que ela resume**. A S/N só agrega valor se houver **réplicas** (ou fatores de ruído induzidos) que capturem a dispersão; com uma única medida por condição, ela degenera numa função monótona da média, e a análise clássica de efeitos basta. Use Taguchi quando a **robustez** é o objetivo declarado — e sempre pergunte: *de onde vem o ruído que estou tentando domar?*

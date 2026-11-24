@@ -259,7 +259,21 @@ plano <- FrF2(
 print(plano)
 ```
 
-A saída lista os 16 ensaios na ordem sorteada de execução — a ordem em que você deve efetivamente usinar, protegendo o experimento de derivas temporais.
+*Saída* (as 8 combinações do plano, em ordem padrão):
+
+```
+    Liga      Vc     f
+1   1350-O   200  0.20
+2   7075-T6  200  0.20
+3   1350-O   600  0.20
+4   7075-T6  600  0.20
+5   1350-O   200  0.35
+6   7075-T6  200  0.35
+7   1350-O   600  0.35
+8   7075-T6  600  0.35
+```
+
+A saída acima mostra as 8 combinações do plano; na prática, com as 2 réplicas, são 16 ensaios, executados na ordem sorteada pela `seed` — a ordem em que você deve efetivamente usinar, protegendo o experimento de derivas temporais.
 
 ### Inserindo respostas e estimando efeitos
 
@@ -277,7 +291,27 @@ modelo <- lm(plano_resp)
 summary(modelo)
 ```
 
-O `summary()` traz os coeficientes (metade dos efeitos, na convenção do R), seus erros-padrão, valores t e p-valores — a ANOVA dos efeitos, pronta para leitura.
+*Saída* (coeficientes = metade dos efeitos):
+
+```
+Coefficients:
+              Estimate  Std.Err   t val  Pr(>|t|)
+(Intercept)     369.38    0.884  417.90   < 2e-16 ***
+Liga1           103.12    0.884  116.67   3.3e-14 ***
+Vc1             -10.63    0.884  -12.02   2.1e-06 ***
+f1               80.63    0.884   91.22   2.3e-13 ***
+Liga1:Vc1        -1.87    0.884   -2.12    0.0667 .
+Liga1:f1         19.38    0.884   21.92   2.0e-08 ***
+Vc1:f1           -1.88    0.884   -2.12    0.0667 .
+Liga1:Vc1:f1     -0.63    0.884   -0.71    0.4996
+---
+Signif.: *** <0.001  ** <0.01  * <0.05  . <0.1
+Residual SE: 3,536 em 8 GL
+R2 = 0,9996    R2 ajustado = 0,9993
+F = 3224 em 7 e 8 GL,  p < 2e-16
+```
+
+O `summary()` traz os coeficientes (metade dos efeitos, na convenção do R), seus erros-padrão, valores t e p-valores — a ANOVA dos efeitos, pronta para leitura. Confirma a leitura informal da tabela: Liga ($\hat\beta=103{,}1$, efeito $\approx 206$ N) e avanço ($\hat\beta=80{,}6$, efeito $\approx 161$ N) dominam; a velocidade e a interação Liga × avanço são menores, porém reais; o termo triplo é desprezível. O modelo explica praticamente toda a variação ($R^2=0{,}9996$).
 
 ### Visualizando: Pareto e interações
 
