@@ -62,6 +62,7 @@ book:
         - parte-3/cap-07-projeto.qmd
         - parte-3/cap-08-fatorial-aluminio.qmd
         - parte-3/cap-09-rsm-pcc.qmd
+        - parte-3/cap-ann-ml.qmd
         - parte-3/cap-10-otimizacao-global.qmd
     - part: "Parte IV — Aplicação"
       chapters:

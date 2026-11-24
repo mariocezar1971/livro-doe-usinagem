@@ -1,0 +1,338 @@
+---
+title: "Do RSM ao aprendizado de máquina"
+subtitle: "Redes neurais, modelos substitutos e interpretabilidade"
+author: "Mário Cezar dos Santos Jr."
+abstract: |
+  Os modelos de segunda ordem do capítulo anterior são excelentes quando a superfície de resposta é suave e quase quadrática — mas nem toda resposta de usinabilidade se deixa descrever por um polinômio. Este capítulo estende a modelagem do RSM ao aprendizado de máquina: apresenta o conceito de modelo substituto (surrogate), as redes neurais do tipo perceptron multicamadas, o problema central do sobreajuste e sua regularização, e dois substitutos alternativos — florestas aleatórias e processos gaussianos. Compara, em dados do planejamento composto central, o modelo de segunda ordem com cada técnica de aprendizado, mostrando quando cada abordagem ganha. Fecha com a interpretabilidade: como recuperar, de um modelo "caixa-preta", a física que o experimento já ensinara.
+---
+
+# Do RSM ao aprendizado de máquina {#sec-cap-ann}
+
+## Introdução {#sec-cap-ann-intro}
+
+O Capítulo @sec-cap9 construiu modelos de segunda ordem para as cinco ligas e obteve coeficientes de determinação notáveis — $R^2$ acima de $0{,}98$ para força, potência e temperatura (Tabela @tbl-r2-pcc). Quando os ajustes são tão bons, por que procurar outra coisa?
+
+Por três razões. Primeiro, **nem toda resposta é quase quadrática**: a vibração, com $R^2$ de $0{,}86$ a $0{,}95$, já sinalizava que o polinômio de segunda ordem deixa variação por explicar. Segundo, à medida que se acumulam dados — de vários planejamentos, de monitoramento em produção, de sensores —, surge a oportunidade de modelos mais flexíveis, que capturem comportamentos que o polinômio não alcança. Terceiro, e mais estratégico, o **aprendizado de máquina** tornou-se a fronteira da modelagem de processos de usinagem, e dominá-lo é hoje um diferencial técnico de quem projeta experimentos.
+
+Este capítulo faz a ponte do RSM para o aprendizado de máquina sem abandonar o rigor do DOE. A tese que o organiza é simples e honesta: **o modelo mais complexo não é automaticamente o melhor**. Com poucos dados e superfície suave, o modelo de segunda ordem costuma vencer; com superfícies complexas e dados abundantes, as redes neurais e os processos gaussianos passam à frente. Saber **qual usar quando** é a competência que este capítulo busca formar.
+
+::: {.callout-note}
+## Onde este capítulo se conecta
+Os modelos aqui discutidos — redes neurais, florestas, processos gaussianos — são **modelos substitutos** (@sec-cap-ann-surrogate): funções que aproximam a resposta e podem alimentar a otimização multiresposta do Capítulo @sec-cap10 exatamente como os modelos de segunda ordem o fazem. O que muda é a forma do modelo, não o seu papel no fluxo do DOE.
+:::
+
+## O modelo substituto {#sec-cap-ann-surrogate}
+
+Um **modelo substituto** (em inglês, *surrogate model* ou *metamodel*) é uma função matemática barata de avaliar que aproxima uma relação cara de obter — no nosso caso, a relação entre os parâmetros de corte ($v_c$, $a_p$, $f$) e uma resposta de usinabilidade. O experimento fornece alguns pontos; o substituto interpola e extrapola entre eles, permitindo prever a resposta onde não se mediu, traçar curvas de nível e, sobretudo, **otimizar** sem repetir ensaios.
+
+O modelo de segunda ordem do RSM **já é** um modelo substituto — o mais clássico deles:
+
+$$
+\hat{y} = \beta_0 + \sum_i \beta_i x_i + \sum_i \beta_{ii} x_i^2 + \sum_{i<j} \beta_{ij} x_i x_j .
+$$
+
+Sua forma é fixada *a priori* (um polinômio de grau 2) e seus coeficientes são estimados por mínimos quadrados. As técnicas deste capítulo relaxam essa imposição: em vez de fixar a forma, deixam os dados **moldarem** uma função mais flexível. Essa flexibilidade é poder e é risco — o poder de capturar o que o polinômio não vê, e o risco de capturar o ruído junto (@sec-cap-ann-overfit).
+
+## Redes neurais: o perceptron multicamadas {#sec-cap-ann-mlp}
+
+A rede neural artificial mais usada em engenharia é o **perceptron multicamadas** (MLP, de *multilayer perceptron*). É um substituto universal: com neurônios suficientes, aproxima qualquer função contínua.
+
+### Arquitetura {#sec-cap-ann-arquitetura}
+
+Um MLP organiza unidades de processamento (**neurônios**) em camadas: uma camada de **entrada** (um neurônio por fator — aqui $v_c$, $a_p$, $f$), uma ou mais camadas **ocultas** e uma camada de **saída** (a resposta prevista). Cada neurônio de uma camada recebe os valores da camada anterior, forma uma combinação linear ponderada e passa o resultado por uma **função de ativação** não linear:
+
+$$
+h_j = \varphi\!\left( \sum_i w_{ij}\, x_i + b_j \right),
+$$
+
+onde $w_{ij}$ são os **pesos**, $b_j$ o **viés** (*bias*) e $\varphi$ a ativação — tipicamente a tangente hiperbólica ($\tanh$) ou a ReLU ($\max(0,z)$). É a composição de muitas dessas não linearidades que dá à rede sua flexibilidade: uma rede sem ativação não linear colapsa num mero modelo linear.
+
+O número de camadas e de neurônios é a **arquitetura** da rede. Mais neurônios significam mais capacidade de ajuste — e maior risco de sobreajuste. Em problemas de DOE, com dezenas (não milhões) de pontos, arquiteturas **pequenas** são a regra: uma ou duas camadas ocultas com poucos neurônios.
+
+### Treino, validação e teste {#sec-cap-ann-split}
+
+Ajustar uma rede é **treinar**: buscar os pesos que minimizam o erro entre previsão e dado. O perigo é a rede decorar os pontos de treino sem aprender o padrão. Para detectá-lo, os dados se dividem em três conjuntos:
+
+- **Treino** — usado para ajustar os pesos;
+- **Validação** — usado durante o treino para decidir quando parar e escolher hiperparâmetros (quantos neurônios, quanta regularização);
+- **Teste** — reservado até o fim, tocado uma única vez, para estimar o desempenho em dados novos.
+
+A regra de ouro: **o desempenho que importa é o do conjunto de teste** — ou, com poucos dados, o da validação cruzada (@sec-cap-ann-overfit). O erro de treino quase sempre engana, porque a rede o reduz artificialmente ao decorar.
+
+::: {.callout-warning}
+## Erro comum
+Reportar o $R^2$ **do próprio treino** e celebrá-lo. Numa rede com capacidade sobrando, o $R^2$ de treino tende a 1 enquanto a previsão em dados novos é ruim. O $R^2$ de treino mede o quanto a rede decorou, não o quanto aprendeu.
+:::
+
+### A função de perda e o treinamento {#sec-cap-ann-treino}
+
+O treino minimiza uma **função de perda** — para regressão, o erro quadrático médio entre previsão $\hat{y}$ e medida $y$:
+
+$$
+L = \frac{1}{n}\sum_{k=1}^{n} \left( y_k - \hat{y}_k \right)^2 .
+$$
+
+A minimização é iterativa: calcula-se o gradiente da perda em relação a cada peso pelo algoritmo de **retropropagação** (*backpropagation*) e ajustam-se os pesos na direção que reduz a perda (descida de gradiente). Cada passada completa pelos dados é uma **época**; o treino percorre muitas épocas até a perda estabilizar.
+
+Dois cuidados práticos, ambos decisivos e frequentemente esquecidos:
+
+1. **Escalonar as variáveis.** Força na casa das centenas de newtons e avanço codificado em $[-1{,}68,\,1{,}68]$ vivem em escalas incompatíveis; sem padronizar entradas **e** saída (subtrair a média, dividir pelo desvio), a rede com $\tanh$ satura e não converge. É a causa número um de redes que "não funcionam".
+2. **Repetir com sementes diferentes.** O treino parte de pesos aleatórios e pode cair em mínimos locais distintos. Reportar a média de várias repetições é mais honesto que exibir a melhor.
+
+## Overfitting e regularização {#sec-cap-ann-overfit}
+
+O **sobreajuste** (*overfitting*) é a doença central do aprendizado de máquina em DOE. Um modelo flexível demais, com dados de menos, ajusta o **ruído** em vez do **sinal**: passa por todos os pontos de treino e erra feio entre eles.
+
+O diagnóstico direto é comparar o erro de treino com o erro em dados não vistos. Com poucos pontos — o caso típico de um planejamento composto central, com 15 a 20 ensaios por liga —, não há dados a reservar para um teste. O recurso é a **validação cruzada**, e sua forma extrema para dados escassos é o **deixa-um-fora** (*leave-one-out*, LOO): ajusta-se o modelo com todos os pontos menos um, prevê-se o ponto excluído, e repete-se para cada ponto. O $R^2$ assim obtido mede honestamente a capacidade de **generalizar**.
+
+As defesas contra o sobreajuste chamam-se **regularização**:
+
+- **Parada antecipada** (*early stopping*) — interromper o treino quando o erro de validação para de cair, antes que a rede comece a decorar;
+- **Decaimento de pesos** (*weight decay*, ou penalidade $L_2$) — somar à perda um termo $\alpha \sum w^2$ que penaliza pesos grandes, forçando funções mais suaves;
+- **Abandono** (*dropout*) — desligar aleatoriamente neurônios durante o treino, impedindo que a rede dependa demais de qualquer unidade;
+- **Arquitetura enxuta** — a regularização mais simples de todas: menos neurônios, menos capacidade de decorar.
+
+::: {.callout-important}
+## Decisão de projeto
+Em DOE, a arquitetura enxuta e a validação cruzada valem mais que qualquer truque sofisticado. Com 20 pontos, uma rede de 2 camadas e 8 neurônios já é generosa. A pergunta não é "qual a maior rede que ajusto?", mas "qual a **menor** rede que explica os dados?". Parcimônia, aqui, é a mesma virtude que levou, no Capítulo @sec-cap9, a manter apenas os termos significativos do modelo de segunda ordem.
+:::
+
+## Outros substitutos: florestas e processos gaussianos {#sec-cap-ann-outros}
+
+A rede neural não é o único — nem sempre o melhor — modelo substituto. Dois concorrentes merecem lugar no repertório do engenheiro de DOE.
+
+### Floresta aleatória {#sec-cap-ann-rf}
+
+A **floresta aleatória** (*Random Forest*) é um conjunto (*ensemble*) de árvores de decisão: cada árvore particiona o espaço dos fatores em caixas e prevê, em cada caixa, uma média; a floresta promedia centenas de árvores. É robusta, exige pouco ajuste e fornece de graça uma medida de **importância de variáveis**.
+
+Tem, porém, duas limitações sérias para superfícies de resposta de usinagem. Primeiro, sua previsão é **constante por partes** — uma escada, não uma superfície suave —, o que a torna inadequada para capturar curvatura fina. Segundo, ela **não extrapola**: fora da nuvem de pontos de treino, devolve o valor da borda. Num planejamento composto central, os pontos axiais ($\alpha = 1{,}68$) ficam justamente nas bordas, onde a floresta tropeça — como os resultados adiante confirmarão.
+
+### Processo gaussiano (kriging) {#sec-cap-ann-gp}
+
+O **processo gaussiano** (GP), conhecido na engenharia como **kriging**, é o substituto predileto para dados caros e escassos — precisamente a situação do DOE experimental. Ele trata a resposta como uma função aleatória suave e, a partir dos pontos medidos, produz dois objetos de grande valor: a **previsão** e a **incerteza** dessa previsão. Onde há pontos próximos, a incerteza é baixa; em regiões vazias, ela cresce — um mapa de onde confiar e de onde convém medir mais.
+
+O GP interpola os pontos de treino com uma superfície suave governada por um *kernel* (tipicamente o RBF, que impõe suavidade). Para as dezenas de pontos de um PCC, ele costuma ser mais robusto que uma rede neural, que só mostra sua força com dados abundantes.
+
+## RSM × aprendizado de máquina: quando cada um ganha {#sec-cap-ann-quando}
+
+Não há vencedor universal. A escolha depende da forma da superfície e da quantidade de dados, como resume a Tabela @tbl-rsm-ml.
+
+| Critério | Modelo de 2ª ordem (RSM) | Rede neural (MLP) | Processo gaussiano | Floresta aleatória |
+|:---|:---|:---|:---|:---|
+| Dados necessários | Poucos (10–20) | Muitos | Poucos a médios | Médios |
+| Superfície suave e quase quadrática | **Ótimo** | Bom (risco de sobreajuste) | Ótimo | Fraco (escada) |
+| Superfície complexa/não polinomial | Limitado (teto de ajuste) | **Ótimo** (com dados) | **Ótimo** | Bom |
+| Extrapolação | Razoável (dentro da faixa) | Arriscada | Com incerteza explícita | **Ruim** |
+| Interpretabilidade | **Alta** (coeficientes) | Baixa (caixa-preta) | Média | Média (importância) |
+| Incerteza da previsão | Via intervalos de confiança | Não nativa | **Nativa** | Via dispersão das árvores |
+
+: Quando preferir cada modelo substituto. {#tbl-rsm-ml}
+
+A mensagem prática: **comece simples**. Ajuste o modelo de segunda ordem; se ele generaliza bem (bom $R^2$ em validação cruzada), pare — ele é interpretável e barato. Só escale a complexidade quando o polinômio mostrar seu teto, e então prefira o processo gaussiano para dados escassos e a rede neural quando os dados forem muitos.
+
+## Interpretabilidade: abrindo a caixa-preta {#sec-cap-ann-interp}
+
+A crítica recorrente ao aprendizado de máquina é que ele é uma **caixa-preta**: prevê bem, mas não explica. Para um engenheiro que precisa justificar uma decisão de processo, isso é inaceitável. Felizmente, há técnicas que recuperam a interpretação:
+
+- **Importância por permutação** — embaralha-se uma variável de cada vez e mede-se o quanto a previsão piora; variáveis cujo embaralhamento degrada muito o modelo são importantes. É o análogo, para caixa-preta, da soma de quadrados da ANOVA;
+- **Gráficos de dependência parcial** (PDP) — fixam-se os demais fatores e varre-se um deles, traçando seu efeito médio sobre a resposta; é a curva de nível reinterpretada para modelos arbitrários;
+- **Valores SHAP** — atribuem a cada fator, em cada previsão, uma contribuição com base em teoria dos jogos; permitem explicar **uma previsão individual**, não apenas o modelo em média.
+
+O teste de sanidade é exigir que a interpretação reproduza a **física já conhecida**. Se a importância por permutação de um modelo de força apontar o avanço e a profundidade como dominantes e a velocidade como secundária — exatamente o que a ANOVA do Capítulo @sec-cap9 mostrou —, ganha-se confiança de que a rede aprendeu o processo, não o ruído. É o que o exemplo a seguir confirma.
+
+## Exemplo resolvido: substitutos nos dados do PCC {#sec-cap-ann-exemplo}
+
+Para comparar as técnicas em terreno concreto, usamos um **conjunto didático** que reproduz o regime do PCC real do Capítulo @sec-cap9: o planejamento composto central de três fatores ($k=3$, $\alpha = 1{,}682$, 6 pontos centrais, 20 ensaios) e uma resposta de força gerada por um modelo de segunda ordem conhecido — com $a_p$ e $f$ dominantes, uma interação $a_p \times f$ e curvatura leve — somado a ruído calibrado para reproduzir o $R^2 \approx 0{,}98$ dos modelos reais (Tabela @tbl-r2-pcc).
+
+::: {.callout-note}
+## Por que um conjunto didático
+As matrizes brutas dos ensaios (cinco ligas $\times$ dezenas de corridas) não cabem no texto; os valores reais de $R^2$ da Tabela @tbl-r2-pcc permanecem a referência. O conjunto didático, com receita e semente explícitas (código adiante), permite ao leitor **reproduzir** cada número desta seção e experimentar por conta própria.
+:::
+
+### Experimento A — superfície quadrática, 20 pontos {.unnumbered}
+
+Ajustamos quatro modelos aos mesmos 20 pontos e medimos o desempenho de duas formas: o $R^2$ **no próprio ajuste** (em treino) e o $R^2$ por **validação cruzada deixa-um-fora** (LOO), que estima a generalização. A Tabela @tbl-exp-a traz o resultado.
+
+| Modelo | $R^2$ (treino) | RMSE (treino) | $R^2$ (LOO) | RMSE (LOO) |
+|:---|:---:|:---:|:---:|:---:|
+| Modelo de 2ª ordem (RSM) | 0,995 | 7,3 | **0,971** | 17,5 |
+| Rede neural MLP (8–8) | 0,967 | 18,8 | 0,882 | 35,4 |
+| Floresta aleatória | 0,947 | 23,8 | 0,622 | 63,4 |
+| Processo gaussiano (RBF) | 0,997 | 5,7 | 0,963 | 19,8 |
+
+: Desempenho em superfície quadrática com 20 pontos. RMSE na unidade da resposta (N). {#tbl-exp-a}
+
+A leitura é instrutiva. Pela validação cruzada — a medida honesta —, o **modelo de segunda ordem vence** ($R^2_{\text{LOO}} = 0{,}971$), com o processo gaussiano logo atrás ($0{,}963$). A rede neural fica em $0{,}882$ e a floresta aleatória despenca para $0{,}622$. Três lições:
+
+1. **Quando a verdade é quadrática, o modelo quadrático ganha.** O RSM tem exatamente a forma certa; os concorrentes gastam flexibilidade à toa e pagam em generalização.
+2. **O $R^2$ de treino engana.** O processo gaussiano exibe o maior $R^2$ de treino ($0{,}997$) mas não é o melhor em LOO — sinal de ajuste otimista. Olhar só o treino levaria à escolha errada.
+3. **A floresta aleatória fracassa nas bordas.** Seu $R^2_{\text{LOO}}$ de $0{,}622$ reflete a incapacidade de extrapolar aos pontos axiais do PCC — a superfície em escada não alcança as quinas do planejamento.
+
+### Experimento B — superfície complexa, dados crescentes {.unnumbered}
+
+E quando a superfície **não** é quadrática? Repetimos a comparação sobre uma resposta com um realce localizado (não polinomial), variando o número de pontos de treino e medindo o $R^2$ num conjunto de teste independente (Tabela @tbl-exp-b).
+
+| Pontos de treino | RSM 2ª ordem | Rede neural | Processo gaussiano |
+|:---:|:---:|:---:|:---:|
+| 20 | 0,892 | 0,940 | 0,953 |
+| 60 | 0,962 | 0,923 | 0,972 |
+| 200 | 0,962 | 0,923 | **0,987** |
+
+: Desempenho em teste sobre superfície complexa, por tamanho de amostra. {#tbl-exp-b}
+
+Agora o quadro se inverte. O modelo de segunda ordem **estaciona** em torno de $R^2 = 0{,}96$: por mais dados que receba, sua forma rígida não alcança o realce não polinomial — é o seu **teto estrutural**. O processo gaussiano, ao contrário, melhora com os dados ($0{,}953 \to 0{,}972 \to 0{,}987$) e supera claramente o RSM. A rede neural bate o RSM com poucos pontos, mas, sem ajuste fino de hiperparâmetros, oscila — ilustrando sua conhecida sensibilidade e a vantagem do processo gaussiano quando os dados ainda são modestos.
+
+### Interpretabilidade — recuperando a física {.unnumbered}
+
+Por fim, aplicamos a **importância por permutação** à rede neural do Experimento A. O resultado, em unidades de piora do erro, foi $a_p \approx 1{,}3$, $f \approx 0{,}7$ e $v_c \approx 0$ — a profundidade como fator dominante, o avanço em seguida e a velocidade praticamente irrelevante para a força. É **exatamente** o padrão que a ANOVA do modelo de segunda ordem apontara no Capítulo @sec-cap9 ($a_p$ e $f$ dominam a força). A caixa-preta, interrogada corretamente, confirma a física conhecida — e isso é o que autoriza confiar nela onde a física ainda não é conhecida.
+
+::: {.callout-important}
+## O veredito do exemplo
+Com 20 pontos e superfície suave, o modelo de segunda ordem do Capítulo @sec-cap9 não é apenas suficiente — é o **melhor**. O aprendizado de máquina paga seu preço em generalização quando a flexibilidade é desnecessária. Sua hora chega quando a superfície foge do polinômio e os dados abundam: aí o processo gaussiano e a rede neural rompem o teto que trava o RSM. Escolher a ferramenta certa é a competência; preferir a mais complexa por moda é o erro.
+:::
+
+## Código: R e Python {#sec-cap-ann-codigo}
+
+Os dois ecossistemas cobrem bem o aprendizado de máquina aplicado ao DOE. Em R, os pacotes `nnet` e `neuralnet` treinam redes pequenas; em Python, o `scikit-learn` oferece MLP, floresta e processo gaussiano sob uma interface única.
+
+```r
+# ---- R: rede neural pequena com nnet, sobre dados do PCC ----
+library(nnet)
+
+# dados$y = resposta; dados[,c("vc","ap","f")] = fatores codificados
+# escalonar e' essencial: nnet espera entradas/saida em escala comparavel
+esc <- scale(dados[, c("vc","ap","f")])
+y_esc <- scale(dados$y)
+
+set.seed(42)
+rede <- nnet(x = esc, y = y_esc,
+             size = 6,        # neuronios na camada oculta
+             decay = 1e-2,    # regularizacao L2 (weight decay)
+             maxit = 2000, linout = TRUE, trace = FALSE)
+
+# validacao cruzada deixa-um-fora para medir generalizacao honesta
+# (repetir o ajuste excluindo cada ponto; comparar a previsao)
+```
+
+```python
+# ---- Python: MLP, floresta e processo gaussiano com scikit-learn ----
+import numpy as np
+from sklearn.preprocessing import StandardScaler, PolynomialFeatures
+from sklearn.pipeline import make_pipeline
+from sklearn.compose import TransformedTargetRegressor
+from sklearn.linear_model import LinearRegression
+from sklearn.neural_network import MLPRegressor
+from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import ConstantKernel, RBF, WhiteKernel
+from sklearn.model_selection import LeaveOneOut, cross_val_predict
+from sklearn.metrics import r2_score
+
+# X = matriz do PCC (n x 3, fatores codificados); y = resposta
+# RSM de 2a ordem
+rsm = make_pipeline(PolynomialFeatures(2, include_bias=False), LinearRegression())
+
+# MLP: escalonar X E y e' obrigatorio para convergir
+mlp = TransformedTargetRegressor(
+    regressor=make_pipeline(
+        StandardScaler(),
+        MLPRegressor(hidden_layer_sizes=(8, 8), activation="tanh",
+                     alpha=1e-2, max_iter=20000, random_state=0)),
+    transformer=StandardScaler())
+
+# Processo gaussiano (kriging) com nugget (WhiteKernel) para ruido
+kernel = ConstantKernel() * RBF(1.0) + WhiteKernel()
+gp = GaussianProcessRegressor(kernel=kernel, normalize_y=True, random_state=0)
+
+# R2 por validacao cruzada deixa-um-fora (a medida que importa)
+for nome, modelo in [("RSM", rsm), ("MLP", mlp), ("GP", gp)]:
+    pred = cross_val_predict(modelo, X, y, cv=LeaveOneOut())
+    print(nome, "R2_LOO =", round(r2_score(y, pred), 3))
+```
+
+O padrão de código espelha a lição do capítulo: ajustar vários substitutos sob a mesma interface, compará-los **por validação cruzada** (não por erro de treino) e só então escolher.
+
+## Síntese do capítulo {#sec-cap-ann-sintese}
+
+O Quadro @tbl-sintese-ann resume o percurso.
+
+| Tema | Ideia-chave |
+|:---|:---|
+| Modelo substituto | Função barata que aproxima a resposta cara; o RSM já é um |
+| Rede neural (MLP) | Aproximador universal; precisa de escala, parcimônia e validação |
+| Sobreajuste | A doença central; combater com validação cruzada e regularização |
+| Floresta / processo gaussiano | GP é o substituto robusto para dados escassos; floresta não extrapola |
+| RSM × ML | Dados poucos e superfície suave → RSM; superfície complexa e dados → ML |
+| Interpretabilidade | Permutação, PDP e SHAP recuperam a física da caixa-preta |
+
+: Síntese do capítulo de aprendizado de máquina. {#tbl-sintese-ann}
+
+Três ideias devem permanecer:
+
+1. **O substituto certo depende do problema.** Com 20 pontos quase quadráticos, o modelo de segunda ordem venceu a rede e a floresta na validação cruzada. Complexidade não é qualidade.
+2. **Generalização mede-se fora do treino.** O $R^2$ de treino quase sempre engana; a validação cruzada deixa-um-fora é o juiz honesto com dados escassos.
+3. **A caixa-preta pode ser aberta.** A importância por permutação reencontrou o domínio de $a_p$ e $f$ sobre a força — a mesma física da ANOVA, confirmando que o modelo aprendeu o processo.
+
+Com esse arsenal — do polinômio de segunda ordem às redes neurais e aos processos gaussianos —, o modelador de usinabilidade escolhe a ferramenta pela natureza do problema. O Capítulo @sec-cap10 retoma os modelos confiáveis construídos até aqui para o passo final do estudo de caso: a otimização multiresposta que concilia força, potência, rugosidade e as demais respostas numa condição de corte recomendada.
+
+## Para saber mais {#sec-cap-ann-saibamais}
+
+::: {.callout-tip}
+## Aprofundamento
+Para redes neurais e aprendizado de máquina em bases sólidas, @hastie2009elements é a referência canônica, com tratamento estatístico do sobreajuste e da validação cruzada. A aplicação de redes neurais à usinagem aparece em @cus2006intellig, que também discute otimização por inteligência computacional. Para processos gaussianos e metamodelagem em engenharia, a literatura de *surrogate-based optimization* é vasta; a documentação do `scikit-learn` oferece um ponto de entrada prático e reprodutível. A metodologia clássica de superfícies de resposta, contraponto deste capítulo, está em @montgomery2005design (Capítulo @sec-cap5).
+:::
+
+## Exercícios resolvidos {#sec-cap-ann-resolvidos .unnumbered}
+
+### Resolvido 1 — Treino alto, validação baixa {.unnumbered}
+
+**Enunciado.** Uma rede neural ajustada a 18 ensaios de um PCC atinge $R^2 = 0{,}999$ no treino, mas $R^2_{\text{LOO}} = 0{,}74$ na validação cruzada. Diagnostique e proponha duas correções.
+
+**Solução.** O abismo entre treino ($0{,}999$) e validação ($0{,}74$) é a assinatura clássica do **sobreajuste**: a rede decorou os 18 pontos, inclusive o ruído, sem aprender o padrão que generaliza. Duas correções, entre as de @sec-cap-ann-overfit: (i) **reduzir a capacidade** — menos neurônios ou menos camadas, até que treino e validação se aproximem; (ii) **regularizar** — aumentar o decaimento de pesos ($\alpha$) e/ou aplicar parada antecipada. Com apenas 18 pontos, convém ainda questionar se um modelo de segunda ordem não seria preferível de saída.
+
+### Resolvido 2 — Escolhendo o substituto {.unnumbered}
+
+**Enunciado.** Em qual dos cenários abaixo o modelo de segunda ordem é a escolha mais sensata, e em qual o processo gaussiano tende a vencer? (a) 16 ensaios de um PCC, resposta de força suave; (b) 300 pontos de monitoramento, resposta de vibração com comportamento local irregular.
+
+**Solução.** Em **(a)**, com poucos pontos e superfície suave, o **modelo de segunda ordem** é a escolha sensata — interpretável, barato e, como o Experimento A mostrou, superior em validação cruzada quando a verdade é quase quadrática. Em **(b)**, com muitos pontos e comportamento local irregular, o **processo gaussiano** (ou uma rede neural bem regularizada) tende a vencer, pois rompe o teto estrutural do polinômio — como o Experimento B evidenciou, em que o GP subiu a $R^2 = 0{,}987$ enquanto o RSM estacionou em $0{,}96$.
+
+### Resolvido 3 — Interpretando a importância {.unnumbered}
+
+**Enunciado.** A importância por permutação de uma rede treinada para prever rugosidade devolve $f \gg a_p \approx v_c$. Isso é coerente com o que o livro vinha mostrando? O que você faria se a rede apontasse $v_c$ como dominante?
+
+**Solução.** É **coerente**: o avanço $f$ é o fator-mestre do acabamento, com termo linear e quadrático dominantes para $R_a$ em todas as ligas (Capítulo @sec-cap9). Uma rede que aponta $f \gg a_p \approx v_c$ reproduz essa física e, portanto, merece confiança. Se, ao contrário, a rede apontasse $v_c$ como dominante da rugosidade — contrariando toda a evidência física e a ANOVA —, o alerta seria de **modelo mal treinado ou sobreajustado**: convém revisar escala, arquitetura e validação antes de acreditar na previsão. A interpretabilidade serve justamente para esse crivo.
+
+## Exercícios propostos {.unnumbered}
+
+1. **Modelo substituto.** Explique, em até cinco linhas, por que o modelo de segunda ordem do RSM já é um modelo substituto. O que o distingue das redes neurais quanto à **forma** da função?
+
+2. **Arquitetura.** Uma rede tem 3 entradas, duas camadas ocultas de 5 neurônios e 1 saída. Quantos pesos (sem contar vieses) ela possui? Comente se essa capacidade é adequada para um PCC de 20 ensaios.
+
+3. **Escalonamento.** Por que treinar uma MLP com $\tanh$ sobre uma força de corte sem padronizar a saída tende a fracassar? Relacione com a saturação da função de ativação.
+
+4. **Validação cruzada.** Descreva o procedimento deixa-um-fora (LOO) para 20 ensaios. Por que ele é preferível a separar um conjunto de teste quando os dados são escassos?
+
+5. **Regularização.** Cite três técnicas de regularização e explique, para cada uma, como ela combate o sobreajuste.
+
+6. **RSM × ML (integrador).** Com base nas Tabelas @tbl-exp-a e @tbl-exp-b, redija uma recomendação de uma frase para um colega que vai modelar uma resposta de força de um PCC de 15 ensaios. E se ele tivesse 500 pontos de uma resposta com comportamento irregular?
+
+7. **Floresta aleatória.** Por que a floresta aleatória teve o pior desempenho ($R^2_{\text{LOO}} = 0{,}622$) no Experimento A? Relacione com os pontos axiais do PCC e com a natureza "em escada" de suas previsões.
+
+8. **Interpretabilidade.** Explique como a importância por permutação funciona e por que seu resultado ($a_p > f > v_c$ para a força) aumenta a confiança no modelo. Que outras duas técnicas de interpretação o capítulo cita?
+
+## Gabarito dos exercícios propostos {#sec-cap-ann-gabarito .unnumbered}
+
+1. **Modelo substituto.** Porque é uma função barata ($\hat{y}=\beta_0+\sum\beta_i x_i+\sum\beta_{ii}x_i^2+\sum\beta_{ij}x_i x_j$) que aproxima a resposta cara e serve para prever e otimizar sem repetir ensaios. Distingue-se das redes pela **forma fixa** *a priori* (polinômio de grau 2); as redes deixam os dados moldarem uma função flexível, sem forma pré-imposta.
+
+2. **Arquitetura.** Pesos = $3\times5 + 5\times5 + 5\times1 = 15+25+5 = 45$. Para 20 ensaios, 45 pesos já é **capacidade excessiva** (mais parâmetros que dados): alto risco de sobreajuste. Convém rede menor e regularização forte — ou simplesmente um modelo de segunda ordem.
+
+3. **Escalonamento.** Uma força na casa das centenas de N leva a combinações lineares de grande magnitude; a $\tanh$ **satura** (aproxima-se de $\pm 1$) e seu gradiente vai a zero, travando o treino. Padronizar entradas e saída mantém os sinais na região sensível da ativação, onde o gradiente é informativo.
+
+4. **Validação cruzada.** No LOO, ajusta-se o modelo com 19 ensaios, prevê-se o 20º excluído, e repete-se 20 vezes (cada ponto é excluído uma vez); o $R^2$ agrega as 20 previsões. É preferível a reservar um teste porque, com 20 pontos, separar 4 ou 5 para teste empobreceria demais o treino; o LOO usa quase todos os dados em cada ajuste e ainda estima a generalização.
+
+5. **Regularização.** (i) **Parada antecipada**: interrompe o treino quando o erro de validação para de cair, antes de decorar; (ii) **decaimento de pesos** ($L_2$): penaliza pesos grandes, impondo funções mais suaves; (iii) **abandono** (*dropout*): desliga neurônios ao acaso no treino, impedindo dependência excessiva de unidades. (A arquitetura enxuta também conta como regularização.)
+
+6. **RSM × ML.** Para o PCC de 15 ensaios (força, superfície suave): "Ajuste um **modelo de segunda ordem** e valide por LOO — com tão poucos pontos e resposta suave, ele será o mais preciso e interpretável." Para 500 pontos de resposta irregular: "Use um **processo gaussiano** (ou rede neural regularizada), que rompe o teto do polinômio quando há complexidade e dados."
+
+7. **Floresta aleatória.** Porque suas previsões são **constantes por partes** (não suaves) e ela **não extrapola**: nos pontos axiais do PCC ($\alpha=1{,}68$), que ficam nas bordas do espaço amostrado, a floresta devolve o valor da caixa mais próxima, errando a curvatura. Daí o $R^2_{\text{LOO}}$ baixo ($0{,}622$), muito abaixo do RSM e do GP.
+
+8. **Interpretabilidade.** A importância por permutação **embaralha** uma variável de cada vez e mede o quanto a previsão piora; variáveis cujo embaralhamento degrada muito o modelo são as importantes. Obter $a_p > f > v_c$ para a força reproduz a física da ANOVA do Capítulo @sec-cap9, aumentando a confiança de que a rede aprendeu o processo, não o ruído. As outras duas técnicas citadas são os **gráficos de dependência parcial (PDP)** e os **valores SHAP**.

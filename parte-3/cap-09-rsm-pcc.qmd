@@ -169,7 +169,7 @@ Três ideias devem permanecer:
 2. **A metalurgia reaparece no cavaco.** O melhor controle de cavaco veio da 6262-T6, pelos elementos de livre-corte — a metalurgia do Capítulo @sec-cap2 confirmada experimentalmente no chão de fábrica.
 3. **Otimizar exige olhar o desgaste.** Um ótimo de força e rugosidade só vale se a ferramenta sobreviver — o estudo de desgaste é o crivo de viabilidade.
 
-Com modelos confiáveis para cada resposta e cada liga, e com o cavaco e o desgaste caracterizados, o Capítulo @sec-cap10 executa o passo final: a otimização multiresposta que concilia todas essas respostas conflitantes numa condição de corte recomendada.
+Com modelos confiáveis para cada resposta e cada liga, e com o cavaco e o desgaste caracterizados, o Capítulo @sec-cap-ann mostra primeiro como o aprendizado de máquina pode ampliar ou substituir esses modelos de segunda ordem; em seguida, o Capítulo @sec-cap10 executa o passo final: a otimização multiresposta que concilia todas essas respostas conflitantes numa condição de corte recomendada.
 
 ## Para saber mais {#sec-cap9-saibamais}
 
