@@ -82,6 +82,15 @@ $$
 
 onde $\bar{y}$ é a média e $s^2$ a variância das réplicas. Repare que o caso nominal-melhor premia explicitamente a **baixa variância** ($s^2$ pequeno) — é a robustez traduzida em número. Em todos os casos, a análise segue como a de efeitos: calcula-se a **S/N média por nível** de cada fator e escolhe-se o nível de **maior S/N** — a condição mais robusta.
 
+::: {.callout-note}
+## Fundamentação matemática: da função perda à razão S/N
+A razão S/N não é arbitrária — deriva da **função perda quadrática** $L = k\,(y - T)^2$, que penaliza o desvio do alvo $T$. A perda **esperada** sobre as peças é
+$$
+E[L] = k\,E[(y-T)^2] = k\big[(\bar y - T)^2 + \sigma^2\big],
+$$
+a soma do **viés** ao quadrado com a **variância** — exatamente os dois males que o projeto robusto combate. Minimizar a perda esperada equivale a maximizar $-10\log_{10} E[(y-T)^2]$, e os três casos saem de especializar $T$: para **menor-melhor** ($T=0$), $E[(y-T)^2] = E[y^2] \approx \tfrac{1}{n}\sum y_i^2$, dando $S/N = -10\log_{10}(\tfrac{1}{n}\sum y_i^2)$; para **maior-melhor**, aplica-se o mesmo a $1/y$; para **nominal-melhor**, separam-se média e variância em $10\log_{10}(\bar y^2/s^2)$, que cresce quando a variância cai. A escala logarítmica (decibéis) torna a métrica aproximadamente **aditiva** nos efeitos dos fatores — o que permite analisá-la como se analisam efeitos médios por nível.
+:::
+
 ## Taguchi × DOE clássico {#sec-captag-comparacao}
 
 As duas abordagens não são rivais; ocupam espaços diferentes.

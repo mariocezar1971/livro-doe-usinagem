@@ -129,6 +129,19 @@ Sua propriedade fundamental: **aponta na direção e sentido de crescimento mais
 
 No estudo de caso, os modelos de segunda ordem das respostas de usinabilidade foram interpretados justamente por curvas de nível e vetor gradiente, revelando como $v_c$, $f$ e $a_p$ deslocam força, potência e rugosidade em direção a seus ótimos.
 
+::: {.callout-note}
+## Fundamentação matemática: análise canônica da superfície
+O modelo de segunda ordem escreve-se de forma compacta como
+$$
+\hat y = \beta_0 + \mathbf{x}^\top\mathbf{b} + \mathbf{x}^\top\mathbf{B}\,\mathbf{x},
+$$
+onde $\mathbf{b}$ reúne os coeficientes lineares e $\mathbf{B}$ é a matriz simétrica com os quadráticos na diagonal e metade das interações fora dela. O **ponto estacionário**, onde o gradiente se anula, sai de $\partial\hat y/\partial\mathbf{x} = \mathbf{b} + 2\mathbf{B}\mathbf{x} = \mathbf{0}$:
+$$
+\mathbf{x}_s = -\tfrac{1}{2}\,\mathbf{B}^{-1}\mathbf{b}.
+$$
+Sua **natureza** é decidida pelos **autovalores** de $\mathbf{B}$: todos positivos, é um mínimo; todos negativos, um máximo; sinais mistos, um ponto de sela. Os autovetores dão as direções principais da superfície (a **forma canônica**), e um autovalor próximo de zero sinaliza uma **crista** — uma direção ao longo da qual a resposta quase não varia, livre para atender outras respostas. Quando $\mathbf{x}_s$ cai fora da região experimental, recorre-se ao **método da máxima inclinação**, caminhando na direção do gradiente até uma nova região, onde se reajusta o modelo.
+:::
+
 ## Exemplo com o pacote rsm do R {#sec-cap5-exemplo}
 
 O R oferece o pacote **rsm**, especializado em superfícies de resposta. Ele cria PCCs, ajusta modelos de segunda ordem e gera as visualizações — tudo integrado.

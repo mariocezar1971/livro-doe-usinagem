@@ -109,6 +109,19 @@ onde $n$ é o número de réplicas. O efeito tem interpretação física direta:
 
 A grande vantagem sobre o OFAT aparece aqui: o mesmo conjunto de ensaios fornece, de uma vez, os efeitos de **todos** os fatores principais e de **todas** as interações. Uma interação AB significativa quer dizer que o efeito de A depende do nível de B — precisamente o fenômeno que a física do corte do Capítulo @sec-cap3 antecipou (a força depende da combinação liga × velocidade, não de cada uma isolada).
 
+::: {.callout-note}
+## Fundamentação matemática: o modelo linear e os mínimos quadrados
+Por trás do contraste está o **modelo linear geral**. Reunindo as $N = 2^k n$ respostas no vetor $\mathbf{y}$ e os níveis codificados (incluindo as colunas de interação) na **matriz de projeto** $\mathbf{X}$, o modelo é
+$$
+\mathbf{y} = \mathbf{X}\boldsymbol\beta + \boldsymbol\varepsilon,
+$$
+e os coeficientes que minimizam a soma dos quadrados dos resíduos são
+$$
+\hat{\boldsymbol\beta} = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{y}.
+$$
+O que torna o $2^k$ especial é a **ortogonalidade**: as colunas de $\pm 1$ são mutuamente ortogonais, de modo que $\mathbf{X}^\top\mathbf{X} = N\,\mathbf{I}$ é diagonal. A inversa é imediata, cada coeficiente sai **independente** dos demais — é por isso que um efeito não "contamina" o outro — e $\hat\beta_i = \text{Contraste}_i / N$, exatamente metade do efeito definido acima. A variância de cada coeficiente é $\operatorname{Var}(\hat\beta_i) = \sigma^2/N$: todos estimados com a mesma precisão, a máxima possível para o número de ensaios (teorema de Gauss-Markov). O contraste, portanto, não é uma receita *ad hoc* — é o estimador de mínimos quadrados de um projeto ortogonal.
+:::
+
 ### Visualização: o gráfico de Pareto
 
 Uma forma imediata de ver quais efeitos dominam é o **gráfico de Pareto dos efeitos**: barras horizontais, uma por fonte de variação, ordenadas por magnitude. Ele mostra de relance os "poucos vitais". Mas atenção: o Pareto ordena, não decide — ele não define um valor de corte para o que é significativo [@montgomery2005design]. Essa decisão cabe à análise de variância.
@@ -135,6 +148,19 @@ Compara-se $F_0$ com o valor crítico $F_{\alpha; 1; 2^k(n-1)}$ da distribuiçã
 | Total | $\sum y^2 - (\sum y)^2 / 2^k n$ | $2^k n - 1$ | — | — |
 
 : Estrutura da análise de variância de um planejamento fatorial 2^k [@montgomery2005design]. {#tbl-anova}
+
+::: {.callout-note}
+## Fundamentação matemática: a decomposição da variância e os testes
+A ANOVA repousa sobre uma identidade exata — a **decomposição da soma de quadrados**:
+$$
+\underbrace{\sum_j (y_j - \bar y)^2}_{SQ_\text{total}} = \underbrace{\sum_j (\hat y_j - \bar y)^2}_{SQ_\text{modelo}} + \underbrace{\sum_j (y_j - \hat y_j)^2}_{SQ_\text{resíduo}} .
+$$
+Cada soma tem seus graus de liberdade ($N-1$ no total, $p-1$ no modelo de $p$ parâmetros, $N-p$ no resíduo), e a média quadrática é a soma dividida por eles. Sob a hipótese nula "o fator não tem efeito", a razão $F_0 = MQ_i/MQ_e$ segue uma distribuição $F$; valores grandes a refutam. Para um único grau de liberdade, o teste $F$ **equivale** ao teste $t$ do coeficiente, com $t = \hat\beta_i / \operatorname{EP}(\hat\beta_i)$ e $F_0 = t^2$ — é o mesmo teste, visto de dois ângulos. Por fim, o coeficiente de determinação $R^2 = SQ_\text{modelo}/SQ_\text{total}$ mede a fração explicada, e o $R^2$ **ajustado**,
+$$
+R^2_\text{aj} = 1 - \frac{SQ_\text{resíduo}/(N-p)}{SQ_\text{total}/(N-1)},
+$$
+penaliza termos supérfluos, evitando premiar o excesso de parâmetros.
+:::
 
 ### Lendo uma tabela de ANOVA real
 

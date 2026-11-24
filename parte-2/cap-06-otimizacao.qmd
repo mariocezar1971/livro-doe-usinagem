@@ -72,6 +72,19 @@ A média **geométrica** (não a aritmética) é a escolha certa por uma razão 
 
 Maximizar $D$ — agora um único escalar entre 0 e 1 — resolve o problema multiresposta. O ponto que dá o maior $D$ é a melhor solução de compromisso segundo os pesos escolhidos.
 
+::: {.callout-note}
+## Fundamentação matemática: a desejabilidade geral e os pesos
+As formas acima são casos de uma definição mais geral. A desejabilidade global com **pesos** $w_r$ (a importância relativa de cada resposta) é a média geométrica ponderada
+$$
+D = \left( \prod_{r=1}^{m} d_r^{\,w_r} \right)^{1/\sum_r w_r},
+$$
+que recai na média geométrica simples quando todos os $w_r = 1$. Para uma resposta do tipo **alvo** $T$ (nem maior, nem menor), a desejabilidade é bilateral, com dois expoentes controlando cada lado:
+$$
+d_r = \begin{cases} \left(\dfrac{y_r - L}{T - L}\right)^{s} & L \le y_r \le T \\ \left(\dfrac{U - y_r}{U - T}\right)^{t} & T < y_r \le U \\ 0 & y_r \notin [L,U] \end{cases}
+$$
+A otimização maximiza $D(\mathbf{x})$ sobre a região experimental. Como $D$ não é suave — tem "quinas" onde algum $d_r$ atinge 0 ou 1 —, sua maximização pede busca com múltiplas partidas ou algoritmos globais, o que motiva os algoritmos genéticos da próxima seção.
+:::
+
 ::: {.callout-tip}
 ## Na prática
 Os limites $L$, $U$ e o alvo não são estatística — são **engenharia**. Você os define a partir de requisitos reais: a rugosidade máxima que o cliente aceita, a força que a máquina suporta, a produtividade mínima que o custo exige. A desejabilidade é o método; os limites são o seu conhecimento do processo entrando na otimização. Escolha-os com cuidado — eles determinam o resultado tanto quanto os dados.

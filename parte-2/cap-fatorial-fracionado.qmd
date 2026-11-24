@@ -86,6 +86,11 @@ $$
 
 O efeito principal A fica aliado com a interação de **quatro** fatores BCDE (desprezível), e a interação AB com a de **três** fatores CDE (também desprezível). É por isso que a resolução V entrega efeitos principais e interações de dois fatores confiáveis.
 
+::: {.callout-note}
+## Fundamentação matemática: a álgebra do confundimento
+A estrutura de aliases tem forma de **grupo**. Tratando cada efeito como uma "palavra" nos símbolos dos fatores, a multiplicação obedece a $X^2 = I$ (uma coluna ao quadrado é a coluna de uns). O conjunto de palavras iguais a $I$ — a **relação de definição** — é um subgrupo; num $2^{k-p}$ ele tem $2^p$ palavras, geradas por $p$ geradores independentes. Os efeitos repartem-se em **classes de alias** (as co-classes desse subgrupo), e multiplicar um efeito pela relação de definição varre toda a sua classe. A **resolução** $R$ é o comprimento da **menor** palavra da relação de definição: ela fixa o pior confundimento, porque um efeito de ordem $a$ fica aliado a um de ordem $R-a$. Resolução III alia principal com dois fatores ($1+2$); IV, principal com três e dois-com-dois ($1+3$, $2+2$); V, principal com quatro e dois com três ($1+4$, $2+3$) — a justificativa formal da regra prática de que a resolução V entrega principais e interações de dois fatores limpos.
+:::
+
 ## Planejamentos de triagem: Plackett-Burman {#sec-capfrac-pb}
 
 Quando o objetivo é apenas **triar** muitos fatores — separar os poucos vitais dos triviais, sem ainda modelar interações —, existem planejamentos ainda mais econômicos: os de **Plackett-Burman**. Eles permitem estudar até $N-1$ fatores em apenas $N$ ensaios (com $N$ múltiplo de 4): até 7 fatores em 8 ensaios, até 11 em 12, e assim por diante.
