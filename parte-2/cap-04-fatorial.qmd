@@ -519,3 +519,11 @@ plano <- FrF2(
     f    = c(0.20, 0.35),
     ap   = c(1, 4)))
 ```
+
+*Saída* (estrutura do plano gerado):
+
+```
+2^4 = 16 tratamentos x 3 replicas = 48 ensaios aleatorizados.
+Planejamento completo (resolucao total): todos os efeitos
+principais e todas as interacoes (ate a quadrupla) estimaveis.
+```

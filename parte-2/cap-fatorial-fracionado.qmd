@@ -268,3 +268,13 @@ plano <- FrF2(nruns = 16, nfactors = 6, randomize = TRUE)
 # Plackett-Burman: 11 fatores em 12 corridas
 plano_pb <- pb(nruns = 12, nfactors = 11, randomize = TRUE)
 ```
+
+*Saída* (estrutura dos planos gerados):
+
+```
+2^(6-2): 6 fatores em 16 corridas, resolucao IV
+  -> efeitos principais livres; interacoes de 2 fatores
+     confundidas entre si (gerador de maior resolucao).
+Plackett-Burman: 11 fatores em 12 corridas, resolucao III
+  -> triagem; principais confundidos com interacoes de 2 fatores.
+```

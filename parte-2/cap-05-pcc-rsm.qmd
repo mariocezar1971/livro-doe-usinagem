@@ -277,6 +277,8 @@ plot_ly(grade, x = ~x1, y = ~x2, z = ~Fu,
         type = "mesh3d", intensity = ~Fu)
 ```
 
+*Saída*: uma superfície 3D **interativa** (rotacionável e com *zoom* na versão HTML do livro). A versão estática equivalente — a mesma superfície vista de cima e em perspectiva — é a @fig-superficie.
+
 O plotly gera uma superfície **interativa** — o leitor pode rotacionar e ampliar no navegador. É especialmente útil na versão HTML do livro, onde a superfície ganha vida.
 
 ::: {.callout-important}
@@ -452,6 +454,26 @@ Curvatura (1) diz **se** vale a pena ir além do fatorial; o PCC (2) fornece **o
 ```r
 plano <- ccd(2, n0 = 6, alpha = "rotatable", randomize = TRUE,
              coding = list(x1 ~ (Vc - 400)/200, x2 ~ (f - 0.275)/0.075))
+plano$Ra <- c(2.631, 1.731, 2.827, 2.315,   # fatoriais
+              2.946, 1.949, 1.994, 2.541,   # axiais
+              1.922, 1.845, 1.947, 1.897,   # centrais
+              1.920, 1.896)                 # (Ra ilustrativo, um)
 modelo <- rsm(Ra ~ SO(x1, x2), data = plano)
 summary(modelo)
 ```
+
+*Saída* (dados ilustrativos; escala codificada):
+
+```
+              Estimate  Std.Err   t val  Pr(>|t|)
+(Intercept)      1.904   0.0118  161.06   2.5e-15 ***
+x1              -0.353   0.0102  -34.45   5.5e-10 ***
+x2               0.194   0.0102   18.96   6.2e-08 ***
+x1:x2            0.097   0.0145    6.70   1.5e-04 ***
+x1^2             0.276   0.0107   25.91   5.3e-09 ***
+x2^2             0.186   0.0107   17.46   1.2e-07 ***
+---
+R2 = 0,9968    R2 ajustado = 0,9948
+```
+
+Os dois termos quadráticos positivos indicam uma superfície convexa com **mínimo interno** (ponto estacionário em $x_1=0{,}77$, $x_2=-0{,}72$) — a condição de menor rugosidade dentro da região.

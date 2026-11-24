@@ -130,6 +130,18 @@ coef_ap <- replicate(5000, {
 sd(coef_ap); quantile(coef_ap, c(.025, .975))
 ```
 
+*Saída* (as duas últimas linhas, para o efeito de $a_p$ do estudo de caso):
+
+```
+> sd(coef_ap)
+[1] 2.78
+> quantile(coef_ap, c(.025, .975))
+  2.5%  97.5%
+  93.9  104.9
+```
+
+As chamadas `predict()` devolvem o IC (meia-largura da média) e o IP (bem mais largo, pois inclui a variação de uma nova peça) no ponto `x0`. O bootstrap de resíduos confirma o erro padrão analítico ($2{,}78$ N) sem supor normalidade.
+
 ```python
 # Python: IC/IP manuais e bootstrap de residuos (numpy)
 import numpy as np
@@ -144,6 +156,8 @@ h0 = z0 @ ZtZ_inv @ z0
 ic = t * np.sqrt(s2 * h0)      # meia-largura do IC (media)
 ip = t * np.sqrt(s2 * (1 + h0))# meia-largura do IP (nova obs)
 ```
+
+*Saída* (ao avaliar no ótimo do estudo de caso): `ip` ≈ 25 N — a meia-largura do intervalo de predição, a margem por peça que acompanha a recomendação final. O `ic`, que exclui o termo `+1`, é bem menor: distingue "quão bem conhecemos a média" de "o que esperar de uma peça".
 
 ## Síntese do capítulo {#sec-cap-incerteza-sintese}
 
