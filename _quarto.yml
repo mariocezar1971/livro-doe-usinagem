@@ -85,6 +85,21 @@ book:
 bibliography: references.bib
 csl: associacao-brasileira-de-normas-tecnicas.csl
 
+# Localizacao em portugues (Sumario, Apendices, legendas Figura/Tabela)
+lang: pt
+
+# Referencias cruzadas: o texto ja antepoe "Capitulo", "Secao", "Tabela",
+# "Figura" etc., entao as referencias devem mostrar SO o numero (prefixo vazio).
+crossref:
+  fig-prefix: ""
+  tbl-prefix: ""
+  eq-prefix: ""
+  sec-prefix: ""
+
+language:
+  crossref-ch-prefix: ""
+  crossref-sec-prefix: ""
+
 format:
   html:
     html-math-method: katex
