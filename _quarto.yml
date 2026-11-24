@@ -85,11 +85,15 @@ book:
 bibliography: references.bib
 csl: associacao-brasileira-de-normas-tecnicas.csl
 
-# Localizacao em portugues (Sumario, Apendices, legendas Figura/Tabela)
-lang: pt
+# IMPORTANTE: 'lang' NAO pode ficar no nivel raiz. No PDF ele faz o pandoc
+# carregar babel[bidi=default], que colide com o \usepackage[brazilian]{babel}
+# do preamble.tex (e do biblatex-abnt) -> "Option clash for package babel".
+# Por isso 'lang' fica APENAS nos formatos html e epub (que nao usam LaTeX).
+# No PDF o portugues vem do babel[brazilian] carregado no preamble.tex.
 
 # Referencias cruzadas: o texto ja antepoe "Capitulo", "Secao", "Tabela",
-# "Figura" etc., entao as referencias devem mostrar SO o numero (prefixo vazio).
+# "Figura" etc., entao as REFERENCIAS mostram SO o numero (prefixo vazio).
+# As LEGENDAS usam o titulo em portugues ("Figura 1:", "Tabela 1:").
 crossref:
   fig-prefix: ""
   tbl-prefix: ""
@@ -97,11 +101,19 @@ crossref:
   sec-prefix: ""
 
 language:
-  crossref-ch-prefix: ""
+  crossref-fig-title: "Figura"
+  crossref-tbl-title: "Tabela"
+  crossref-eq-title: "Equação"
+  crossref-lst-title: "Listagem"
+  crossref-fig-prefix: ""
+  crossref-tbl-prefix: ""
+  crossref-eq-prefix: ""
   crossref-sec-prefix: ""
+  crossref-ch-prefix: ""
 
 format:
   html:
+    lang: pt-BR          # idioma so aqui (e no epub); fora do PDF para nao colidir no babel
     html-math-method: katex
     sitemap: true
     theme:
@@ -146,8 +158,6 @@ format:
       - twoside
       - openright
       - numbers=noenddot
-      - brazilian        # opcao global de idioma: evita "Option clash for package babel"
-                         # (lang:pt carrega babel[bidi=default]; biblatex-abnt carrega babel[brazilian])
     papersize: a5         # Sobrescrito por classoption acima se necessario
     pdf-engine: xelatex
     cite-method: biblatex
@@ -185,6 +195,7 @@ format:
     keep-tex: true
 
   epub:
+    lang: pt-BR          # idioma so aqui (e no html); fora do PDF para nao colidir no babel
     toc: true
     toc-depth: 2
     number-sections: true
