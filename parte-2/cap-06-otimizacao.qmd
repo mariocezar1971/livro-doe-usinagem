@@ -144,6 +144,15 @@ A desejabilidade e o AG mono-objetivo entregam **um** ponto — a melhor soluç�
 
 O **NSGA-II** (Non-dominated Sorting Genetic Algorithm II) responde. É um AG multiobjetivo que não escalariza: ele busca o conjunto de soluções **não-dominadas** — aquelas em que não se pode melhorar uma resposta sem piorar outra. Esse conjunto forma a **fronteira de Pareto**: o mapa completo dos compromissos possíveis.
 
+::: {.callout-note}
+## Fundamentação matemática: dominância de Pareto e o NSGA-II
+Com múltiplos objetivos, "melhor" deixa de ser uma ordem total. Uma solução $\mathbf{a}$ **domina** $\mathbf{b}$ quando é pelo menos tão boa em todos os objetivos e estritamente melhor em ao menos um:
+$$
+\mathbf{a} \prec \mathbf{b} \iff f_i(\mathbf{a}) \le f_i(\mathbf{b})\ \ \forall i \ \ \text{e} \ \ \exists\, j: f_j(\mathbf{a}) < f_j(\mathbf{b}).
+$$
+As soluções não dominadas por nenhuma outra formam a **fronteira de Pareto**. O **NSGA-II** evolui a população rumo a ela com dois mecanismos. Primeiro, a **ordenação por não dominância**: a população é estratificada em frentes $F_1, F_2, \ldots$, onde $F_1$ são as não dominadas, $F_2$ as dominadas apenas por $F_1$, e assim por diante. Segundo, a **distância de aglomeração** (*crowding distance*): dentro de uma frente, prefere-se as soluções mais isoladas — a distância é a soma, por objetivo, do intervalo entre os dois vizinhos imediatos —, o que espalha a população e impede que ela se amontoe num só trecho da fronteira. A seleção favorece primeiro a frente mais baixa e, dentro dela, a maior distância de aglomeração: o algoritmo **converge** para a fronteira e ao mesmo tempo **cobre** toda a sua extensão.
+:::
+
 Em vez de dizer "a solução ótima é esta", o NSGA-II diz "estas são todas as soluções eficientes; escolha o compromisso que preferir". Numa fronteira força × rugosidade, cada ponto é uma condição de corte não-dominada; caminhar pela fronteira mostra exatamente quanto de rugosidade se sacrifica por cada newton de força economizado. A decisão final — o peso relativo — fica com o engenheiro, informada pelo mapa completo.
 
 ::: {.callout-important}

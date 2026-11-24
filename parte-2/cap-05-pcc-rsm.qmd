@@ -66,6 +66,18 @@ $$\alpha = \left[ \frac{\left(2^k + 2k + n_0\right)^{1/2} - 2^{k/2}}{2} \cdot 2^
 
 A ortogonalidade faz com que as estimativas dos coeficientes sejam independentes entre si — cada efeito é estimado sem contaminação dos outros. Uma alternativa é escolher $\alpha$ para **rotabilidade** (variância de predição constante à mesma distância do centro), com $\alpha = (2^k)^{1/4}$. No estudo de caso deste livro, o PCC foi construído com quatro observações no ponto central e $\alpha$ calculado para garantir a ortogonalidade da matriz.
 
+::: {.callout-note}
+## Fundamentação matemática: o que torna um projeto "bom"
+A qualidade de um planejamento mede-se pela **matriz de informação** $\mathbf{X}^\top\mathbf{X}$: quanto "maior" ela for, menores as variâncias das estimativas, pois $\operatorname{Var}(\hat{\boldsymbol\beta}) = \sigma^2(\mathbf{X}^\top\mathbf{X})^{-1}$. Como resumir "maior" num escalar define os **critérios de otimalidade**:
+
+- **D-ótimo** — maximiza $\det(\mathbf{X}^\top\mathbf{X})$; minimiza o volume da região de confiança conjunta dos coeficientes (o mais usado);
+- **A-ótimo** — minimiza $\operatorname{tr}\!\big[(\mathbf{X}^\top\mathbf{X})^{-1}\big]$, a soma das variâncias dos coeficientes;
+- **G-ótimo** — minimiza a **maior** variância de predição na região;
+- **I-ótimo** — minimiza a variância de predição **média** na região.
+
+Um projeto **ortogonal** (o fatorial, ou o PCC com $\alpha$ ortogonal) torna $\mathbf{X}^\top\mathbf{X}$ diagonal — e com isso ótimo, ou quase, em todos esses critérios ao mesmo tempo. É por isso que a ortogonalidade é tão perseguida: não é um detalhe estético, é o que entrega coeficientes independentes e de variância mínima. Quando restrições práticas (fatores categóricos, região irregular, ensaios proibidos) impedem um projeto clássico, constroem-se **projetos ótimos por algoritmo**, maximizando $\det(\mathbf{X}^\top\mathbf{X})$ sobre os candidatos viáveis.
+:::
+
 ### Do fatorial ao PCC: reaproveitamento
 
 Um ponto prático valioso: o PCC **não recomeça do zero**. Como os pontos fatoriais são os mesmos do 2^k já executado, só é preciso rodar os ensaios **novos** — os axiais e os centrais adicionais. No estudo de caso, o fatorial identificou $v_c$, $a_p$ e $f$ como significativos; o PCC então acrescentou apenas os pontos axiais e centrais desses três fatores, reaproveitando todo o trabalho fatorial anterior. Isso encadeia os planejamentos numa progressão econômica: triagem (2^k) → modelagem (PCC) → otimização (RSM).
