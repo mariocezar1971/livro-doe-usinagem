@@ -330,7 +330,8 @@ $$
 
 $$
 \begin{aligned}
-\hat{R}_a(1, -1) &= 1{,}60 + 0{,}10(1) + 0{,}70(-1) + 0{,}30(1)^2 + 0{,}25(-1)^2 + 0{,}10(1)(-1) \\
+\hat{R}_a(1, -1) &= 1{,}60 + 0{,}10(1) + 0{,}70(-1) \\
+&\quad {}+ 0{,}30(1)^2 + 0{,}25(-1)^2 + 0{,}10(1)(-1) \\
 &= 1{,}60 + 0{,}10 - 0{,}70 + 0{,}30 + 0{,}25 - 0{,}10 = 1{,}45 \text{ µm}.
 \end{aligned}
 $$
@@ -344,8 +345,10 @@ $$
 **Solução.** O **gradiente** é o vetor das derivadas parciais:
 
 $$
-\nabla \hat{R}_a = \left( \frac{\partial \hat{R}_a}{\partial x_1},\ \frac{\partial \hat{R}_a}{\partial x_2} \right)
-= \big(\, 0{,}10 + 0{,}60\,x_1 + 0{,}10\,x_2,\ \ 0{,}70 + 0{,}10\,x_1 + 0{,}50\,x_2 \,\big).
+\begin{aligned}
+\nabla \hat{R}_a &= \left( \frac{\partial \hat{R}_a}{\partial x_1},\ \frac{\partial \hat{R}_a}{\partial x_2} \right) \\
+&= \big(\, 0{,}10 + 0{,}60\,x_1 + 0{,}10\,x_2,\ \ 0{,}70 + 0{,}10\,x_1 + 0{,}50\,x_2 \,\big).
+\end{aligned}
 $$
 
 No ponto estacionário o gradiente se anula. Igualando a zero, chega-se ao sistema linear

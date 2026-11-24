@@ -132,13 +132,17 @@ Tomemos um cenário de torneamento de alumínio com metal duro, com parâmetros 
 Aplicando @eq-vidas e depois @eq-taylor:
 
 $$
-T_{\text{mín. custo}} = (4-1)\left(2 + \tfrac{8}{1{,}5}\right) = 3 \times 7{,}33 = 22{,}0 \text{ min}
-\;\Rightarrow\; v_{\text{mín. custo}} = \frac{700}{22{,}0^{\,0{,}25}} \approx 323 \text{ m/min},
+\begin{aligned}
+T_{\text{mín. custo}} &= (4-1)\left(2 + \tfrac{8}{1{,}5}\right) = 3 \times 7{,}33 = 22{,}0 \text{ min} \\
+&\Rightarrow\; v_{\text{mín. custo}} = \frac{700}{22{,}0^{\,0{,}25}} \approx 323 \text{ m/min},
+\end{aligned}
 $$
 
 $$
-T_{\text{máx. prod.}} = (4-1)(2) = 6{,}0 \text{ min}
-\;\Rightarrow\; v_{\text{máx. prod.}} = \frac{700}{6{,}0^{\,0{,}25}} \approx 447 \text{ m/min}.
+\begin{aligned}
+T_{\text{máx. prod.}} &= (4-1)(2) = 6{,}0 \text{ min} \\
+&\Rightarrow\; v_{\text{máx. prod.}} = \frac{700}{6{,}0^{\,0{,}25}} \approx 447 \text{ m/min}.
+\end{aligned}
 $$
 
 O **intervalo de máxima eficiência** vai, portanto, de **323 a 447 m/min**. A Tabela @tbl-econ-result compara os dois pontos.
