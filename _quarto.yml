@@ -146,6 +146,8 @@ format:
       - twoside
       - openright
       - numbers=noenddot
+      - brazilian        # opcao global de idioma: evita "Option clash for package babel"
+                         # (lang:pt carrega babel[bidi=default]; biblatex-abnt carrega babel[brazilian])
     papersize: a5         # Sobrescrito por classoption acima se necessario
     pdf-engine: xelatex
     cite-method: biblatex
