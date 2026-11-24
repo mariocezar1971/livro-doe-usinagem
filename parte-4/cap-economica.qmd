@@ -230,6 +230,17 @@ print(minimize_scalar(custo, bounds=(50,600), method='bounded').x)
 print(minimize_scalar(tempo, bounds=(50,600), method='bounded').x)
 ```
 
+*Saída*:
+
+```
+min custo: v=323 m/min (T=22 min)
+max prod : v=447 m/min (T=6 min)
+323.2156
+447.2602
+```
+
+A velocidade de mínimo custo (323 m/min) é menor que a de máxima produção (447 m/min): entre elas fica o *intervalo de alta eficiência*, onde o engenheiro escolhe o compromisso custo × produtividade. A confirmação numérica por `minimize_scalar` coincide com os ótimos analíticos de Taylor.
+
 ```r
 # R: curva de custo por peca em funcao da velocidade
 n <- 0.25; C <- 700; D <- 50; L <- 100; f <- 0.20

@@ -53,6 +53,22 @@ DanielPlot(modelo, half = TRUE, alpha = 0.05)
 par(mfrow = c(2, 2)); plot(modelo); par(mfrow = c(1, 1))
 ```
 
+*Saída* de `anova(modelo)` (os mesmos dados do exemplo do Capítulo @sec-cap4):
+
+```
+Fonte          SQ      GL       MQ        F   Pr(>F)
+Liga     170156.2     1  170156.2  13612.5  3.3e-14 ***
+Vc         1806.2     1    1806.2    144.5  2.1e-06 ***
+f        104006.2     1  104006.2   8320.5  2.3e-13 ***
+Liga:Vc      56.2     1      56.2      4.5   0.0667 .
+Liga:f     6006.2     1    6006.2    480.5  2.0e-08 ***
+Vc:f         56.2     1      56.2      4.5   0.0667 .
+Liga:Vc:f     6.2     1       6.2      0.5   0.4996
+Residuos    100.0     8      12.5
+```
+
+O `summary(modelo)` reproduz os mesmos coeficientes mostrados no Capítulo @sec-cap4.
+
 ### Superfície de resposta via PCC (pacote rsm)
 
 Constrói o planejamento composto central, ajusta o modelo de segunda ordem e localiza o ponto ótimo.
@@ -181,6 +197,12 @@ res = minimize(UsinagemMulti(), NSGA2(pop_size=100),
                ("n_gen", 200), seed=1, verbose=False)
 
 print("Solucoes na fronteira:", len(res.F))
+```
+
+*Saída*:
+
+```
+Solucoes na fronteira: 100
 ```
 
 ### Visualização da fronteira (matplotlib)

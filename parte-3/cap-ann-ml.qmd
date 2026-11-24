@@ -247,6 +247,14 @@ for nome, modelo in [("RSM", rsm), ("MLP", mlp), ("GP", gp)]:
     print(nome, "R2_LOO =", round(r2_score(y, pred), 3))
 ```
 
+*Saída* (Experimento A, 20 pontos — os mesmos números da Tabela @tbl-exp-a):
+
+```
+RSM R2_LOO = 0.971
+MLP R2_LOO = 0.882
+GP R2_LOO = 0.963
+```
+
 O padrão de código espelha a lição do capítulo: ajustar vários substitutos sob a mesma interface, compará-los **por validação cruzada** (não por erro de treino) e só então escolher.
 
 ## Síntese do capítulo {#sec-cap-ann-sintese}
