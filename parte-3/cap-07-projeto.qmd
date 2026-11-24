@@ -186,9 +186,11 @@ $$
 Aplicando aos níveis ajustados:
 
 $$
-x_{v_c}(300) = \frac{300 - 400}{200} = -0{,}50, \quad
-x_{f}(0{,}30) = \frac{0{,}30 - 0{,}275}{0{,}075} = +0{,}33, \quad
-x_{a_p}(3) = \frac{3 - 2{,}5}{1{,}5} = +0{,}33 .
+\begin{aligned}
+x_{v_c}(300) &= \frac{300 - 400}{200} = -0{,}50, \\
+x_{f}(0{,}30) &= \frac{0{,}30 - 0{,}275}{0{,}075} = +0{,}33, \\
+x_{a_p}(3) &= \frac{3 - 2{,}5}{1{,}5} = +0{,}33 .
+\end{aligned}
 $$
 
 **Interpretação.** Os três valores ficam **dentro** da região fatorial (todos entre $-1$ e $+1$), apenas deslocados do centro. É o esperado: os níveis de temperatura foram ajustados por limitação da ferramenta B, mas sem sair do envelope experimental — garantindo que as leituras de temperatura ainda sejam comparáveis às demais respostas.

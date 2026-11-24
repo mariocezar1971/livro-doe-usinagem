@@ -239,10 +239,12 @@ $$
 **Solução.** Para cada resposta, $d = \dfrac{U - y}{U - L}$ (fórmula de minimizar, Capítulo @sec-cap6):
 
 $$
-d_{F_u} = \frac{900 - 723}{300} = 0{,}59, \quad
-d_{N_e} = \frac{5000 - 1395}{4000} = 0{,}90, \quad
-d_{T_c} = \frac{600 - 344}{300} = 0{,}85, \quad
-d_{R_a} = \frac{3{,}5 - 2{,}47}{2{,}0} = 0{,}52 .
+\begin{aligned}
+d_{F_u} &= \frac{900 - 723}{300} = 0{,}59, &
+d_{N_e} &= \frac{5000 - 1395}{4000} = 0{,}90, \\
+d_{T_c} &= \frac{600 - 344}{300} = 0{,}85, &
+d_{R_a} &= \frac{3{,}5 - 2{,}47}{2{,}0} = 0{,}52 .
+\end{aligned}
 $$
 
 A desejabilidade global é a média geométrica das quatro:

@@ -389,9 +389,10 @@ $$
 : Construção da coluna de interação AC. {#tbl-exemplo-ac}
 
 $$
-\text{Contraste}_{AC} = +210 -385 +195 -360 -340 +590 -315 +555 = +150 \text{ N},
-\qquad
-\text{Efeito}_{AC} = \frac{150}{4} = +37{,}5 \text{ N}.
+\begin{aligned}
+\text{Contraste}_{AC} &= +210 -385 +195 -360 -340 +590 -315 +555 = +150 \text{ N}, \\
+\text{Efeito}_{AC} &= \frac{150}{4} = +37{,}5 \text{ N}.
+\end{aligned}
 $$
 
 **Interpretação.** O jeito mais intuitivo de ler uma interação é calcular o efeito de um fator **dentro de cada nível do outro**. O efeito do avanço vale:

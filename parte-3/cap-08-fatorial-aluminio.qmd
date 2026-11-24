@@ -213,8 +213,10 @@ A interpretação dos efeitos pela mecânica do cisalhamento apoia-se em @trent2
 **Solução.** O coeficiente de regressão de cada fator é **metade** do efeito tabelado (o efeito é a variação de $-1$ para $+1$; o coeficiente é por unidade codificada). Em fatores codificados:
 
 $$
-\hat{F}_u = 585 - \tfrac{52}{2}\,\text{Liga} - \tfrac{107}{2}\,v_c + \tfrac{714}{2}\,a_p + \tfrac{221}{2}\,f
-= 585 - 26\,\text{Liga} - 53{,}5\,v_c + 357\,a_p + 110{,}5\,f .
+\begin{aligned}
+\hat{F}_u &= 585 - \tfrac{52}{2}\,\text{Liga} - \tfrac{107}{2}\,v_c + \tfrac{714}{2}\,a_p + \tfrac{221}{2}\,f \\
+&= 585 - 26\,\text{Liga} - 53{,}5\,v_c + 357\,a_p + 110{,}5\,f .
+\end{aligned}
 $$
 
 (a) Todos em $+1$:

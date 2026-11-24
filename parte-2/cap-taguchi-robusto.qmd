@@ -200,7 +200,10 @@ A obra de referência é @montgomery2005design, que dedica um capítulo ao proje
 
 **Enunciado.** Uma condição foi medida três vezes, obtendo-se $y = \{48, 52, 50\}$. Calcule a razão sinal-ruído para os três objetivos: menor-melhor, maior-melhor e nominal-melhor.
 
-**Solução.** Primeiro, $\bar{y} = 50$ e $s^2 = \dfrac{(48-50)^2+(52-50)^2+(50-50)^2}{3-1} = \dfrac{8}{2} = 4$.
+**Solução.** Primeiro, $\bar{y} = 50$ e
+$$
+s^2 = \frac{(48-50)^2+(52-50)^2+(50-50)^2}{3-1} = \frac{8}{2} = 4 .
+$$
 
 $$
 S/N_{\text{menor}} = -10\log_{10}\!\left(\frac{48^2+52^2+50^2}{3}\right) = -33{,}98 \text{ dB},
