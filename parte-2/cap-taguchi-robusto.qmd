@@ -154,6 +154,8 @@ plano <- snPlot(plano, type = "smaller")
 effectPlot(plano)
 ```
 
+*Saída*: o `snPlot` devolve a razão S/N de cada corrida e o `effectPlot` traça a média por nível (escolhe-se o de maior S/N). O cálculo manual, com os números concretos dos dados do Capítulo @sec-cap4, está no bloco seguinte.
+
 Para o exemplo acima (dados do Capítulo @sec-cap4), a razão menor-melhor pode ser calculada à mão em poucas linhas:
 
 ```r

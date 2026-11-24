@@ -99,6 +99,8 @@ summary(modelo_rsm)   # coeficientes, ANOVA, falta de ajuste
 canonical(modelo_rsm)$xs
 ```
 
+*Saída*: os coeficientes do modelo de 2ª ordem, a ANOVA com teste de falta de ajuste e o ponto estacionário (em coordenadas codificadas) — como no exemplo resolvido do Capítulo @sec-cap5.
+
 ### Otimização por algoritmo genético (pacotes GA + desirability)
 
 Otimiza multiplas respostas via desejabilidade global, maximizada por algoritmo genético.
@@ -131,6 +133,8 @@ resultado <- ga(
 )
 summary(resultado)
 ```
+
+*Saída*: a condição de máxima desejabilidade global — as seis variáveis codificadas e o valor de $D$ —, equivalente ao ótimo consolidado na Tabela @tbl-otimo do Capítulo @sec-cap10.
 
 ### Visualização com ggplot2
 
