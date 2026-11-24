@@ -35,9 +35,23 @@ $$
 
 A equação captura o compromisso central: como $n < 1$, um pequeno aumento de $v_c$ **reduz muito** a vida $T$. Dobrar a velocidade, com $n = 0{,}25$, divide a vida por $2^{4} = 16$. É essa sensibilidade que torna a escolha da velocidade uma decisão econômica, não apenas técnica.
 
+### A equação de Taylor ampliada {#sec-cap-econ-taylor-ampliada}
+
+A forma simples @eq-taylor fixa avanço e profundidade — mas ambos afetam a vida da ferramenta. A **equação de Taylor ampliada** inclui os três parâmetros de corte:
+
+$$
+v_c\, T^{\,n} f^{\,a} a_p^{\,b} = C',
+\qquad\text{ou}\qquad
+T = \left( \frac{C'}{v_c\, f^{\,a}\, a_p^{\,b}} \right)^{1/n}.
+$$ {#eq-taylor-ampliada}
+
+Os expoentes obedecem tipicamente a $n < b < a$ (para metal duro, ordens de grandeza $n \approx 0{,}25$, $a \approx 0{,}6$, $b \approx 0{,}25$): **a velocidade é o que mais encurta a vida, seguida do avanço e, por último, da profundidade**. A física é a do Capítulo @sec-cap3 — velocidade e avanço elevam a temperatura e a solicitação do gume mais do que a profundidade, que apenas alonga o comprimento de contato.
+
+Um exemplo torna a hierarquia concreta. Calibrando $C'$ para coincidir com a forma simples numa condição de referência ($v_c = 300$, $f = 0{,}20$, $a_p = 1{,}5$, vida $\approx 30$ min), a vida na condição ótima do estudo de caso ($v_c = 126$, $f = 0{,}19$, $a_p = 2{,}43$) sobe para cerca de **665 min** — a velocidade baixa domina. A partir daí, **dobrar o avanço** (para $0{,}38$) derruba a vida para $\approx 126$ min, enquanto **dobrar a profundidade** (para $4{,}86$) a reduz só a $\approx 333$ min: o avanço custa muito mais vida que a profundidade, exatamente o que $a > b$ prevê.
+
 ::: {.callout-note}
-## Taylor ampliada
-A forma simples @eq-taylor fixa avanço e profundidade. A **equação de Taylor ampliada** inclui-os explicitamente, $v_c\, T^{\,n} f^{\,a} a_p^{\,b} = C'$, permitindo otimizar os três parâmetros juntos. Aqui usamos a forma simples, suficiente para expor os conceitos; a ampliada é o caminho natural quando o avanço e a profundidade também variam.
+## Fundamentação matemática: o ótimo econômico com três fatores
+Minimizando o custo @eq-custo sob a Taylor ampliada, a **vida de mínimo custo não muda** — $T_{\text{mín. custo}} = (\tfrac{1}{n}-1)(t_d + C_e/C_m)$ depende só de $n$ e dos custos, não de $f$ nem $a_p$. Muda a **velocidade** que a realiza, $v_c = C'/(T^{\,n} f^{\,a} a_p^{\,b})$, e o custo total **sempre cai** com $f$ e $a_p$ maiores (menos tempo de usinagem por peça). Logo, o ótimo econômico empurra avanço e profundidade **até o limite** de outras restrições — a rugosidade limita $f$, a força e a potência limitam $a_p$ e $f$ — e só então aplica a velocidade de mínimo custo. Otimizar os três resume-se a: maximizar $f$ e $a_p$ dentro das restrições, depois escolher a velocidade econômica.
 :::
 
 ## O custo por peça {#sec-cap-econ-custo}
@@ -87,6 +101,19 @@ Entre a velocidade de mínimo custo e a de máxima produção estende-se o **int
 ::: {.callout-important}
 ## Decisão de projeto
 O IME é a faixa onde a decisão deixa de ser técnica e passa a ser estratégica. O DOE entrega os modelos; a economia entrega os limites; o gestor escolhe o ponto dentro deles conforme a conjuntura — carteira de pedidos, custo de capital, criticidade do prazo. Recomendar uma única velocidade sem apresentar o IME é esconder do decisor a margem de manobra que ele tem.
+:::
+
+## Custo de ferramenta e vida sob desgaste {#sec-cap-econ-desgaste}
+
+A vida $T$ que alimenta Taylor e o custo não é um número abstrato: é **medida por um critério de desgaste**. Convenciona-se que a ferramenta "morreu" quando o desgaste de flanco atinge um limite — tipicamente $VB = 0{,}3$ mm no acabamento (ou $VB = 0{,}6$ mm no desbaste). A vida é o tempo de corte até cruzar esse limite; a equação de Taylor nada mais é que o ajuste de como esse tempo cai com a velocidade.
+
+No alumínio, o mecanismo que governa esse desgaste é peculiar e já foi caracterizado no estudo de caso (Capítulo @sec-cap9): a **adesão** e a **aresta postiça de corte** (BUE). O alumínio, dúctil e de baixo ponto de fusão, solda-se ao gume; os destacamentos periódicos da aresta postiça arrancam material da ferramenta, acelerando o desgaste e deteriorando o acabamento. Foi por isso que a geometria polida e afiada da ferramenta do estudo foi escolhida — para minimizar justamente essa adesão. A consequência econômica é direta: **a estratégia que controla a aresta postiça prolonga a vida $T$ e, por @eq-custo, baixa o custo por peça** — ligando o estudo de desgaste do Capítulo @sec-cap9 ao modelo de custo deste capítulo.
+
+O custo por aresta, $C_e$, fecha a conta. Uma pastilha intercambiável oferece várias arestas (uma pastilha quadrada, por exemplo, quatro a oito gumes), então $C_e$ é o preço da pastilha dividido pelo número de arestas aproveitáveis, mais o rateio do porta-ferramentas. Esse $C_e$, a vida $T$ medida pelo critério de $VB$, e a razão $t_m/T$ são o que traduz o desgaste físico em reais por peça — e o que torna o estudo de desgaste parte integrante da avaliação econômica, não um apêndice técnico.
+
+::: {.callout-tip}
+## Na prática
+Antes de aplicar Taylor, faça o ensaio de vida de ferramenta que fornece $n$ e $C$: usine em duas ou três velocidades, registre o tempo até $VB = 0{,}3$ mm em cada uma e ajuste a reta de $\log T$ contra $\log v_c$ — a inclinação vale $-1/n$ e o intercepto dá $C$. Sem esse ensaio, os parâmetros de Taylor são chute; com ele, toda a economia deste capítulo ganha base experimental, como o DOE deu base aos modelos de usinabilidade.
 :::
 
 ## Exemplo resolvido: do ótimo técnico ao ótimo econômico {#sec-cap-econ-exemplo}
@@ -152,6 +179,29 @@ E o avanço? Ele não muda a velocidade de mínimo custo, mas governa um trade-o
 
 Para integrar a economia ao DOE, basta tratar **custo por peça** e **tempo de produção** como respostas adicionais na desejabilidade (@sec-cap6): define-se para cada uma uma função do tipo "menor é melhor" e combina-se com as respostas técnicas na média geométrica. O ótimo resultante concilia, num só número, acabamento, força, custo e produtividade — e o peso relativo de cada objetivo (pelo expoente da desejabilidade) traduz a prioridade da planta. Assim, o ótimo recomendado ao fim do estudo (Capítulo @sec-cap10) pode ser reponderado para refletir não só o que a peça exige, mas o que ela custa.
 
+## Estudo de caso: a economia do ótimo do Capítulo @sec-cap10 {#sec-cap-econ-estudocaso}
+
+Até aqui a economia foi exposta sobre um cenário didático. Apliquemo-la ao **ótimo real** do estudo de caso. A otimização multiresposta do Capítulo @sec-cap10 recomendou, para a usinabilidade, a condição $v_c = 126$ m/min, $a_p = 2{,}43$ mm, $f = 0{,}19$ mm/volta (Tabela @tbl-otimo), que minimiza força, potência, temperatura e rugosidade. **Essa condição é economicamente boa?**
+
+Para responder, aplicamos o modelo de custo (@eq-custo) com os parâmetros ilustrativos da Tabela @tbl-econ-param, mantendo o avanço do ótimo ($f = 0{,}19$) e variando apenas a velocidade. A Tabela @tbl-econ-caso compara o ótimo técnico com as velocidades de mínimo custo e de máxima produção.
+
+| Condição | $v_c$ (m/min) | Vida $T$ (min) | Custo (R\$/peça) | Tempo (min/peça) |
+|:---|:---:|:---:|:---:|:---:|
+| **Ótimo técnico** (Cap. @sec-cap10) | 126 | 953 | 2,49 | 1,66 |
+| Mínimo custo | 323 | 22 | **2,01** | 1,28 |
+| Máxima produção | 447 | 6 | 2,12 | **1,25** |
+
+: Economia da condição ótima do estudo de caso, comparada às velocidades econômicas. {#tbl-econ-caso}
+
+O veredito é instrutivo. O ótimo técnico usina **devagar** ($v_c = 126$ m/min, a menor da região estudada): isso minimiza força, potência e temperatura e, de quebra, faz a ferramenta durar quase indefinidamente (953 min). Mas a lentidão **custa**: comparado à velocidade de mínimo custo, o ótimo técnico sai **24% mais caro** e **30% mais lento** por peça — não por desgaste de ferramenta (mínimo aqui), mas porque cada peça ocupa a máquina por muito mais tempo.
+
+Eis o conflito em sua forma mais nítida: a condição que a engenharia de qualidade prefere (menor força e rugosidade) **não** é a que a engenharia de produção prefere (menor custo e maior vazão). Subir a velocidade de 126 para 323 m/min cortaria 24% do custo e 30% do tempo — ao preço de mais força, potência, temperatura e rugosidade, justamente as respostas que o ótimo técnico protegia. Não há resposta única: há um **trade-off** que só a direção da empresa resolve, pesando margem contra qualidade. O papel do DOE somado à economia deste capítulo é tornar esse trade-off **explícito e quantificado** — e é o que a integração do custo à desejabilidade (@sec-cap-econ-multi) permite, trazendo a velocidade econômica para dentro dos objetivos do ótimo.
+
+::: {.callout-important}
+## Decisão de projeto
+O ótimo do Capítulo @sec-cap10 é um ótimo **técnico** — não enxergou custo nem produtividade. Apresentá-lo à produção sem a análise econômica ao lado esconde que ele sacrifica 24% de custo e 30% de vazão. A recomendação madura leva as duas tabelas juntas: a condição de menor força/rugosidade **e** a de menor custo, com o intervalo entre elas como espaço de decisão. Os parâmetros de Taylor e de custo aqui são ilustrativos; com um ensaio de vida de ferramenta (@sec-cap-econ-desgaste) e os custos reais da planta, a mesma análise entrega a recomendação econômica definitiva.
+:::
+
 ## Código: as contas da economia {#sec-cap-econ-codigo}
 
 ```python
@@ -197,11 +247,14 @@ abline(v = C/((1/n-1)*(td+Ce/Cm))^n, lty = 2)  # velocidade de minimo custo
 | Tema | Ideia-chave |
 |:---|:---|
 | Equação de Taylor | $v_c T^n = C$: velocidade alta encurta muito a vida ($n<1$) |
+| Taylor ampliada | $v_c T^n f^a a_p^b = C'$: $v_c$ e $f$ encurtam a vida mais que $a_p$ |
 | Custo por peça | Usinagem + manuseio + troca/ferramenta; tem mínimo |
 | Taxa de produção | Tem máximo; não coincide com o mínimo custo |
 | Duas velocidades | $v_{\text{mín. custo}} < v_{\text{máx. prod.}}$, sempre |
 | Intervalo de eficiência | Faixa entre as duas; a escolha ali é gerencial |
+| Vida sob desgaste | $T$ medida por critério $VB$; adesão/BUE a governa no alumínio |
 | Custo no multiresposta | Entra na desejabilidade como resposta "menor é melhor" |
+| Ótimo técnico × econômico | O ótimo do estudo é lento: +24% custo e +30% tempo vs. mínimo custo |
 
 : Síntese da otimização econômica. {#tbl-sintese-econ}
 
