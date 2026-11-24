@@ -58,6 +58,8 @@ Para $k$ fatores significativos, o PCC é montado assim [@montgomery2005design; 
 
 O total é $2^k + 2k + n_0$ tratamentos. Para três fatores com quatro pontos centrais: $8 + 6 + 4 = 18$ ensaios — modesto para a riqueza de informação (todos os efeitos principais, interações e curvaturas). Essa economia é a grande vantagem do PCC: com poucos ensaios, avalia-se por ANOVA a significância dos termos principais, das interações e dos **termos quadráticos** que formarão o modelo [@correia2005].
 
+![Geometria do planejamento composto central (3 fatores): os 8 pontos fatoriais nas quinas do cubo (±1), os 6 pontos axiais sobre os eixos (±α=1,68) que fornecem o terceiro nível necessário à curvatura, e as réplicas no ponto central.](../figuras/fig-pcc-geometria.png){#fig-pcc-geom width=72%}
+
 ### A distância axial e a ortogonalidade
 
 O valor de $\alpha$ — a distância dos pontos axiais ao centro — não é arbitrário. Escolhe-se $\alpha$ para dar à matriz uma propriedade estatística desejável. Uma escolha comum garante a **ortogonalidade** da matriz de variância-covariância, calculada por [@montgomery2005design]:

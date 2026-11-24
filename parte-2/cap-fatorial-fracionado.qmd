@@ -27,6 +27,8 @@ Fracionar parece bom demais: como estimar os efeitos de muitos fatores com metad
 
 Juntos, esses princípios dizem: não vale a pena pagar por ensaios que só servem para estimar interações de alta ordem desprezíveis. O fatorial fracionado troca essa informação inútil por **economia de ensaios** — deliberadamente, e de forma controlada.
 
+![A meia-fração $2^{3-1}$ com $I=ABC$: das 8 corridas do fatorial completo $2^3$, usam-se apenas as 4 destacadas (uma em cada par de quinas opostas do cubo) — metade do esforço, preservando a estimativa dos efeitos principais.](../figuras/fig-fracionado-cubo.png){#fig-frac-cubo width=72%}
+
 ## O gerador e a relação de definição {#sec-capfrac-gerador}
 
 A meia-fração de um fatorial $2^k$ — o planejamento $2^{k-1}$ — usa **metade** dos tratamentos. A questão é: qual metade? A escolha é feita por um **gerador**.

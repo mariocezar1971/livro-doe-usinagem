@@ -89,6 +89,8 @@ A pegada da ferramenta, terceira fonte da seção anterior, merece sua própria 
 
 : Energia embutida da ferramenta por peça, contra a energia de corte direta ($\approx 16{,}5$ kJ/peça). {#tbl-sust-desgaste}
 
+![Energia embutida da ferramenta por peça em função da velocidade (parâmetros ilustrativos). A vida curta em alta velocidade consome mais pastilhas: em ~369 m/min a energia para fabricá-las iguala a energia de corte, e a 447 m/min (29 kJ) a supera.](../figuras/fig-energia-desgaste.png){#fig-energia-desgaste width=85%}
+
 A leitura inverte uma intuição comum. No ótimo técnico lento, a ferramenta dura tanto que sua energia embutida é desprezível (4% da energia de corte). Mas, na velocidade de máxima produção, a vida curta consome tantas pastilhas que a energia **para fabricá-las** por peça **supera a própria energia de corte** (177%). Correr mais economiza tempo de máquina, mas transfere energia para a cadeia de produção das ferramentas — muitas vezes fora dos muros da fábrica e invisível ao medidor de energia local.
 
 Eis o paralelo com o Capítulo @sec-cap-econ: assim como existe uma velocidade de **mínimo custo**, existe uma de **mínima energia** — e elas não coincidem, porque os pesos são outros (a energia embutida de uma pastilha pesa diferente do seu preço). A Taylor ampliada (@sec-cap-econ-taylor-ampliada) fecha o quadro: como a vida depende de $v_c$, $f$ e $a_p$, a energia da ferramenta por peça depende dos três — e minimizá-la é mais uma resposta ambiental a entrar na otimização multiobjetivo da próxima seção.

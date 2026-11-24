@@ -83,6 +83,8 @@ $$
 
 Agora aumentar $v_c$ **piora** a rugosidade. A conclusão do engenheiro depende inteiramente do ponto de partida arbitrário que ele escolheu para $f$. E ele não sabe disso, porque OFAT nunca testa combinações que revelariam a interação.
 
+![Por que OFAT falha quando há interação: as curvas de nível formam uma crista diagonal; o caminho "um fator por vez" (vermelho) sobe pela crista em passos e trava longe do ótimo verdadeiro (estrela), enquanto um planejamento fatorial $2^2$ (quadrados) amostra as quatro quinas e revela a direção da crista.](../figuras/fig-doe-ofat.png){#fig-doe-ofat width=82%}
+
 ::: {.callout-warning}
 ## Erro comum
 "Vamos rodar OFAT primeiro para descobrir quais variáveis importam, depois fazemos um DOE só com as importantes." Essa estratégia parece prudente, mas é logicamente inconsistente. Se OFAT declara uma variável irrelevante --- o que ocorre com frequência quando o efeito principal é pequeno mas a interação é grande --- essa variável será excluída do DOE seguinte, que, portanto, nunca conseguirá detectar a interação. O erro se propaga.
