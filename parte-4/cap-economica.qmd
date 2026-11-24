@@ -255,6 +255,8 @@ plot(v, custo(v), type = "l", xlab = "vc (m/min)", ylab = "custo/peca (R$)")
 abline(v = C/((1/n-1)*(td+Ce/Cm))^n, lty = 2)  # velocidade de minimo custo
 ```
 
+*Saída*: a curva de custo por peça tem forma de **U**, com o mínimo sobre a linha tracejada em ≈ 323 m/min — a mesma velocidade de mínimo custo obtida analiticamente no bloco anterior. À esquerda do mínimo, a vida longa não compensa o tempo de usinagem; à direita, a troca frequente de ferramenta encarece a peça.
+
 ## Síntese do capítulo {#sec-cap-econ-sintese}
 
 | Tema | Ideia-chave |

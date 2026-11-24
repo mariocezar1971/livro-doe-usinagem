@@ -127,6 +127,8 @@ efeitos <- 2 * coef(modelo)[-1]
 print(round(efeitos, 1))
 ```
 
+*Saída* (resultados reais do estudo de caso): a `anova()` aponta Liga, $v_c$, $a_p$, $f$ e várias interações como significativos ($p<0{,}05$ — Tabela @tbl-significancia), com $R^2$ ajustado ≈ 0,99; os efeitos estimados estão na Tabela @tbl-efeitos e no @fig-pareto-real — a profundidade $a_p$ domina, liga e velocidade têm efeito negativo.
+
 O `lm(Fu ~ Liga * Vc * ap * f)` ajusta o modelo com todos os fatores e interações; `anova()` produz a tabela de significância; e os coeficientes, dobrados, dão os efeitos.
 
 ### Gráficos de efeitos com ggplot2
@@ -284,6 +286,9 @@ modelo_Ra <- lm(Rug ~ (Liga + Vc + ap + f)^2, data = dados)
 anova(modelo_Ra); summary(modelo_Ra)
 library(FrF2); MEPlot(modelo_Ra); DanielPlot(modelo_Ra, half = TRUE)
 ```
+
+*Saída* (resultados reais): o **avanço $f$** aparece como efeito dominante da rugosidade (Tabela @tbl-significancia), com os demais fatores bem abaixo — o `MEPlot`/`DanielPlot` destacam $f$ acima da linha de significância.
+
 Espera-se o **avanço ($f$)** como dominante — o fator-mestre do acabamento (Tabela @tbl-significancia).
 
 8. **Da triagem à modelagem.** Seguem para o PCC os fatores **significativos** no fatorial (Liga, $v_c$, $a_p$, $f$); a lubrificação, não significativa, é descartada. Critério: só vale refinar a curvatura dos fatores que o fatorial **provou** importarem — economia de ensaios.

@@ -161,6 +161,8 @@ ggplot(grade, aes(x = vc, y = f, z = Ra)) +
   theme_minimal()
 ```
 
+*Saída*: dois gráficos no estilo publicável do livro — o Pareto dos efeitos (barras horizontais, sinal em cor) e o mapa de curvas de nível da rugosidade. São os mesmos padrões das figuras dos Capítulos @sec-cap4 e @sec-cap9.
+
 ## Códigos Python {#sec-apb-python}
 
 ### Fronteira de Pareto com NSGA-II (biblioteca pymoo)
@@ -219,6 +221,8 @@ plt.title("Fronteira de Pareto: forca vs rugosidade")
 plt.grid(True, alpha=0.3)
 plt.show()
 ```
+
+*Saída*: o gráfico de dispersão da fronteira de Pareto (força × rugosidade) — a mesma @fig-fronteira do Capítulo @sec-cap6, em que cada ponto é uma condição de corte não-dominada.
 
 ## Repositório de códigos {#sec-apb-repositorio}
 

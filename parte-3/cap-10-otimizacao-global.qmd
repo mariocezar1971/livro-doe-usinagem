@@ -132,6 +132,8 @@ resultado <- ga(
 summary(resultado)   # ponto otimo e desejabilidade maxima
 ```
 
+*Saída*: o `summary(resultado)` reporta o melhor indivíduo — as seis coordenadas codificadas da condição ótima e a desejabilidade global máxima, exatamente os valores consolidados na Tabela @tbl-otimo.
+
 O pacote GA evolui uma população de soluções por 200 gerações, convergindo para a condição de máxima desejabilidade — reproduzindo o ponto ótimo da Tabela @tbl-otimo.
 
 ## A fronteira de Pareto como alternativa {#sec-cap10-pareto}

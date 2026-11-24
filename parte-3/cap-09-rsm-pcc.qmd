@@ -96,6 +96,8 @@ ggplot(grade, aes(x = vc, y = f, z = Ra)) +
   theme_minimal(base_size = 12)
 ```
 
+*Saída*: o mapa de curvas de nível da rugosidade $R_a$ — o vale de baixo $R_a$ aparece na região de **alta velocidade e baixo avanço**; a qualidade de ajuste de cada modelo (por liga e resposta) está na Tabela @tbl-r2-pcc.
+
 O `geom_contour_fill` do pacote metR preenche as regiões entre curvas com cor, e `geom_text_contour` rotula cada curva com seu valor — produzindo um mapa de nível legível e publicável. O vale de baixa rugosidade aparece como a região de cor mais clara (ou escura, conforme a escala), localizando visualmente a melhor condição.
 
 ::: {.callout-tip}
@@ -233,4 +235,7 @@ Como este capítulo é de leitura e interpretação de resultados, os exercício
 library(rsm)
 contour(modelo_Fu, ~ x_ap + x_f, at = list(x_vc = 0))
 ```
+
+*Saída*: as curvas de nível da força no plano $a_p \times f$ (com $v_c$ fixo no centro) — visualizam diretamente o que o texto a seguir conclui.
+
 A **menor força** fica na região de **baixo $a_p$ e baixo $f$** — ambos têm efeito positivo dominante sobre a força.
