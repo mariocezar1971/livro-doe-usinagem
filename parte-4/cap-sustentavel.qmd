@@ -73,6 +73,31 @@ A pegada ambiental da usinagem tem três fontes principais:
 
 A síntese prática: **o jorro domina a pegada pelo fluido; o seco e o MQF a reduzem drasticamente**, desde que não piorem tanto o desgaste a ponto de elevar a parcela da ferramenta e da energia. É um trade-off, e trade-off é terreno de DOE.
 
+## Energia sob desgaste: a ferramenta na conta ambiental {#sec-cap-sust-desgaste}
+
+A pegada da ferramenta, terceira fonte da seção anterior, merece sua própria conta — porque o desgaste a liga diretamente à energia, por dois caminhos.
+
+**Primeiro: uma ferramenta desgastada gasta mais energia.** À medida que o desgaste de flanco cresce (Capítulo @sec-cap9), a força de corte sobe — e, por @eq-energia, a energia específica $u_c = F_c/(a_p f)$ sobe junto. Um gume que começa afiado e termina na borda do critério ($VB = 0{,}3$ mm) pode elevar a força em 20 a 40% ao fim da vida, puxando a energia média por peça para cima na mesma medida. No alumínio, onde a **aresta postiça** (Capítulo @sec-cap9) faz a força oscilar, manter o gume limpo — com geometria afiada ou lubrificação MQF — é também uma medida de **eficiência energética**, não só de acabamento.
+
+**Segundo: fabricar a ferramenta custa energia, amortizada por peça.** Uma pastilha de metal duro carrega uma **energia embutida** elevada — o tungstênio é caro de extrair e sinterizar (ordem de grandeza ilustrativa: $\sim 400$ MJ/kg, cerca de 1 MJ por aresta numa pastilha de 10 g com quatro gumes). Essa energia dilui-se pelas peças que cada aresta produz — a mesma razão $t_m/T$ do custo (Capítulo @sec-cap-econ), agora em joules. E, como a vida $T$ cai com a velocidade (Taylor), **a energia embutida por peça cresce com a velocidade**, como mostra a Tabela @tbl-sust-desgaste (mesma geometria e Taylor ilustrativos do Capítulo @sec-cap-econ).
+
+| Velocidade $v_c$ (m/min) | Vida $T$ (min) | Peças por aresta | Energia da ferramenta por peça |
+|:---:|:---:|:---:|:---|
+| 126 (ótimo técnico) | 953 | ~1530 | 0,7 kJ (4% da energia de corte) |
+| 323 (mínimo custo) | 22 | ~91 | 11 kJ (67%) |
+| 447 (máxima produção) | 6 | ~34 | 29 kJ (177%) |
+
+: Energia embutida da ferramenta por peça, contra a energia de corte direta ($\approx 16{,}5$ kJ/peça). {#tbl-sust-desgaste}
+
+A leitura inverte uma intuição comum. No ótimo técnico lento, a ferramenta dura tanto que sua energia embutida é desprezível (4% da energia de corte). Mas, na velocidade de máxima produção, a vida curta consome tantas pastilhas que a energia **para fabricá-las** por peça **supera a própria energia de corte** (177%). Correr mais economiza tempo de máquina, mas transfere energia para a cadeia de produção das ferramentas — muitas vezes fora dos muros da fábrica e invisível ao medidor de energia local.
+
+Eis o paralelo com o Capítulo @sec-cap-econ: assim como existe uma velocidade de **mínimo custo**, existe uma de **mínima energia** — e elas não coincidem, porque os pesos são outros (a energia embutida de uma pastilha pesa diferente do seu preço). A Taylor ampliada (@sec-cap-econ-taylor-ampliada) fecha o quadro: como a vida depende de $v_c$, $f$ e $a_p$, a energia da ferramenta por peça depende dos três — e minimizá-la é mais uma resposta ambiental a entrar na otimização multiobjetivo da próxima seção.
+
+::: {.callout-important}
+## Decisão de projeto
+A pegada energética de um processo não termina no medidor de energia da máquina: inclui a energia embutida nas ferramentas consumidas. Ignorá-la faz a máxima produção parecer "neutra" em energia quando, por peça, ela pode gastar mais energia em pastilhas do que em corte. Uma contabilidade ambiental honesta soma as três parcelas — corte, auxiliares e ferramenta — e deixa o DOE achar a condição que minimiza o todo, não uma parte.
+:::
+
 ## Otimização multiobjetivo com a dimensão ambiental {#sec-cap-sust-multi}
 
 Incluir o ambiente na otimização é acrescentar uma (ou mais) resposta ambiental à desejabilidade (@sec-cap6):
@@ -100,6 +125,7 @@ Adotar o MQF ou o corte a seco não é decisão só ambiental: muda forças, tem
 | Energia específica | $u_c = F_c/(a_p f)$; não depende de $v_c$; é a força específica |
 | Pegada de carbono | Energia × fator de emissão + fluido + ferramenta |
 | Descarte de fluido | Maior passivo ambiental do jorro; seco/MQF o reduzem |
+| Energia sob desgaste | Ferramenta desgastada gasta mais; energia embutida/peça cresce com $v_c$ |
 | Otimização | Resposta ambiental entra na desejabilidade, com peso ESG |
 
 : Síntese da usinagem sustentável. {#tbl-sintese-sust}
