@@ -212,6 +212,8 @@ rede <- nnet(x = esc, y = y_esc,
 # (repetir o ajuste excluindo cada ponto; comparar a previsao)
 ```
 
+*Saída*: a rede treina em silêncio (`trace = FALSE`, sem impressão no console); sua generalização é medida pela validação cruzada deixa-um-fora. Para a superfície quadrática do Experimento A, o $R^2_{LOO}$ dessa MLP fica em torno de **0,88** (linha "Rede neural" da Tabela @tbl-exp-a) — abaixo do modelo de 2ª ordem, como o bloco Python a seguir quantifica.
+
 ```python
 # ---- Python: MLP, floresta e processo gaussiano com scikit-learn ----
 import numpy as np
