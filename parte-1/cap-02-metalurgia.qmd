@@ -230,7 +230,7 @@ A Tabela @tbl-propriedades ordena as seis ligas por resistência, da mais mole �
 | 7075-T73 | > 470 | > 395 | > 7 | 7xxx superenvelhecida |
 | 7075-T6 | > 540 | > 485 | > 7 | Topo: resistente, menos dúctil |
 
-: Propriedades mecânicas das seis ligas [@alcoa2009certific]. R = limite de resistência; e₀,₂% = limite de escoamento; alongamento = medida de ductilidade. {#tbl-propriedades}
+: Propriedades mecânicas das seis ligas [@alcoa2009certific]. R = limite de resistência; e₀,₂% = limite de escoamento; alongamento = medida de ductilidade. {#tbl-propriedades tbl-colwidths="[16,13,15,11,45]"}
 
 O padrão é inversamente proporcional e não é coincidência: **conforme a resistência sobe, o alongamento (ductilidade) cai**. A 1350-O alonga mais de 25% mas resiste a menos de 95 MPa; a 7075-T6 resiste a mais de 540 MPa mas alonga apenas 7%. Essa relação inversa é consequência direta dos mecanismos de endurecimento — todo obstáculo que barra discordâncias para aumentar a resistência também impede a deformação plástica que constitui a ductilidade.
 

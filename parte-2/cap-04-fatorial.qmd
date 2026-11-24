@@ -143,7 +143,7 @@ Compara-se $F_0$ com o valor crítico $F_{\alpha; 1; 2^k(n-1)}$ da distribuiçã
 | Erro | $SQ_T - \sum SQ$ | $2^k(n-1)$ | $SQ_e / [2^k(n-1)]$ | — |
 | Total | $\sum y^2 - (\sum y)^2 / 2^k n$ | $2^k n - 1$ | — | — |
 
-: Estrutura da análise de variância de um planejamento fatorial 2^k [@montgomery2005design]. {#tbl-anova}
+: Estrutura da análise de variância de um planejamento fatorial 2^k [@montgomery2005design]. {#tbl-anova tbl-colwidths="[18,30,12,28,12]"}
 
 ::: {.callout-note}
 ## Fundamentação matemática: a decomposição da variância e os testes

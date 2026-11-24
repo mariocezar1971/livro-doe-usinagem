@@ -149,6 +149,8 @@ Os fatores que o experimentador manipula nos planejamentos deste livro são as t
 | Avanço | $f$ | mm/volta | Força, rugosidade, forma do cavaco |
 | Profundidade de corte | $a_p$ | mm | Força, área de seção |
 
+: Fatores de corte manipulados nos planejamentos e seus efeitos dominantes. {#tbl-fatores-corte tbl-colwidths="[28,12,16,44]"}
+
 : Os três fatores controláveis dos planejamentos de experimentos. {#tbl-fatores}
 
 A área da seção de corte ($A_{sc} = a_p \cdot f$) combina dois deles e permite avaliar a **pressão específica de corte** ($K_s = F_c/A_{sc}$) [@boothroyd1981fundamen] — uma medida normalizada de quão "difícil" é cortar o material, independente do tamanho do corte.

@@ -109,7 +109,7 @@ Formatos disponíveis:
 - 📄 **PDF** — R\$ 79 (R\$ 49 na pré-venda para inscritos aqui)
 - 📖 **Impresso** — R\$ 119 (via Amazon KDP)
 
-Para acompanhar o desenvolvimento em tempo real: [github.com/mariocezar1971/livro-doe-usinagem](https://github.com/mariocezar1971/livro-doe-usinagem)
+Para acompanhar o desenvolvimento em tempo real: <https://github.com/mariocezar1971/livro-doe-usinagem>
 :::
 
 ::: {.rodape-landing}

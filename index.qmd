@@ -52,7 +52,7 @@ Conteúdo opcional para quem quer ir além do mínimo necessário.
 
 ## Códigos e dados
 
-Todos os códigos R e Python apresentados estão disponíveis em [github.com/mariocezar1971/livro-doe-usinagem-codigos](https://github.com/mariocezar1971/livro-doe-usinagem-codigos), assim como os dados experimentais consolidados em formato CSV e SQLite.
+Todos os códigos R e Python apresentados estão disponíveis em <https://github.com/mariocezar1971/livro-doe-usinagem-codigos>, assim como os dados experimentais consolidados em formato CSV e SQLite.
 
 ## Agradecimentos
 

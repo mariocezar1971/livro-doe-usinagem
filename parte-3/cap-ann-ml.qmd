@@ -156,7 +156,7 @@ Ajustamos quatro modelos aos mesmos 20 pontos e medimos o desempenho de duas for
 | Floresta aleatória | 0,947 | 23,8 | 0,622 | 63,4 |
 | Processo gaussiano (RBF) | 0,997 | 5,7 | 0,963 | 19,8 |
 
-: Desempenho em superfície quadrática com 20 pontos. RMSE na unidade da resposta (N). {#tbl-exp-a}
+: Desempenho em superfície quadrática com 20 pontos. RMSE na unidade da resposta (N). {#tbl-exp-a tbl-colwidths="[28,18,18,18,18]"}
 
 A leitura é instrutiva. Pela validação cruzada — a medida honesta —, o **modelo de segunda ordem vence** ($R^2_{\text{LOO}} = 0{,}971$), com o processo gaussiano logo atrás ($0{,}963$). A rede neural fica em $0{,}882$ e a floresta aleatória despenca para $0{,}622$. Três lições:
 
