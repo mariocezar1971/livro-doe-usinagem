@@ -153,7 +153,7 @@ Três ideias devem permanecer:
 2. **O ruído fabril se gerencia, não se elimina.** Aleatorização, blocagem e réplicas centrais tornam o experimento robusto ao ambiente real — que é onde a decisão vai valer.
 3. **Planejar antes é tudo.** O experimento industrial vive ou morre no planejamento. Matriz, ordem, medição e blocos definidos antes de ligar a máquina.
 
-Com a metodologia adaptada à prática industrial, o próximo e último capítulo sintetiza as lições do livro inteiro e aponta as direções de pesquisa que o futuro reserva ao planejamento de experimentos em usinagem.
+Com a metodologia adaptada à prática industrial, os dois capítulos seguintes ampliam a otimização para além do desempenho técnico — o custo e a produtividade (Capítulo @sec-cap-econ) e a sustentabilidade ambiental (Capítulo @sec-cap-sust) — antes de o capítulo final sintetizar as lições do livro inteiro e apontar as direções de pesquisa que o futuro reserva ao planejamento de experimentos em usinagem.
 
 ## Para saber mais {#sec-cap11-saibamais}
 

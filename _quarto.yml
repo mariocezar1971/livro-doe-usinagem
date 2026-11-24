@@ -67,6 +67,8 @@ book:
     - part: "Parte IV — Aplicação"
       chapters:
         - parte-4/cap-11-chao-fabrica.qmd
+        - parte-4/cap-economica.qmd
+        - parte-4/cap-sustentavel.qmd
         - parte-4/cap-12-sintese.qmd
     - references.qmd
     - em-breve.qmd

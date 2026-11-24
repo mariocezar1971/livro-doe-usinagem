@@ -1,0 +1,182 @@
+---
+title: "Usinagem sustentável"
+subtitle: "Energia, fluidos e a dimensão ambiental do corte"
+author: "Mário Cezar dos Santos Jr."
+abstract: |
+  Custo e desempenho não esgotam mais os objetivos da usinagem: energia, fluidos e pegada de carbono entraram na conta. Este capítulo traz a sustentabilidade para dentro do DOE. Apresenta as estratégias de lubri-refrigeração — corte a seco, por jorro e por mínima quantidade de fluido (MQF) — e seus trade-offs; define a energia específica de corte como indicador objetivo de eficiência energética; discute a pegada de carbono e o descarte de fluidos; e mostra como incluir uma resposta ambiental na otimização multiobjetivo, para que a condição recomendada seja ótima também sob a ótica ESG. Reanalisa, sob essa lente, a lubri-refrigeração do estudo de caso.
+---
+
+# Usinagem sustentável {#sec-cap-sust}
+
+## Introdução {#sec-cap-sust-intro}
+
+O capítulo anterior acrescentou o custo ao DOE; este acrescenta o **meio ambiente**. A usinagem consome energia elétrica, fluidos de corte à base de óleo, e gera cavaco, calor e resíduo contaminado. Com a pressão regulatória e a agenda ESG, a sustentabilidade deixou de ser adorno para virar critério de projeto — e, como todo critério, pode ser medida, modelada e otimizada.
+
+A boa notícia é que o ferramental deste livro se aplica sem mudança: basta tratar os indicadores ambientais — **energia específica de corte**, **consumo de fluido**, **pegada de carbono** — como respostas de usinabilidade, modeláveis por DOE e integráveis à otimização multirresposta (@sec-cap6). A sustentabilidade não exige abandonar o método; exige ampliá-lo com respostas novas.
+
+::: {.callout-note}
+## Onde este capítulo se conecta
+A lubri-refrigeração foi um dos fatores do estudo de caso (Capítulo @sec-cap7), e os fundamentos de corte e fluido estão no Capítulo @sec-cap3. Aqui reinterpretamos aquele fator sob a ótica energética e ambiental, e mostramos como a resposta ambiental entra na mesma desejabilidade do custo (Capítulo @sec-cap-econ) e das respostas técnicas (@sec-cap6).
+:::
+
+## As estratégias de lubri-refrigeração {#sec-cap-sust-estrategias}
+
+A forma de aplicar (ou não) fluido de corte é a decisão ambiental mais visível da usinagem. Três estratégias disputam o espaço:
+
+- **Jorro abundante** (*flood*) — o padrão histórico: grande vazão de fluido inunda a região de corte. Refrigera e lubrifica bem, mas consome muito fluido, exige bombeamento (energia), e gera resíduo contaminado caro de descartar;
+- **Corte a seco** (*dry*) — nenhum fluido. Elimina o resíduo e o custo do fluido, mas aumenta a temperatura e, muitas vezes, o desgaste da ferramenta e as forças; nem todo par ferramenta-material o tolera;
+- **Mínima quantidade de fluido** (MQF, ou MQL) — um fio de óleo (tipicamente 10 a 100 mL/h) nebulizado em ar comprimido, dirigido ao gume. Lubrifica onde importa com consumo de fluido mil vezes menor que o jorro, aproximando-se do seco em pegada e do jorro em desempenho.
+
+O alumínio, com sua alta afinidade pela ferramenta (tendência à aresta postiça, Capítulo @sec-cap9), costuma se beneficiar de lubrificação — o que faz do MQF um candidato natural: lubrifica o gume e combate a adesão sem o passivo ambiental do jorro.
+
+::: {.callout-note}
+## Valores típicos, não da tese
+A Tabela @tbl-sust-estrategias reúne ordens de grandeza típicas da literatura para comparar as estratégias; não são medidas do estudo de caso. Servem para expor o método de avaliação, que o leitor aplicará aos seus próprios dados.
+:::
+
+| Critério | A seco | MQF | Jorro |
+|:---|:---:|:---:|:---:|
+| Consumo de fluido | nenhum | muito baixo (10–100 mL/h) | alto (litros/min) |
+| Energia auxiliar (bomba/ar) | nenhuma | baixa (ar comprimido) | média a alta |
+| Resíduo/descarte | mínimo | baixo | alto (fluido contaminado) |
+| Controle de temperatura | fraco | bom (lubrifica) | ótimo (refrigera) |
+| Risco de aresta postiça (Al) | maior | menor | menor |
+
+: Comparação qualitativa das estratégias de lubri-refrigeração (valores típicos). {#tbl-sust-estrategias}
+
+## A energia específica de corte {#sec-cap-sust-energia}
+
+O indicador objetivo de eficiência energética do processo é a **energia específica de corte** $u_c$ — a energia gasta para remover uma unidade de volume de material:
+
+$$
+u_c = \frac{P_c}{\text{MRR}} = \frac{F_c \, v_c}{v_c\, a_p\, f} = \frac{F_c}{a_p\, f},
+$$ {#eq-energia}
+
+onde $P_c = F_c\, v_c$ é a potência de corte, $\text{MRR} = v_c\, a_p\, f$ a taxa de remoção de material, $F_c$ a força de corte, $a_p$ a profundidade e $f$ o avanço. O resultado notável de @eq-energia: a energia específica **não depende da velocidade** — ela é, essencialmente, a **força específica de corte** $k_c = F_c/(a_p f)$. Reduzir $u_c$ significa reduzir a força por unidade de seção de corte, o que remete de volta à usinabilidade modelada nos capítulos anteriores.
+
+::: {.callout-tip}
+## Cálculo exemplo
+Numa condição de acabamento de alumínio com $F_c = 210$ N, $a_p = 1{,}5$ mm e $f = 0{,}20$ mm/volta, a $v_c = 300$ m/min:
+$$
+u_c = \frac{210}{1{,}5 \times 0{,}20} = 700 \text{ N/mm}^2 = 0{,}70 \text{ J/mm}^3 .
+$$
+A potência de corte é $P_c = 210 \times (300/60) = 1{,}05$ kW, e o tempo de corte da peça (do Capítulo @sec-cap-econ, $\approx 0{,}26$ min $= 15{,}7$ s) dá uma energia de corte de $\approx 16{,}5$ kJ por peça. Multiplicada pela produção mensal e pelo fator de emissão da rede elétrica, essa energia vira pegada de carbono — e, portanto, resposta a otimizar.
+:::
+
+## A pegada de carbono e o descarte {#sec-cap-sust-pegada}
+
+A pegada ambiental da usinagem tem três fontes principais:
+
+1. **Energia elétrica** — a energia de corte é só uma parte; a máquina consome ainda em movimentos de avanço rápido, bombeamento, refrigeração e o consumo de base (*standby*), muitas vezes maior que o próprio corte. A pegada de carbono é a energia total multiplicada pelo **fator de emissão** da matriz elétrica local;
+2. **Fluido de corte** — produção, uso e, sobretudo, **descarte** do fluido contaminado, que é resíduo perigoso. É aqui que o jorro pesa e o MQF/seco ganham;
+3. **Ferramenta** — a energia embutida na fabricação da ferramenta, diluída pela quantidade de peças que cada aresta produz — o mesmo $t_m/T$ do capítulo econômico, agora em chave ambiental.
+
+A síntese prática: **o jorro domina a pegada pelo fluido; o seco e o MQF a reduzem drasticamente**, desde que não piorem tanto o desgaste a ponto de elevar a parcela da ferramenta e da energia. É um trade-off, e trade-off é terreno de DOE.
+
+## Otimização multiobjetivo com a dimensão ambiental {#sec-cap-sust-multi}
+
+Incluir o ambiente na otimização é acrescentar uma (ou mais) resposta ambiental à desejabilidade (@sec-cap6):
+
+- defina a resposta ambiental — energia específica $u_c$, energia por peça, ou um índice de pegada que some energia e fluido;
+- construa sua desejabilidade individual do tipo **"menor é melhor"**;
+- combine-a, na média geométrica, com as desejabilidades técnicas e econômica (Capítulo @sec-cap-econ), ponderando pelo expoente que traduz a prioridade ESG da planta.
+
+O ótimo resultante é uma condição de corte que concilia **acabamento, custo e meio ambiente**. Quando os objetivos conflitam — por exemplo, o jorro dá menor temperatura mas maior pegada —, a fronteira de Pareto (@sec-cap10) mostra as soluções não dominadas, e a decisão final pondera desempenho contra sustentabilidade de forma explícita, não implícita.
+
+### Reanálise do estudo de caso {#sec-cap-sust-reanalise}
+
+No estudo de caso, a lubri-refrigeração entrou como fator (Capítulo @sec-cap7) e foi avaliada sobretudo pelo seu efeito **técnico** — sobre força, temperatura e acabamento. A ótica deste capítulo propõe reanalisá-la acrescentando **duas respostas**: a energia específica de corte (obtida das forças já medidas, via @eq-energia) e um índice de pegada que penalize o consumo e o descarte de fluido. Com isso, uma condição a jorro que vencia no critério puramente técnico pode perder para o MQF quando a pegada entra na conta — ou confirmar-se, se a vantagem técnica for grande o bastante. O ponto metodológico é que a resposta ambiental **torna explícito** um custo que antes ficava fora do modelo. Os dados de força do estudo (Capítulos @sec-cap8 e @sec-cap9) já bastam para calcular $u_c$; o índice de fluido viria de um levantamento de consumo e descarte da planta.
+
+::: {.callout-important}
+## Decisão de projeto
+Adotar o MQF ou o corte a seco não é decisão só ambiental: muda forças, temperatura e desgaste, e portanto todas as respostas técnicas. Por isso ela pertence ao DOE, não a uma avaliação ambiental à parte. A pergunta correta não é "qual a opção mais verde?", mas "qual condição otimiza o conjunto — técnico, econômico e ambiental — com os pesos que a planta assume?". Tratar sustentabilidade como resposta, e não como restrição imposta de fora, é o que a mantém no mesmo arcabouço de decisão do resto do livro.
+:::
+
+## Síntese do capítulo {#sec-cap-sust-sintese}
+
+| Tema | Ideia-chave |
+|:---|:---|
+| Estratégias | Seco, MQF e jorro; MQF concilia desempenho e baixa pegada |
+| Energia específica | $u_c = F_c/(a_p f)$; não depende de $v_c$; é a força específica |
+| Pegada de carbono | Energia × fator de emissão + fluido + ferramenta |
+| Descarte de fluido | Maior passivo ambiental do jorro; seco/MQF o reduzem |
+| Otimização | Resposta ambiental entra na desejabilidade, com peso ESG |
+
+: Síntese da usinagem sustentável. {#tbl-sintese-sust}
+
+Três ideias devem permanecer:
+
+1. **Sustentabilidade é resposta, não restrição externa.** Energia e fluido se medem e se modelam; integrá-los ao DOE é tratá-los como as demais respostas de usinabilidade.
+2. **A energia específica é o indicador-chave.** $u_c = F_c/(a_p f)$ liga eficiência energética à força de corte já modelada — e revela que reduzir força é reduzir pegada.
+3. **O MQF é a ponte.** Para o alumínio, a mínima quantidade de fluido costuma unir desempenho próximo ao do jorro e pegada próxima à do seco — mas só o DOE, com a resposta ambiental incluída, confirma caso a caso.
+
+Com o custo (Capítulo @sec-cap-econ) e o ambiente integrados às respostas técnicas, a otimização do DOE torna-se completa: técnica, econômica e sustentável. O Capítulo @sec-cap12 sintetiza toda a jornada do livro e discute as tendências que a prolongam.
+
+## Para saber mais {#sec-cap-sust-saibamais}
+
+::: {.callout-tip}
+## Aprofundamento
+A energia específica de corte e a eficiência energética de processos de usinagem são tratadas em @machado2009teoria. As estratégias de lubri-refrigeração — jorro, seco e MQF — e seus efeitos na usinagem de alumínio aparecem em @kelly2002minimal e @braga2002minimum, que avaliam a mínima quantidade de fluido no torneamento. A metodologia de otimização multirresposta que acolhe a resposta ambiental está em @montgomery2005design (Capítulo @sec-cap6).
+:::
+
+## Exercícios resolvidos {#sec-cap-sust-resolvidos .unnumbered}
+
+### Resolvido 1 — Energia específica de corte {.unnumbered}
+
+**Enunciado.** Uma operação tem $F_c = 300$ N, $a_p = 2{,}0$ mm e $f = 0{,}25$ mm/volta. Calcule a energia específica de corte. Ela muda se a velocidade dobrar?
+
+**Solução.** Por @eq-energia: $u_c = F_c/(a_p f) = 300/(2{,}0 \times 0{,}25) = 300/0{,}5 = 600$ N/mm$^2 = 0{,}60$ J/mm$^3$. Dobrar a velocidade **não muda** $u_c$: a velocidade cancela entre potência e MRR.
+
+**Interpretação.** A eficiência energética do corte é governada pela força específica, não pela velocidade. Para gastar menos energia por peça usinada, reduz-se a força (melhor ferramenta, melhor lubrificação) ou aumenta-se a seção de corte por passe — não adianta mexer só na velocidade.
+
+### Resolvido 2 — Escolhendo a estratégia {.unnumbered}
+
+**Enunciado.** Ao tornear alumínio com forte tendência à aresta postiça, uma planta hesita entre seco e MQF. Pela Tabela @tbl-sust-estrategias, qual favorece o desempenho sem grande passivo ambiental, e por quê?
+
+**Solução.** O **MQF**: lubrifica o gume com consumo mínimo de fluido, reduzindo o risco de aresta postiça (ponto fraco do alumínio, Capítulo @sec-cap9) que o corte a seco agravaria, e mantém a pegada próxima à do seco (10–100 mL/h contra litros/min do jorro).
+
+**Interpretação.** O MQF ocupa o meio-termo virtuoso para o alumínio: desempenho perto do jorro, pegada perto do seco. A decisão final, porém, deveria passar pelo DOE, medindo forças e temperatura em cada estratégia para confirmar o ganho.
+
+### Resolvido 3 — Resposta ambiental no multiresposta {.unnumbered}
+
+**Enunciado.** Como você incluiria "energia específica" na otimização por desejabilidade do Capítulo @sec-cap10? Que tipo de desejabilidade ela exige, e o que acontece se seu peso for aumentado?
+
+**Solução.** Calcula-se $u_c = F_c/(a_p f)$ em cada ponto experimental (a força já é medida) e define-se uma desejabilidade **"menor é melhor"** para $u_c$. Combina-se com as desejabilidades técnicas e econômica na média geométrica (@sec-cap6). Aumentar o peso (expoente) de $u_c$ **desloca o ótimo** para condições de menor força específica — tipicamente maior seção de corte por passe e lubrificação que reduza a força —, à custa de eventual sacrifício nas demais respostas.
+
+**Interpretação.** O peso da resposta ambiental é a alavanca ESG da planta: peso baixo recupera o ótimo puramente técnico/econômico; peso alto prioriza a eficiência energética. A desejabilidade torna essa prioridade um número, auditável e ajustável.
+
+## Exercícios propostos {.unnumbered}
+
+1. **Energia específica.** Calcule $u_c$ para $F_c = 450$ N, $a_p = 3{,}0$ mm e $f = 0{,}30$ mm/volta. Expresse em N/mm² e em J/mm³.
+
+2. **Independência da velocidade.** Demonstre, a partir de $P_c = F_c v_c$ e $\text{MRR} = v_c a_p f$, por que $u_c$ não depende de $v_c$.
+
+3. **Potência e energia.** Com $F_c = 300$ N e $v_c = 350$ m/min, calcule a potência de corte (kW). Se o tempo de corte por peça é 0,20 min, qual a energia de corte por peça (kJ)?
+
+4. **Estratégias.** Liste duas vantagens e duas desvantagens do corte a seco frente ao jorro. Para que par ferramenta-material ele é mais arriscado?
+
+5. **MQF.** Por que o MQF é particularmente adequado à usinagem de alumínio? Relacione com a tendência à aresta postiça (Capítulo @sec-cap9).
+
+6. **Pegada de carbono.** Cite as três fontes da pegada ambiental da usinagem e explique por que a parcela de energia pode ser dominada pelo consumo de base da máquina, não pelo corte.
+
+7. **Trade-off (integrador).** Uma condição a jorro dá temperatura 15% menor que o MQF, mas o MQF elimina o descarte de fluido. Descreva como o DOE decidiria entre as duas, em vez de decidir por opinião.
+
+8. **Multiobjetivo.** Explique como custo (Capítulo @sec-cap-econ) e energia específica entram **juntos** numa única otimização por desejabilidade com as respostas técnicas. O que fixa a importância relativa de cada objetivo?
+
+## Gabarito dos exercícios propostos {#sec-cap-sust-gabarito .unnumbered}
+
+1. **Energia específica.** $u_c = 450/(3{,}0 \times 0{,}30) = 450/0{,}9 = 500$ N/mm$^2 = 0{,}50$ J/mm$^3$.
+
+2. **Independência da velocidade.** $u_c = P_c/\text{MRR} = (F_c v_c)/(v_c a_p f) = F_c/(a_p f)$. O $v_c$ aparece no numerador (potência) e no denominador (MRR) e se cancela; resta a força específica, independente da velocidade.
+
+3. **Potência e energia.** $P_c = F_c v_c = 300 \times (350/60) = 300 \times 5{,}83 = 1750$ W $= 1{,}75$ kW. Energia por peça $= P_c \times t = 1750 \times (0{,}20 \times 60) = 1750 \times 12 = 21\,000$ J $= 21$ kJ.
+
+4. **Seco × jorro.** Vantagens do seco: elimina fluido (sem resíduo, sem custo de fluido) e simplifica a máquina/limpeza. Desvantagens: maior temperatura e, em geral, maior desgaste e força; risco de dano térmico à peça. É mais arriscado em pares de **alta adesão/baixa condutividade da ferramenta** e em materiais dúcteis como o alumínio, propensos à aresta postiça.
+
+5. **MQF e alumínio.** Porque o alumínio adere à ferramenta e forma aresta postiça (Capítulo @sec-cap9); o MQF leva lubrificante ao gume, reduzindo a adesão e a aresta postiça, com consumo de fluido mínimo — desempenho perto do jorro e pegada perto do seco.
+
+6. **Pegada de carbono.** Fontes: (i) energia elétrica (× fator de emissão da rede); (ii) fluido de corte (produção, uso e descarte); (iii) ferramenta (energia embutida, diluída por $t_m/T$). A parcela de energia pode ser dominada pelo **consumo de base** (*standby*: controles, hidráulica, refrigeração da máquina ligada), muitas vezes maior que a potência de corte — especialmente em cortes leves de alumínio.
+
+7. **Trade-off (DOE).** Mede-se, por planejamento, a temperatura **e** um índice de pegada (consumo/descarte de fluido) nas duas estratégias; constroem-se desejabilidades "menor é melhor" para cada resposta e combinam-se com peso explícito; a fronteira de Pareto mostra se a vantagem térmica do jorro compensa seu passivo ambiental. A decisão vira número ponderado, não opinião.
+
+8. **Multiobjetivo.** Calculam-se custo por peça (@eq-custo, Capítulo @sec-cap-econ) e energia específica (@eq-energia) em cada ponto; definem-se desejabilidades "menor é melhor" para ambos e combinam-se, junto às respostas técnicas, na média geométrica (@sec-cap6). A **importância relativa** é fixada pelos expoentes (pesos) atribuídos a cada desejabilidade, que traduzem a prioridade da planta entre técnica, custo e sustentabilidade.

@@ -160,7 +160,7 @@ Empresas do porte de Gerdau e Vale, em suas operações de laminação e de bene
 
 Este livro nasce de uma tese de doutorado defendida em 2012 na Faculdade de Engenharia Mecânica da Universidade Federal de Uberlândia. O estudo aplicou planejamento fatorial completo, planejamento composto central e otimização multiresposta a seis ligas de alumínio da série 6xxx e 7xxx, com foco em torneamento a seco e com fluido em condições próximas às praticadas na indústria automotiva de auto peças. As decisões metodológicas tomadas ali foram, ao longo da década seguinte, refinadas em sala de aula com alunos de graduação e pós-graduação do IFES, e ajustadas pela experiência de aplicação em colaborações pontuais com indústrias do Espírito Santo.
 
-Nada do que este livro apresenta é original em termos de teoria: DOE é um corpo consolidado de conhecimento desde os anos 1950, refinado por décadas na comunidade estatística e industrial internacional. O que se propõe original é a **integração didática**: uma sequência única que parte da motivação (este capítulo), passa pela metalurgia e pela usinagem específicas do alumínio (Capítulos 2 e 3, @sec-cap2 e @sec-cap3), estabelece a metodologia (Capítulos 4 a 8), aplica ao caso real (Capítulos 9 a 13) e discute a implantação (Capítulos 14 e 15, @sec-cap11 e @sec-cap12).
+Nada do que este livro apresenta é original em termos de teoria: DOE é um corpo consolidado de conhecimento desde os anos 1950, refinado por décadas na comunidade estatística e industrial internacional. O que se propõe original é a **integração didática**: uma sequência única que parte da motivação (este capítulo), passa pela metalurgia e pela usinagem específicas do alumínio (Capítulos 2 e 3, @sec-cap2 e @sec-cap3), estabelece a metodologia (Capítulos 4 a 8), aplica ao caso real (Capítulos 9 a 13) e discute a aplicação à indústria (Capítulos 14 a 17, @sec-cap11, @sec-cap-econ, @sec-cap-sust e @sec-cap12).
 
 ## O mapa deste livro {#sec-mapa-livro}
 
@@ -178,9 +178,9 @@ Núcleo estatístico do livro. O Capítulo 4 (@sec-cap4) apresenta o planejament
 
 Aplicação integral da metodologia. O Capítulo 9 (@sec-cap7) descreve o projeto experimental: fatores escolhidos, respostas medidas, matriz de planejamento. O Capítulo 10 (@sec-cap8) executa a análise fatorial. O Capítulo 11 (@sec-cap9) executa o PCC e ajusta as superfícies. O Capítulo 12 (@sec-cap-ann) estende a modelagem ao aprendizado de máquina — redes neurais e modelos substitutos. O Capítulo 13 (@sec-cap10) apresenta a otimização global, com múltiplas respostas conflitantes.
 
-### Parte IV --- Aplicação (Capítulos 14 e 15)
+### Parte IV --- Aplicação (Capítulos 14 a 17)
 
-Discussão pragmática. O Capítulo 14 (@sec-cap11) aborda o DOE no ambiente de chão de fábrica, com restrições reais de disponibilidade de máquina, tempo de setup, custo de matéria-prima e coleta de dados durante produção. O Capítulo 15 (@sec-cap12) sintetiza os aprendizados e discute tendências: MQL, criogenia, digitalização de processos.
+Discussão pragmática. O Capítulo 14 (@sec-cap11) aborda o DOE no ambiente de chão de fábrica, com restrições reais de disponibilidade de máquina, tempo de setup, custo de matéria-prima e coleta de dados durante produção. O Capítulo 15 (@sec-cap-econ) traz a otimização econômica — custo por peça, produtividade e vida de ferramenta (equação de Taylor). O Capítulo 16 (@sec-cap-sust) incorpora a sustentabilidade — energia, fluidos e pegada ambiental. O Capítulo 17 (@sec-cap12) sintetiza os aprendizados e discute tendências: IA, criogenia, digitalização de processos.
 
 ### Apêndices
 
